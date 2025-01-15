@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI/Style.uss?fileID=7433441132597879392&amp;guid=7bcea1e29dadd8c498fad6fff54dd4f6&amp;type=3#Style" />
+    <ui:VisualElement name="Display" style="flex-grow: 1; background-color: rgba(43, 43, 43, 0.75); width: 100%; align-self: center; height: 100%; display: none;">
+        <ui:VisualElement name="Menu" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); align-items: stretch; align-self: center; width: 30%; height: 100%; justify-content: center; color: rgb(255, 255, 255); display: flex;">
+            <ui:Button text="Wznów" display-tooltip-when-elided="true" name="ResumeButton" class="menu_button pause_menu_button" style="width: 100%;" />
+            <ui:Button text="Opcje" display-tooltip-when-elided="true" name="OptionsButton" class="pause_menu_button menu_button" />
+            <ui:Button text="Wróć do głównego menu" display-tooltip-when-elided="true" name="ReturnToMainMenuButton" class="pause_menu_button menu_button" />
+            <ui:Button text="Wyjdź z gry" display-tooltip-when-elided="true" name="QuitButton" class="pause_menu_button menu_button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI/MainMenu/Style.uss?fileID=7433441132597879392&amp;guid=7bcea1e29dadd8c498fad6fff54dd4f6&amp;type=3#Style" />
+    <ui:VisualElement name="Display" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="Menu" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); justify-content: center; align-self: center; width: 232px; color: rgb(255, 255, 255); -unity-text-align: upper-center; display: flex; visibility: visible; overflow: visible;">
+            <ui:Button text="Nowa Gra" display-tooltip-when-elided="true" name="NewGameButton" class="button menu_button" />
+            <ui:Button text="Wczytaj grę" display-tooltip-when-elided="true" name="LoadGameButton" class="button menu_button" />
+            <ui:Button text="Opcje" display-tooltip-when-elided="true" name="OptionsButton" class="button menu_button" />
+            <ui:Button text="Wyjdź" display-tooltip-when-elided="true" name="QuitButton" class="button menu_button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
