@@ -17,16 +17,22 @@ public class CarController : MonoBehaviour
     public float Acceleration = 1700f; 
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
+    public float DriftForce = 5000f;
     public AnimationCurve TurnForceCurve;
 
     [Header("Input")]
-    [SerializeField] Vector2 moveInput;
+    [SerializeField] Vector2 moveInput = Vector2.zero;
+    [SerializeField] bool isDrifting = false;
 
 
     public void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
         moveInput = input;
+    }
+    public void OnDrift(InputValue value)
+    {
+        isDrifting = value.isPressed;
     }
     public float GetForwardSpeed()
     {
@@ -42,6 +48,11 @@ public class CarController : MonoBehaviour
         }
         force = Mathf.Clamp01(force);
         BodyRigidbody.AddForceAtPosition(transform.forward * Acceleration * force, CenterOfMass.position);
+    }
+
+    public void Drift(float input)
+    {
+        //BodyRigidbody.AddTorque(transform.up * input * TurnForce, ForceMode.VelocityChange);
     }
     public void Brake(float force = 1.0f)
     {
@@ -88,7 +99,17 @@ public class CarController : MonoBehaviour
         {
             Brake(moveInput.y);
         }
-        DoTurn(moveInput.x);
+        if (moveInput.x != 0)
+        {
+            if (isDrifting)
+            {
+                Drift(moveInput.x);
+            }
+            else
+            {
+                DoTurn(moveInput.x);
+            }
+        }
     }
 
     void Awake()
