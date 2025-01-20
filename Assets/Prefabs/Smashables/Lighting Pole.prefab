@@ -105,11 +105,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda6d46a5bbf43c489729901173ec691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bountyPointsReward: 150
   OnHit:
     m_PersistentCalls:
       m_Calls: []
+  wasHit: 0
   collisionEvents: {fileID: 2729614477671773308}
-  usedRigidbody: {fileID: 839861608275074290}
+  usedRigidbodies:
+  - {fileID: 839861608275074290}
 --- !u!114 &2729614477671773308
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class GameRunInfo : MonoBehaviour
+public class GameRunInfo
 {
     public float time = 0;
+    public int bountyPoints = 0;
     
     const string _formatTimeTemplate = "{0}:{1}.{2}";
     
@@ -14,13 +15,23 @@ public class GameRunInfo : MonoBehaviour
         float millisec = seconds % 1;
 
         string secondsPadded = Mathf.RoundToInt(seconds).ToString().PadLeft(2, '0');
-        string millisecPadded = millisec.ToString().PadLeft(2, '0').Substring(2, 2);
+        string millisecPadded = millisec.ToString().Substring(2, 2).PadLeft(2, '0');
         
         return string.Format(_formatTimeTemplate, minutes, secondsPadded, millisecPadded);
     }
-
-    private void Update()
+    public void AddBountyPoints(int amount)
     {
-        time += Time.deltaTime;
+        bountyPoints += amount;
     }
+}
+
+public enum GameRunPhase
+{ 
+    Loading,
+    Preparation,
+    Introduction,
+    Countdown,
+    Play,
+    Ending,
+    Aftermath
 }

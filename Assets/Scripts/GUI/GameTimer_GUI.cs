@@ -4,10 +4,12 @@ using UnityEngine;
 public class GameTimer_GUI : MonoBehaviour
 {
     [SerializeField] TMP_Text label;
-    [SerializeField] GameRunInfo runInfo;
- 
-    void Update()
+
+    void LateUpdate()
     {
-        label.text = runInfo.GetTimeFormatted();
+        if (GameManager.isDuringRun)
+        {
+            label.text = GameManager.runInfo.GetTimeFormatted();
+        }
     }
 }

@@ -3,10 +3,12 @@ using UnityEngine.Events;
 
 public class SmashableEntity : MonoBehaviour
 {
-    public UnityEvent OnHit;
+    public int bountyPointsReward;
+    public UnityEvent<SmashableEntity> OnHit;
+    public bool wasHit = false;
     [Header("Components")]
     [SerializeField] CollisionEventEmitter collisionEvents;
-    [SerializeField] Rigidbody usedRigidbody;
+    [SerializeField] Rigidbody[] usedRigidbodies;
 
 
     #region Event subscribing
@@ -23,9 +25,18 @@ public class SmashableEntity : MonoBehaviour
     #region Events
     private void OnColliderHit(Collision collision)
     {
-        usedRigidbody.freezeRotation = false;
-        usedRigidbody.constraints = RigidbodyConstraints.None;
-        OnHit?.Invoke();
+        if (collision.collider == null) return;
+        if (collision.gameObject.tag != "Vehicle") return;
+        if (!wasHit)
+        {
+            foreach(Rigidbody rb in usedRigidbodies)
+            {
+                rb.freezeRotation = false;
+                rb.constraints = RigidbodyConstraints.None;
+            }
+            OnHit?.Invoke(this);
+            wasHit = true;
+        }
     }
     #endregion
 }

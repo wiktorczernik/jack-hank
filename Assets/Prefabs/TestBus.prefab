@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 1754507601643921490}
   m_Layer: 0
   m_Name: Wheel Back Right
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -479,7 +479,7 @@ GameObject:
   - component: {fileID: 6582577405405240925}
   m_Layer: 0
   m_Name: Wheel Front Right
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1501,7 +1501,7 @@ GameObject:
   - component: {fileID: 8409974713711607995}
   m_Layer: 0
   m_Name: TestBus
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1846,9 +1846,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3878800678360203441}
   - component: {fileID: 7777228443190461095}
+  - component: {fileID: 1732403293298331413}
+  - component: {fileID: 8047620005199023980}
   m_Layer: 0
   m_Name: BusNew
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1896,6 +1898,48 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1596508, y: 2.582944, z: 12.030493}
   m_Center: {x: -0.002228345, y: 2.2346632, z: -3.6980543}
+--- !u!65 &1732403293298331413
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854346634697848216}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.1596508, y: 0.60996825, z: 1.9994285}
+  m_Center: {x: -0.0022283753, y: 0.6467817, z: 1.305464}
+--- !u!65 &8047620005199023980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854346634697848216}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 1
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.1596508, y: 0.60996825, z: 1.9994285}
+  m_Center: {x: -0.0022283753, y: 0.6467817, z: -8.67}
 --- !u!1 &5147999947503295857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1997,7 +2041,7 @@ GameObject:
   - component: {fileID: 321183809788251971}
   m_Layer: 0
   m_Name: Wheel Front Left
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2733,7 +2777,7 @@ Transform:
   m_GameObject: {fileID: 7439046200188411116}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -0, y: 1.5, z: 6}
+  m_LocalPosition: {x: 0, y: 1.5, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3012,7 +3056,7 @@ GameObject:
   - component: {fileID: 663347084425971500}
   m_Layer: 0
   m_Name: Wheel Back Left
-  m_TagString: Untagged
+  m_TagString: Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

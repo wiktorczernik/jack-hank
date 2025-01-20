@@ -102,6 +102,7 @@ public class CarController : MonoBehaviour
     void Awake()
     {
         bodyRigidbody = GetComponent<Rigidbody>();
+        bodyRigidbody.maxLinearVelocity = 150f;
     }
 
 
