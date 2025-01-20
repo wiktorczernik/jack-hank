@@ -1498,6 +1498,7 @@ GameObject:
   - component: {fileID: 8364358126425438002}
   - component: {fileID: 9165154653561585143}
   - component: {fileID: 8049625386355856952}
+  - component: {fileID: 8409974713711607995}
   m_Layer: 0
   m_Name: TestBus
   m_TagString: Untagged
@@ -1515,7 +1516,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.25, y: 0, z: 6.49}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.9, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4075399231296317712}
@@ -1523,6 +1524,7 @@ Transform:
   - {fileID: 3412112620800836822}
   - {fileID: 4774066018385728865}
   - {fileID: 2391960054740651281}
+  - {fileID: 3484621251597863864}
   - {fileID: 3878800678360203441}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1549,7 +1551,7 @@ Rigidbody:
   m_Mass: 150
   m_Drag: 0.1
   m_AngularDrag: 0.1
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_CenterOfMass: {x: 0, y: -1, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
@@ -1558,13 +1560,13 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,23 +1587,24 @@ MonoBehaviour:
   - {fileID: 8330458456530461051}
   MaxSpeed: 100
   Acceleration: 1700
-  BrakeForce: 1000
-  TurnForce: 5000
+  BrakeForce: 2500
+  TurnForce: 7500
+  DriftForce: 5000
   TurnForceCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0.00029324336
       value: -0.00036793947
-      inSlope: 0.0049053384
-      outSlope: 0.0049053384
+      inSlope: -0.03521948
+      outSlope: -0.03521948
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.37507716
+      outWeight: 0.4983673
     - serializedVersion: 3
-      time: 0.20027333
-      value: 0.996504
+      time: 0.18218505
+      value: 0.95719856
       inSlope: 0.36824444
       outSlope: 0.36824444
       tangentMode: 0
@@ -1630,6 +1633,37 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   moveInput: {x: 0, y: 0}
+  isDrifting: 0
+--- !u!114 &8409974713711607995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 47f8bff154d10dd4a8e7344cd60d4f7e, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &4541372557963350123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1857,7 +1891,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 3.1596508, y: 2.582944, z: 12.030493}
@@ -2255,7 +2289,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4075399231296317712
 Transform:
   m_ObjectHideFlags: 0
@@ -2303,7 +2337,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 1000
+  far clip plane: 150
   field of view: 90
   orthographic: 0
   orthographic size: 5
@@ -2674,6 +2708,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7439046200188411116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3484621251597863864}
+  m_Layer: 0
+  m_Name: Aim
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3484621251597863864
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7439046200188411116}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: -0, y: 1.5, z: 6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6347187237283905811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7864133808801057533
 GameObject:
   m_ObjectHideFlags: 0

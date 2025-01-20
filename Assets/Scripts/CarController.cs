@@ -6,6 +6,8 @@ using UnityEngine.Windows;
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
 {
+    public int speedKmh => Mathf.RoundToInt(BodyRigidbody.linearVelocity.magnitude * 3.6f);
+
     public Rigidbody BodyRigidbody => bodyRigidbody;
     public Transform CenterOfMass;
 
@@ -30,10 +32,6 @@ public class CarController : MonoBehaviour
         Vector2 input = value.Get<Vector2>();
         moveInput = input;
     }
-    public void OnDrift(InputValue value)
-    {
-        isDrifting = value.isPressed;
-    }
     public float GetForwardSpeed()
     {
         return Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward);
@@ -50,10 +48,6 @@ public class CarController : MonoBehaviour
         BodyRigidbody.AddForceAtPosition(transform.forward * Acceleration * force, CenterOfMass.position);
     }
 
-    public void Drift(float input)
-    {
-        //BodyRigidbody.AddTorque(transform.up * input * TurnForce, ForceMode.VelocityChange);
-    }
     public void Brake(float force = 1.0f)
     {
         if (Vector3.Dot(BodyRigidbody.linearVelocity, -transform.forward) * 3.6f > MaxSpeed)
@@ -101,14 +95,7 @@ public class CarController : MonoBehaviour
         }
         if (moveInput.x != 0)
         {
-            if (isDrifting)
-            {
-                Drift(moveInput.x);
-            }
-            else
-            {
-                DoTurn(moveInput.x);
-            }
+            DoTurn(moveInput.x);
         }
     }
 
