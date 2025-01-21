@@ -1,15 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Splines.Examples;
 using UnityEngine;
 using UnityEngine.Splines;
 
 [ExecuteInEditMode]
-public class TerrainAdjusterRuntime : MonoBehaviour
+public class LoftRoadTerrainAdjusterRuntime : MonoBehaviour
 {
     public Terrain terrain;
+    public LoftRoadBehaviour loftRoad;
 
     [Range(0f, 1f)]
     public float brushFallOff = 0.3f;
+    [Range(0f, 10f)]
+    public float heightOffset = 0.0f;
 
     [Range(1f, 10f)]
     public float brushSpacing = 1f;
@@ -20,7 +24,7 @@ public class TerrainAdjusterRuntime : MonoBehaviour
     private float[,] originalTerrainHeights;
 
     // the blur radius values being used for the various passes
-    public int[] initialPassRadii = { 15, 7, 2 };
+    public int[] initialPassRadii = { 12, 4, 1 };
 
     void Start()
     {
@@ -62,7 +66,7 @@ public class TerrainAdjusterRuntime : MonoBehaviour
         if (originalTerrainHeights == null)
             SaveOriginalTerrainHeights();
 
-        Vector3 terrainPosition = terrain.gameObject.transform.position;
+        Vector3 terrainPosition = terrain.transform.position;
         TerrainData terrainData = terrain.terrainData;
 
         // both GetHeights and SetHeights use normalized height values, where 0.0 equals to terrain.transform.position.y in the world space and 1.0 equals to terrain.transform.position.y + terrain.terrainData.size.y in the world space
@@ -94,6 +98,19 @@ public class TerrainAdjusterRuntime : MonoBehaviour
                 float clampedDistance = Mathf.Clamp(t, 0f, splineLength);
                 Vector3 point = splineContainer.transform.TransformPoint(SplineUtility.EvaluatePosition(spline, clampedDistance / splineLength));
                 distancePoints.Add(point);
+            }
+
+            if (loftRoad != null)
+            {
+                Mesh mesh = loftRoad.GetComponent<MeshFilter>().sharedMesh;
+                Vector3[] localVertices = mesh.vertices;
+
+                // Convert them to world space
+                foreach (Vector3 localVertex in localVertices)
+                {
+                    Vector3 worldVertex = transform.TransformPoint(localVertex);
+                    distancePoints.Add(worldVertex);
+                }
             }
 
             // sort by height reverse
@@ -146,7 +163,7 @@ public class TerrainAdjusterRuntime : MonoBehaviour
         xIndex = Mathf.Clamp(xIndex, 0, terrainData.heightmapResolution - 1);
         zIndex = Mathf.Clamp(zIndex, 0, terrainData.heightmapResolution - 1);
 
-        float normalizedHeight = (worldPosition.y - 0.05f - terrainPosition.y) / terrainData.size.y;
+        float normalizedHeight = (worldPosition.y - heightOffset - terrainPosition.y) / terrainData.size.y;
         normalizedHeight = Mathf.Clamp01(normalizedHeight);
 
         targetHeight = normalizedHeight;

@@ -1,21 +1,27 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Splines;
 
-[CustomEditor(typeof(TerrainAdjusterRuntime))]
-public class TerrainAdjusterRuntimeEditor : Editor
+[CustomEditor(typeof(LoftRoadTerrainAdjusterRuntime))]
+public class LoftRoadTerrainAdjusterRuntimeEditor : Editor
 {
-    TerrainAdjusterRuntimeEditor editor;
+    LoftRoadTerrainAdjusterRuntimeEditor editor;
 
     public void OnEnable()
     {
         this.editor = this;
 
-        TerrainAdjusterRuntime targetGameObject = (TerrainAdjusterRuntime)target;
+        LoftRoadTerrainAdjusterRuntime targetGameObject = (LoftRoadTerrainAdjusterRuntime)target;
 
         if (targetGameObject.splineContainer != null)
         {
             targetGameObject.splineContainer.Spline.changed -= OnPathChanged;
             targetGameObject.splineContainer.Spline.changed += OnPathChanged;
+        }
+        if (targetGameObject.loftRoad != null)
+        {
+            targetGameObject.loftRoad.OnLofted -= OnPathChanged;
+            targetGameObject.loftRoad.OnLofted += OnPathChanged;
         }
 
         targetGameObject.SaveOriginalTerrainHeights();
@@ -24,7 +30,7 @@ public class TerrainAdjusterRuntimeEditor : Editor
 
     void OnDisable()
     {
-        TerrainAdjusterRuntime targetGameObject = (TerrainAdjusterRuntime)target;
+        LoftRoadTerrainAdjusterRuntime targetGameObject = (LoftRoadTerrainAdjusterRuntime)target;
 
         // remove original terrain data
         targetGameObject.CleanUp();
@@ -34,20 +40,24 @@ public class TerrainAdjusterRuntimeEditor : Editor
         {
             targetGameObject.splineContainer.Spline.changed -= OnPathChanged;
         }
+        if (targetGameObject.loftRoad != null)
+        {
+            targetGameObject.loftRoad.OnLofted -= OnPathChanged;
+        }
 
     }
 
 
     void OnPathChanged()
     {
-        TerrainAdjusterRuntime targetGameObject = (TerrainAdjusterRuntime)target;
+        LoftRoadTerrainAdjusterRuntime targetGameObject = (LoftRoadTerrainAdjusterRuntime)target;
 
         targetGameObject.ShapeTerrain();
     }
 
     public override void OnInspectorGUI()
     {
-        TerrainAdjusterRuntime targetGameObject = (TerrainAdjusterRuntime)target;
+        LoftRoadTerrainAdjusterRuntime targetGameObject = (LoftRoadTerrainAdjusterRuntime)target;
 
         EditorGUI.BeginChangeCheck();
 

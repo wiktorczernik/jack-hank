@@ -17,6 +17,8 @@ namespace Unity.Splines.Examples
     [RequireComponent(typeof(SplineContainer), typeof(MeshRenderer), typeof(MeshFilter))]
     public class LoftRoadBehaviour : MonoBehaviour
     {
+        public event Action OnLofted;
+
         [SerializeField]
         List<SplineData<float>> m_Widths = new List<SplineData<float>>();
 
@@ -107,6 +109,7 @@ namespace Unity.Splines.Examples
             if (m_LoftRoadsRequested)
             {
                 LoftAllRoads();
+                OnLofted?.Invoke();
                 m_LoftRoadsRequested = false;
             }
         }
