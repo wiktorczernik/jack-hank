@@ -19,6 +19,7 @@ public class CarController : MonoBehaviour
     public float Acceleration = 1700f; 
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
+    [Obsolete]
     public float DriftForce = 5000f;
     public AnimationCurve TurnForceCurve;
 
