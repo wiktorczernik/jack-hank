@@ -26,17 +26,26 @@ public class SmashableEntity : MonoBehaviour
     private void OnColliderHit(Collision collision)
     {
         if (collision.collider == null) return;
-        if (collision.gameObject.tag != "Vehicle") return;
+        if (collision.gameObject.tag != "Vehicle" && collision.gameObject.tag != "Passenger") return;
         if (!wasHit)
         {
+            Vector3 contactPoint = collision.contacts[0].point;
+            Vector3 contactNormal = collision.contacts[0].normal;
+            float relativeSpeed = collision.relativeVelocity.magnitude;
             foreach(Rigidbody rb in usedRigidbodies)
             {
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.None;
             }
+            OnHitEvent();
             OnHit?.Invoke(this);
             wasHit = true;
         }
+    }
+
+    protected virtual void OnHitEvent()
+    {
+
     }
     #endregion
 }

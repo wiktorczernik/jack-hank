@@ -4,6 +4,7 @@ public class GameRunInfo
 {
     public float time = 0;
     public int bountyPoints = 0;
+    public int passengersOnBoard = 0;
     
     const string _formatTimeTemplate = "{0}:{1}.{2}";
     
@@ -22,6 +23,10 @@ public class GameRunInfo
     public void AddBountyPoints(int amount)
     {
         bountyPoints += amount;
+    }
+    public void AddPassenger()
+    {
+        passengersOnBoard++;
     }
 }
 
