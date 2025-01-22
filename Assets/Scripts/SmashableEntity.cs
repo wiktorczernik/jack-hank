@@ -7,8 +7,8 @@ public class SmashableEntity : MonoBehaviour
     public UnityEvent<SmashableEntity> OnHit;
     public bool wasHit = false;
     [Header("Components")]
-    [SerializeField] CollisionEventEmitter collisionEvents;
-    [SerializeField] Rigidbody[] usedRigidbodies;
+    [SerializeField] protected CollisionEventEmitter collisionEvents;
+    [SerializeField] protected Rigidbody[] usedRigidbodies;
 
 
     #region Event subscribing

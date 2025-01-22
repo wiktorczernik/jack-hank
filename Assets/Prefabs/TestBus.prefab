@@ -1357,7 +1357,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5882246190223746869}
   - component: {fileID: 7579209945102099691}
-  - component: {fileID: 4173143296682796144}
   - component: {fileID: 5494111998625822928}
   m_Layer: 0
   m_Name: Rear Mirror Camera
@@ -1432,14 +1431,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4173143296682796144
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3551148840436793782}
-  m_Enabled: 1
 --- !u!114 &5494111998625822928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1756,6 +1747,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
+  onPickupPassenger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &9165154653561585143
 Rigidbody:
   m_ObjectHideFlags: 0

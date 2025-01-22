@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public class PlayerVehicle : Vehicle
 {
     public TriggerEventEmitter pickupRightTrigger;
     public TriggerEventEmitter pickupLeftTrigger;
+
+    public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
 
 
     private void OnEnable()
@@ -20,12 +23,12 @@ public class PlayerVehicle : Vehicle
         PickupablePassenger passenger;
         if (!col.TryGetComponent(out passenger)) return;
         if (!passenger.isAlive) return;
-        OnPickupPassenger(trigger, passenger);
+        OnPickupPassengerEvent(trigger, passenger);
+        onPickupPassenger?.Invoke(trigger, passenger);
 
     }
-    private void OnPickupPassenger(TriggerEventEmitter trigger, PickupablePassenger passenger)
+    private void OnPickupPassengerEvent(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
-        Destroy(passenger.gameObject);
-        GameManager.runInfo.passengersOnBoard++;
+        passenger.NotifyPickup();
     }
 }

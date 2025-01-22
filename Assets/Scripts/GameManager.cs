@@ -20,13 +20,35 @@ public class GameManager : MonoBehaviour
 
     private void PrepareLevelEntities()
     {
-        SmashableEntity[] smashables = GameObject.FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None);
+        PlayerVehicle playerVehicle = FindFirstObjectByType<PlayerVehicle>();
+
+        playerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
+
+        SmashableEntity[] smashables = FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None);
         foreach (SmashableEntity smashable in smashables)
         {
-            smashable.OnHit?.AddListener(OnHitSmashable);
+            UnityAction<SmashableEntity> onHit;
+            if (smashable is PickupablePassenger)
+            {
+                onHit = OnPassengerHit;
+            }
+            else
+            {
+                onHit = OnHitSmashable;
+            }
+
+            smashable.OnHit.AddListener(onHit);
         }
     }
 
+    private void OnPassengerHit(SmashableEntity smashable)
+    {
+        Debug.Log("Passenger was hit! Oh no!");
+    }
+    private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
+    {
+        runInfo.AddPassenger();
+    }
     private void OnHitSmashable(SmashableEntity smashable)
     {
         runInfo.AddBountyPoints(smashable.bountyPointsReward);
