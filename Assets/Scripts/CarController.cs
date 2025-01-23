@@ -7,6 +7,13 @@ using UnityEngine.Windows;
 public class CarController : MonoBehaviour
 {
     public int speedKmh => Mathf.RoundToInt(BodyRigidbody.linearVelocity.magnitude * 3.6f);
+    public int speedKmhForward => Mathf.Abs(Mathf.RoundToInt(Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward) * 3.6f));
+
+    public VehicleSkidmarkSource skidmarkSourceLeft;
+    public VehicleSkidmarkSource skidmarkSourceRight;
+
+    public ParticleSystem smokeSourceLeft;
+    public ParticleSystem smokeSourceRight;
 
     public Rigidbody BodyRigidbody => bodyRigidbody;
     public Transform CenterOfMass;
@@ -20,6 +27,8 @@ public class CarController : MonoBehaviour
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
     public float DriftForce = 5000f;
+    public float DriftAngle = 45f;
+    public AnimationCurve TestCurve;
     public AnimationCurve TurnForceCurve;
 
     [Header("Input")]
@@ -36,6 +45,11 @@ public class CarController : MonoBehaviour
     {
         return Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward);
     }
+
+    public bool IsDrifting()
+    {
+        return Mathf.Abs(bodyRigidbody.angularVelocity.y) > 1f;
+    }
     public void Accelerate(float force = 1.0f)
     {
         float sp = Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward) * 3.6f;
@@ -44,8 +58,18 @@ public class CarController : MonoBehaviour
             Debug.Log("Capped front");
             return;
         }
-        force = Mathf.Clamp01(force);
-        BodyRigidbody.AddForceAtPosition(transform.forward * Acceleration * force, CenterOfMass.position);
+        float wheelGroundFactor = 0.0f;
+        foreach(var wheel in wheels)
+        {
+            if (wheel.IsGrounded())
+            {
+                wheelGroundFactor += 0.25f;
+            }
+        }
+        force = Mathf.Clamp01(force) * wheelGroundFactor;
+        Vector3 direction = transform.forward;
+
+        BodyRigidbody.AddForceAtPosition(direction * Acceleration * force, CenterOfMass.position);
     }
 
     public void Brake(float force = 1.0f)
@@ -79,11 +103,59 @@ public class CarController : MonoBehaviour
             wheel.ApplyFriction();
         }
     }
+    void HandleSkidmarks()
+    {
+        
+        if (wheels[2].IsGrounded())
+        {
+            if (IsDrifting())
+            {
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
+                if (factor > 0.5f)
+                {
+                    smokeSourceRight.Play();
+                }
+                skidmarkSourceRight.StartEmitting();
+            }
+            else
+            {
+                smokeSourceRight.Stop();
+                skidmarkSourceRight.StopEmitting();
+            }
+        }
+        else
+        {
+            smokeSourceRight.Stop();
+            skidmarkSourceRight.StopEmitting();
+        }
+        if (wheels[3].IsGrounded())
+        {
+            if (IsDrifting())
+            {
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
+                if (factor > 0.5f)
+                {
+                    smokeSourceLeft.Play();
+                }
+                skidmarkSourceLeft.StartEmitting();
+            }
+            else
+            {
+                smokeSourceLeft.Stop();
+                skidmarkSourceLeft.StopEmitting();
+            }
+        }
+        else
+        {
+            smokeSourceLeft.Stop();
+            skidmarkSourceLeft.StopEmitting();
+        }
+    }
 
     private void FixedUpdate()
     {
         HandleWheels();
-
+        HandleSkidmarks();
 
         if (moveInput.y > 0)
         {
@@ -96,6 +168,12 @@ public class CarController : MonoBehaviour
         if (moveInput.x != 0)
         {
             DoTurn(moveInput.x);
+        }
+        if (IsDrifting())
+        {
+            float ratio = speedKmh / MaxSpeed;
+            Vector3 dir = Quaternion.AngleAxis(BodyRigidbody.angularVelocity.y * -DriftAngle, Vector3.up) * transform.forward;
+            bodyRigidbody.AddForceAtPosition(dir * DriftForce * Time.fixedDeltaTime, bodyRigidbody.transform.TransformPoint(bodyRigidbody.centerOfMass), ForceMode.Acceleration);
         }
     }
 

@@ -8,6 +8,6 @@ public class Speedometer_GUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        text.text = carController.speedKmh.ToString();
+        text.text = carController.speedKmhForward.ToString();
     }
 }

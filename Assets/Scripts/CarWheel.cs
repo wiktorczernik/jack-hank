@@ -23,6 +23,15 @@ public class CarWheel : MonoBehaviour
         float force = Vector3.Dot(useRigidbody.linearVelocity, dir) * friction;
         useRigidbody.AddForce(-dir * force * forceFraction);
     }
+    public bool IsGrounded()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f))
+        {
+            return true;
+        }
+        return false;
+    }
 
 #if UNITY_EDITOR
     void OnValidate()
