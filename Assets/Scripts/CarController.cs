@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
@@ -83,6 +82,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.isDuringRun) return;
         HandleWheels();
 
 
