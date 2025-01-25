@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
             UnityAction<SmashableEntity> onHit;
             if (smashable is PickupablePassenger)
             {
+                PickupablePassenger passenger = smashable as PickupablePassenger;
+                passenger.StartLookingForPlayerVehicle(playerVehicle);
                 onHit = OnPassengerHit;
             }
             else
