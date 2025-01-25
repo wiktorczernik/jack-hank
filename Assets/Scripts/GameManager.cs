@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,13 +8,21 @@ public class GameManager : MonoBehaviour
 
 
     public static Action<GameRunInfo> OnRunBegin;
-
+    public static Action<GameRunInfo> OnRunFinish;
+    
+    
     public void BeginRun()
     {
         runInfo = new GameRunInfo();
         isDuringRun = true;
         OnRunBegin?.Invoke(runInfo);
         PrepareLevelEntities();
+    }
+
+    public static void FinishRun()
+    {
+        isDuringRun = false;
+        OnRunFinish?.Invoke(runInfo);
     }
 
     private void PrepareLevelEntities()
@@ -57,10 +64,11 @@ public class GameManager : MonoBehaviour
     }
     private void GameRunFrameTick()
     {
+        if (!isDuringRun) return;
+        
         runInfo.time += Time.deltaTime;   
     }
-
-
+    
     private void Awake()
     {
         BeginRun();

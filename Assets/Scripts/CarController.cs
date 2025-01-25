@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 [RequireComponent(typeof(Rigidbody))]
 public class CarController : MonoBehaviour
@@ -26,6 +25,7 @@ public class CarController : MonoBehaviour
     public float Acceleration = 1700f; 
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
+    [Obsolete]
     public float DriftForce = 5000f;
     public float DriftAngle = 45f;
     public AnimationCurve TestCurve;
@@ -154,6 +154,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.isDuringRun) return;
         HandleWheels();
         HandleSkidmarks();
 
