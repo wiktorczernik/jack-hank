@@ -163,9 +163,9 @@ public class CarController : MonoBehaviour
         {
             Accelerate(moveInput.y);
         }
-        else
+        else if (moveInput.y < 0)
         {
-            Brake(moveInput.y);
+            Brake(Mathf.Abs(moveInput.y));
         }
         if (moveInput.x != 0)
         {
