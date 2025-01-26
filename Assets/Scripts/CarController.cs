@@ -25,6 +25,7 @@ public class CarController : MonoBehaviour
     public float Acceleration = 1700f; 
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
+    public float DriftTurnForce = 1000f;
     [Obsolete]
     public float DriftForce = 5000f;
     public float DriftAngle = 45f;
@@ -94,7 +95,7 @@ public class CarController : MonoBehaviour
         sp /= MaxSpeed;
         sp = Mathf.Clamp01(sp);
         sp = TurnForceCurve.Evaluate(sp);
-        BodyRigidbody.AddTorque(transform.up * input * TurnForce * sp);
+        BodyRigidbody.AddTorque(transform.up * input * ( IsDrifting() ? DriftTurnForce : TurnForce ) * sp);
     }
     void HandleWheels()
     {

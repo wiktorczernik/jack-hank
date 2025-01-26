@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 3, z: 4.5985084}
-  m_Center: {x: 6.583166e-10, y: 0, z: 0.7992543}
+  m_Size: {x: 3.7462246, y: 3, z: 4.5985084}
+  m_Center: {x: 0.6231124, y: 0, z: 0.79925436}
 --- !u!114 &4174879054022182403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11560,6 +11560,7 @@ MonoBehaviour:
   Acceleration: 2750
   BrakeForce: 4500
   TurnForce: 10000
+  DriftTurnForce: 3000
   DriftForce: 1150
   DriftAngle: 55
   TestCurve:
@@ -13045,8 +13046,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 3, z: 4.6364202}
-  m_Center: {x: 9.2380237e-10, y: 0, z: 0.81821084}
+  m_Size: {x: 3.7610164, y: 3, z: 4.6364202}
+  m_Center: {x: -0.6305084, y: 0, z: 0.8182108}
 --- !u!114 &1991286314898252981
 MonoBehaviour:
   m_ObjectHideFlags: 0

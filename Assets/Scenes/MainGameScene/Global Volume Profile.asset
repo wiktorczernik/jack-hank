@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7147568841140826082
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.9404543, z: 0.9485229, w: 0.3}
+  midtones:
+    m_OverrideState: 1
+    m_Value: {x: 0.8419515, y: 0.889997, z: 1, w: 0.13999978}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {x: 0.78032506, y: 1, z: 0.95543706, w: 0.17500076}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
+--- !u!114 &-6330315251880004253
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: 0.12
+  contrast:
+    m_OverrideState: 0
+    m_Value: 3
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+  hueShift:
+    m_OverrideState: 1
+    m_Value: -0
+  saturation:
+    m_OverrideState: 1
+    m_Value: 50
 --- !u!114 &-6270871117047036950
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -46,10 +108,10 @@ MonoBehaviour:
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 200
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 150
+    m_Value: 500
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 0.5
@@ -115,3 +177,5 @@ MonoBehaviour:
   - {fileID: -5348303959314254123}
   - {fileID: -1180526107231076750}
   - {fileID: -6270871117047036950}
+  - {fileID: -6330315251880004253}
+  - {fileID: -7147568841140826082}
