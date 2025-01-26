@@ -22,9 +22,11 @@ public class CarController : MonoBehaviour
 
     [Header("Settings")]
     public float MaxSpeed = 100;
+    public float MaxBackwardSpeed = 15f;
     public float Acceleration = 1700f; 
     public float BrakeForce = 1000f;
     public float TurnForce = 1500f;
+    public float TurnStabilizeSpeed = 3f;
     public float DriftTurnForce = 1000f;
     [Obsolete]
     public float DriftForce = 5000f;
@@ -75,7 +77,7 @@ public class CarController : MonoBehaviour
 
     public void Brake(float force = 1.0f)
     {
-        if (Vector3.Dot(BodyRigidbody.linearVelocity, -transform.forward) * 3.6f > MaxSpeed)
+        if (Vector3.Dot(BodyRigidbody.linearVelocity, -transform.forward) * 3.6f > MaxBackwardSpeed)
         {
             Debug.Log("Capped back");
             return;
@@ -112,7 +114,7 @@ public class CarController : MonoBehaviour
             if (IsDrifting())
             {
                 float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
-                if (factor > 0.5f)
+                if (factor > 0.1f)
                 {
                     smokeSourceRight.Play();
                 }
@@ -134,7 +136,7 @@ public class CarController : MonoBehaviour
             if (IsDrifting())
             {
                 float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
-                if (factor > 0.5f)
+                if (factor > 0.1f)
                 {
                     smokeSourceLeft.Play();
                 }
@@ -170,6 +172,15 @@ public class CarController : MonoBehaviour
         if (moveInput.x != 0)
         {
             DoTurn(moveInput.x);
+        }
+        else
+        {
+            if (!IsDrifting())
+            {
+                Vector3 av = bodyRigidbody.angularVelocity;
+                av.y = 0;
+                bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, TurnStabilizeSpeed * Time.fixedDeltaTime);
+            }
         }
         if (IsDrifting())
         {

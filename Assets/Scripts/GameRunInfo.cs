@@ -24,6 +24,10 @@ public class GameRunInfo
     {
         bountyPoints += amount;
     }
+    public void AddBountyPenalty(int penalty)
+    {
+        bountyPoints -= penalty;
+    }
     public void AddPassenger()
     {
         passengersOnBoard++;

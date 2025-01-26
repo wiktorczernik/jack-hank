@@ -51,8 +51,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnPassengerHit(SmashableEntity smashable)
+    private void OnPassengerHit(SmashableEntity smashable) => OnPassengerHit((PickupablePassenger)smashable);
+    private void OnPassengerHit(PickupablePassenger passenger)
     {
+        runInfo.AddBountyPenalty(passenger.bountyPointsPenalty);
         Debug.Log("Passenger was hit! Oh no!");
     }
     private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)

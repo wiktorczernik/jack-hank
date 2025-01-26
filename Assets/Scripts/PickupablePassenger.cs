@@ -3,6 +3,7 @@ using UnityEngine.Events;
 
 public class PickupablePassenger : SmashableEntity
 {
+    public int bountyPointsPenalty = 5000;
     public bool isAlive = true;
     public bool isLookingForPlayerVehicle = false;
     public bool isPickedUp = false;
@@ -13,6 +14,7 @@ public class PickupablePassenger : SmashableEntity
     public void NotifyPickup()
     {
         isPickedUp = true;
+        hittable = false;
         OnPickupEvent();
         onPickedUp?.Invoke();
     }
@@ -22,7 +24,7 @@ public class PickupablePassenger : SmashableEntity
         {
             rb.AddForce(Vector3.up * 50, ForceMode.Impulse);
         }
-        Invoke(nameof(Disappear), 0.5f);
+        StopLookingForPlayerVehicle();
     }
     public void StartLookingForPlayerVehicle(PlayerVehicle vehicle)
     {
