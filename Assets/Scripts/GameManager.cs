@@ -60,6 +60,7 @@ public class GameManager : MonoBehaviour
     private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
         runInfo.AddPassenger();
+        runInfo.AddBountyPoints(passenger.bountyPointsReward);
     }
     private void OnHitSmashable(SmashableEntity smashable)
     {

@@ -48,16 +48,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e57a4568eec7064abc9b736e9d5b158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bountyPointsReward: 0
+  bountyPointsReward: 50000
   OnHit:
     m_PersistentCalls:
       m_Calls: []
   wasHit: 0
+  hittable: 1
   collisionEvents: {fileID: 4722935629629059078}
   usedRigidbodies:
   - {fileID: 579355331054680116}
+  bountyPointsPenalty: 50000
   isAlive: 1
+  isLookingForPlayerVehicle: 0
   isPickedUp: 0
+  playerVehicle: {fileID: 0}
   onPickedUp:
     m_PersistentCalls:
       m_Calls: []
