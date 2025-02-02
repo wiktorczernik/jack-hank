@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectAccount : MonoBehaviour
+public class SelectAccountButton_GUI : MonoBehaviour
 {
      public void Initialize(int index, string accountName, Action<string> onSuccess, Action onFail)
      {
@@ -15,7 +15,7 @@ public class SelectAccount : MonoBehaviour
           
           gameObject.GetComponent<Button>().onClick.AddListener((() =>
           {
-               if (!AccountLoader.ExistsSavedAccount(accountName)) onFail();
+               if (!AccountManager.ExistsSavedAccount(accountName)) onFail();
 
                onSuccess(accountName);
           }));

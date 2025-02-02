@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AccountLoader : MonoBehaviour
+public class AccountManager : MonoBehaviour
 {
     public static AccountData CurrentAccountData { get; private set; }
 
@@ -44,6 +44,20 @@ public class AccountLoader : MonoBehaviour
         ProcessSaveDirectory();
         
         File.WriteAllText(GetAccountSavePath(CurrentAccountData.AccountName), JsonUtility.ToJson(CurrentAccountData));
+    }
+
+    public static void LogInNewAccount(string accountName)
+    {
+        if (ExistsSavedAccount(accountName)) throw new Exception("Account already exists");
+        if (CurrentAccountData != null) throw new Exception("There is logged in another account");
+        
+        ProcessSaveDirectory();
+
+        var newAccount = new AccountData();
+
+        CurrentAccountData = newAccount;
+        
+        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(newAccount));
     }
 
     private void Awake()

@@ -3,16 +3,17 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class LoadAccountList : MonoBehaviour
 {
-    [SerializeField] private SelectAccount buttonLoadAccount;
+    [FormerlySerializedAs("buttonLoadAccount")] [SerializeField] private SelectAccountButton_GUI buttonLoadAccountButtonGUI;
     [SerializeField] private TextMeshProUGUI noAccountsText;
     private bool _isAccountSelected;
     
     private void Start()
     {
-        var names = AccountLoader.GetSavedAccountsNames();
+        var names = AccountManager.GetSavedAccountsNames();
 
         if (names.Count == 0)
         {
@@ -22,7 +23,7 @@ public class LoadAccountList : MonoBehaviour
 
         for (var i = 0; i < names.Count; i++)
         {
-            Instantiate(buttonLoadAccount, transform).Initialize(i, names[i], OnAccountSelected, OnAccountNotExist);
+            Instantiate(buttonLoadAccountButtonGUI, transform).Initialize(i, names[i], OnAccountSelected, OnAccountNotExist);
         }
     }
 
@@ -30,7 +31,7 @@ public class LoadAccountList : MonoBehaviour
     {
         if (_isAccountSelected) return;
 
-        AccountLoader.LogInAccount(accountName);
+        AccountManager.LogInAccount(accountName);
         _isAccountSelected = true;
         SceneManager.LoadScene("Levels");
     }
