@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
-public class LoadAccountList : MonoBehaviour
+public class LoadAccountList_GUI : MonoBehaviour
 {
     [FormerlySerializedAs("buttonLoadAccount")] [SerializeField] private SelectAccountButton_GUI buttonLoadAccountButtonGUI;
     [SerializeField] private TextMeshProUGUI noAccountsText;
@@ -33,7 +33,7 @@ public class LoadAccountList : MonoBehaviour
 
         AccountManager.LogInAccount(accountName);
         _isAccountSelected = true;
-        SceneManager.LoadScene("Levels");
+        SceneManager.LoadScene("SelectLevels");
     }
 
     private void OnAccountNotExist()

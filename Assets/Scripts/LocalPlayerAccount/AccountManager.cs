@@ -4,7 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AccountManager : MonoBehaviour
+public static class AccountManager
 {
     public static AccountData CurrentAccountData { get; private set; }
 
@@ -15,23 +15,30 @@ public class AccountManager : MonoBehaviour
         return new DirectoryInfo(GetDestination())
             .GetFiles("*.json")
             .ToList()
-            .ConvertAll(save => save.Name);
+            .ConvertAll(save => save.Name.Replace(".json", ""));
     }
 
-    public static bool ExistsSavedAccount(string name)
+    public static bool ExistsSavedAccount(string accountName)
     {
-        return File.Exists(GetAccountSavePath(name));
+        return File.Exists(GetAccountSavePath(accountName));
     }
 
-    public static void LogInAccount(string name)
+    public static void LogInAccount(string accountName)
     {
         ProcessSaveDirectory();
+        
+        var savePath = GetAccountSavePath(accountName);
+        
+        if (!File.Exists(savePath)) throw new Exception("Account not found");
 
-        var savePath = GetAccountSavePath(name);
+        var accountData = new AccountData
+        {
+            AccountName = accountName
+        };
+        
+        JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), accountData);
 
-        CurrentAccountData = File.Exists(savePath)
-            ? JsonUtility.FromJson<AccountData>(new FileInfo(savePath).ToString())
-            : new AccountData();
+        CurrentAccountData = accountData;
     }
 
     public static void LogOutCurrentAccount()
@@ -53,16 +60,14 @@ public class AccountManager : MonoBehaviour
         
         ProcessSaveDirectory();
 
-        var newAccount = new AccountData();
+        var newAccount = new AccountData
+        {
+            AccountName = accountName
+        };
 
         CurrentAccountData = newAccount;
         
         File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(newAccount));
-    }
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
     }
 
     private static string GetAccountSavePath(string accountName)
