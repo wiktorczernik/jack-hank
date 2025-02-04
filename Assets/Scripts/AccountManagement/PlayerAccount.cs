@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace AccountManagement
+﻿namespace AccountManagement
 {
     public class PlayerAccount
     {

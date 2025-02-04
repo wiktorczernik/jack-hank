@@ -15,8 +15,10 @@ namespace AccountManagement
             {
                 AccountName = AccountName,
                 bouncy = bouncy,
-                openedLevels = new LevelStatistics[openedLevels.Length]
+                openedLevels = new LevelStatistics[openedLevels ?.Length ?? 0]
             };
+
+            if (openedLevels == null) return clone;
 
             for (var i = 0; i < openedLevels.Length; i++)
             {
