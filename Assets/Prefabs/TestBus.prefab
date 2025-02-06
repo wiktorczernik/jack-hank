@@ -300,7 +300,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDrivable: 1
   isTurnable: 1
+  isDrifting: 0
   friction: 100
+  driftFriction: 50
   useRigidbody: {fileID: 1530501619771812440}
   useCollider: {fileID: 276487848086827425}
   joint: {fileID: 1754507601643921490}
@@ -591,7 +593,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDrivable: 1
   isTurnable: 1
+  isDrifting: 0
   friction: 100
+  driftFriction: 50
   useRigidbody: {fileID: 3719792249936022879}
   useCollider: {fileID: 7684140732747701937}
   joint: {fileID: 6582577405405240925}
@@ -16393,11 +16397,19 @@ MonoBehaviour:
   MaxBackwardSpeed: 15
   Acceleration: 2300
   BrakeForce: 4500
-  TurnForce: 10000
-  TurnStabilizeSpeed: 3
+  TurnForce: 5000
+  CounterTurnForce: 7500
+  TurnStabilizeSpeed: 8
   DriftTurnForce: 3000
-  DriftForce: 1150
-  DriftAngle: 55
+  DriftMoveForce: 1500
+  DriftAngle: 15
+  DriftSpeeddown: 3
+  DriftSpeedup: 1.7
+  DriftMinSpeed: 15
+  DriftCounterSpeedup: 3.75
+  MaxDriftAngularY: 1.5
+  DriftStartThreshold: 1.1
+  DriftEndThreshold: 0.135
   TestCurve:
     serializedVersion: 2
     m_Curve:
@@ -16435,22 +16447,22 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.4983673
     - serializedVersion: 3
-      time: 0.18218505
-      value: 0.95719856
-      inSlope: 0.36824444
-      outSlope: 0.36824444
+      time: 0.16586846
+      value: 0.77706105
+      inSlope: 2.478717
+      outSlope: 2.478717
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.36887324
+      inWeight: 0.21059623
       outWeight: 0.07951835
     - serializedVersion: 3
-      time: 0.53011286
-      value: 0.93471307
-      inSlope: -0.27294225
-      outSlope: -0.27294225
+      time: 0.6138836
+      value: 0.838144
+      inSlope: -0.3972686
+      outSlope: -0.3972686
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.14587171
       outWeight: 0.163783
     - serializedVersion: 3
       time: 0.99560547
@@ -16466,6 +16478,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   moveInput: {x: 0, y: 0}
   isDrifting: 0
+  isDriftingRight: 0
+  driftAngularY: 0
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17062,7 +17076,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDrivable: 1
   isTurnable: 1
+  isDrifting: 0
   friction: 100
+  driftFriction: 50
   useRigidbody: {fileID: 3899408103439205578}
   useCollider: {fileID: 935231137603860631}
   joint: {fileID: 321183809788251971}
@@ -18215,7 +18231,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDrivable: 1
   isTurnable: 1
+  isDrifting: 0
   friction: 100
+  driftFriction: 50
   useRigidbody: {fileID: 3601310230038554918}
   useCollider: {fileID: 4874616326639056341}
   joint: {fileID: 663347084425971500}

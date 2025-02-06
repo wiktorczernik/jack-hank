@@ -23,20 +23,30 @@ public class CarController : MonoBehaviour
     [Header("Settings")]
     public float MaxSpeed = 100;
     public float MaxBackwardSpeed = 15f;
-    public float Acceleration = 1700f; 
-    public float BrakeForce = 1000f;
-    public float TurnForce = 1500f;
-    public float TurnStabilizeSpeed = 3f;
-    public float DriftTurnForce = 1000f;
-    [Obsolete]
-    public float DriftForce = 5000f;
+    public float Acceleration = 2300f; 
+    public float BrakeForce = 4500f;
+    public float TurnForce = 5000f;
+    public float CounterTurnForce = 7500;
+    public float TurnStabilizeSpeed = 8f;
+    public float DriftTurnForce = 3000f;
+    public float DriftMoveForce = 100f;
     public float DriftAngle = 45f;
+    public float DriftSpeeddown = 3;
+    public float DriftSpeedup = 5;
+    public float DriftMinSpeed = 15f;
+    public float DriftCounterSpeedup = 8;
+    public float MaxDriftAngularY = 1.5f;
+    public float DriftStartThreshold = 1.1f;
+    public float DriftEndThreshold = 0.4f;
     public AnimationCurve TestCurve;
     public AnimationCurve TurnForceCurve;
 
     [Header("Input")]
     [SerializeField] Vector2 moveInput = Vector2.zero;
-    [SerializeField] bool isDrifting = false;
+    [Header("State")]
+    public bool isDrifting = false;
+    public bool isDriftingRight = false;
+    public float driftAngularY = 0.0f;
 
 
     public void OnMove(InputValue value)
@@ -48,14 +58,16 @@ public class CarController : MonoBehaviour
     {
         return Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward);
     }
-
-    public bool IsDrifting()
-    {
-        return Mathf.Abs(bodyRigidbody.angularVelocity.y) > 1f;
-    }
     public void Accelerate(float force = 1.0f)
     {
-        float sp = Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward) * 3.6f;
+        Vector3 direction = transform.forward;
+        Quaternion driftRotation = Quaternion.identity;
+        if (isDrifting)
+        {
+            float driftFactor = driftAngularY / MaxDriftAngularY;
+            driftRotation = Quaternion.Euler(0, driftFactor * DriftAngle, 0);
+        }
+        float sp = Vector3.Dot(BodyRigidbody.linearVelocity, direction) * 3.6f;
         if (sp > MaxSpeed)
         {
             Debug.Log("Capped front");
@@ -70,9 +82,7 @@ public class CarController : MonoBehaviour
             }
         }
         force = Mathf.Clamp01(force) * wheelGroundFactor;
-        Vector3 direction = transform.forward;
-
-        BodyRigidbody.AddForceAtPosition(direction * Acceleration * force, CenterOfMass.position);
+        BodyRigidbody.AddForceAtPosition(driftRotation * direction * Acceleration * force, CenterOfMass.position);
     }
 
     public void Brake(float force = 1.0f)
@@ -87,7 +97,9 @@ public class CarController : MonoBehaviour
     }
     public void DoTurn(float input)
     {
+        if (input == 0) return;
         input = Mathf.Clamp(input, -1, 1);
+        if (isDrifting) return;
         float sp = Mathf.Abs(Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward));
         if (GetForwardSpeed() < 0)
         {
@@ -97,12 +109,37 @@ public class CarController : MonoBehaviour
         sp /= MaxSpeed;
         sp = Mathf.Clamp01(sp);
         sp = TurnForceCurve.Evaluate(sp);
-        BodyRigidbody.AddTorque(transform.up * input * ( IsDrifting() ? DriftTurnForce : TurnForce ) * sp);
+        bool isCounter = Mathf.Sign(bodyRigidbody.angularVelocity.y) != Mathf.Sign(input);
+        BodyRigidbody.AddTorque(transform.up * input * (isCounter ? CounterTurnForce : TurnForce) * sp);
+    }
+    public void DoDrift(float input)
+    {
+        if (!isDrifting) return;
+        input = Mathf.Clamp(input, -1, 1);
+        if (input != 0)
+        {
+            float driftSign = isDriftingRight ? 1 : -1;
+            float chosenFactor = DriftSpeedup;
+            if (Mathf.Sign(input) != Mathf.Sign(driftAngularY))
+            {
+                chosenFactor = DriftCounterSpeedup;
+            }
+            driftAngularY += input * chosenFactor * Time.fixedDeltaTime;
+        }
+        else
+        {
+            driftAngularY = Mathf.SmoothStep(driftAngularY, 0, DriftSpeeddown * Time.fixedDeltaTime);
+        }
+        driftAngularY = Mathf.Clamp(driftAngularY, -MaxDriftAngularY, MaxDriftAngularY);
+        Vector3 newAngular = bodyRigidbody.angularVelocity;
+        newAngular.y = driftAngularY;
+        bodyRigidbody.angularVelocity = newAngular;
     }
     void HandleWheels()
     {
         foreach(CarWheel wheel in wheels)
         {
+            wheel.isDrifting = isDrifting;
             wheel.ApplyFriction();
         }
     }
@@ -111,9 +148,9 @@ public class CarController : MonoBehaviour
         
         if (wheels[2].IsGrounded())
         {
-            if (IsDrifting())
+            if (isDrifting)
             {
-                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - DriftEndThreshold;
                 if (factor > 0.1f)
                 {
                     smokeSourceRight.Play();
@@ -133,9 +170,9 @@ public class CarController : MonoBehaviour
         }
         if (wheels[3].IsGrounded())
         {
-            if (IsDrifting())
+            if (isDrifting)
             {
-                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - 1f;
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - DriftEndThreshold;
                 if (factor > 0.1f)
                 {
                     smokeSourceLeft.Play();
@@ -155,9 +192,37 @@ public class CarController : MonoBehaviour
         }
     }
 
+    private void ManageDriftState()
+    {
+        float angY = bodyRigidbody.angularVelocity.y;
+        float absAngY = Mathf.Abs(angY);
+
+        if (isDrifting)
+        {
+            if (absAngY < DriftEndThreshold || speedKmh < DriftMinSpeed)
+            {
+                isDrifting = false;
+                isDriftingRight = false;
+                driftAngularY = 0.0f;
+            }
+        }
+        else
+        {
+            if (absAngY > DriftStartThreshold && speedKmh > DriftMinSpeed)
+            {
+                isDrifting = true;
+                isDriftingRight = angY > 0;
+                driftAngularY = angY;
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (!GameManager.isDuringRun) return;
+
+        ManageDriftState();
+
         HandleWheels();
         HandleSkidmarks();
 
@@ -165,28 +230,17 @@ public class CarController : MonoBehaviour
         {
             Accelerate(moveInput.y);
         }
-        else if (moveInput.y < 0)
+        if (moveInput.y < 0)
         {
-            Brake(Mathf.Abs(moveInput.y));
+            Brake(-moveInput.y);
         }
-        if (moveInput.x != 0)
+        DoTurn(moveInput.x);
+        DoDrift(moveInput.x);
+        if (!isDrifting && moveInput.x == 0)
         {
-            DoTurn(moveInput.x);
-        }
-        else
-        {
-            if (!IsDrifting())
-            {
-                Vector3 av = bodyRigidbody.angularVelocity;
-                av.y = 0;
-                bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, TurnStabilizeSpeed * Time.fixedDeltaTime);
-            }
-        }
-        if (IsDrifting())
-        {
-            float ratio = speedKmh / MaxSpeed;
-            Vector3 dir = Quaternion.AngleAxis(BodyRigidbody.angularVelocity.y * -DriftAngle, Vector3.up) * transform.forward;
-            bodyRigidbody.AddForceAtPosition(dir * DriftForce * Time.fixedDeltaTime, bodyRigidbody.transform.TransformPoint(bodyRigidbody.centerOfMass), ForceMode.Acceleration);
+            Vector3 av = bodyRigidbody.angularVelocity;
+            av.y = 0;
+            bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, TurnStabilizeSpeed * Time.fixedDeltaTime);
         }
     }
 
