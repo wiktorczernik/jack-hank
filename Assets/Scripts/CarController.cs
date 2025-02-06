@@ -34,6 +34,8 @@ public class CarController : MonoBehaviour
     public float DriftSpeeddown = 3;
     public float DriftSpeedup = 5;
     public float DriftMinSpeed = 15f;
+    public float MinFrictionMagnitude = 50f;
+    public float MaxFrictionForce = 50f;
     public float DriftCounterSpeedup = 8;
     public float MaxDriftAngularY = 1.5f;
     public float DriftStartThreshold = 1.1f;
@@ -216,26 +218,41 @@ public class CarController : MonoBehaviour
             }
         }
     }
+    private void ApplyFriction()
+    {
+        Vector3 velocity = bodyRigidbody.linearVelocity;
+        float magnitude = velocity.magnitude;
+        Vector3 frictionForce = -velocity.normalized;
+        if (magnitude >= MinFrictionMagnitude)
+        {
+            frictionForce *= MaxFrictionForce;
+        }
+        bodyRigidbody.AddForce(frictionForce);
+    }
 
     private void FixedUpdate()
     {
-        if (!GameManager.isDuringRun) return;
+        bool isPlaying = GameManager.isDuringRun;
 
         ManageDriftState();
 
         HandleWheels();
         HandleSkidmarks();
 
-        if (moveInput.y > 0)
+        if (moveInput.y > 0 && isPlaying)
         {
             Accelerate(moveInput.y);
         }
-        if (moveInput.y < 0)
+        if (moveInput.y < 0 && isPlaying)
         {
             Brake(-moveInput.y);
         }
-        DoTurn(moveInput.x);
-        DoDrift(moveInput.x);
+        if (isPlaying)
+        {
+            DoTurn(moveInput.x);
+            DoDrift(moveInput.x);
+        }
+        ApplyFriction();
         if (!isDrifting && moveInput.x == 0)
         {
             Vector3 av = bodyRigidbody.angularVelocity;

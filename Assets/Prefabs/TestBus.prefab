@@ -16406,6 +16406,8 @@ MonoBehaviour:
   DriftSpeeddown: 3
   DriftSpeedup: 1.7
   DriftMinSpeed: 15
+  MinFrictionMagnitude: 0
+  MaxFrictionForce: 750
   DriftCounterSpeedup: 3.75
   MaxDriftAngularY: 1.5
   DriftStartThreshold: 1.1
