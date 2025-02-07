@@ -40,6 +40,7 @@ public class CarController : MonoBehaviour
     public float MaxDriftAngularY = 1.5f;
     public float DriftStartThreshold = 1.1f;
     public float DriftEndThreshold = 0.4f;
+    public float DriftEndMaxTimer = 1.0f;
     public AnimationCurve TestCurve;
     public AnimationCurve TurnForceCurve;
 
@@ -49,6 +50,7 @@ public class CarController : MonoBehaviour
     public bool isDrifting = false;
     public bool isDriftingRight = false;
     public float driftAngularY = 0.0f;
+    public float driftEndTimer = 0.0f;
 
 
     public void OnMove(InputValue value)
@@ -143,6 +145,7 @@ public class CarController : MonoBehaviour
         {
             wheel.isDrifting = isDrifting;
             wheel.ApplyFriction();
+            wheel.ApplyGravity();
         }
     }
     void HandleSkidmarks()
@@ -153,7 +156,7 @@ public class CarController : MonoBehaviour
             if (isDrifting)
             {
                 float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - DriftEndThreshold;
-                if (factor > 0.1f)
+                if (factor > 0.1f && driftEndTimer <= float.Epsilon)
                 {
                     smokeSourceRight.Play();
                 }
@@ -203,9 +206,18 @@ public class CarController : MonoBehaviour
         {
             if (absAngY < DriftEndThreshold || speedKmh < DriftMinSpeed)
             {
-                isDrifting = false;
-                isDriftingRight = false;
-                driftAngularY = 0.0f;
+                driftEndTimer += Time.fixedDeltaTime;
+                if (driftEndTimer >= DriftEndMaxTimer)
+                {
+                    isDrifting = false;
+                    isDriftingRight = false;
+                    driftAngularY = 0.0f;
+                    driftEndTimer = 0.0f;
+                }
+            }
+            else
+            {
+                driftEndTimer = 0.0f;
             }
         }
         else
@@ -215,6 +227,7 @@ public class CarController : MonoBehaviour
                 isDrifting = true;
                 isDriftingRight = angY > 0;
                 driftAngularY = angY;
+                driftEndTimer = 0.0f;
             }
         }
     }

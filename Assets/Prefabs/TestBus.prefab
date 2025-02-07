@@ -16411,7 +16411,8 @@ MonoBehaviour:
   DriftCounterSpeedup: 3.75
   MaxDriftAngularY: 1.5
   DriftStartThreshold: 1.1
-  DriftEndThreshold: 0.135
+  DriftEndThreshold: 0.5
+  DriftEndMaxTimer: 0.5
   TestCurve:
     serializedVersion: 2
     m_Curve:
@@ -16482,6 +16483,7 @@ MonoBehaviour:
   isDrifting: 0
   isDriftingRight: 0
   driftAngularY: 0
+  driftEndTimer: 0
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0
