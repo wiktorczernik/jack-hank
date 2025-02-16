@@ -41,6 +41,7 @@ public class CarController : MonoBehaviour
     public float DriftStartThreshold = 1.1f;
     public float DriftEndThreshold = 0.4f;
     public float DriftEndMaxTimer = 1.0f;
+    public float AdditionalWheelGravity = 50f;
     public AnimationCurve TestCurve;
     public AnimationCurve TurnForceCurve;
 
@@ -145,7 +146,7 @@ public class CarController : MonoBehaviour
         {
             wheel.isDrifting = isDrifting;
             wheel.ApplyFriction();
-            wheel.ApplyGravity();
+            wheel.ApplyGravity(AdditionalWheelGravity);
         }
     }
     void HandleSkidmarks()

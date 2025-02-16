@@ -16403,7 +16403,7 @@ MonoBehaviour:
   DriftTurnForce: 3000
   DriftMoveForce: 1500
   DriftAngle: 15
-  DriftSpeeddown: 3
+  DriftSpeeddown: 6.25
   DriftSpeedup: 1.7
   DriftMinSpeed: 15
   MinFrictionMagnitude: 0
