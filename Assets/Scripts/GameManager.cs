@@ -10,8 +10,10 @@ public class GameManager : MonoBehaviour
 
     public static Action<GameRunInfo> OnRunBegin;
     public static Action<GameRunInfo> OnRunFinish;
-    
-    
+
+    public static Action<string, int> OnBigBounty;
+
+
     public void BeginRun()
     {
         runInfo = new GameRunInfo();
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         runInfo.AddPassenger();
         runInfo.AddBountyPoints(passenger.bountyPointsReward);
+        OnBigBounty?.Invoke("PASSENGER CATCHED", passenger.bountyPointsPenalty);
     }
     private void OnHitSmashable(SmashableEntity smashable)
     {
