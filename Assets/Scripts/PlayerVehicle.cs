@@ -22,7 +22,7 @@ public class PlayerVehicle : Vehicle
         if (col.tag != "Passenger") return;
         PickupablePassenger passenger;
         if (!col.TryGetComponent(out passenger)) return;
-        if (!passenger.isAlive) return;
+        if (!passenger.isAlive || passenger.wasPickedUp) return;
         OnPickupPassengerEvent(trigger, passenger);
         onPickupPassenger?.Invoke(trigger, passenger);
 

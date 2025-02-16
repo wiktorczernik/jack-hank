@@ -60,7 +60,7 @@ MonoBehaviour:
   bountyPointsPenalty: 50000
   isAlive: 1
   isLookingForPlayerVehicle: 0
-  isPickedUp: 0
+  wasPickedUp: 0
   playerVehicle: {fileID: 0}
   onPickedUp:
     m_PersistentCalls:
