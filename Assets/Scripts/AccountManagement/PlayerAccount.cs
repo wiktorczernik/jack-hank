@@ -1,4 +1,6 @@
-﻿namespace AccountManagement
+﻿using System.Linq;
+
+namespace AccountManagement
 {
     public class PlayerAccount
     {
@@ -14,6 +16,11 @@
             _playerAccountData = new PlayerAccountData() { AccountName = accountName };
         }
 
+        public LevelStatistics GetLevelStatistics(int levelID)
+        {
+            return _playerAccountData.openedLevels.First(level => level.levelID == levelID).Clone() as LevelStatistics;
+        }
+        
         public PlayerAccountData GetData()
         {
             return _playerAccountData.Clone() as PlayerAccountData;
