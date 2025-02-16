@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
     {
         runInfo.AddPassenger();
         runInfo.AddBountyPoints(passenger.bountyPointsReward);
-        OnBigBounty?.Invoke("PASSENGER CATCHED", passenger.bountyPointsPenalty);
+        OnBigBounty?.Invoke("FRIEND CAUGHT", passenger.bountyPointsPenalty);
     }
     private void OnHitSmashable(SmashableEntity smashable)
     {
