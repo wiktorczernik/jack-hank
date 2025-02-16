@@ -40,11 +40,22 @@ public class PlayerVehicle : Vehicle
         PickupablePassenger passenger = seat.passenger;
         passenger.SetRigidbodyKinematic(true);
         passenger.DisableColliders();
+        Vector3 initPos = passenger.transform.position;
+        Vector3 initScale = passenger.transform.localScale;
         yield return null;
+        float time = 0f;
+        float maxTime = 0.2f;
+        while (time < maxTime)
+        {
+            time = Mathf.Clamp(time + Time.deltaTime, 0, maxTime);
+            passenger.transform.position = Vector3.Lerp(initPos, seat.point.position, time / maxTime);
+            passenger.transform.localScale = Vector3.Lerp(initScale, initScale * 0.5f, time / maxTime);
+            yield return null;
+            
+        }
+        yield return null;
+        passenger.transform.SetParent(seat.point);
         passenger.transform.position = seat.point.position;
-        passenger.transform.localScale *= 0.5f;
-        seat.passenger.transform.SetParent(seat.point);
-        yield return null;
     }
     private void OnPickupPassengerEvent(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
