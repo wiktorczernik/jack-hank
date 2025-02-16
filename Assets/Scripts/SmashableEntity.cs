@@ -11,6 +11,7 @@ public class SmashableEntity : MonoBehaviour
     [Header("Components")]
     [SerializeField] protected CollisionEventEmitter collisionEvents;
     [SerializeField] protected Rigidbody[] usedRigidbodies;
+    [SerializeField] protected Collider[] usedColliders;
 
 
     #region Event subscribing
@@ -57,6 +58,28 @@ public class SmashableEntity : MonoBehaviour
     protected virtual void OnHitEvent()
     {
 
+    }
+
+    public void SetRigidbodyKinematic(bool flag)
+    {
+        foreach (Rigidbody rb in usedRigidbodies)
+        {
+            rb.isKinematic = flag;
+        }
+    }
+    public void EnableColliders()
+    {
+        foreach(Collider c in usedColliders)
+        {
+            c.enabled = true;
+        }
+    }
+    public void DisableColliders()
+    {
+        foreach (Collider c in usedColliders)
+        {
+            c.enabled = false;
+        }
     }
     #endregion
 }

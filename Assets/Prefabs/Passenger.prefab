@@ -31,7 +31,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 35.97, y: 1.6712, z: 45.007984}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8506508744357372766}
   m_Father: {fileID: 0}
@@ -57,6 +57,8 @@ MonoBehaviour:
   collisionEvents: {fileID: 4722935629629059078}
   usedRigidbodies:
   - {fileID: 579355331054680116}
+  usedColliders:
+  - {fileID: 255709533160029318}
   bountyPointsPenalty: 50000
   isAlive: 1
   isLookingForPlayerVehicle: 0
