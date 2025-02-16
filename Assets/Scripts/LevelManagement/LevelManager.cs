@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using UnityEngine;
 
 namespace LevelManagement
 {
@@ -56,16 +56,14 @@ namespace LevelManagement
 
         private static LevelDefinition[] GetLevelTreeLeafs()
         {
-            var guids = AssetDatabase.FindAssets("t:LevelDefinition");
+            var definitions = Resources.FindObjectsOfTypeAll<LevelDefinition>();
 
-            if (guids.Length == 0) return Array.Empty<LevelDefinition>();
+            if (definitions.Length == 0) return Array.Empty<LevelDefinition>();
 
             var leafs = new List<LevelDefinition>();
 
-            foreach (var guid in guids)
+            foreach (var definition in definitions)
             {
-                var definition = AssetDatabase.LoadAssetAtPath<LevelDefinition>(AssetDatabase.GUIDToAssetPath(guid));
-
                 leafs.Add(definition);
 
                 foreach (var lastLevel in definition.LastLevels)
