@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AccountManagement;
 using UnityEngine;
 
 namespace LevelManagement
@@ -10,11 +11,12 @@ namespace LevelManagement
         private static bool _isInitializedWithLevels;
         private static List<LevelInfo> _levels;
 
-        public static void ValidateAndLoadLevelsSave()
+        public static void InitializeAndValidateLevelsTree(List<LevelStatistics> levelsStatistics)
         {
             if (_isInitializedWithLevels) throw new Exception("LevelManager has already been initialized!");
 
             var leafs = GetLevelTreeLeafs();
+ 
             var levelDefinitionsNodes = new Stack<LevelDefinition>();
             _levels = new List<LevelInfo>();
 
@@ -36,7 +38,7 @@ namespace LevelManagement
 
                 levelDefinitionsNodes.Pop();
 
-                var levelSave = AccountManager.LoggedInPlayerAccount.GetLevelStatistics(node.LevelID);
+                var levelSave = levelsStatistics.Find(level => level.levelID == node.LevelID);
                 var lastLevelsInfo = _levels.Where(level =>
                     node.LastLevels.FirstOrDefault(last => last.LevelID == level.LevelID) != null).ToList();
                 var areLastLevelsPassed = lastLevelsInfo.All(level => level.Status == LevelStatus.Passed);
@@ -54,22 +56,35 @@ namespace LevelManagement
             _isInitializedWithLevels = true;
         }
 
+        public static void DeinitializeLevelsTree()
+        {
+            if (!_isInitializedWithLevels) throw new Exception("LevelManager has not been initialized!");
+            
+            _levels.Clear();
+            _isInitializedWithLevels = false;
+        }
+
+        public static List<LevelInfo> GetLevelsList()
+        {
+            if (!_isInitializedWithLevels) throw new Exception("LevelManager has not been initialized!");
+
+            return _levels.ToList();
+        }
+
         private static LevelDefinition[] GetLevelTreeLeafs()
         {
-            var definitions = Resources.FindObjectsOfTypeAll<LevelDefinition>();
-
+            var definitions = Resources.LoadAll<LevelDefinition>("Level Definitions/");
+  
             if (definitions.Length == 0) return Array.Empty<LevelDefinition>();
 
             var leafs = new List<LevelDefinition>();
+            leafs.AddRange(definitions);
 
             foreach (var definition in definitions)
-            {
-                leafs.Add(definition);
-
                 foreach (var lastLevel in definition.LastLevels)
                     if (leafs.Contains(lastLevel))
                         leafs.Remove(lastLevel);
-            }
+            
 
             return leafs.ToArray();
         }

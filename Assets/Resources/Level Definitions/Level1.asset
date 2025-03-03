@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   levelID: 0
+  sceneName: Level1
   lastLevels: []

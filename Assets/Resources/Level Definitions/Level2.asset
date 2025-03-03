@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level2
   m_EditorClassIdentifier: 
   levelID: 1
-  usedScene: {fileID: 0}
+  sceneName: Level2
   lastLevels:
   - {fileID: 11400000, guid: 2747cc5a547c4664592b45c938b4d289, type: 2}
