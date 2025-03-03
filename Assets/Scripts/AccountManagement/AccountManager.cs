@@ -3,6 +3,7 @@ using System.Linq;
 using System.IO;
 using System.Collections.Generic;
 using AccountManagement;
+using LevelManagement;
 using UnityEngine;
 
 public static class AccountManager
@@ -40,6 +41,8 @@ public static class AccountManager
         };
         
         JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), accountData);
+        
+        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
 
         LoggedInPlayerAccount = new PlayerAccount(accountData);
     }

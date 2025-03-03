@@ -10,7 +10,7 @@ namespace LevelManagement
         private LevelStatus _status;
     
         public readonly int LevelID;
-        public string LevelName => _definition.SceneName;
+        public string LevelSceneName => _definition.SceneName;
 
         public LevelStatus Status
         {
@@ -32,10 +32,10 @@ namespace LevelManagement
             if (definition == null) throw new Exception("Level definition is null");
             if (statistics is not null && statistics.levelID != definition.LevelID) throw new Exception("LevelID doesn't match");
 
+            _statistics = statistics != null ? statistics.Clone() as LevelStatistics : new LevelStatistics();
             LevelID = definition.LevelID;
             Status = status;
             _definition = definition;
-            _statistics = statistics != null ? statistics.Clone() as LevelStatistics : new LevelStatistics();
         }
 
         public LevelStatistics GetLevelStatistics()
