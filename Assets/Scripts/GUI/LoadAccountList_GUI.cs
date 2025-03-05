@@ -33,7 +33,7 @@ public class LoadAccountList_GUI : MonoBehaviour
 
         AccountManager.LogInAccount(accountName);
         _isAccountSelected = true;
-        SceneManager.LoadScene("SelectLevels");
+        SceneManager.LoadScene("XMenu");
     }
 
     private void OnAccountNotExist()
