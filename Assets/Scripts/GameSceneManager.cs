@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using LevelManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
@@ -8,7 +9,13 @@ public class GameSceneManager : MonoBehaviour
     private static Scene _essentialsScene;
 
 
+    public static void LoadLevel(LevelInfo level) => _instance.StartCoroutine(LoadLevelAsync(level));
     public static void LoadMenu() => _instance.StartCoroutine(LoadMenuAsync());
+    public static IEnumerator LoadLevelAsync(LevelInfo level)
+    {
+        UnloadAllExceptCritical();
+        yield return LoadActiveSceneAsync(level.LevelSceneName);
+    }
     public static IEnumerator LoadMenuAsync()
     {
         UnloadAllExceptCritical();
@@ -30,14 +37,11 @@ public class GameSceneManager : MonoBehaviour
                 menuLoadOperation.allowSceneActivation = true;
 
                 SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-
-                yield return null;
-
-                var loginScene = SceneManager.GetSceneByName(sceneName);
-                SceneManager.SetActiveScene(loginScene);
             }
             yield return null;
         }
+        var loginScene = SceneManager.GetSceneByName(sceneName);
+        SceneManager.SetActiveScene(loginScene);
     }
     private static void UnloadAllExceptCritical()
     {
