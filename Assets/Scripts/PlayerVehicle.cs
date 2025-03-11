@@ -8,6 +8,7 @@ public class PlayerVehicle : Vehicle
     public PlayerVehicleSeatController seatsController;
     public TriggerEventEmitter pickupRightTrigger;
     public TriggerEventEmitter pickupLeftTrigger;
+    public CollisionEventEmitter vehicleCollision;
 
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
 

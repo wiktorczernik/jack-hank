@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using LevelTask;
+using UnityEngine;
 
 namespace LevelManagement
 {
@@ -8,9 +9,14 @@ namespace LevelManagement
         [SerializeField] private int levelID;
         [SerializeField] private string sceneName;
         [SerializeField] private LevelDefinition[] lastLevels;
+        [SerializeField] private LevelTaskDefinition[] levelTasks;
 
         public int LevelID => levelID;
-        public LevelDefinition[] LastLevels => lastLevels.Clone() as LevelDefinition[];
+       
         public string SceneName => sceneName;
+        
+        public LevelDefinition[] LastLevels => lastLevels.Clone() as LevelDefinition[];
+
+        public LevelTaskDefinition[] LevelTasks => levelTasks.Clone() as LevelTaskDefinition[];
     }
 }

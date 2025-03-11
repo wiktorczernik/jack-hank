@@ -107,9 +107,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   wasHit: 0
+  hittable: 1
   collisionEvents: {fileID: 6354681936616171272}
   usedRigidbodies:
   - {fileID: 8400708454974765062}
+  usedColliders: []
+  smashableType: 3
 --- !u!65 &6252911912654290055
 BoxCollider:
   m_ObjectHideFlags: 0
