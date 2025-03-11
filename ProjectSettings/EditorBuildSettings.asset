@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MenuScene.unity
-    guid: e2112e06a6fd1f841ad8c5b246a90162
+    path: Assets/Scenes/Bootstrap.unity
+    guid: 1ea9a776b01613b4b858c7126a763d2a
   - enabled: 1
-    path: Assets/Scenes/MainGameScene.unity
-    guid: 36c94d28a9185f545962de3e66166222
+    path: Assets/Scenes/Essentials.unity
+    guid: b1d3035e77c46634c972550197938738
   - enabled: 1
-    path: Assets/Scenes/QuestsScene.unity
-    guid: e1c1721975f2728499d83be41377383e
+    path: Assets/Scenes/Login.unity
+    guid: b573b08e6d04cd84db304185eeeadde9
   - enabled: 1
-    path: Assets/Scenes/UpgradeScene.unity
-    guid: 18aed8b26c8154943a38a435a57d847a
-  - enabled: 1
-    path: Assets/Scenes/SelectLevels.unity
+    path: Assets/Scenes/XMenu.unity
     guid: 07f51e25d654a2d4db98c9dfaf0eceb3
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: 36c94d28a9185f545962de3e66166222
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

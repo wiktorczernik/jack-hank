@@ -15,6 +15,6 @@ public class CreateAccountButton_GUI : MonoBehaviour
     private void OnButtonClick()
     {
         AccountManager.LogInNewAccount(nicknameText.text);
-        SceneManager.LoadScene("SelectLevels");
+        GameSceneManager.LoadMenu();
     }
 }

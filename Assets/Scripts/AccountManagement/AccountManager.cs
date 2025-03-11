@@ -67,10 +67,10 @@ public static class AccountManager
         if (LoggedInPlayerAccount != null) throw new Exception("There is logged in another account");
         
         ProcessSaveDirectory();
-
         LoggedInPlayerAccount = new PlayerAccount(accountName);
-        
         File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
+
+        LogInAccount(accountName);
     }
 
     private static string GetAccountSavePath(string accountName)

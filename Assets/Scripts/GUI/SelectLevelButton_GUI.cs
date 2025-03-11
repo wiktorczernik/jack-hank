@@ -22,7 +22,8 @@ public class SelectLevelButton_GUI : MonoBehaviour
     private void OnClick()
     {
         if (_levelInfo.Status == LevelStatus.Unavailable) return;
-        
+
         Debug.Log($"Hard opening of level called {_levelInfo.LevelSceneName}");
+        GameSceneManager.LoadLevel(_levelInfo);
     }
 }
