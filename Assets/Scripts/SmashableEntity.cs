@@ -8,10 +8,12 @@ public class SmashableEntity : MonoBehaviour
     public UnityEvent<SmashableEntity> OnHit;
     public bool wasHit = false;
     public bool hittable = true;
+    public SmashableType SmashableType => smashableType;
     [Header("Components")]
     [SerializeField] protected CollisionEventEmitter collisionEvents;
     [SerializeField] protected Rigidbody[] usedRigidbodies;
     [SerializeField] protected Collider[] usedColliders;
+    [SerializeField] private SmashableType smashableType;
 
 
     #region Event subscribing
@@ -82,4 +84,9 @@ public class SmashableEntity : MonoBehaviour
         }
     }
     #endregion
+}
+
+public enum SmashableType
+{
+    Cow, RoadSign, LightingPole, TrafficBarrier, TrafficLight, TrafficCone
 }

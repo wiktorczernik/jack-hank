@@ -16319,6 +16319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
+  vehicleCollision: {fileID: 7498811702490313808}
   onPickupPassenger:
     m_PersistentCalls:
       m_Calls: []
@@ -16766,6 +16767,7 @@ GameObject:
   - component: {fileID: 7777228443190461095}
   - component: {fileID: 1732403293298331413}
   - component: {fileID: 8047620005199023980}
+  - component: {fileID: 7498811702490313808}
   m_Layer: 0
   m_Name: BusNew
   m_TagString: Vehicle
@@ -16859,6 +16861,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1596508, y: 0.60996825, z: 1.9994285}
   m_Center: {x: -0.0022283753, y: 0.6467817, z: -8.67}
+--- !u!114 &7498811702490313808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4854346634697848216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStay:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5147999947503295857
 GameObject:
   m_ObjectHideFlags: 0
