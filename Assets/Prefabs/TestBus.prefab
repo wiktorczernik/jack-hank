@@ -16350,7 +16350,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &4841979615947226047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16451,19 +16451,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b6cf9c54d3da640967afdce37c48e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDrifting: 0
-  _isDriftingRight: 0
-  _input: {x: 0, y: 0}
-  _driftAngular: 0
-  _driftEndBuildup: 0
-  _maxForwardSpeed: 100
-  _maxBackwardSpeed: 15
-  _forwardAcceleration: 2300
-  _forwardBrakeForce: 4500
-  _turnForce: 5000
-  _turnAginForce: 7500
-  _turnStabilization: 8
-  _turnForceCurve:
+  isDrifting: 0
+  isDriftingRight: 0
+  input: {x: 0, y: 0, z: 0}
+  driftAngular: 0
+  driftEndBuildup: 0
+  speedKmh: 0
+  speedKmhForward: 0
+  maxForwardSpeed: 100
+  maxBackwardSpeed: 15
+  forwardAcceleration: 2300
+  forwardBrakeForce: 4500
+  turnForce: 5000
+  turnAginForce: 7500
+  turnStabilization: 8
+  turnForceCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -16472,7 +16474,7 @@ MonoBehaviour:
       inSlope: -0.03521948
       outSlope: -0.03521948
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0.33333334
       outWeight: 0.4983673
     - serializedVersion: 3
@@ -16481,7 +16483,7 @@ MonoBehaviour:
       inSlope: 2.478717
       outSlope: 2.478717
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0.21059623
       outWeight: 0.07951835
     - serializedVersion: 3
@@ -16490,7 +16492,7 @@ MonoBehaviour:
       inSlope: -0.3972686
       outSlope: -0.3972686
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0.14587171
       outWeight: 0.163783
     - serializedVersion: 3
@@ -16499,32 +16501,32 @@ MonoBehaviour:
       inSlope: -0.059095774
       outSlope: -0.059095774
       tangentMode: 0
-      weightedMode: 0
+      weightedMode: 3
       inWeight: 0.07981926
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _wheels:
+  wheels:
   - {fileID: 2128196000275830148}
   - {fileID: 8609627877500603006}
   - {fileID: 1712791839570977324}
   - {fileID: 8330458456530461051}
-  _bonusWheelGravity: 50
-  _driftMinSpeed: 15
-  _driftTurnForce: 3000
-  _driftMoveForce: 1500
-  _driftLeanAngle: 15
-  _driftClimbRate: 1.7
-  _driftClimbAginRate: 3.75
-  _driftSinkRate: 6.25
-  _driftMaxAngular: 1.5
-  _driftStartAngular: 1.1
-  _driftEndAngular: 0.5
-  _driftEndTime: 0.5
-  _bodyRigidbody: {fileID: 9165154653561585143}
-  _centerOfMass: {fileID: 3878800678360203441}
-  _frictionForce: 750
+  bonusWheelGravity: 50
+  driftMinSpeed: 15
+  driftTurnForce: 3000
+  driftMoveForce: 1500
+  driftLeanAngle: 15
+  driftClimbRate: 1.7
+  driftClimbAginRate: 3.75
+  driftSinkRate: 6.25
+  driftMaxAngular: 1.5
+  driftStartAngular: 1.1
+  driftEndAngular: 0.5
+  driftEndTime: 0.5
+  bodyRigidbody: {fileID: 9165154653561585143}
+  centerOfMass: {fileID: 6347187237283905811}
+  frictionForce: 750
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
