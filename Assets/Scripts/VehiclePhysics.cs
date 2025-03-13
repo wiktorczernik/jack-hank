@@ -39,7 +39,7 @@ public class VehiclePhysics : MonoBehaviour
 
     #region Wheels
     [Header("Wheels")]
-    public CarWheel[] wheels;
+    public VehicleWheel[] wheels;
     public float bonusWheelGravity = 50;
     #endregion
 
@@ -165,7 +165,7 @@ public class VehiclePhysics : MonoBehaviour
     }
     void HandleWheels()
     {
-        foreach(CarWheel wheel in wheels)
+        foreach(VehicleWheel wheel in wheels)
         {
             wheel.isDrifting = isDrifting;
             wheel.ApplyFriction();
@@ -314,8 +314,9 @@ public class VehiclePhysics : MonoBehaviour
         }
         if (wheels == null || wheels.Length == 0)
         {
-            wheels = GetComponentsInChildren<CarWheel>();
+            wheels = GetComponentsInChildren<VehicleWheel>();
         }
     }
 #endif
 }
+

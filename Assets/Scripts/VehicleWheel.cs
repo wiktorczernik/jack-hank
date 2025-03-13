@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(ConfigurableJoint))]
-public class CarWheel : MonoBehaviour
+public class VehicleWheel : MonoBehaviour
 {
     [Header("Settings")]
     public bool isDrivable = true;
