@@ -78,10 +78,6 @@ public class VehiclePhysics : MonoBehaviour
     #endregion
 
 
-    public void OnMove(InputValue value)
-    {
-        input = value.Get<Vector2>();
-    }
     public float GetForwardSpeed()
     {
         return Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward);
