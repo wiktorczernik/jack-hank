@@ -52,11 +52,18 @@ public class GameManager : MonoBehaviour
 
             smashable.OnHit.AddListener(onHit);
         }
-        
-        _levelTaskTrackers = new LevelTaskTracker[LevelTasks.Length];
-        for (var i = 0; i < _levelTaskTrackers.Length; i++)
+
+        try
         {
-            _levelTaskTrackers[i] = LevelTaskTracker.CreateTracker(gameObject, LevelTasks[i]);
+            _levelTaskTrackers = new LevelTaskTracker[LevelTasks.Length];
+            for (var i = 0; i < _levelTaskTrackers.Length; i++)
+            {
+                _levelTaskTrackers[i] = LevelTaskTracker.CreateTracker(gameObject, LevelTasks[i]);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"LeveTaskTrackers error : {e.Message}");
         }
     }
 
