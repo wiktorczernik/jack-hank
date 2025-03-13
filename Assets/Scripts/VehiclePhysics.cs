@@ -7,86 +7,62 @@ public class VehiclePhysics : MonoBehaviour
 {
     #region State
     [Header("State")]
-    [SerializeField] bool _isDrifting = false;
-    [SerializeField] bool _isDriftingRight = false;
-    [SerializeField] Vector2 _input = Vector2.zero;
-    [SerializeField] float _driftAngular = 0.0f;
-    [SerializeField] float _driftEndBuildup = 0.0f;
-    public bool isDrifting { get => _isDrifting; private set => _isDrifting = value; }
-    public bool isDriftingRight { get => _isDriftingRight; private set => _isDriftingRight = value; }
-    public Vector3 input { get => _input; private set => _input = value; }
-    public float driftAngular { get => _driftAngular; private set => _driftAngular = value; }
-    public float driftEndBuildup { get => _driftEndBuildup; private set => _driftEndBuildup = value; }
-    public int speedKmh => Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
-    public int speedKmhForward => Mathf.Abs(Mathf.RoundToInt(Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward) * 3.6f));
+    public bool isDrifting = false;
+    public bool isDriftingRight = false;
+    public Vector3 input = Vector3.zero;
+    public float driftAngular = 0;
+    public float driftEndBuildup = 0;
+    public int speedKmh;
+    public int speedKmhForward;
     #endregion
 
     #region Speed
     [Header("Speed")]
-    [SerializeField] float _maxForwardSpeed = 100f;
-    [SerializeField] float _maxBackwardSpeed = 100f;
-    [SerializeField] float _forwardAcceleration = 100f;
-    [SerializeField] float _forwardBrakeForce = 100f;
-    public float maxForwardSpeed { get => _maxForwardSpeed; private set => _maxForwardSpeed = value; }
-    public float maxBackwardSpeed { get => _maxBackwardSpeed; private set => _maxBackwardSpeed = value; }
-    public float forwardAcceleration { get => _forwardAcceleration; private set => _forwardAcceleration = value; }
-    public float forwardBrakeForce { get => _forwardBrakeForce; private set => _forwardBrakeForce = value; }
+    public float maxForwardSpeed = 100;
+    public float maxBackwardSpeed = 15;
+    public float forwardAcceleration = 2300;
+    public float forwardBrakeForce = 4500f;
     #endregion
 
     #region Turning
     [Header("Turning")]
-    [SerializeField] float _turnForce = 5000f;
-    [SerializeField] float _turnAginForce = 7500;
-    [SerializeField] float _turnStabilization = 8f;
-    [SerializeField] AnimationCurve _turnForceCurve;
-    public float turnForce { get => _turnForce; private set => _turnForce = value; }
-    public float turnAginForce { get => _turnAginForce; private set => _turnAginForce = value; }
-    public float turnStabilization { get => _turnStabilization; private set => _turnStabilization = value; }
-    public AnimationCurve turnForceCurve { get => _turnForceCurve; private set => _turnForceCurve = value; }
+    public float turnForce = 5000;
+    public float turnAginForce = 7500;
+    public float turnStabilization = 8;
+    public AnimationCurve turnForceCurve = new AnimationCurve(
+            new Keyframe(0.00029324335628189147f, -0.00036793947219848633f, -0.035219479352235797f, -0.035219479352235797f, 0.3333333432674408f, 0.4983673095703125f),
+            new Keyframe(0.16586846113204957f, 0.7770610451698303f, 2.478717088699341f, 2.478717088699341f, 0.2105962336063385f, 0.07951834797859192f),
+            new Keyframe(0.6138836145401001f, 0.8381440043449402f, -0.3972685933113098f, -0.3972685933113098f, 0.14587171375751496f, 0.163782998919487f),
+            new Keyframe(0.99560546875f, 0.7938946485519409f, -0.059095773845911029f, -0.059095773845911029f, 0.07981926202774048f, 0.0f)
+        );
     #endregion
 
     #region Wheels
     [Header("Wheels")]
-    [SerializeField] CarWheel[] _wheels;
-    [SerializeField] float _bonusWheelGravity = 50f;
-    public CarWheel[] wheels { get => _wheels; private set => _wheels = value; }
-    public float bonusWheelGravity { get => _bonusWheelGravity; private set => _bonusWheelGravity = value; }
+    public CarWheel[] wheels;
+    public float bonusWheelGravity = 50;
     #endregion
 
     #region Drifting
     [Header("Drifting")]
-    [SerializeField] float _driftMinSpeed = 15f;
-    [SerializeField] float _driftTurnForce = 3000f;
-    [SerializeField] float _driftMoveForce = 1500f;
-    [SerializeField] float _driftLeanAngle = 15f;
-    [SerializeField] float _driftClimbRate = 1.7f;
-    [SerializeField] float _driftClimbAginRate = 3.75f;
-    [SerializeField] float _driftSinkRate = 6.25f;
-    [SerializeField] float _driftMaxAngular = 1.5f;
-    [SerializeField] float _driftStartAngular = 1.1f;
-    [SerializeField] float _driftEndAngular = 0.5f;
-    [SerializeField] float _driftEndTime = 0.5f;
-    public float driftMinSpeed { get => _driftMinSpeed; private set => _driftMinSpeed = value; }
-    public float driftTurnForce { get => _driftTurnForce; private set => _driftTurnForce = value; }
-    public float driftMoveForce { get => _driftMoveForce; private set => _driftMoveForce = value; }
-    public float driftLeanAngle { get => _driftLeanAngle; private set => _driftLeanAngle = value; }
-    public float driftClimbRate { get => _driftClimbRate; private set => _driftClimbRate = value; }
-    public float driftClimbAginRate { get => _driftClimbAginRate; private set => _driftClimbAginRate = value; }
-    public float driftSinkRate { get => _driftSinkRate; private set => _driftSinkRate = value; }
-    public float driftMaxAngular { get => _driftMaxAngular; private set => _driftMaxAngular = value; }
-    public float driftStartAngular { get => _driftStartAngular; private set => _driftStartAngular = value; }
-    public float driftEndAngular { get => _driftEndAngular; private set => _driftEndAngular = value; }
-    public float driftEndTime { get => _driftEndTime; private set => _driftEndTime = value; }
+    public float driftMinSpeed = 15f;
+    public float driftTurnForce = 3000f;
+    public float driftMoveForce = 1500f;
+    public float driftLeanAngle = 15f;
+    public float driftClimbRate = 1.7f;
+    public float driftClimbAginRate = 3.75f;
+    public float driftSinkRate = 6.25f;
+    public float driftMaxAngular = 1.5f;
+    public float driftStartAngular = 1.1f;
+    public float driftEndAngular = 0.5f;
+    public float driftEndTime = 0.5f;
     #endregion
 
     #region Physics
     [Header("Physics")]
-    [SerializeField] Rigidbody _bodyRigidbody;
-    [SerializeField] Transform _centerOfMass;
-    [SerializeField] float _frictionForce = 750f;
-    public Rigidbody bodyRigidbody { get => _bodyRigidbody; private set => _bodyRigidbody = value; }
-    public Transform centerOfMass { get => _centerOfMass; private set => _centerOfMass = value; }
-    public float frictionForce { get => _frictionForce; private set => _frictionForce = value; }
+    public Rigidbody bodyRigidbody;
+    public Transform centerOfMass;
+    public float frictionForce = 750f;
     #endregion
 
     #region Visuals
@@ -151,7 +127,7 @@ public class VehiclePhysics : MonoBehaviour
     {
         if (input == 0) return;
         input = Mathf.Clamp(input, -1, 1);
-        if (_isDrifting) return;
+        if (isDrifting) return;
         float sp = Mathf.Abs(Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward));
         if (GetForwardSpeed() < 0)
         {
@@ -320,6 +296,8 @@ public class VehiclePhysics : MonoBehaviour
             av.y = 0;
             bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, turnStabilization * Time.fixedDeltaTime);
         }
+        speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
+        speedKmhForward = Mathf.Abs(speedKmh);
     }
 
 #if UNITY_EDITOR
@@ -334,7 +312,7 @@ public class VehiclePhysics : MonoBehaviour
         {
             centerOfMass = bodyRigidbody.transform;
         }
-        if (wheels.Length == 0)
+        if (wheels == null || wheels.Length == 0)
         {
             wheels = GetComponentsInChildren<CarWheel>();
         }
