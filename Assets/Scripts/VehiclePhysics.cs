@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-public class CarController : MonoBehaviour
+public class VehiclePhysics : MonoBehaviour
 {
     public int speedKmh => Mathf.RoundToInt(BodyRigidbody.linearVelocity.magnitude * 3.6f);
     public int speedKmhForward => Mathf.Abs(Mathf.RoundToInt(Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward) * 3.6f));

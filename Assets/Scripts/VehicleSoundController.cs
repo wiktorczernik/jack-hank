@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class VehicleSoundController : MonoBehaviour
 {
-    public CarController vehicleController;
+    public VehiclePhysics vehicleController;
     public AnimationCurve driftVolumeCurve;
     public AnimationCurve driftPitchCurve;
     public AnimationCurve engineVolumeCurve;
