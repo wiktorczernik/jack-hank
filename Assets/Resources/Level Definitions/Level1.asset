@@ -15,3 +15,10 @@ MonoBehaviour:
   levelID: 0
   sceneName: Level1
   lastLevels: []
+  levelTasks: []
+  e: 0
+  d: 0
+  c: 0
+  b: 0
+  a: 0
+  s: 0
