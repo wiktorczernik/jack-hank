@@ -9,7 +9,7 @@ public class OnBoardCounter_GUI : MonoBehaviour
     {
         if (GameManager.isDuringRun)
         {
-            label.text = GameManager.runInfo.passengersOnBoard.ToString();
+            label.text = GameManager.runInfo.PassengersOnBoard.ToString();
         }
     }
 }
