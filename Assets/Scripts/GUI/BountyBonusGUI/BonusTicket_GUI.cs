@@ -15,7 +15,10 @@ public class BonusTicket_GUI : MonoBehaviour
     public void ChangeBonusValueOn(int value)
     {
         _lastUpdateInSeconds = Time.time;
-        UpdateView(value);
+        gameObject.SetActive(true);
+        enabled = true;
+        
+        _text.text = $"+{value} {bonusName.ToUpper()}: ";
     }
     
     public void ChangeBonusValueOn(int value, int comboValue)
@@ -24,7 +27,10 @@ public class BonusTicket_GUI : MonoBehaviour
             throw new System.Exception("This overload of ChangeBonusValueOn should be used only for PlayerBonusTypes.DestructionCombo!");
         
         _lastUpdateInSeconds = Time.time;
-        UpdateView(value);
+        gameObject.SetActive(true);
+        enabled = true;
+        
+        _text.text = $"X{comboValue} +{value} {bonusName.ToUpper()}";
     }
 
     private void Start()
@@ -40,13 +46,5 @@ public class BonusTicket_GUI : MonoBehaviour
         
         gameObject.SetActive(false);
         enabled = false;
-    }
-
-    private void UpdateView(int value)
-    {
-        gameObject.SetActive(true);
-        enabled = true;
-        
-        _text.text = $"{bonusName.ToUpper()}: {value}";
     }
 }

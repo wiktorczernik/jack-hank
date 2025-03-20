@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
@@ -17,17 +18,16 @@ public class Bonus_GUI : MonoBehaviour
     private readonly PlayerBonusTypes[] _bigBonuses = { PlayerBonusTypes.Passenger };
     private BonusTicket_GUI[] _bonusTickets;
     private RectTransform[] _bonusTicketsRect;
+    private LinkedList<Tuple<int, string>> _bigBonusesList;
+    private BigBonusBoard_GUI _bigBonusBoard;
 
     public void ShowBonus(int bonus, PlayerBonusTypes bonusType)
     {
         if (bonusType == PlayerBonusTypes.DestructionCombo)
             throw new Exception("There is another way to show destruction combo bonus");
         
-        if (_bigBonuses.Any(bigBonus => bigBonus == bonusType)) return;
-        
-        var ticket = _bonusTickets.First(ticket => ticket.BonusType == bonusType);
-
-        ticket.ChangeBonusValueOn(bonus);
+        if (_bigBonuses.Any(bigBonus => bigBonus == bonusType)) ShowBigBonus(bonus, bonusType);
+        else ShowMiniBonus(bonus, bonusType);
     }
 
     public void ShowDestructionComboBonus(int bonus, int combo)
@@ -40,6 +40,11 @@ public class Bonus_GUI : MonoBehaviour
     {
         _bonusTickets = new BonusTicket_GUI[_miniBonuses.Length];
         _bonusTicketsRect = new RectTransform[_miniBonuses.Length];
+        _bigBonusBoard = GetComponentInChildren<BigBonusBoard_GUI>();
+        _bigBonusBoard.OnShowingEnded += ShowBigBonusBoard;
+        _bigBonusesList = new LinkedList<Tuple<int, string>>();
+
+        if (_bigBonusBoard == null) throw new Exception("There is no bonus board");
         
         for (var i = 0; i < _miniBonuses.Length; i++)
         {
@@ -77,5 +82,27 @@ public class Bonus_GUI : MonoBehaviour
             rect.rotation = Quaternion.AngleAxis(angleOnCurveInCelsius, Vector3.forward);
         }
     }
-}
 
+    private void ShowBigBonus(int bonus, PlayerBonusTypes bonusTypes)
+    {
+        _bigBonusesList.AddLast(new Tuple<int, string>(bonus, bonusTypes.ToString()));
+        ShowBigBonusBoard();
+    }
+
+    private void ShowMiniBonus(int bonus, PlayerBonusTypes bonusType)
+    {
+        var ticket = _bonusTickets.First(ticket => ticket.BonusType == bonusType);
+
+        ticket.ChangeBonusValueOn(bonus);
+    }
+
+    private void ShowBigBonusBoard()
+    {
+        if (_bigBonusBoard.IsShowing
+            || _bigBonusesList.Count == 0) return;
+
+        var dataToShow = _bigBonusesList.First.Value;
+        _bigBonusesList.RemoveFirst();
+        _bigBonusBoard.ShowBigBonus(dataToShow.Item1, dataToShow.Item2);
+    }
+}
