@@ -1,9 +1,12 @@
 using System;
+using System.Linq;
 using LevelTask;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Bonus_GUI bonusGUI;
+    [SerializeField] private LevelTaskDefinition _levelTaskTample;
     public static GameRunInfo runInfo { get; private set; } = null;
     public static bool isDuringRun { get; private set; } = false;
     public static PlayerVehicle PlayerVehicle { get; private set; }
@@ -11,11 +14,14 @@ public class GameManager : MonoBehaviour
     public static Action<GameRunInfo> OnRunBegin;
     public static Action<GameRunInfo> OnRunFinish;
     
-    public static LevelTaskDefinition[] LevelTasks;
+    public static LevelTaskDefinition[] LevelTasks; 
     private static LevelTaskTracker[] _levelTaskTrackers; // this value is taking from level definition when level scene is loading
+    private static GameManager _local;
 
     public void BeginRun()
     {
+        LevelTasks = new[] { _levelTaskTample };
+        _local = this;
         runInfo = new GameRunInfo();
         isDuringRun = true;
         OnRunBegin?.Invoke(runInfo);
@@ -39,18 +45,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void ChangePlayerBonusBy(int value, PlayerBonusTypes bonusType)
+    public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
     {
-        runInfo.ChangeBonusBountyBy(value, bonusType);
+        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        _local.bonusGUI.ShowBonus(bonusPool, bonusType);
     }
     
-    public static void ChangePlayerBonusBy(int value, PlayerBonusTypes bonusType, int comboValue)
+    public static void UpdateBonus(int bonusValue,  PlayerBonusTypes bonusType)
     {
-        if (bonusType != PlayerBonusTypes.DestructionCombo)
-            throw new ArgumentException("Parameter comboValue can be set only for destruction combo");
-        
-        runInfo.ChangeBonusBountyBy(value, bonusType);
-        
+        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        _local.bonusGUI.ShowBonus(bonusValue, bonusType);
+    }
+    
+    public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
+    {
+        runInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
+        _local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
     }
     
     private void GameRunFrameTick()

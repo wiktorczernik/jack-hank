@@ -18,7 +18,6 @@ public class GameRunInfo
         { PlayerBonusTypes.Passenger, 0},
     };
 
-
     public string GetTimeFormatted()
     {
         var seconds = Time % 60;
