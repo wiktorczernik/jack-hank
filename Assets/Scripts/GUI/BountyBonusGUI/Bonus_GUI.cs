@@ -24,7 +24,10 @@ public class Bonus_GUI : MonoBehaviour
     public void ShowBonus(int bonus, PlayerBonusTypes bonusType)
     {
         if (bonusType == PlayerBonusTypes.DestructionCombo)
-            throw new Exception("There is another way to show destruction combo bonus");
+        {
+            Debug.LogError("There is another way to show destruction combo bonus");
+            return;
+        }
         
         if (_bigBonuses.Any(bigBonus => bigBonus == bonusType)) ShowBigBonus(bonus, bonusType);
         else ShowMiniBonus(bonus, bonusType);
@@ -52,7 +55,10 @@ public class Bonus_GUI : MonoBehaviour
                 .FirstOrDefault(c => c.BonusType == _miniBonuses[i]);
 
             if (ticket == null)
-                throw new Exception($"BonusTicket of type '{_miniBonuses[i].ToString()}' was not found");
+            {
+               Debug.LogError($"BonusTicket of type '{_miniBonuses[i].ToString()}' was not found");
+               return;
+            }
 
             _bonusTickets[i] = ticket;
             _bonusTicketsRect[i] = ticket.GetComponent<RectTransform>();
