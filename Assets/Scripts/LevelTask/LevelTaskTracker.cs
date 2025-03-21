@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 namespace LevelTask
@@ -8,13 +9,18 @@ namespace LevelTask
         public abstract bool IsComplete();
         protected abstract LevelTaskTracker Initialize(LevelTaskDefinition levelTaskDefinition);
 
-        public static LevelTaskTracker CreateTracker(GameObject parent, LevelTaskDefinition levelTask) => levelTask switch
-        { 
-            CounterLevelTask => parent.AddComponent<CounterTracker>().Initialize(levelTask),
-            TimerLevelTask => parent.AddComponent<TimerTracker>().Initialize(levelTask),
-            _ => throw new NotSupportedException(),
-        };
-
+        public static LevelTaskTracker CreateTracker(GameObject parent, LevelTaskDefinition levelTask)
+        {
+            LevelTaskTracker tracker = levelTask switch
+            {
+                CounterLevelTask => parent.AddComponent<CounterTracker>().Initialize(levelTask),
+                TimerLevelTask => parent.AddComponent<TimerTracker>().Initialize(levelTask),
+                _ => null,
+            };
+            if (tracker == null)
+                Debug.LogError("Ty dolboev!?");
+            return tracker;
+        } 
     }
 }
 
