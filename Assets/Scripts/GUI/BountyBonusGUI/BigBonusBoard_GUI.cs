@@ -31,7 +31,7 @@ public class BigBonusBoard_GUI : MonoBehaviour
     IEnumerator PlayNotification(string message, int count)
     {
         animation.Play();
-        label.text = $"{message}\n+{count}";
+        label.text = $"{message}\n{(count > 0 ? "+" : "")}{count}";
         yield return new WaitForSeconds(animation.clip.length);
         label.text = "";
         isShowing = false;

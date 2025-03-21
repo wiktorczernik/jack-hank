@@ -23,8 +23,12 @@ public class BonusTicket_GUI : MonoBehaviour
     
     public void ChangeBonusValueOn(int value, int comboValue)
     {
-        if (bonusType != PlayerBonusTypes.DestructionCombo) 
-            throw new System.Exception("This overload of ChangeBonusValueOn should be used only for PlayerBonusTypes.DestructionCombo!");
+        if (bonusType != PlayerBonusTypes.DestructionCombo)
+        {
+            Debug.LogError(
+                "This overload of ChangeBonusValueOn should be used only for PlayerBonusTypes.DestructionCombo!");
+            return;
+        }
         
         _lastUpdateInSeconds = Time.time;
         gameObject.SetActive(true);
