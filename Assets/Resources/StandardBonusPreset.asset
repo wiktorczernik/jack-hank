@@ -15,5 +15,5 @@ MonoBehaviour:
   comboMaxIntervalInSeconds: 1
   driftBonus: 100
   driftIntervalInSeconds: 0.2
-  flyingBonus: 0
-  flyingIntervalInSeconds: 0
+  flyingBonus: 50
+  flyingIntervalInSeconds: 0.2
