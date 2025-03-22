@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class BonusSystem : MonoBehaviour
@@ -8,16 +11,26 @@ public class BonusSystem : MonoBehaviour
     private int _destructionCombo = 1;
     private float _lastHitTime;
     private int _hitBonusPool;
-    private float _lastDriftTime;
-    private int _driftBonusPool;
-    private float _lastFlyingTime;
-    private int _flyingBonusPool;
+
+    private Dictionary<PlayerBonusTypes, InUpdateBonus> _inUpdateBonuses;
     
-    private CarController _playerCar;
+    private CarController _playerVehicleController;
+
+    private void InitializeInUpdateBonuses()
+    {
+        _inUpdateBonuses = new Dictionary<PlayerBonusTypes, InUpdateBonus>()
+        {
+            { PlayerBonusTypes.Drift, new InUpdateBonus(settings.DriftIntervalInSeconds, settings.DriftBonus,
+                CheckIsDrifting)},
+            { PlayerBonusTypes.Flying, new InUpdateBonus(settings.FlyingIntervalInSeconds, settings.FlyingBonus,
+                CheckIsFlying)},
+        };
+    }
     
     private void Start()
     {
-        _playerCar = GameManager.PlayerVehicle.GetComponent<CarController>();
+        InitializeInUpdateBonuses();
+        _playerVehicleController = GameManager.PlayerVehicle.GetComponent<CarController>();
         GameManager.PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
         
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))
@@ -40,21 +53,24 @@ public class BonusSystem : MonoBehaviour
     }
 
     private void Update()
-    {
-        var isAfterDrift = Time.time - _lastDriftTime >= settings.DriftIntervalInSeconds;
-        var isDrifting = _playerCar.isDrifting || _playerCar.isDriftingRight;
-        
-        switch (isAfterDrift)
+    {   
+        foreach (var (bonusType, bonusState) in _inUpdateBonuses)
         {
-            case true when isDrifting:
-                _lastDriftTime = Time.time;
-                _driftBonusPool += settings.DriftBonus;
+            var isAfterBonus = Time.time - bonusState.LastBonusTime >= bonusState.TimeIntervalInSeconds;
+            var isBonusTaking = bonusState.CheckBonus(bonusState);
 
-                GameManager.UpdateBonus(settings.DriftBonus, PlayerBonusTypes.Drift, _driftBonusPool);
-                break;
-            case true:
-                _driftBonusPool = 0;
-                break;
+            switch (isAfterBonus)
+            {
+                case true when isBonusTaking:
+                    bonusState.LastBonusTime = Time.time;
+                    bonusState.BonusPool += bonusState.Bonus;
+                    
+                    GameManager.UpdateBonus(bonusState.Bonus, bonusType, bonusState.BonusPool);
+                    break;
+                case true:
+                    bonusState.BonusPool = 0;
+                    break;
+            }
         }
     }
 
@@ -67,7 +83,6 @@ public class BonusSystem : MonoBehaviour
     private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
         GameManager.UpdateBonus(passenger.bountyPointsReward, PlayerBonusTypes.Passenger);
-        // OnBigBounty?.Invoke("FRIEND CAUGHT", passenger.bountyPointsPenalty);
     }
     
     private void OnHitSmashable(SmashableEntity smashable)
@@ -81,5 +96,25 @@ public class BonusSystem : MonoBehaviour
         GameManager.UpdateDestructionCombo(bonus, _destructionCombo, _hitBonusPool);
 
         _lastHitTime = Time.time;
+    }
+    
+    private bool CheckIsDrifting(InUpdateBonus bonusState) => _playerVehicleController.isDrifting || _playerVehicleController.isDriftingRight;
+    private bool CheckIsFlying(InUpdateBonus bonusState) => _playerVehicleController.wheels.All(w => !w.IsGrounded());
+
+    private class InUpdateBonus
+    {
+        public readonly float TimeIntervalInSeconds;
+        public readonly Func<InUpdateBonus, bool> CheckBonus;
+        public readonly int Bonus;
+        
+        public float LastBonusTime;
+        public int BonusPool;
+
+        public InUpdateBonus(float timeIntervalInSeconds, int bonus, Func<InUpdateBonus, bool> checkBonus)
+        {
+            TimeIntervalInSeconds = timeIntervalInSeconds;
+            CheckBonus = checkBonus;
+            Bonus = bonus;
+        }
     }
 }
