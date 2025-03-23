@@ -9,16 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7690187cb2b44c59b41ddf759f81732c, type: 3}
-  m_Name: Level1
+  m_Script: {fileID: 11500000, guid: 9a8c2375d22048d294c7e0bac3ef345e, type: 3}
+  m_Name: StandardBonusPreset
   m_EditorClassIdentifier: 
-  levelID: 0
-  sceneName: Level1
-  lastLevels: []
-  levelTasks: []
-  e: 0
-  d: 0
-  c: 0
-  b: 0
-  a: 0
-  s: 0
+  comboMaxIntervalInSeconds: 1
+  driftBonus: 100
+  driftIntervalInSeconds: 0.2
+  flyingBonus: 50
+  flyingIntervalInSeconds: 0.2

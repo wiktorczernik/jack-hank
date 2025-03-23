@@ -8,7 +8,7 @@ namespace LevelTask
         
         public override bool IsComplete()
         {
-            return GameManager.runInfo.time >= _task.TimerDurationInSeconds * 1000;
+            return GameManager.runInfo.Time >= _task.TimerDurationInSeconds * 1000;
         }    
         
         protected override LevelTaskTracker Initialize(LevelTaskDefinition task)
