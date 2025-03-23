@@ -53,7 +53,7 @@ public class CarController : MonoBehaviour
     {
         return Mathf.Abs(bodyRigidbody.angularVelocity.y) > 1f;
     }
-    public void Accelerate(float force = 1.0f)
+    public void Accelerate(float force = 1.0f, bool ignoreGrounded = false)
     {
         float sp = Vector3.Dot(BodyRigidbody.linearVelocity, transform.forward) * 3.6f;
         if (sp > MaxSpeed)
@@ -69,9 +69,8 @@ public class CarController : MonoBehaviour
                 wheelGroundFactor += 0.25f;
             }
         }
-        force = Mathf.Clamp01(force) * wheelGroundFactor;
+        force = ignoreGrounded ? Mathf.Clamp01(force) : Mathf.Clamp01(force) * wheelGroundFactor;
         Vector3 direction = transform.forward;
-
         BodyRigidbody.AddForceAtPosition(direction * Acceleration * force, CenterOfMass.position);
     }
 
@@ -153,6 +152,18 @@ public class CarController : MonoBehaviour
             smokeSourceLeft.Stop();
             skidmarkSourceLeft.StopEmitting();
         }
+    }
+
+    public bool isGrounded()
+    {
+        foreach (var wheel in wheels)
+        {
+            if (!wheel.IsGrounded())
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void FixedUpdate()
