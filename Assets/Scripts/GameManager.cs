@@ -1,23 +1,27 @@
 using System;
+using System.Linq;
 using LevelTask;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Bonus_GUI bonusGUI;
+    [SerializeField] private LevelTaskDefinition _levelTaskTample;
     public static GameRunInfo runInfo { get; private set; } = null;
     public static bool isDuringRun { get; private set; } = false;
     public static PlayerVehicle PlayerVehicle { get; private set; }
 
     public static Action<GameRunInfo> OnRunBegin;
     public static Action<GameRunInfo> OnRunFinish;
-
-    public static Action<string, int> OnBigBounty;
-    public static LevelTaskDefinition[] LevelTasks;
+    
+    public static LevelTaskDefinition[] LevelTasks; 
     private static LevelTaskTracker[] _levelTaskTrackers; // this value is taking from level definition when level scene is loading
+    private static GameManager _local;
 
     public void BeginRun()
     {
+        LevelTasks = new[] { _levelTaskTample };
+        _local = this;
         runInfo = new GameRunInfo();
         isDuringRun = true;
         OnRunBegin?.Invoke(runInfo);
@@ -33,25 +37,6 @@ public class GameManager : MonoBehaviour
     private void PrepareLevelEntities()
     {
         PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
-        PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
-
-        SmashableEntity[] smashables = FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None);
-        foreach (SmashableEntity smashable in smashables)
-        {
-            UnityAction<SmashableEntity> onHit;
-            if (smashable is PickupablePassenger)
-            {
-                PickupablePassenger passenger = smashable as PickupablePassenger;
-                passenger.StartLookingForPlayerVehicle(PlayerVehicle);
-                onHit = OnPassengerHit;
-            }
-            else
-            {
-                onHit = OnHitSmashable;
-            }
-
-            smashable.OnHit.AddListener(onHit);
-        }
         
         _levelTaskTrackers = new LevelTaskTracker[LevelTasks.Length];
         for (var i = 0; i < _levelTaskTrackers.Length; i++)
@@ -60,27 +45,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnPassengerHit(SmashableEntity smashable) => OnPassengerHit((PickupablePassenger)smashable);
-    private void OnPassengerHit(PickupablePassenger passenger)
+    public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
     {
-        runInfo.AddBountyPenalty(passenger.bountyPointsPenalty);
-        Debug.Log("Passenger was hit! Oh no!");
+        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        _local.bonusGUI.ShowBonus(bonusPool, bonusType);
     }
-    private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
+    
+    public static void UpdateBonus(int bonusValue,  PlayerBonusTypes bonusType)
     {
-        runInfo.AddPassenger();
-        runInfo.AddBountyPoints(passenger.bountyPointsReward);
-        OnBigBounty?.Invoke("FRIEND CAUGHT", passenger.bountyPointsPenalty);
+        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        _local.bonusGUI.ShowBonus(bonusValue, bonusType);
     }
-    private void OnHitSmashable(SmashableEntity smashable)
+    
+    public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
     {
-        runInfo.AddBountyPoints(smashable.bountyPointsReward);
+        runInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
+        _local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
     }
+    
     private void GameRunFrameTick()
     {
         if (!isDuringRun) return;
         
-        runInfo.time += Time.deltaTime;   
+        runInfo.Time += Time.deltaTime;   
     }
     
     private void Awake()

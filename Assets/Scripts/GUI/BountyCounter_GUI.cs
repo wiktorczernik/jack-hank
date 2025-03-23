@@ -9,7 +9,7 @@ public class BountyCounter_GUI : MonoBehaviour
     {
         if (GameManager.isDuringRun)
         {
-            label.text = GameManager.runInfo.bountyPoints.ToString();
+            label.text = GameManager.runInfo.AllBountyPoints.ToString();
         }
     }
 }
