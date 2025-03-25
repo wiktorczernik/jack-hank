@@ -6,14 +6,18 @@ public class PickupablePassenger : SmashableEntity
     public int bountyPointsPenalty = 5000;
     public bool isAlive = true;
     public bool isLookingForPlayerVehicle = false;
-    public bool isPickedUp = false;
+    public bool wasPickedUp = false;
     public PlayerVehicle playerVehicle;
 
     public UnityEvent onPickedUp;
 
     public void NotifyPickup()
     {
-        isPickedUp = true;
+        if (!isAlive || wasPickedUp)
+        {
+            return;
+        }
+        wasPickedUp = true;
         hittable = false;
         OnPickupEvent();
         onPickedUp?.Invoke();
@@ -22,8 +26,9 @@ public class PickupablePassenger : SmashableEntity
     {
         foreach(Rigidbody rb in usedRigidbodies)
         {
-            rb.AddForce(Vector3.up * 50, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 5000, ForceMode.Force);
         }
+        Debug.Log(nameof(OnPickupEvent));
         StopLookingForPlayerVehicle();
     }
     public void StartLookingForPlayerVehicle(PlayerVehicle vehicle)
@@ -45,6 +50,7 @@ public class PickupablePassenger : SmashableEntity
     protected override void OnHitEvent()
     {
         base.OnHitEvent();
+        StopLookingForPlayerVehicle();
         isAlive = false;
     }
 
