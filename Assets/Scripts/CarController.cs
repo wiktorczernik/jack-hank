@@ -92,7 +92,6 @@ public class CarController : MonoBehaviour
             }
         }
         force = ignoreGrounded ? Mathf.Clamp01(force) : Mathf.Clamp01(force) * wheelGroundFactor;
-        Vector3 direction = transform.forward;
         BodyRigidbody.AddForceAtPosition(direction * Acceleration * force, CenterOfMass.position);
     }
 
@@ -216,7 +215,6 @@ public class CarController : MonoBehaviour
         return true;
     }
 
-    private void FixedUpdate()
     private void ManageDriftState()
     {
         float angY = bodyRigidbody.angularVelocity.y;
