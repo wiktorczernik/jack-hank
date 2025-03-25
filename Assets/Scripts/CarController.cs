@@ -54,6 +54,8 @@ public class CarController : MonoBehaviour
     public float driftEndTimer = 0.0f;
 
 
+    public bool ignoreGrounded = false;
+
     public void OnMove(InputValue value)
     {
         Vector2 input = value.Get<Vector2>();
@@ -68,7 +70,7 @@ public class CarController : MonoBehaviour
     {
         return Mathf.Abs(bodyRigidbody.angularVelocity.y) > 1f;
     }
-    public void Accelerate(float force = 1.0f, bool ignoreGrounded = false)
+    public void Accelerate(float force = 1.0f)
     {
         Vector3 direction = transform.forward;
         Quaternion driftRotation = Quaternion.identity;
@@ -291,6 +293,7 @@ public class CarController : MonoBehaviour
             bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, TurnStabilizeSpeed * Time.fixedDeltaTime);
         }
     }
+
 
     void Awake()
     {
