@@ -10,8 +10,8 @@ public class AbilitiesController : MonoBehaviour
     public float speedBoostAccelerationMultiplier = 2.0f;
     public float speedBoostBreakForceMultiplier = 1.5f;
 
-    public float jumpAcceleration = 10000f;
-    public float jumpTime = 1.0f;
+    public float jumpAcceleration = 5000f;
+    public float jumpAirTiltBackwardForce = 40;
 
     private float boostElapsedTime;
     private bool isBoosting = false;
@@ -39,41 +39,47 @@ public class AbilitiesController : MonoBehaviour
         }
     }
 
-/*    public void OnJump()
+    public void OnJump()
     {
-        if (carController.isGrounded())
-        {
-            if(!isJumping)
+            if (!isJumping)
             {
                 isJumping = true;
                 jumpElapsedTime = 0;
-                print("jump");
-            }
+                carController.BodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
+                carController.BodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
         }
-    }*/
+    }
 
     private void FixedUpdate()
     {
-        //HandleJump();
+        HandleJump();
         HandleSpeedBoost();
+
+        if (!carController.isGrounded())
+        {
+            carController.BodyRigidbody.linearDamping = 1.5f;  // Increase air drag
+            carController.BodyRigidbody.angularDamping = 2.0f;  // Reduce rotations
+        }
+        else
+        {
+            carController.BodyRigidbody.linearDamping = 0.1f;  // Restore normal state
+            carController.BodyRigidbody.angularDamping = 0.05f;
+        }
+
     }
 
-/*    private void HandleJump()
+    private void HandleJump()
     {
         if (isJumping)
         {
-            jumpElapsedTime += Time.deltaTime;
-            if (jumpElapsedTime <= jumpTime)
-            {
-                carController.BodyRigidbody.AddForce(transform.up * jumpAcceleration);
-            }
-            else
+            if (carController.isGrounded())
             {
                 isJumping = false;
             }
         }
     }
-*/
+
+
     private void HandleSpeedBoost()
     {
         if (isBoosting)
@@ -83,19 +89,23 @@ public class AbilitiesController : MonoBehaviour
                 isBoosting=false;
                 carController.MaxSpeed /= speedBoostMaxSpeedMultiplier;
                 carController.Acceleration /= (speedBoostAccelerationMultiplier - 1.0f);
-                
+                carController.ignoreGrounded = false;
                 return;
             }
-            carController.Accelerate(1.0f, true);
+            carController.ignoreGrounded = true;
+            carController.Accelerate(1.0f);
             return;
         }
         float forwardSpeed = carController.GetForwardSpeed() * 3.6f;
-        if(forwardSpeed > (carController.MaxSpeed + 1.0f) && enableAfterBoostSlowDown) {
-            carController.BodyRigidbody.AddForceAtPosition(-transform.forward * carController.BrakeForce * speedBoostBreakForceMultiplier, carController.CenterOfMass.position);
-        }
-        else
+        if (carController.isGrounded())
         {
-            enableAfterBoostSlowDown= false;
+            if(forwardSpeed > (carController.MaxSpeed + 1.0f) && enableAfterBoostSlowDown) {
+                carController.BodyRigidbody.AddForce(-transform.forward * carController.BrakeForce * speedBoostBreakForceMultiplier);
+            }
+            else
+            {
+                enableAfterBoostSlowDown= false;
+            }
         }
     }
 
