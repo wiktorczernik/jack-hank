@@ -17,7 +17,7 @@ namespace LevelManagement
             get => _status;
             set
             {
-                _statistics.isPassed = value == LevelStatus.Passed;
+                _statistics.IsPassed = value == LevelStatus.Passed;
 
                 _status = value;
             }
@@ -30,7 +30,7 @@ namespace LevelManagement
         public LevelInfo(LevelStatus status, LevelDefinition definition, LevelStatistics statistics = null)
         {
             if (definition == null) throw new Exception("Level definition is null");
-            if (statistics is not null && statistics.levelID != definition.LevelID) throw new Exception("LevelID doesn't match");
+            if (statistics is not null && statistics.LevelID != definition.LevelID) throw new Exception("LevelID doesn't match");
 
             _statistics = statistics != null ? statistics.Clone() as LevelStatistics : new LevelStatistics();
             LevelID = definition.LevelID;
