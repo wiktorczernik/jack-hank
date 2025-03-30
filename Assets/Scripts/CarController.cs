@@ -246,7 +246,7 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bool isPlaying = GameManager.isDuringRun;
+        bool isPlaying = GameManager.IsDuringRun;
 
         ManageDriftState();
 
