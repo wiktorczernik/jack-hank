@@ -7,6 +7,7 @@ TagManager:
   - Vehicle
   - Passenger
   - Smashable
+  - Bus
   layers:
   - Default
   - TransparentFX

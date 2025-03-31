@@ -13,11 +13,13 @@ public class AbilitiesController : MonoBehaviour
     public float jumpAcceleration = 5000f;
     public float jumpAirTiltBackwardForce = 40;
 
+    public int speedBoostCharges = 0;
+    public int jumpCharges = 0;
+
     private float boostElapsedTime;
     private bool isBoosting = false;
     private bool enableAfterBoostSlowDown = false;
 
-    private float jumpElapsedTime;
     private bool isJumping;
 
     private CarController carController;
@@ -44,7 +46,6 @@ public class AbilitiesController : MonoBehaviour
             if (!isJumping)
             {
                 isJumping = true;
-                jumpElapsedTime = 0;
                 carController.BodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
                 carController.BodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
         }
