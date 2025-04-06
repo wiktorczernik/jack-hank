@@ -11,10 +11,16 @@ public class PlayerVehicle : Vehicle
     public CollisionEventEmitter vehicleCollision;
 
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
+    public UnityEvent<float, float, float> onExplosionNearby;
 
     [SerializeField] Transform _seatsContainer;
 
 
+    public void NotifyExplosionNearby(float intensity, float distance, float impactRadius)
+    {
+        onExplosionNearby?.Invoke(intensity, distance, impactRadius);
+    }
+    
     private void OnEnable()
     {
         InitSeatsController();

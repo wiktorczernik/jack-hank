@@ -16,6 +16,19 @@ public class SmashableEntity : MonoBehaviour
     [SerializeField] private SmashableType smashableType;
 
 
+    public void AddExplosionForce(Vector3 center, float force, float radius)
+    {
+        foreach (Rigidbody rb in usedRigidbodies)
+        {
+            rb.freezeRotation = false;
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddExplosionForce(force, center, radius);
+        }
+        OnHitEvent();
+        OnHit?.Invoke(this);
+        wasHit = true;
+    }
+
     #region Event subscribing
     private void OnEnable()
     {
