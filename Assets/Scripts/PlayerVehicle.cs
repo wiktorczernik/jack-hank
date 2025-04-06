@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 public class PlayerVehicle : Vehicle
@@ -20,7 +22,12 @@ public class PlayerVehicle : Vehicle
     {
         onExplosionNearby?.Invoke(intensity, distance, impactRadius);
     }
-    
+
+    public void OnMove(InputValue value)
+    {
+        physics.input = value.Get<Vector2>();
+    }
+
     private void OnEnable()
     {
         InitSeatsController();
