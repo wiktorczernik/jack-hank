@@ -8,7 +8,7 @@ public class BotVehicle : Vehicle
     public bool arrived = false;
     public bool isFollowing = false;
     public Vector3 destinationPoint = Vector3.zero;
-    public Queue<Vector3> destinationQueue;
+    public Queue<Vector3> destinationQueue = new Queue<Vector3>();
     public FollowMode followMode = FollowMode.Single;
     public float followMaxSpeed = 60f;
 
@@ -26,8 +26,13 @@ public class BotVehicle : Vehicle
 
     private void Awake()
     {
-        foreach (var trans in _initDestinationQueue) {
-            destinationQueue.Enqueue(trans.position);
+        if (_initDestinationQueue.Length > 0)
+        {
+            foreach (var trans in _initDestinationQueue)
+            {
+                destinationQueue.Enqueue(trans.position);
+            }
+            destinationPoint = destinationQueue.Dequeue();
         }
     }
 
