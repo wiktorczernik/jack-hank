@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using TMPro;
 
 [RequireComponent (typeof(CarController))]
 public class AbilitiesController : MonoBehaviour
@@ -15,6 +16,9 @@ public class AbilitiesController : MonoBehaviour
 
     public int speedBoostCharges = 0;
     public int jumpCharges = 0;
+
+    public TextMeshProUGUI UIspeedBoostCharges;
+    public TextMeshProUGUI UIjumpcharges;
 
     private float boostElapsedTime;
     private bool isBoosting = false;
@@ -31,9 +35,11 @@ public class AbilitiesController : MonoBehaviour
 
     public void OnSpeedBoost()
     {
-        if(!isBoosting)
+        if(!isBoosting && speedBoostCharges > 0)
         {
             isBoosting = true;
+            speedBoostCharges--;
+            UIspeedBoostCharges.text = speedBoostCharges.ToString();
             enableAfterBoostSlowDown = true;
             boostElapsedTime = 0;
             carController.MaxSpeed *= speedBoostMaxSpeedMultiplier;
@@ -43,9 +49,11 @@ public class AbilitiesController : MonoBehaviour
 
     public void OnJump()
     {
-            if (!isJumping)
+            if (!isJumping && jumpCharges > 0)
             {
                 isJumping = true;
+                jumpCharges--;
+                UIjumpcharges.text = jumpCharges.ToString();
                 carController.BodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
                 carController.BodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
         }
@@ -80,6 +88,18 @@ public class AbilitiesController : MonoBehaviour
         }
     }
 
+
+    public void addJumpCharge()
+    {
+        jumpCharges++;
+        UIjumpcharges.text = jumpCharges.ToString();
+    }
+
+    public void addSpeedBoostCharge()
+    {
+        speedBoostCharges++;
+        UIspeedBoostCharges.text = speedBoostCharges.ToString();
+    }
 
     private void HandleSpeedBoost()
     {
