@@ -23,12 +23,4 @@ public class ExplosionMaster : MonoBehaviour
         exp.intensity = shakeIntensity;
         exp.Init();
     }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Create(new Vector3(60, 79, 500), Quaternion.identity, 2500, 10, 300, 0.5f);
-        }
-    }
 }
