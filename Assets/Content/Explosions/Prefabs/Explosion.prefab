@@ -44,14 +44,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 632113832989453138}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20a12a119aa918241922d33c4698f259, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c6b62516b6b3904cbcf51138171fbde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   visuals: {fileID: 6876015900257930307}
-  force: 2500
-  radius: 20
-  busDistance: 300
-  intensity: 0.5
+  properties:
+    _epicenterParentTransform: {fileID: 7388565218404419512}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    force: 500
+    epicenterRadius: 10
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
 --- !u!114 &6876015900257930307
 MonoBehaviour:
   m_ObjectHideFlags: 0

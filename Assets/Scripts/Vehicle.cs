@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Vehicle : MonoBehaviour
+public abstract class Vehicle : GameEntity
 {
     public VehiclePhysics physics;
 

@@ -50,18 +50,18 @@ public class CameraController : MonoBehaviour
         }
     }
     
-    private void OnShakeNearby(float intensity, float distance, float impactRadius)
+    private void OnExplosionNearby(ExplosionProperties properties)
     {
-        Shake(intensity);
+        Shake(properties.shakeIntensity);
     }
 
     private void OnEnable()
     {
-        playerVehicle.onExplosionNearby.AddListener(OnShakeNearby);
+        playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
     }
     private void OnDisable()
     {
-        playerVehicle.onExplosionNearby.RemoveListener(OnShakeNearby);
+        playerVehicle.onExplosionNearby.RemoveListener(OnExplosionNearby);
     }
 
 #if UNITY_EDITOR
