@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class LargeDestructableSite : MonoBehaviour
+public class LargeDestructableSite : GameEntity
 {
     public SmashableEntity[] supportEntities;
     public bool isBeingDestroyed = false;

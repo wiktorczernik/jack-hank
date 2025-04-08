@@ -13,14 +13,11 @@ public class ExplosionMaster : MonoBehaviour
         _main = this;
     }
     
-    public static void Create(Vector3 worldPos, Quaternion rot, float force, float impactRad, float busDist, float shakeIntensity)
+    public static void Create(ExplosionProperties properties)
     {
-        var inst = Instantiate(_main._largeExplosionPrefab, worldPos, rot);
+        var inst = Instantiate(_main._largeExplosionPrefab, properties.epicenterPosition, Quaternion.identity);
         Explosion exp = inst.GetComponent<Explosion>();
-        exp.force = force;
-        exp.impactRadius = impactRad;
-        exp.busDistance = busDist;
-        exp.intensity = shakeIntensity;
+        exp.properties = properties;
         exp.Init();
     }
 }

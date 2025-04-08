@@ -13,14 +13,14 @@ public class PlayerVehicle : Vehicle
     public CollisionEventEmitter vehicleCollision;
 
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
-    public UnityEvent<float, float, float> onExplosionNearby;
+    public UnityEvent<ExplosionProperties> onExplosionNearby;
 
     [SerializeField] Transform _seatsContainer;
 
 
-    public void NotifyExplosionNearby(float intensity, float distance, float impactRadius)
+    public void NotifyExplosionNearby(ExplosionProperties properties)
     {
-        onExplosionNearby?.Invoke(intensity, distance, impactRadius);
+        onExplosionNearby?.Invoke(properties);
     }
 
     public void OnMove(InputValue value)

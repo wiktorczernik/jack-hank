@@ -3,17 +3,17 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public ExplosionVisuals visuals;
-
-    public float force = 500f;
-    public float impactRadius = 10f;
-    public float busDistance = 100f;
-    public float intensity = 0.5f;
-
+    public ExplosionProperties properties = new ExplosionProperties() { 
+        force = 500f,
+        epicenterRadius = 10f,
+        shakeMaxDistance = 100f,
+        shakeIntensity = 0.5f
+    };
 
     public void Init()
     {
         visuals.Init();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, busDistance);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, properties.shakeMaxDistance);
         foreach(var collider in colliders)
         {
             Vector3 cPosition = collider.transform.position;
@@ -27,8 +27,8 @@ public class Explosion : MonoBehaviour
 
             if (smashable)
             {
-                if (distance > impactRadius) continue;
-                smashable.AddExplosionForce(transform.position, force, impactRadius);
+                if (distance > properties.epicenterRadius) continue;
+                smashable.Explode(properties);
                 continue;
             }
 
@@ -36,8 +36,8 @@ public class Explosion : MonoBehaviour
 
             if (pVehicle)
             {
-                if (distance > busDistance) continue;
-                pVehicle.NotifyExplosionNearby(intensity, distance, impactRadius);
+                if (distance > properties.shakeMaxDistance) continue;
+                pVehicle.NotifyExplosionNearby(properties);
             }
         }
     }
