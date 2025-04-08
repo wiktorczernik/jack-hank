@@ -64,8 +64,17 @@ public class BotVehicle : Vehicle
 
         float distance = DistanceToDest();
         Vector3 destDir = DirectionToDest();
-        Vector3 curAng = transform.eulerAngles;
+        destDir.y *= -Mathf.Cos(destDir.y);
+        Vector3 curAng = transform.rotation.eulerAngles;
+        if (curAng.y > 180)
+        {
+            curAng.y -= 360f;
+        }
         Vector3 destAng = Quaternion.LookRotation(destDir).eulerAngles;
+        if (destAng.y > 180)
+        {
+            destAng.y -= 360f;
+        }
         // Difference between destination Y angle and current Y angle;
         float angYdiff = destAng.y - curAng.y;
         float angYdiffA = Mathf.Abs(angYdiff);
@@ -77,9 +86,13 @@ public class BotVehicle : Vehicle
 
         if (InArriveZone()) {
             doAccelerate = false;
-            doBreak = true;
+            doBreak = false;
             doTurn = false;
-
+            if ((IsFollowingQueue() && IsQueueEmpty() || IsFollowingSingle()) &&
+                !IsArriveSpeedCorrect())
+            {
+                doBreak = true;
+            }
             if (
                 (IsArriveSpeedCorrect() && IsFollowingSingle()) 
                 ||
@@ -91,10 +104,12 @@ public class BotVehicle : Vehicle
             if (IsFollowingQueue() && !IsQueueEmpty()) {
                 if (loopQueue) destinationQueue.Enqueue(destinationPoint);
                 destinationPoint = destinationQueue.Dequeue();
+                Debug.Log("Arrived at queue point");
             }
         }
         if (Mathf.Abs(angYdiff) > hardTurnThresholdAngle)
         {
+            Debug.Log($"{curAng.y} {destAng.y}");
             if (physics.speedKmh > hardTurnMaxSpeed)
             {
                 doAccelerate = false && doAccelerate;
@@ -126,7 +141,7 @@ public class BotVehicle : Vehicle
         if (doTurn)
         {
             float turnStep = curAng.y > destAng.y ? -1f : 1f;
-            if (angYdiffA < 90 && !doHardTurn) {
+            if (angYdiffA < 90) {
                 turnStep *= angYdiffA / 90f;
             }
             physics.input.x = turnStep;
