@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class BotVehicle : Vehicle
 {
@@ -9,11 +10,12 @@ public class BotVehicle : Vehicle
     public bool isFollowing = false;
     public Vector3 destinationPoint = Vector3.zero;
     public Queue<Vector3> destinationQueue = new Queue<Vector3>();
+    public bool loopQueue = false;
     public FollowMode followMode = FollowMode.Single;
     public float followMaxSpeed = 60f;
 
     [Header("Folllow")]
-    [SerializeField] Transform[] _initDestinationQueue = new Transform[0];
+    [SerializeField] SplineContainer _destinationQueueSpline;
 
     [Header("Destination")]
     public float destinationArriveMaxDistance = 15f;
@@ -26,11 +28,14 @@ public class BotVehicle : Vehicle
 
     private void Awake()
     {
-        if (_initDestinationQueue.Length > 0)
+        
+        if (_destinationQueueSpline != null && _destinationQueueSpline.Spline.Count > 0)
         {
-            foreach (var trans in _initDestinationQueue)
+            foreach (var knot in _destinationQueueSpline.Spline.Knots)
             {
-                destinationQueue.Enqueue(trans.position);
+                Vector3 localPos = knot.Position;
+                Vector3 worldPos = _destinationQueueSpline.transform.TransformPoint(localPos);
+                destinationQueue.Enqueue(worldPos);
             }
             destinationPoint = destinationQueue.Dequeue();
         }
@@ -82,6 +87,7 @@ public class BotVehicle : Vehicle
                 return;
             }
             if (IsFollowingQueue() && !IsQueueEmpty()) {
+                if (loopQueue) destinationQueue.Enqueue(destinationPoint);
                 destinationPoint = destinationQueue.Dequeue();
             }
         }
