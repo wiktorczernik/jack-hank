@@ -68,10 +68,12 @@ public class BotVehicle : Vehicle
         Vector3 destAng = Quaternion.LookRotation(destDir).eulerAngles;
         // Difference between destination Y angle and current Y angle;
         float angYdiff = destAng.y - curAng.y;
+        float angYdiffA = Mathf.Abs(angYdiff);
 
         bool doAccelerate = true;
         bool doBreak = false;
         bool doTurn = true;
+        bool doHardTurn = false;
 
         if (InArriveZone()) {
             doAccelerate = false;
@@ -97,11 +99,15 @@ public class BotVehicle : Vehicle
             {
                 doAccelerate = false && doAccelerate;
                 doBreak = true && doBreak;
+                doTurn = true && doTurn;
+                doHardTurn = true;
             }
             else
             {
                 doAccelerate = true && doAccelerate;
                 doBreak = false && doBreak;
+                doTurn = true && doTurn;
+                doHardTurn = true;
             }
         }
         if (physics.speedKmh > followMaxSpeed) {
@@ -119,7 +125,11 @@ public class BotVehicle : Vehicle
         }
         if (doTurn)
         {
-            physics.input.x = curAng.y > destAng.y ? -1f : 1f;
+            float turnStep = curAng.y > destAng.y ? -1f : 1f;
+            if (angYdiffA < 90 && !doHardTurn) {
+                turnStep *= angYdiffA / 90f;
+            }
+            physics.input.x = turnStep;
         }
     }
     private void FixedUpdate()
