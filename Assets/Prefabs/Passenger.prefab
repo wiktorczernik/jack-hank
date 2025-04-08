@@ -54,7 +54,7 @@ MonoBehaviour:
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 1344969482925427600}
     _epicenterPosition: {x: 0, y: 0, z: 0}
-    force: 500
+    force: 5000
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
