@@ -5,8 +5,6 @@ public class JumpPickup : AbilityPickup
 
     public override void OnPickup(AbilitiesController abilityController)
     {
-        // Increment jump charges
-        abilityController.jumpCharges += chargeAmount;
-        Debug.Log("Jump charge added: " + chargeAmount);
+        abilityController.addJumpCharge();
     }
 }
