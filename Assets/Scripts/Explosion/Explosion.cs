@@ -41,12 +41,4 @@ public class Explosion : MonoBehaviour
             }
         }
     }
-
-    private void LateUpdate()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            Init();
-        }
-    }
 }
