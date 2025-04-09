@@ -14,7 +14,7 @@ public class BonusSystem : MonoBehaviour
 
     private Dictionary<PlayerBonusTypes, InUpdateBonus> _inUpdateBonuses;
     
-    private CarController _playerVehicleController;
+    private VehiclePhysics _playerVehicleController;
 
     private void InitializeInUpdateBonuses()
     {
@@ -30,7 +30,7 @@ public class BonusSystem : MonoBehaviour
     private void Start()
     {
         InitializeInUpdateBonuses();
-        _playerVehicleController = GameManager.PlayerVehicle.GetComponent<CarController>();
+        _playerVehicleController = GameManager.PlayerVehicle.GetComponent<VehiclePhysics>();
         GameManager.PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
         
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))

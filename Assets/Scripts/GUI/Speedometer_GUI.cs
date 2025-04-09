@@ -4,7 +4,7 @@ using UnityEngine;
 public class Speedometer_GUI : MonoBehaviour
 {
     [SerializeField] TMP_Text text;
-    [SerializeField] CarController carController;
+    [SerializeField] VehiclePhysics carController;
 
     private void LateUpdate()
     {

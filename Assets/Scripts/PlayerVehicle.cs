@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.Windows;
 
 
 public class PlayerVehicle : Vehicle
@@ -11,9 +13,20 @@ public class PlayerVehicle : Vehicle
     public CollisionEventEmitter vehicleCollision;
 
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
+    public UnityEvent<ExplosionProperties> onExplosionNearby;
 
     [SerializeField] Transform _seatsContainer;
 
+
+    public void NotifyExplosionNearby(ExplosionProperties properties)
+    {
+        onExplosionNearby?.Invoke(properties);
+    }
+
+    public void OnMove(InputValue value)
+    {
+        physics.input = value.Get<Vector2>();
+    }
 
     private void OnEnable()
     {

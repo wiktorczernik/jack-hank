@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class VehicleSoundController : MonoBehaviour
 {
-    public CarController vehicleController;
+    public VehiclePhysics vehicleController;
     public AnimationCurve driftVolumeCurve;
     public AnimationCurve driftPitchCurve;
     public AnimationCurve engineVolumeCurve;
@@ -13,7 +13,7 @@ public class VehicleSoundController : MonoBehaviour
 
     private void Update()
     {
-        float driftFactor = Mathf.Abs(vehicleController.BodyRigidbody.angularVelocity.y);
+        float driftFactor = Mathf.Abs(vehicleController.bodyRigidbody.angularVelocity.y);
         driftFactor = Mathf.Clamp01(driftFactor - 0.8f);
         float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f;
         driftSoundSource.volume = Mathf.Lerp(driftSoundSource.volume, driftVolumeCurve.Evaluate(driftFactor), driftVolumeLerp * Time.deltaTime);
