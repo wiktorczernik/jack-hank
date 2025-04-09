@@ -16278,6 +16278,8 @@ GameObject:
   - component: {fileID: 4841979615947226047}
   - component: {fileID: 8049625386355856952}
   - component: {fileID: 6155559150184595958}
+  - component: {fileID: 4716489835503060122}
+  - component: {fileID: 5774747425646821380}
   - component: {fileID: 8409974713711607995}
   m_Layer: 0
   m_Name: TestBus
@@ -16567,15 +16569,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6254e4c5790b3de428e4763c6e0a4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedBoostTime: 2
-  speedBoostMaxSpeedMultiplier: 3
-  speedBoostAccelerationMultiplier: 2
-  speedBoostBreakForceMultiplier: 1.5
-  jumpAcceleration: 50
-  jumpAirTiltBackwardForce: -1
-  jumpUpTiltFactor: 0.5
-  speedBoostCharges: 0
-  jumpCharges: 0
+  nitro: {fileID: 4716489835503060122}
+  jump: {fileID: 5774747425646821380}
+  _availableMana: 500
+  _maxMana: 500
+--- !u!114 &4716489835503060122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237702cc6853d16439c90945e521f55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPrepareBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrepareTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrepareEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onStateUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  _requiredMana: 100
+  _prepareTime: 0
+  _workTime: 0
+  _cooldownTime: 0
+  _state: 0
+  _displayName: Rocket Ride
+  _prepareDuration: 0.5
+  _workDuration: 5
+  _cooldownDuration: 10
+  maxSpeedBonus: 25
+  accelerationBonus: 2500
+--- !u!114 &5774747425646821380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4de02b5fff18a9e4bbcee9473a8c5a58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onPrepareBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrepareTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onPrepareEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onWorkEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onCooldownEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onStateUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  _requiredMana: 50
+  _prepareTime: 0
+  _workTime: 0
+  _cooldownTime: 0
+  _state: 0
+  _displayName: Jo-Jump
+  _prepareDuration: 0
+  _workDuration: 0
+  _cooldownDuration: 2
+  jumpVelocity: 50
+  jumpTilt: -1
+  trajectoryAngle: 0.5
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0

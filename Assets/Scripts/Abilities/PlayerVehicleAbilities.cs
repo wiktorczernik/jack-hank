@@ -1,125 +1,47 @@
 using UnityEngine;
 
-[RequireComponent (typeof(PlayerVehicle))]
+[RequireComponent(typeof(PlayerVehicle))]
 public class PlayerVehicleAbilities : MonoBehaviour
 {
-    public float speedBoostTime = 2.0f;
-    public float speedBoostMaxSpeedMultiplier = 3.0f;
-    public float speedBoostAccelerationMultiplier = 2.0f;
-    public float speedBoostBreakForceMultiplier = 1.5f;
+    [Header("Mana points")]
+    public int availableMana
+    {
+        get => _availableMana;
+        set => _availableMana = Mathf.Clamp(value, 0, _maxMana);
+    }
+    public int maxMana => _maxMana;
 
-    public float jumpAcceleration = 5000f;
-    public float jumpAirTiltBackwardForce = 40;
-    [Range(0, 1)]
-    public float jumpUpTiltFactor = 0.5f;
-
-    public int speedBoostCharges = 0;
-    public int jumpCharges = 0;
-
-    private float boostElapsedTime;
-    private bool isBoosting = false;
-    private bool enableAfterBoostSlowDown = false;
-
-    private bool isJumping;
+    [Header("Abilities")]
+    public PlayerNitroAbility nitro;
+    public PlayerJumpAbility jump;
 
     private PlayerVehicle parent;
-    private VehiclePhysics physics;
 
     private void Awake()
     {
         parent = GetComponent<PlayerVehicle>();
-        physics = parent.physics;
+        nitro?.Init(parent);
+        jump?.Init(parent);
     }
 
-    public void OnSpeedBoost()
+    public void OnNitro() => TryUseAbility(nitro);
+    public void OnJump() => TryUseAbility(jump);
+
+    private bool TryUseAbility(PlayerVehicleAbility ability)
     {
-        if(!isBoosting && speedBoostCharges > 0)
+        if (!ability) return false;
+        if (ability.requiredMana > availableMana) return false;
+        
+        if (ability.Use())
         {
-            isBoosting = true;
-            speedBoostCharges--;
-            enableAfterBoostSlowDown = true;
-            boostElapsedTime = 0;
-            physics.maxForwardSpeed *= speedBoostMaxSpeedMultiplier;
-            physics.forwardAcceleration *= (speedBoostAccelerationMultiplier - 1.0f);
-        }
-    }
-
-    public void OnJump()
-    {
-            if (!isJumping && jumpCharges > 0)
-            {
-                isJumping = true;
-                jumpCharges--;
-                physics.bodyRigidbody.AddForce((Vector3.up * jumpUpTiltFactor + transform.forward).normalized * jumpAcceleration, ForceMode.VelocityChange); // Jump
-                physics.bodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.VelocityChange); // Add slight tilt backwards
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        HandleJump();
-        HandleSpeedBoost();
-
-        if (!physics.IsGrounded())
-        {
-            physics.bodyRigidbody.linearDamping = 1.5f;  // Increase air drag
-            physics.bodyRigidbody.angularDamping = 2.0f;  // Reduce rotations
-        }
-        else
-        {
-            physics.bodyRigidbody.linearDamping = 0.1f;  // Restore normal state
-            physics.bodyRigidbody.angularDamping = 0.05f;
+            availableMana -= ability.requiredMana;
+            return true;
         }
 
+        return false;
     }
 
-    private void HandleJump()
-    {
-        if (isJumping)
-        {
-            if (physics.IsGrounded())
-            {
-                isJumping = false;
-            }
-        }
-    }
-
-
-    public void addJumpCharge()
-    {
-        jumpCharges++;
-    }
-
-    public void addSpeedBoostCharge()
-    {
-        speedBoostCharges++;
-    }
-
-    private void HandleSpeedBoost()
-    {
-        if (isBoosting)
-        {
-            boostElapsedTime += Time.deltaTime;    
-            if(boostElapsedTime >= speedBoostTime) { 
-                isBoosting=false;
-                physics.maxForwardSpeed /= speedBoostMaxSpeedMultiplier;
-                physics.forwardAcceleration /= (speedBoostAccelerationMultiplier - 1.0f);
-                return;
-            }
-            physics.Accelerate(1.0f);
-            return;
-        }
-        float forwardSpeed = physics.GetForwardSpeed() * 3.6f;
-        if (physics.IsGrounded())
-        {
-            if(forwardSpeed > (physics.maxForwardSpeed + 1.0f) && enableAfterBoostSlowDown) {
-                physics.bodyRigidbody.AddForce(-transform.forward * physics.forwardBrakeForce * speedBoostBreakForceMultiplier);
-            }
-            else
-            {
-                enableAfterBoostSlowDown= false;
-            }
-        }
-    }
-
+    [Header("Settings")]
+    [SerializeField] int _availableMana = 0;
+    [SerializeField] int _maxMana = 500;
 }
