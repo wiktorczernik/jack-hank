@@ -16484,10 +16484,34 @@ MonoBehaviour:
   driftEndBuildup: 0
   speedKmh: 0
   speedKmhForward: 0
-  maxForwardSpeed: 100
+  maxForwardSpeed: 250
   maxBackwardSpeed: 15
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9871719
+      inSlope: -0.006936253
+      outSlope: -0.006936253
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2405324
+    - serializedVersion: 3
+      time: 1
+      value: 0.25
+      inSlope: -1.0398812
+      outSlope: -1.0398812
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.099405944
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   turnForce: 5000
   turnAginForce: 7500
   turnStabilization: 8
@@ -16539,6 +16563,7 @@ MonoBehaviour:
   - {fileID: 1712791839570977324}
   - {fileID: 8330458456530461051}
   bonusWheelGravity: 50
+  driftBonusAcceleration: 2100
   driftMinSpeed: 15
   driftTurnForce: 3000
   driftMoveForce: 1500

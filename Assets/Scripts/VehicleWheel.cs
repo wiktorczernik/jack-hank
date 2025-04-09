@@ -30,13 +30,13 @@ public class VehicleWheel : MonoBehaviour
     }
     public void ApplyGravity(float scale = 1.0f)
     {
-        bool isGrounded = IsGrounded();
+        bool isGrounded = CheckGround();
         if (!isGrounded)
         {
             useRigidbody.AddForce(Physics.gravity * scale, ForceMode.Force);
         }
     }
-    public bool IsGrounded()
+    public bool CheckGround()
     {
         isGrounded = GetDistanceToGround() < 0.5f;
         return isGrounded;

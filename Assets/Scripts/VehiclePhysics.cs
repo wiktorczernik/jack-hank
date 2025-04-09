@@ -28,6 +28,18 @@ public class VehiclePhysics : MonoBehaviour
     public float maxBackwardSpeed = 15;
     public float forwardAcceleration = 2300;
     public float forwardBrakeForce = 4500f;
+    public AnimationCurve accelerationCurve = new AnimationCurve(
+            new Keyframe(0.0f, 0.9871719f, -0.006936253f, -0.006936253f)
+            {
+                weightedMode = WeightedMode.Out,
+                outWeight = 0.2405324f
+            },
+            new Keyframe(1.0f, 0.25f, -1.0398812f, -1.0398812f)
+            {
+                weightedMode = WeightedMode.In,
+                inWeight = 0.099405944f
+            }
+        );
     #endregion
 
     #region Turning
@@ -51,6 +63,7 @@ public class VehiclePhysics : MonoBehaviour
 
     #region Drifting
     [Header("Drifting")]
+    public float driftBonusAcceleration = 1.5f;
     public float driftMinSpeed = 15f;
     public float driftTurnForce = 3000f;
     public float driftMoveForce = 1500f;
@@ -88,13 +101,14 @@ public class VehiclePhysics : MonoBehaviour
     {
         return Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward);
     }
-    public void Accelerate(float force = 1.0f)
+    public void Accelerate(float force = 1.0f, bool useCurve = true)
     {
         Vector3 direction = transform.forward;
         Quaternion driftRotation = Quaternion.identity;
+        float driftFactor = 0;
         if (isDrifting)
         {
-            float driftFactor = driftAngular / driftMaxAngular;
+            driftFactor = Mathf.Abs(driftAngular / driftMaxAngular);
             driftRotation = Quaternion.Euler(0, driftFactor * driftLeanAngle, 0);
         }
         float sp = Vector3.Dot(bodyRigidbody.linearVelocity, direction) * 3.6f;
@@ -106,13 +120,17 @@ public class VehiclePhysics : MonoBehaviour
         float wheelGroundFactor = 0.0f;
         foreach(var wheel in wheels)
         {
-            if (wheel.IsGrounded())
+            if (wheel.CheckGround())
             {
                 wheelGroundFactor += 0.25f;
             }
         }
+        float acceleration = forwardAcceleration;
+        acceleration += driftFactor * driftBonusAcceleration;
+        acceleration *= accelerationCurve.Evaluate(speedKmhForward / maxForwardSpeed);
+
         force = Mathf.Clamp01(force) * wheelGroundFactor;
-        bodyRigidbody.AddForceAtPosition(driftRotation * direction * forwardAcceleration * force, centerOfMass.position);
+        bodyRigidbody.AddForceAtPosition(driftRotation * direction * acceleration * force, centerOfMass.position);
     }
 
     public void Brake(float force = 1.0f)
@@ -176,7 +194,7 @@ public class VehiclePhysics : MonoBehaviour
 
         foreach (var wheel in wheels)
         {
-            if (wheel.IsGrounded())
+            if (wheel.CheckGround())
                 newGrounded = true;
             newDistance = Mathf.Min(newDistance, wheel.distanceToGround);
         }
@@ -221,7 +239,7 @@ public class VehiclePhysics : MonoBehaviour
     void HandleSkidmarks()
     {
         
-        if (wheels[2].IsGrounded())
+        if (wheels[2].CheckGround())
         {
             if (isDrifting)
             {
@@ -243,7 +261,7 @@ public class VehiclePhysics : MonoBehaviour
             smokeSourceRight.Stop();
             skidmarkSourceRight.StopEmitting();
         }
-        if (wheels[3].IsGrounded())
+        if (wheels[3].CheckGround())
         {
             if (isDrifting)
             {
