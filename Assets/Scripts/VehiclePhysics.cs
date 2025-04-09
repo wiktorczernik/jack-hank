@@ -159,6 +159,15 @@ public class VehiclePhysics : MonoBehaviour
         newAngular.y = driftAngular;
         bodyRigidbody.angularVelocity = newAngular;
     }
+    public bool IsGrounded()
+    {
+        foreach (var wheel in wheels)
+        {
+            if (wheel.IsGrounded())
+                return true;
+        }
+        return false;
+    }
     void HandleWheels()
     {
         foreach(VehicleWheel wheel in wheels)
