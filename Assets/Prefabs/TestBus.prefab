@@ -16273,6 +16273,7 @@ GameObject:
   - component: {fileID: 9165154653561585143}
   - component: {fileID: 4841979615947226047}
   - component: {fileID: 8049625386355856952}
+  - component: {fileID: 6155559150184595958}
   - component: {fileID: 8409974713711607995}
   m_Layer: 0
   m_Name: TestBus
@@ -16317,10 +16318,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835c814ac0e4a1c4a965e77489f75f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploded: 0
+  canBeExploded: 0
+  canSelfExplode: 0
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 0}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    force: 500
+    epicenterRadius: 10
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
+  physics: {fileID: 8049625386355856952}
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
   vehicleCollision: {fileID: 7498811702490313808}
   onPickupPassenger:
+    m_PersistentCalls:
+      m_Calls: []
+  onExplosionNearby:
     m_PersistentCalls:
       m_Calls: []
   _seatsContainer: {fileID: 6318858428641228763}
@@ -16531,6 +16546,28 @@ MonoBehaviour:
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
   smokeSourceRight: {fileID: 1171526438022583130}
+--- !u!114 &6155559150184595958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e90f606fdc52f4b45b210b47bc72c6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedBoostTime: 2
+  speedBoostMaxSpeedMultiplier: 3
+  speedBoostAccelerationMultiplier: 2
+  speedBoostBreakForceMultiplier: 1.5
+  jumpAcceleration: 5000
+  jumpAirTiltBackwardForce: 40
+  speedBoostCharges: 0
+  jumpCharges: 0
+  UIspeedBoostCharges: {fileID: 0}
+  UIjumpcharges: {fileID: 0}
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0

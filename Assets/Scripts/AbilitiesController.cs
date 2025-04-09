@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using TMPro;
 
-[RequireComponent (typeof(CarController))]
+[RequireComponent (typeof(PlayerVehicle))]
 public class AbilitiesController : MonoBehaviour
 {
     public float speedBoostTime = 2.0f;
@@ -17,20 +17,19 @@ public class AbilitiesController : MonoBehaviour
     public int speedBoostCharges = 0;
     public int jumpCharges = 0;
 
-    public TextMeshProUGUI UIspeedBoostCharges;
-    public TextMeshProUGUI UIjumpcharges;
-
     private float boostElapsedTime;
     private bool isBoosting = false;
     private bool enableAfterBoostSlowDown = false;
 
     private bool isJumping;
 
-    private CarController carController;
+    private PlayerVehicle parent;
+    private VehiclePhysics physics;
 
     private void Awake()
     {
-        carController = GetComponent<CarController>();
+        parent = GetComponent<PlayerVehicle>();
+        physics = parent.physics;
     }
 
     public void OnSpeedBoost()
@@ -39,11 +38,10 @@ public class AbilitiesController : MonoBehaviour
         {
             isBoosting = true;
             speedBoostCharges--;
-            UIspeedBoostCharges.text = speedBoostCharges.ToString();
             enableAfterBoostSlowDown = true;
             boostElapsedTime = 0;
-            carController.MaxSpeed *= speedBoostMaxSpeedMultiplier;
-            carController.Acceleration *= (speedBoostAccelerationMultiplier - 1.0f);
+            physics.maxForwardSpeed *= speedBoostMaxSpeedMultiplier;
+            physics.forwardAcceleration *= (speedBoostAccelerationMultiplier - 1.0f);
         }
     }
 
@@ -53,9 +51,8 @@ public class AbilitiesController : MonoBehaviour
             {
                 isJumping = true;
                 jumpCharges--;
-                UIjumpcharges.text = jumpCharges.ToString();
-                carController.BodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
-                carController.BodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
+                physics.bodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
+                physics.bodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
         }
     }
 
@@ -64,15 +61,15 @@ public class AbilitiesController : MonoBehaviour
         HandleJump();
         HandleSpeedBoost();
 
-        if (!carController.isGrounded())
+        if (!physics.IsGrounded())
         {
-            carController.BodyRigidbody.linearDamping = 1.5f;  // Increase air drag
-            carController.BodyRigidbody.angularDamping = 2.0f;  // Reduce rotations
+            physics.bodyRigidbody.linearDamping = 1.5f;  // Increase air drag
+            physics.bodyRigidbody.angularDamping = 2.0f;  // Reduce rotations
         }
         else
         {
-            carController.BodyRigidbody.linearDamping = 0.1f;  // Restore normal state
-            carController.BodyRigidbody.angularDamping = 0.05f;
+            physics.bodyRigidbody.linearDamping = 0.1f;  // Restore normal state
+            physics.bodyRigidbody.angularDamping = 0.05f;
         }
 
     }
@@ -81,7 +78,7 @@ public class AbilitiesController : MonoBehaviour
     {
         if (isJumping)
         {
-            if (carController.isGrounded())
+            if (physics.IsGrounded())
             {
                 isJumping = false;
             }
@@ -92,13 +89,11 @@ public class AbilitiesController : MonoBehaviour
     public void addJumpCharge()
     {
         jumpCharges++;
-        UIjumpcharges.text = jumpCharges.ToString();
     }
 
     public void addSpeedBoostCharge()
     {
         speedBoostCharges++;
-        UIspeedBoostCharges.text = speedBoostCharges.ToString();
     }
 
     private void HandleSpeedBoost()
@@ -108,20 +103,18 @@ public class AbilitiesController : MonoBehaviour
             boostElapsedTime += Time.deltaTime;    
             if(boostElapsedTime >= speedBoostTime) { 
                 isBoosting=false;
-                carController.MaxSpeed /= speedBoostMaxSpeedMultiplier;
-                carController.Acceleration /= (speedBoostAccelerationMultiplier - 1.0f);
-                carController.ignoreGrounded = false;
+                physics.maxForwardSpeed /= speedBoostMaxSpeedMultiplier;
+                physics.forwardAcceleration /= (speedBoostAccelerationMultiplier - 1.0f);
                 return;
             }
-            carController.ignoreGrounded = true;
-            carController.Accelerate(1.0f);
+            physics.Accelerate(1.0f);
             return;
         }
-        float forwardSpeed = carController.GetForwardSpeed() * 3.6f;
-        if (carController.isGrounded())
+        float forwardSpeed = physics.GetForwardSpeed() * 3.6f;
+        if (physics.IsGrounded())
         {
-            if(forwardSpeed > (carController.MaxSpeed + 1.0f) && enableAfterBoostSlowDown) {
-                carController.BodyRigidbody.AddForce(-transform.forward * carController.BrakeForce * speedBoostBreakForceMultiplier);
+            if(forwardSpeed > (physics.maxForwardSpeed + 1.0f) && enableAfterBoostSlowDown) {
+                physics.bodyRigidbody.AddForce(-transform.forward * physics.forwardBrakeForce * speedBoostBreakForceMultiplier);
             }
             else
             {
