@@ -99,7 +99,7 @@ public class BonusSystem : MonoBehaviour
     }
     
     private bool CheckIsDrifting(InUpdateBonus bonusState) => _playerVehicleController.isDrifting || _playerVehicleController.isDriftingRight;
-    private bool CheckIsFlying(InUpdateBonus bonusState) => _playerVehicleController.wheels.All(w => !w.IsGrounded());
+    private bool CheckIsFlying(InUpdateBonus bonusState) => _playerVehicleController.wheels.All(w => !w.CheckGround());
 
     private class InUpdateBonus
     {
