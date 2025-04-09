@@ -3,7 +3,7 @@ using UnityEngine;
 public class AbilityPickup : MonoBehaviour
 {
     // This will be overridden by child classes
-    public virtual void OnPickup(AbilitiesController abilitiesController)
+    public virtual void OnPickup(PlayerVehicleAbilities abilitiesController)
     {
         // Base implementation does nothing
     }
@@ -14,7 +14,7 @@ public class AbilityPickup : MonoBehaviour
         if (other.CompareTag("Vehicle"))
         {
             // Try to get the ability controller from the bus
-            AbilitiesController abilitiesController = other.GetComponent<AbilitiesController>();
+            PlayerVehicleAbilities abilitiesController = other.GetComponent<PlayerVehicleAbilities>();
 
             if (abilitiesController != null)
             {

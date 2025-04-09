@@ -16555,7 +16555,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4409508978620240855}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e90f606fdc52f4b45b210b47bc72c6c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6254e4c5790b3de428e4763c6e0a4778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speedBoostTime: 2
@@ -16566,8 +16566,6 @@ MonoBehaviour:
   jumpAirTiltBackwardForce: 40
   speedBoostCharges: 0
   jumpCharges: 0
-  UIspeedBoostCharges: {fileID: 0}
-  UIjumpcharges: {fileID: 0}
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0
