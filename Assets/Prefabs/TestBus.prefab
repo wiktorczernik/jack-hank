@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -599,6 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -16473,6 +16475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
+  groundNormal: {x: 0, y: 1, z: 0}
   airTimeState:
     timePassed: 0
     groundHeight: 0
@@ -16700,10 +16703,11 @@ MonoBehaviour:
   _state: 0
   _displayName: Jo-Jump
   _prepareDuration: 0
-  _workDuration: 0
+  _workDuration: 0.25
   _cooldownDuration: 2
   jumpVelocity: 50
   jumpTilt: -1
+  stabilizationForce: 50
   trajectoryAngle: 0.5
 --- !u!114 &8409974713711607995
 MonoBehaviour:
@@ -17323,6 +17327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -18542,6 +18547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0

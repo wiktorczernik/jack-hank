@@ -12,6 +12,7 @@ public class VehiclePhysics : MonoBehaviour
     #region State
     [Header("State")]
     public bool isGrounded = false;
+    public Vector3 groundNormal = Vector3.up;
     public AirTimeState airTimeState = new AirTimeState(0f, 0f, 0f);
     public bool isDrifting = false;
     public bool isDriftingRight = false;
@@ -191,13 +192,17 @@ public class VehiclePhysics : MonoBehaviour
         bool newGrounded = false;
         float newDistance = Mathf.Infinity;
         var newState = airTimeState;
+        // Average of ground normals under wheels
+        Vector3 newGroundNormal = Vector3.zero;
 
         foreach (var wheel in wheels)
         {
             if (wheel.CheckGround())
                 newGrounded = true;
             newDistance = Mathf.Min(newDistance, wheel.distanceToGround);
+            newGroundNormal += wheel.groundNormal;
         }
+        newGroundNormal /= wheels.Length;
 
         if (oldGrounded || oldGrounded && !newGrounded)
         {
@@ -214,6 +219,7 @@ public class VehiclePhysics : MonoBehaviour
 
         isGrounded = newGrounded;
         airTimeState = newState;
+        groundNormal = newGroundNormal;
 
         if (oldGrounded != newGrounded)
         {
