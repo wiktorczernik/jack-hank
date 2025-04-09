@@ -18,4 +18,8 @@ public class PlayerJumpAbility : PlayerVehicleAbility
         useRigidbody.AddForce(jumpTrajectory * jumpVelocity, ForceMode.VelocityChange);
         useRigidbody.AddTorque(-transform.right * jumpTilt, ForceMode.VelocityChange);
     }
+    public override bool UsageConditionsSatisfied()
+    {
+        return physics.IsGrounded();
+    }
 }
