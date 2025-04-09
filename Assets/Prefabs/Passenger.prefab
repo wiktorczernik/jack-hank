@@ -48,10 +48,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e57a4568eec7064abc9b736e9d5b158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploded: 0
+  canBeExploded: 0
+  canSelfExplode: 1
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 1344969482925427600}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    force: 5000
+    epicenterRadius: 10
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
   bountyPointsReward: 50000
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4838025276435632193}
+        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
+        m_MethodName: SelfExplode
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   wasHit: 0
   hittable: 1
   collisionEvents: {fileID: 4722935629629059078}
@@ -59,6 +81,7 @@ MonoBehaviour:
   - {fileID: 579355331054680116}
   usedColliders:
   - {fileID: 255709533160029318}
+  smashableType: 0
   bountyPointsPenalty: 50000
   isAlive: 1
   isLookingForPlayerVehicle: 0

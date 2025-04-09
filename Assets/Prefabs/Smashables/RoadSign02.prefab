@@ -106,6 +106,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda6d46a5bbf43c489729901173ec691, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exploded: 0
+  canBeExploded: 1
+  canSelfExplode: 0
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 0}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    force: 500
+    epicenterRadius: 10
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
   bountyPointsReward: 25
   OnHit:
     m_PersistentCalls:

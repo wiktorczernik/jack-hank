@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
 
-public class SmashableEntity : MonoBehaviour
+public class SmashableEntity : GameEntity
 {
     public int bountyPointsReward;
     public UnityEvent<SmashableEntity> OnHit;
@@ -15,6 +15,19 @@ public class SmashableEntity : MonoBehaviour
     [SerializeField] protected Collider[] usedColliders;
     [SerializeField] private SmashableType smashableType;
 
+
+    protected override void InternalExplode(ExplosionProperties explosionProps)
+    {
+        foreach (Rigidbody rb in usedRigidbodies)
+        {
+            rb.freezeRotation = false;
+            rb.constraints = RigidbodyConstraints.None;
+            rb.AddExplosionForce(explosionProps.force, explosionProps.epicenterPosition, explosionProps.epicenterRadius);
+        }
+        OnHitEvent();
+        OnHit?.Invoke(this);
+        wasHit = true;
+    }
 
     #region Event subscribing
     private void OnEnable()

@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 {
     public CinemachineVirtualCamera virtualCamera;
     public CinemachineBasicMultiChannelPerlin perlinNoise;
+    public PlayerVehicle playerVehicle;
 
     [Header("State")]
     public float shakeIntensity = 0f;
@@ -14,6 +15,7 @@ public class CameraController : MonoBehaviour
     public float shakeMaxAmplitude = 50f;
     public float shakeRiseRate = 4f;
     public float shakeFallRate = 0.5f;
+    public float shakeFrequency = 0.05f;
 
     public void Shake(float intensity)
     {
@@ -32,6 +34,7 @@ public class CameraController : MonoBehaviour
         {
             shakeIntensity = Mathf.Clamp01(shakeIntensity + shakeRiseRate * Time.deltaTime);
             perlinNoise.m_AmplitudeGain = shakeMaxAmplitude * shakeIntensity;
+            perlinNoise.m_FrequencyGain = shakeFrequency;
             yield return new WaitForEndOfFrame();
         }
         yield return ShakeFall();
@@ -42,8 +45,23 @@ public class CameraController : MonoBehaviour
         {
             shakeIntensity = Mathf.Clamp01(shakeIntensity - shakeFallRate * Time.deltaTime);
             perlinNoise.m_AmplitudeGain = shakeMaxAmplitude * shakeIntensity;
+            perlinNoise.m_FrequencyGain = shakeFrequency;
             yield return new WaitForEndOfFrame();
         }
+    }
+    
+    private void OnExplosionNearby(ExplosionProperties properties)
+    {
+        Shake(properties.shakeIntensity);
+    }
+
+    private void OnEnable()
+    {
+        playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
+    }
+    private void OnDisable()
+    {
+        playerVehicle.onExplosionNearby.RemoveListener(OnExplosionNearby);
     }
 
 #if UNITY_EDITOR
