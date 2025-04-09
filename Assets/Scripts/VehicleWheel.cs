@@ -8,6 +8,7 @@ public class VehicleWheel : MonoBehaviour
     [Header("State")]
     public bool isGrounded = false;
     public float distanceToGround = Mathf.Infinity;
+    public Vector3 groundNormal = Vector3.up;
     [Header("Settings")]
     public bool isDrivable = true;
     public bool isTurnable = true;
@@ -47,10 +48,12 @@ public class VehicleWheel : MonoBehaviour
         if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
         {
             distanceToGround = hit.distance;
+            groundNormal = hit.normal;
         }
         else
         {
             distanceToGround = Mathf.Infinity;
+            groundNormal = Vector3.up;
         }
         return distanceToGround;
     }
