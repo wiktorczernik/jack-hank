@@ -1,10 +1,7 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
-using TMPro;
 
 [RequireComponent (typeof(PlayerVehicle))]
-public class AbilitiesController : MonoBehaviour
+public class PlayerVehicleAbilities : MonoBehaviour
 {
     public float speedBoostTime = 2.0f;
     public float speedBoostMaxSpeedMultiplier = 3.0f;

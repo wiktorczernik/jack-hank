@@ -3,7 +3,7 @@ public class JumpPickup : AbilityPickup
 {
     public int chargeAmount = 1;
 
-    public override void OnPickup(AbilitiesController abilityController)
+    public override void OnPickup(PlayerVehicleAbilities abilityController)
     {
         abilityController.addJumpCharge();
     }
