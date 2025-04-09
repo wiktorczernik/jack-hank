@@ -5,6 +5,6 @@ public class JumpPickup : AbilityPickup
 
     public override void OnPickup(PlayerVehicleAbilities abilityController)
     {
-        abilityController.addJumpCharge();
+        //abilityController.addJumpCharge();
     }
 }

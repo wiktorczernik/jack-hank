@@ -7,6 +7,6 @@ public class SpeedBoostPickup : AbilityPickup
     public override void OnPickup(PlayerVehicleAbilities abilityController)
     {
         // Increment speed boost charges
-        abilityController.addSpeedBoostCharge();
+        //abilityController.addSpeedBoostCharge();
     }
 }
