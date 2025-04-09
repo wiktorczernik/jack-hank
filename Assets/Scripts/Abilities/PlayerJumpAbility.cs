@@ -11,7 +11,7 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     protected override void OnWorkBegin()
     {
         Rigidbody useRigidbody = physics.bodyRigidbody;
-        Vector3 jumpTrajectory = Vector3.up * trajectoryAngle;
+        Vector3 jumpTrajectory = vehicle.transform.up * trajectoryAngle;
         jumpTrajectory += vehicle.transform.forward;
         jumpTrajectory.Normalize();
 
@@ -20,6 +20,6 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     }
     public override bool UsageConditionsSatisfied()
     {
-        return physics.IsGrounded();
+        return physics.isGrounded;
     }
 }

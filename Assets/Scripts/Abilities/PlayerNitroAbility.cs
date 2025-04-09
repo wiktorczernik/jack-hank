@@ -13,7 +13,7 @@ public class PlayerNitroAbility : PlayerVehicleAbility
     }
     protected override void OnWorkTick()
     {
-        physics.Accelerate(1);
+        physics.Accelerate(1, false);
     }
     protected override void OnWorkEnd()
     {
