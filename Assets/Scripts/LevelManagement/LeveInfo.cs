@@ -23,7 +23,7 @@ namespace LevelManagement
             }
         }
     
-        private readonly LevelInfo[] _lastLevels;
+        private readonly LevelInfo[] _lastLevels = Array.Empty<LevelInfo>();
 
         public LevelInfo[] LastLevels => _lastLevels.Clone() as LevelInfo[];
 

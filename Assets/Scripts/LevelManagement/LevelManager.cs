@@ -71,6 +71,11 @@ namespace LevelManagement
             return _levels.ToList();
         }
 
+        public static List<LevelInfo> GetAvailableLevels()
+        {
+            return _levels.Where(level => level.Status == LevelStatus.Available).ToList();
+        }
+
         private static LevelDefinition[] GetLevelTreeLeafs()
         {
             var definitions = Resources.LoadAll<LevelDefinition>("Level Definitions/");
