@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(ConfigurableJoint))]
 public class VehicleWheel : MonoBehaviour
 {
+    [Header("State")]
+    public bool isGrounded = false;
+    public float distanceToGround = Mathf.Infinity;
     [Header("Settings")]
     public bool isDrivable = true;
     public bool isTurnable = true;
@@ -35,12 +38,21 @@ public class VehicleWheel : MonoBehaviour
     }
     public bool IsGrounded()
     {
+        isGrounded = GetDistanceToGround() < 0.5f;
+        return isGrounded;
+    }
+    public float GetDistanceToGround()
+    {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 0.5f))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, Mathf.Infinity))
         {
-            return true;
+            distanceToGround = hit.distance;
         }
-        return false;
+        else
+        {
+            distanceToGround = Mathf.Infinity;
+        }
+        return distanceToGround;
     }
 
 #if UNITY_EDITOR

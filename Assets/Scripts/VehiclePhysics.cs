@@ -5,8 +5,14 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody))]
 public class VehiclePhysics : MonoBehaviour
 {
+    public event Action<AirTimeState> onTakeOff;
+    public event Action<AirTimeState> onAir;
+    public event Action<AirTimeState> onLand;
+
     #region State
     [Header("State")]
+    public bool isGrounded = false;
+    public AirTimeState airTimeState = new AirTimeState(0f, 0f, 0f);
     public bool isDrifting = false;
     public bool isDriftingRight = false;
     public Vector3 input = Vector3.zero;
@@ -159,6 +165,7 @@ public class VehiclePhysics : MonoBehaviour
         newAngular.y = driftAngular;
         bodyRigidbody.angularVelocity = newAngular;
     }
+    [Obsolete]
     public bool IsGrounded()
     {
         foreach (var wheel in wheels)
@@ -167,6 +174,48 @@ public class VehiclePhysics : MonoBehaviour
                 return true;
         }
         return false;
+    }
+    void CheckGrounded()
+    {
+        bool oldGrounded = isGrounded;
+        bool newGrounded = false;
+        float newDistance = Mathf.Infinity;
+        var newState = airTimeState;
+
+        foreach (var wheel in wheels)
+        {
+            if (wheel.IsGrounded())
+                newGrounded = true;
+            newDistance = Mathf.Min(newDistance, wheel.distanceToGround);
+        }
+
+        if (oldGrounded || oldGrounded && !newGrounded)
+        {
+            newState.timePassed = 0;
+            newState.groundHeight = 0;
+            newState.maxGroundHeight = 0;
+        }
+        if (!newGrounded)
+        {
+            newState.timePassed += Time.fixedDeltaTime;
+            newState.groundHeight = newDistance;
+            newState.maxGroundHeight = Mathf.Max(newState.maxGroundHeight, newDistance);
+        }
+
+        isGrounded = newGrounded;
+        airTimeState = newState;
+
+        if (oldGrounded != newGrounded)
+        {
+            if (newGrounded)
+                onLand?.Invoke(airTimeState);
+            else
+                onTakeOff?.Invoke(airTimeState);
+        }
+        else
+        {
+            onAir?.Invoke(airTimeState);
+        }
     }
     void HandleWheels()
     {
@@ -276,6 +325,8 @@ public class VehiclePhysics : MonoBehaviour
     {
         bool isPlaying = GameManager.isDuringRun;
 
+        CheckGrounded();
+
         ManageDriftState();
 
         HandleWheels();
@@ -323,5 +374,20 @@ public class VehiclePhysics : MonoBehaviour
         }
     }
 #endif
+
+    [Serializable]
+    public struct AirTimeState
+    {
+        public AirTimeState(float timePassed, float distToGround, float maxDistToGround)
+        {
+            this.timePassed = timePassed;
+            this.groundHeight = distToGround;
+            this.maxGroundHeight = maxDistToGround;
+        }
+
+        public float timePassed;
+        public float groundHeight;
+        public float maxGroundHeight;
+    }
 }
 
