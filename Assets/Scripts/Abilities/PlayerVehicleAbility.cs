@@ -8,6 +8,10 @@ using UnityEngine.Events;
 public class PlayerVehicleAbility : MonoBehaviour
 {
     public string displayName => _displayName;
+    /// <summary>
+    /// Required amount of mana points to use this ability
+    /// </summary>
+    public int requiredMana => _requiredMana;
 
     public AbilityState state => _state;
     /// <summary>
@@ -289,6 +293,10 @@ public class PlayerVehicleAbility : MonoBehaviour
     protected VehiclePhysics physics => vehicle.physics;
 
     [Header("General ability state")]
+    /// <summary>
+    /// Required mana points to use this ability
+    /// </summary>
+    [SerializeField] int _requiredMana = 100;
     /// <summary>
     /// Tells how many time already passed during preparation stage
     /// </summary>
