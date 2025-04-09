@@ -166,15 +166,7 @@ public class VehiclePhysics : MonoBehaviour
         bodyRigidbody.angularVelocity = newAngular;
     }
     [Obsolete]
-    public bool IsGrounded()
-    {
-        foreach (var wheel in wheels)
-        {
-            if (wheel.IsGrounded())
-                return true;
-        }
-        return false;
-    }
+    public bool IsGrounded() => isGrounded;
     void CheckGrounded()
     {
         bool oldGrounded = isGrounded;
