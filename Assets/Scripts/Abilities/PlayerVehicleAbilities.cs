@@ -10,6 +10,8 @@ public class PlayerVehicleAbilities : MonoBehaviour
 
     public float jumpAcceleration = 5000f;
     public float jumpAirTiltBackwardForce = 40;
+    [Range(0, 1)]
+    public float jumpUpTiltFactor = 0.5f;
 
     public int speedBoostCharges = 0;
     public int jumpCharges = 0;
@@ -48,8 +50,8 @@ public class PlayerVehicleAbilities : MonoBehaviour
             {
                 isJumping = true;
                 jumpCharges--;
-                physics.bodyRigidbody.AddForce(Vector3.up * jumpAcceleration, ForceMode.Impulse); // Jump
-                physics.bodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.Acceleration); // Add slight tilt backwards
+                physics.bodyRigidbody.AddForce((Vector3.up * jumpUpTiltFactor + transform.forward).normalized * jumpAcceleration, ForceMode.VelocityChange); // Jump
+                physics.bodyRigidbody.AddTorque(-transform.right * jumpAirTiltBackwardForce, ForceMode.VelocityChange); // Add slight tilt backwards
         }
     }
 

@@ -16562,8 +16562,9 @@ MonoBehaviour:
   speedBoostMaxSpeedMultiplier: 3
   speedBoostAccelerationMultiplier: 2
   speedBoostBreakForceMultiplier: 1.5
-  jumpAcceleration: 5000
-  jumpAirTiltBackwardForce: 40
+  jumpAcceleration: 50
+  jumpAirTiltBackwardForce: -1
+  jumpUpTiltFactor: 0.5
   speedBoostCharges: 0
   jumpCharges: 0
 --- !u!114 &8409974713711607995
