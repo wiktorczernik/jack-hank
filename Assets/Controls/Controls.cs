@@ -73,7 +73,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SpeedBoost"",
+                    ""name"": ""Nitro"",
                     ""type"": ""Button"",
                     ""id"": ""08aef45d-7bbf-4219-a51a-0d3bb25de956"",
                     ""expectedControlType"": """",
@@ -341,7 +341,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SpeedBoost"",
+                    ""action"": ""Nitro"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -352,7 +352,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SpeedBoost"",
+                    ""action"": ""Nitro"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -956,7 +956,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_DoorControl = m_Player.FindAction("DoorControl", throwIfNotFound: true);
         m_Player_Drift = m_Player.FindAction("Drift", throwIfNotFound: true);
-        m_Player_SpeedBoost = m_Player.FindAction("SpeedBoost", throwIfNotFound: true);
+        m_Player_Nitro = m_Player.FindAction("Nitro", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1042,7 +1042,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_DoorControl;
     private readonly InputAction m_Player_Drift;
-    private readonly InputAction m_Player_SpeedBoost;
+    private readonly InputAction m_Player_Nitro;
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
@@ -1053,7 +1053,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @DoorControl => m_Wrapper.m_Player_DoorControl;
         public InputAction @Drift => m_Wrapper.m_Player_Drift;
-        public InputAction @SpeedBoost => m_Wrapper.m_Player_SpeedBoost;
+        public InputAction @Nitro => m_Wrapper.m_Player_Nitro;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -1079,9 +1079,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Drift.started += instance.OnDrift;
             @Drift.performed += instance.OnDrift;
             @Drift.canceled += instance.OnDrift;
-            @SpeedBoost.started += instance.OnSpeedBoost;
-            @SpeedBoost.performed += instance.OnSpeedBoost;
-            @SpeedBoost.canceled += instance.OnSpeedBoost;
+            @Nitro.started += instance.OnNitro;
+            @Nitro.performed += instance.OnNitro;
+            @Nitro.canceled += instance.OnNitro;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -1104,9 +1104,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Drift.started -= instance.OnDrift;
             @Drift.performed -= instance.OnDrift;
             @Drift.canceled -= instance.OnDrift;
-            @SpeedBoost.started -= instance.OnSpeedBoost;
-            @SpeedBoost.performed -= instance.OnSpeedBoost;
-            @SpeedBoost.canceled -= instance.OnSpeedBoost;
+            @Nitro.started -= instance.OnNitro;
+            @Nitro.performed -= instance.OnNitro;
+            @Nitro.canceled -= instance.OnNitro;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -1297,7 +1297,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnDoorControl(InputAction.CallbackContext context);
         void OnDrift(InputAction.CallbackContext context);
-        void OnSpeedBoost(InputAction.CallbackContext context);
+        void OnNitro(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
     }
     public interface IUIActions
