@@ -16562,6 +16562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nitro: {fileID: 4716489835503060122}
   jump: {fileID: 5774747425646821380}
+  _availableMana: 500
+  _maxMana: 500
 --- !u!114 &4716489835503060122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16604,15 +16606,16 @@ MonoBehaviour:
   onStateUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _requiredMana: 100
   _prepareTime: 0
   _workTime: 0
   _cooldownTime: 0
   _state: 0
   _displayName: Rocket Ride
   _prepareDuration: 0.5
-  _workDuration: 3
-  _cooldownDuration: 5
-  maxSpeedBonus: 100
+  _workDuration: 5
+  _cooldownDuration: 10
+  maxSpeedBonus: 25
   accelerationBonus: 2500
 --- !u!114 &5774747425646821380
 MonoBehaviour:
@@ -16656,6 +16659,7 @@ MonoBehaviour:
   onStateUpdate:
     m_PersistentCalls:
       m_Calls: []
+  _requiredMana: 50
   _prepareTime: 0
   _workTime: 0
   _cooldownTime: 0
@@ -16663,7 +16667,7 @@ MonoBehaviour:
   _displayName: Jo-Jump
   _prepareDuration: 0
   _workDuration: 0
-  _cooldownDuration: 1
+  _cooldownDuration: 2
   jumpVelocity: 50
   jumpTilt: -1
   trajectoryAngle: 0.5
