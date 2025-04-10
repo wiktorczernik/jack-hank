@@ -21,6 +21,14 @@ public class GameEntity : MonoBehaviour
     public event Action<ExplosionProperties> onExplode;
 
 
+    public virtual void SetPosition(Vector3 newPos)
+    {
+        transform.position = newPos;
+    }
+    public virtual Vector3 GetPosition()
+    {
+        return transform.position;
+    }
     public void SelfExplode()
     {
         if (!canSelfExplode) return;
