@@ -13,6 +13,7 @@ public class VehiclePhysics : MonoBehaviour
     [Header("State")]
     public bool isGrounded = false;
     public Vector3 groundNormal = Vector3.up;
+    public Vector3 lastVelocity = Vector3.zero;
     public AirTimeState airTimeState = new AirTimeState(0f, 0f, 0f);
     public bool isDrifting = false;
     public bool isDriftingRight = false;
@@ -29,6 +30,7 @@ public class VehiclePhysics : MonoBehaviour
     public float maxBackwardSpeed = 15;
     public float forwardAcceleration = 2300;
     public float forwardBrakeForce = 4500f;
+    public float hitAlignTorque = 50f;
     public AnimationCurve accelerationCurve = new AnimationCurve(
             new Keyframe(0.0f, 0.9871719f, -0.006936253f, -0.006936253f)
             {
@@ -81,6 +83,7 @@ public class VehiclePhysics : MonoBehaviour
     #region Physics
     [Header("Physics")]
     public Rigidbody bodyRigidbody;
+    public CollisionEventEmitter collisionEvents;
     public Transform centerOfMass;
     public float frictionForce = 750f;
     #endregion
@@ -290,6 +293,22 @@ public class VehiclePhysics : MonoBehaviour
             skidmarkSourceLeft.StopEmitting();
         }
     }
+    void DampenVelocity(Collision collision)
+    {
+        Vector3 avgNormal = Vector3.zero;
+        foreach(var contact in collision.contacts)
+        {
+            avgNormal += contact.normal;
+        }
+        avgNormal /= collision.contacts.Length;
+
+        Vector3 velocity = bodyRigidbody.linearVelocity;
+        velocity = Vector3.Reflect(velocity, avgNormal);
+
+        bodyRigidbody.linearVelocity = velocity;
+
+        lastVelocity = velocity;
+    }
 
     private void ManageDriftState()
     {
@@ -337,6 +356,16 @@ public class VehiclePhysics : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        collisionEvents.OnEnter?.AddListener(DampenVelocity);
+        collisionEvents.OnStay?.AddListener(DampenVelocity);
+    }
+    private void OnDisable()
+    {
+        collisionEvents.OnEnter?.RemoveListener(DampenVelocity);
+        collisionEvents.OnStay?.RemoveListener(DampenVelocity);
+    }
     private void FixedUpdate()
     {
         bool isPlaying = GameManager.isDuringRun;
@@ -370,7 +399,8 @@ public class VehiclePhysics : MonoBehaviour
         }
         speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
         speedKmhForward = Mathf.Abs(speedKmh);
-    }
+        lastVelocity = bodyRigidbody.linearVelocity;
+}
 
 #if UNITY_EDITOR
     private void OnValidate()
