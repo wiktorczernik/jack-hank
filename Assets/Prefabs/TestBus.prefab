@@ -16282,6 +16282,7 @@ GameObject:
   - component: {fileID: 6155559150184595958}
   - component: {fileID: 4716489835503060122}
   - component: {fileID: 5774747425646821380}
+  - component: {fileID: 3356494008966536327}
   - component: {fileID: 8409974713711607995}
   m_Layer: 0
   m_Name: TestBus
@@ -16339,7 +16340,7 @@ MonoBehaviour:
   physics: {fileID: 8049625386355856952}
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
-  vehicleCollision: {fileID: 7498811702490313808}
+  vehicleCollision: {fileID: 3356494008966536327}
   onPickupPassenger:
     m_PersistentCalls:
       m_Calls: []
@@ -16492,7 +16493,7 @@ MonoBehaviour:
   maxBackwardSpeed: 15
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
-  hitAlignTorque: -500
+  hitAlignTorque: 500000
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -16576,12 +16577,12 @@ MonoBehaviour:
   driftClimbRate: 1.7
   driftClimbAginRate: 3.75
   driftSinkRate: 6.25
-  driftMaxAngular: 1.5
+  driftMaxAngular: 1.53
   driftStartAngular: 1.1
   driftEndAngular: 0.5
   driftEndTime: 0.5
   bodyRigidbody: {fileID: 9165154653561585143}
-  collisionEvents: {fileID: 7498811702490313808}
+  collisionEvents: {fileID: 3356494008966536327}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
   skidmarkSourceLeft: {fileID: 8059905075052972374}
@@ -16712,6 +16713,27 @@ MonoBehaviour:
   jumpTilt: -1
   stabilizationForce: 50
   trajectoryAngle: 0.5
+--- !u!114 &3356494008966536327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStay:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8409974713711607995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16926,7 +16948,6 @@ GameObject:
   - component: {fileID: 7777228443190461095}
   - component: {fileID: 1732403293298331413}
   - component: {fileID: 8047620005199023980}
-  - component: {fileID: 7498811702490313808}
   m_Layer: 0
   m_Name: BusNew
   m_TagString: Vehicle
@@ -17020,27 +17041,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.1596508, y: 0.60996825, z: 1.9994285}
   m_Center: {x: -0.0022283753, y: 0.6467817, z: -8.67}
---- !u!114 &7498811702490313808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4854346634697848216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStay:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5147999947503295857
 GameObject:
   m_ObjectHideFlags: 0
