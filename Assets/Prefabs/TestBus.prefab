@@ -16328,7 +16328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   exploded: 0
   canBeExploded: 0
-  canSelfExplode: 0
+  canSelfExplode: 1
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
     _epicenterPosition: {x: 0, y: 0, z: 0}
@@ -16476,6 +16476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGrounded: 0
   groundNormal: {x: 0, y: 1, z: 0}
+  lastVelocity: {x: 0, y: 0, z: 0}
   airTimeState:
     timePassed: 0
     groundHeight: 0
@@ -16491,6 +16492,7 @@ MonoBehaviour:
   maxBackwardSpeed: 15
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
+  hitAlignTorque: -500
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -16531,7 +16533,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.4983673
     - serializedVersion: 3
-      time: 0.16586846
+      time: 0.06718987
       value: 0.77706105
       inSlope: 2.478717
       outSlope: 2.478717
@@ -16579,6 +16581,7 @@ MonoBehaviour:
   driftEndAngular: 0.5
   driftEndTime: 0.5
   bodyRigidbody: {fileID: 9165154653561585143}
+  collisionEvents: {fileID: 7498811702490313808}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
   skidmarkSourceLeft: {fileID: 8059905075052972374}
