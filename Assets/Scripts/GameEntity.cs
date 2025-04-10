@@ -55,11 +55,25 @@ public class GameEntity : MonoBehaviour
     [SerializeField] float _maxHealth = 100f;
 
     [Header("Explosion State")]
+    /// <summary>
+    /// Tells if this entity was exploded, no matter if it was
+    /// exploded by some other entity or on its own.
+    /// </summary>
     public bool exploded = false;
 
     [Header("Explosion Settings")]
+    /// <summary>
+    /// Determines if this entity can be exploded by other entity
+    /// </summary>
     public bool canBeExploded = false;
+    /// <summary>
+    /// Determines if this entity can produce explosion
+    /// </summary>
     public bool canSelfExplode = false;
+    /// <summary>
+    /// Properties of produced explosion by this entity.
+    /// Modify only if this entity can self explode
+    /// </summary>
     public ExplosionProperties selfExplosionProps = new ExplosionProperties()
     {
         force = 500f,
@@ -348,22 +362,36 @@ public class GameEntity : MonoBehaviour
     /// </summary>
     protected virtual void OnDeathInternal() { }
 
+    /// <summary>
+    /// Produces explosion
+    /// </summary>
     public void SelfExplode()
     {
         if (!canSelfExplode) return;
         ExplosionMaster.Create(selfExplosionProps);
+        exploded = true;
         InternalSelfExplode();
         onSelfExplode?.Invoke(selfExplosionProps);
-        exploded = true;
     }
+    /// <summary>
+    /// Tells entity that it is being exploded by other entity
+    /// </summary>
+    /// <param name="explosionProps">Explosion properties</param>
     public void Explode(ExplosionProperties explosionProps)
     {
         if (!canBeExploded) return;
+        exploded = true;
         InternalExplode(explosionProps);
         onExplode?.Invoke(explosionProps);
-        exploded = true;
     }
 
+    /// <summary>
+    /// Called after entity produced explosion
+    /// </summary>
     protected virtual void InternalSelfExplode() { }
+    /// <summary>
+    /// Called after entity was exploded by other entity
+    /// </summary>
+    /// <param name="explosionProps">Explosion properties</param>
     protected virtual void InternalExplode(ExplosionProperties explosionProps) { }
 }
