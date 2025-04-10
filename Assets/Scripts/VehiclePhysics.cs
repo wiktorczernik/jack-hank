@@ -293,21 +293,39 @@ public class VehiclePhysics : MonoBehaviour
             skidmarkSourceLeft.StopEmitting();
         }
     }
+
     void DampenVelocity(Collision collision)
     {
-        Vector3 avgNormal = Vector3.zero;
-        foreach(var contact in collision.contacts)
+        Vector3 newVelocity = lastVelocity;
+        bool reflect = true;
+        var hitObject = collision.gameObject;
+
+        GameEntity ent;
+        if (!hitObject.TryGetComponent(out ent))
         {
-            avgNormal += contact.normal;
+            if (hitObject.GetComponentInParent<GameEntity>() != null)
+                reflect = false;
         }
-        avgNormal /= collision.contacts.Length;
+        else
+            reflect = false;
 
-        Vector3 velocity = bodyRigidbody.linearVelocity;
-        velocity = Vector3.Reflect(velocity, avgNormal);
+        if (reflect)
+        {
+            Vector3 hitPointPos = Vector3.zero;
+            Vector3 hitPointNormal = Vector3.zero;
+            foreach (var contact in collision.contacts)
+            {
+                hitPointPos += contact.point;
+                hitPointNormal += contact.normal;
+            }
+            hitPointPos /= collision.contacts.Length;
+            hitPointNormal /= collision.contacts.Length;
+            newVelocity = Vector3.Reflect(newVelocity, hitPointNormal);
+        }
 
-        bodyRigidbody.linearVelocity = velocity;
-
-        lastVelocity = velocity;
+        bodyRigidbody.linearVelocity = newVelocity;
+        
+        lastVelocity = newVelocity;
     }
 
     private void ManageDriftState()
@@ -358,13 +376,11 @@ public class VehiclePhysics : MonoBehaviour
 
     private void OnEnable()
     {
-        collisionEvents.OnEnter?.AddListener(DampenVelocity);
-        collisionEvents.OnStay?.AddListener(DampenVelocity);
+        collisionEvents.OnEnter.AddListener(DampenVelocity);
     }
     private void OnDisable()
     {
-        collisionEvents.OnEnter?.RemoveListener(DampenVelocity);
-        collisionEvents.OnStay?.RemoveListener(DampenVelocity);
+        collisionEvents.OnEnter.RemoveListener(DampenVelocity);
     }
     private void FixedUpdate()
     {
