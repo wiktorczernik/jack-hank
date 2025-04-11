@@ -7,6 +7,18 @@ public class CinematicSequence : ScriptableObject
     public GameObject prefab;
     public AudioClip audio;
 
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (!prefab) return;
+        Animation animation;
+        if (prefab.TryGetComponent(out animation))
+        {
+            duration = animation.clip.length;
+        }  
+    }
+#endif
+
     /// <summary>
     /// Describes camera state at specific frame
     /// </summary>
