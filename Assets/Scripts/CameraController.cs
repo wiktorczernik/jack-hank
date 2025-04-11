@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     public PlayerVehicle playerVehicle;
 
     [Header("State")]
+    public bool duringCinematic = false;
     public float shakeIntensity = 0f;
 
     [Header("Settings")]
@@ -55,13 +56,33 @@ public class CameraController : MonoBehaviour
         Shake(properties.shakeIntensity);
     }
 
+
+    private void OnCinematicBegin()
+    {
+        duringCinematic = true;
+    }
+    private void OnCinematicFrameUpdate(CinematicSequence.CameraFrameState frameState)
+    {
+        virtualCamera.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
+    }
+    private void OnCinematicEnd()
+    {
+        duringCinematic = false;
+    }
+
     private void OnEnable()
     {
         playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
+        CinematicPlayer.onBeginPlay += OnCinematicBegin;
+        CinematicPlayer.onFrameUpdate += OnCinematicFrameUpdate;
+        CinematicPlayer.onEndPlay += OnCinematicEnd;
     }
     private void OnDisable()
     {
         playerVehicle.onExplosionNearby.RemoveListener(OnExplosionNearby);
+        CinematicPlayer.onBeginPlay -= OnCinematicBegin;
+        CinematicPlayer.onFrameUpdate -= OnCinematicFrameUpdate;
+        CinematicPlayer.onEndPlay -= OnCinematicEnd;
     }
 
 #if UNITY_EDITOR

@@ -84,6 +84,9 @@ public class CinematicPlayer : MonoBehaviour
         if (parent)
             instance.transform.SetParent(parent);
 
+        Animation animation = instance.GetComponent<Animation>();
+        animation.Play();
+
         Transform cameraAnchor = instance.transform.GetChild(0);
 
         isPlaying = true;
