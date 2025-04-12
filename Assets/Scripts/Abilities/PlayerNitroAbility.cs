@@ -3,21 +3,23 @@ using UnityEngine;
 public class PlayerNitroAbility : PlayerVehicleAbility
 {
     [Header("Nitro Settings")]
-    public float maxSpeedBonus = 100f;
-    public float accelerationBonus = 2500f;
+    public float maxSpeed = 150f;
+    public float accelerationForce = 150f;
 
-    protected override void OnWorkBegin()
-    {
-        physics.maxForwardSpeed += maxSpeedBonus;
-        physics.forwardAcceleration += accelerationBonus;
-    }
     protected override void OnWorkTick()
     {
-        physics.Accelerate(1, false);
-    }
-    protected override void OnWorkEnd()
-    {
-        physics.maxForwardSpeed -= maxSpeedBonus;
-        physics.forwardAcceleration -= accelerationBonus;
+        var rigidbody = physics.bodyRigidbody;
+
+        Vector3 nitroForce = rigidbody.transform.forward;
+        nitroForce *= accelerationForce;
+
+        float sp = Vector3.Dot(rigidbody.linearVelocity, nitroForce.normalized) * 3.6f;
+        if (sp > maxSpeed)
+        {
+            Debug.Log("Capped nitro");
+            return;
+        }
+
+        rigidbody.AddForce(nitroForce, ForceMode.Impulse);
     }
 }
