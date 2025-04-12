@@ -16327,6 +16327,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835c814ac0e4a1c4a965e77489f75f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canReceiveDamage: 1
+  canBeHealed: 1
+  _health: 100
+  _maxHealth: 100
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 1
@@ -16494,6 +16498,8 @@ MonoBehaviour:
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
   hitAlignTorque: 500000
+  maxNitroSpeed: 200
+  nitroAcceleration: 5000
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -16518,6 +16524,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  allowAirRoll: 1
+  airRollForce: 7.5
   turnForce: 5000
   turnAginForce: 7500
   turnStabilization: 8
@@ -16569,7 +16577,7 @@ MonoBehaviour:
   - {fileID: 1712791839570977324}
   - {fileID: 8330458456530461051}
   bonusWheelGravity: 50
-  driftBonusAcceleration: 2100
+  driftBonusAcceleration: 2750
   driftMinSpeed: 15
   driftTurnForce: 3000
   driftMoveForce: 1500
@@ -16653,11 +16661,11 @@ MonoBehaviour:
   _cooldownTime: 0
   _state: 0
   _displayName: Rocket Ride
-  _prepareDuration: 0.5
-  _workDuration: 5
+  _prepareDuration: 1.25
+  _workDuration: 10
   _cooldownDuration: 10
-  maxSpeedBonus: 25
-  accelerationBonus: 2500
+  maxSpeed: 150
+  accelerationForce: 125
 --- !u!114 &5774747425646821380
 MonoBehaviour:
   m_ObjectHideFlags: 0

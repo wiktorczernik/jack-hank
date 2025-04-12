@@ -45,6 +45,13 @@ public class VehiclePhysics : MonoBehaviour
         );
     #endregion
 
+    #region Air roll
+    [Header("Air roll")]
+    public bool allowAirRoll = false;
+    public float airRollForce = 1f;
+    public float airRollMinTime = 1.25f;
+    #endregion
+
     #region Turning
     [Header("Turning")]
     public float turnForce = 5000;
@@ -186,6 +193,24 @@ public class VehiclePhysics : MonoBehaviour
         Vector3 newAngular = bodyRigidbody.angularVelocity;
         newAngular.y = driftAngular;
         bodyRigidbody.angularVelocity = newAngular;
+    }
+    public void DoAirRoll(Vector3 input)
+    {
+        if (isGrounded || !allowAirRoll) return;
+        if (airTimeState.timePassed < airRollMinTime) return;
+
+        Vector3 sideForce = transform.up;
+        sideForce *= airRollForce;
+        sideForce *= input.x;
+        sideForce *= Time.fixedDeltaTime;
+        
+        Vector3 forwardForce = transform.right;
+        forwardForce *= airRollForce;
+        forwardForce *= input.y;
+        forwardForce *= Time.fixedDeltaTime;
+
+        bodyRigidbody.AddTorque(sideForce, ForceMode.VelocityChange);
+        bodyRigidbody.AddTorque(forwardForce, ForceMode.VelocityChange);
     }
     [Obsolete]
     public bool IsGrounded() => isGrounded;
@@ -393,15 +418,15 @@ public class VehiclePhysics : MonoBehaviour
         HandleWheels();
         HandleSkidmarks();
 
-        if (input.y > 0 && isPlaying)
+        if (input.y > 0 && isPlaying && isGrounded)
         {
             Accelerate(input.y);
         }
-        if (input.y < 0 && isPlaying)
+        if (input.y < 0 && isPlaying && isGrounded)
         {
             Brake(-input.y);
         }
-        if (isPlaying)
+        if (isPlaying && isGrounded)
         {
             DoTurn(input.x);
             DoDrift(input.x);
@@ -412,6 +437,10 @@ public class VehiclePhysics : MonoBehaviour
             Vector3 av = bodyRigidbody.angularVelocity;
             av.y = 0;
             bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, turnStabilization * Time.fixedDeltaTime);
+        }
+        if (!isGrounded && allowAirRoll)
+        {
+            DoAirRoll(input);
         }
         speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
         speedKmhForward = Mathf.Abs(speedKmh);
