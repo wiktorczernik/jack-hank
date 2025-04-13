@@ -265,26 +265,22 @@ public class VehiclePhysics : MonoBehaviour
 
     private void FixedUpdate()
     {
-        bool isPlaying = GameManager.isDuringRun;
-
         ManageDriftState();
 
         HandleWheels();
         HandleSkidmarks();
 
-        if (input.y > 0 && isPlaying)
+        if (input.y > 0)
         {
             Accelerate(input.y);
         }
-        if (input.y < 0 && isPlaying)
+        if (input.y < 0)
         {
             Brake(-input.y);
         }
-        if (isPlaying)
-        {
-            DoTurn(input.x);
-            DoDrift(input.x);
-        }
+        DoTurn(input.x);
+        DoDrift(input.x);
+        
         ApplyFriction();
         if (!isDrifting && input.x == 0)
         {
