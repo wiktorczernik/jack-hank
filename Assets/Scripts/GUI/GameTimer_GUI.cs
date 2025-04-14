@@ -7,9 +7,9 @@ public class GameTimer_GUI : MonoBehaviour
 
     void LateUpdate()
     {
-        if (GameManager.isDuringRun)
+        if (GameManager.IsDuringRun)
         {
-            label.text = GameManager.runInfo.GetTimeFormatted();
+            label.text = GameManager.RunInfo.GetTimeFormatted();
         }
     }
 }

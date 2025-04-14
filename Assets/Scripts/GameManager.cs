@@ -1,42 +1,88 @@
 using System;
 using System.Linq;
+using LevelManagement;
 using LevelTask;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Bonus_GUI bonusGUI;
-    [SerializeField] private LevelTaskDefinition _levelTaskTample;
-    public static GameRunInfo runInfo { get; private set; } = null;
-    public static bool isDuringRun { get; private set; } = false;
+    [SerializeField] private LevelDefinition debugLevelDefinition;
+    
+    public static GameManager Local;
+    public static LevelTaskDefinition[] LevelTasks => _definition.LevelTasks; 
+    public static GameRunInfo RunInfo { get; private set; }
+    public static bool IsDuringRun { get; private set; }
     public static PlayerVehicle PlayerVehicle { get; private set; }
 
     public static Action<GameRunInfo> OnRunBegin;
     public static Action<GameRunInfo> OnRunFinish;
-    
-    public static LevelTaskDefinition[] LevelTasks; 
-    private static LevelTaskTracker[] _levelTaskTrackers; // this value is taking from level definition when level scene is loading
-    private static GameManager _local;
 
-    public void BeginRun()
+    private static LevelDefinition _definition;
+    private static LevelTaskTracker[] _levelTaskTrackers;
+    private static bool _isInitialized;
+
+    public void Initialize(LevelDefinition definition)
     {
-        LevelTasks = new[] { _levelTaskTample };
-        _local = this;
-        runInfo = new GameRunInfo();
-        isDuringRun = true;
-        OnRunBegin?.Invoke(runInfo);
-        PrepareLevelEntities();
+        if (_isInitialized) return;
+        if (definition == null)
+        {
+            Debug.LogError("Game Manager can not be initialized with null Level Definition");
+            return;
+        }
+        
+        _definition = definition;
+        CreateTaskTrackers();
+        _isInitialized = true;
     }
-
+    
     public static void FinishRun()
     {
-        isDuringRun = false;
-        OnRunFinish?.Invoke(runInfo);
+        IsDuringRun = false;
+        OnRunFinish?.Invoke(RunInfo);
+    }
+    
+    public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
+    {
+        RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        Local.bonusGUI.ShowBonus(bonusPool, bonusType);
+    }
+    
+    public static void UpdateBonus(int bonusValue,  PlayerBonusTypes bonusType)
+    {
+        RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        Local.bonusGUI.ShowBonus(bonusValue, bonusType);
+    }
+    
+    public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
+    {
+        RunInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
+        Local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
     }
 
-    private void PrepareLevelEntities()
+    public static LevelCompletenessMark GetMarkByBounty()
+    {
+        if (RunInfo.AllBountyPoints <= _definition.E) return LevelCompletenessMark.E;
+        if (RunInfo.AllBountyPoints <= _definition.D) return LevelCompletenessMark.D;
+        if (RunInfo.AllBountyPoints <= _definition.C) return LevelCompletenessMark.C;
+        if (RunInfo.AllBountyPoints <= _definition.B) return LevelCompletenessMark.B;
+        if (RunInfo.AllBountyPoints <= _definition.A) return LevelCompletenessMark.A;
+
+        return LevelCompletenessMark.S;
+    }
+    
+    private void BeginRun()
     {
         PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
+        Local = this;
+        RunInfo = new GameRunInfo();
+        IsDuringRun = true;
+        OnRunBegin?.Invoke(RunInfo);
+    }
+
+    private void CreateTaskTrackers()
+    {
+        if (LevelTasks.Length == 0) return;
         
         _levelTaskTrackers = new LevelTaskTracker[LevelTasks.Length];
         for (var i = 0; i < _levelTaskTrackers.Length; i++)
@@ -44,39 +90,26 @@ public class GameManager : MonoBehaviour
             _levelTaskTrackers[i] = LevelTaskTracker.CreateTracker(gameObject, LevelTasks[i]);
         }
     }
-
-    public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
-    {
-        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
-        _local.bonusGUI.ShowBonus(bonusPool, bonusType);
-    }
-    
-    public static void UpdateBonus(int bonusValue,  PlayerBonusTypes bonusType)
-    {
-        runInfo.ChangeBonusBountyBy(bonusValue, bonusType);
-        _local.bonusGUI.ShowBonus(bonusValue, bonusType);
-    }
-    
-    public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
-    {
-        runInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
-        _local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
-    }
     
     private void GameRunFrameTick()
     {
-        if (!isDuringRun) return;
+        if (!IsDuringRun) return;
         
-        runInfo.Time += Time.deltaTime;   
+        RunInfo.Time += Time.deltaTime;   
     }
     
     private void Awake()
     {
+        if (Debug.isDebugBuild && !_isInitialized) 
+            Initialize(debugLevelDefinition);
+
+        if (!_isInitialized) Debug.LogError("Game Manager was not initialzied");
+        
         BeginRun();
     }
     private void Update()
     {
-        if (isDuringRun)
+        if (IsDuringRun)
         {
             GameRunFrameTick();
         }

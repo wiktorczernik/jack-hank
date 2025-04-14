@@ -7,9 +7,9 @@ public class BountyCounter_GUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (GameManager.isDuringRun)
+        if (GameManager.IsDuringRun)
         {
-            label.text = GameManager.runInfo.AllBountyPoints.ToString();
+            label.text = GameManager.RunInfo.AllBountyPoints.ToString();
         }
     }
 }

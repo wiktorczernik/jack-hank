@@ -18,6 +18,12 @@ namespace LevelManagement
         [SerializeField] private int b;
         [SerializeField] private int a;
         [SerializeField] private int s;
+        public int E => e;
+        public int D => d;
+        public int C => c;
+        public int B => b;
+        public int A => a;
+        public int S => s;
 
         public int LevelID => levelID;
        
@@ -26,7 +32,5 @@ namespace LevelManagement
         public LevelDefinition[] LastLevels => lastLevels.Clone() as LevelDefinition[];
 
         public LevelTaskDefinition[] LevelTasks => levelTasks.Clone() as LevelTaskDefinition[];
-
-        public int[] ScaleLimits => new int[] { e, d, c, b, a, s };
     }
 }
