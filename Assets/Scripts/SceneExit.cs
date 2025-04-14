@@ -13,9 +13,7 @@ public class SceneExit : MonoBehaviour
     [Header("Next options will be used only if [useBotWhenPlayerInTrigger] is set to true]")]
     [SerializeField] private TriggerEventEmitter turnOnBotZone;
     [SerializeField] private Transform pointToDesignateFroBot;
-
-    private BotVehicle _botVehicle;
-    
+    [SerializeField] private BotVehicle botVehicle;
 
     private void Awake()
     {
@@ -38,17 +36,16 @@ public class SceneExit : MonoBehaviour
         
         if (!useBotWhenPlayerInTrigger) return;
         
-        _botVehicle.isFollowing = true;
-        _botVehicle.followMode = BotVehicle.FollowMode.Single; 
-        _botVehicle.destinationPoint = pointToDesignateFroBot.position;
-        _botVehicle.followMaxSpeed = 100;
+        botVehicle.isFollowing = true;
+        botVehicle.followMode = BotVehicle.FollowMode.Single; 
+        botVehicle.destinationPoint = pointToDesignateFroBot.position;
+        botVehicle.followMaxSpeed = 100;
     }
 
     private void OnPlayerEnterExitZone(Collider other)
     {
-        Debug.Log("Something entered");
         if (!other.gameObject.CompareTag("Vehicle")) return;
-        Debug.Log("IT IS PLAYER");
+
         SceneManager.LoadScene(nextSceneName);
     }
 
