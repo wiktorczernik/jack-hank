@@ -16,7 +16,7 @@ public class NextAccessibleLevels_GUI : MonoBehaviour
    {
       _createdButtons = new Button[levels.Length];
 
-      var i = 1;
+      var i = 0;
       
       foreach (var level in levels)
       {
@@ -28,9 +28,11 @@ public class NextAccessibleLevels_GUI : MonoBehaviour
          
          button.GetComponentInChildren<TMP_Text>().text = level.LevelSceneName;
          var rect = button.GetComponent<RectTransform>();
-         rect.anchorMax = new Vector2(1, 1);
-         rect.anchorMin = new Vector2(1, 1);
-         rect.anchoredPosition = new Vector2((-rightOffset - rect.localScale.x) * i, -bottomOffset - rect.localScale.y);
+         rect.anchorMin = new Vector2(1, 0);
+         rect.anchorMax = new Vector2(1, 0);
+         rect.pivot = new Vector2(1, 0);
+
+         rect.localPosition = new Vector2(-rightOffset - rect.sizeDelta.x * i, bottomOffset);
          i++;
       }
    }
