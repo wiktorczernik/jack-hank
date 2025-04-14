@@ -1,13 +1,15 @@
 ﻿using LevelManagement;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LevelSelectMenuManager : MonoBehaviour
 {
    
-    [SerializeField] private Transform pointToExit;
+    [SerializeField] private Transform botDestination;
     
     private LevelSelectMenuScroller _levelScroller;
     private BotVehicle _botVehicle;
+    private SceneExit _sceneExit;
     public static LevelSelectMenuState State { get; private set; }
     public static LevelInfo[] NextLevels { get; private set; }
     
@@ -19,20 +21,26 @@ public class LevelSelectMenuManager : MonoBehaviour
     {
         if (State == LevelSelectMenuState.LevelSelected) return;
 
+        _instance._sceneExit.SetNextScene(selectedLevel.LevelSceneName);
+        
         _instance._levelScroller.StopScrolling();
         _instance._botVehicle.isFollowing = true;
-        _instance._botVehicle.destinationPoint = _instance.pointToExit.position;
+        _instance._botVehicle.followMode = BotVehicle.FollowMode.Single; 
+        _instance._botVehicle.destinationPoint = _instance.botDestination.position;
+        _instance._botVehicle.followMaxSpeed = 100;
     }
 
     private static void Initialize()
     {
         if (_initialized) return;
-        Debug.Log("Init");
+
         State = LevelSelectMenuState.Idle;
         NextLevels = LevelManager.GetAvailableLevels().ToArray();
         var nextLevelsUI = FindFirstObjectByType<NextAccessibleLevels_GUI>();
         nextLevelsUI.InitializeWithNextLevels(NextLevels);
         nextLevelsUI.OnLevelSelected += SetLevelSelectedState;
+
+        _instance._sceneExit = FindFirstObjectByType<SceneExit>();
         
         _instance._levelScroller = FindFirstObjectByType<LevelSelectMenuScroller>();
         _instance._levelScroller.StartScrolling();
