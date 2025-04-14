@@ -16498,8 +16498,6 @@ MonoBehaviour:
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
   hitAlignTorque: 500000
-  maxNitroSpeed: 200
-  nitroAcceleration: 5000
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -16526,6 +16524,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   allowAirRoll: 1
   airRollForce: 7.5
+  airRollMinTime: 1.25
   turnForce: 5000
   turnAginForce: 7500
   turnStabilization: 8
