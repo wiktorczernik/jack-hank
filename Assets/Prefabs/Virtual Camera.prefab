@@ -58,7 +58,7 @@ MonoBehaviour:
     FieldOfView: 55
     OrthographicSize: 5
     NearClipPlane: 0.1
-    FarClipPlane: 1000
+    FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 2
-  m_FollowOffset: {x: 0, y: 6.9, z: -15}
+  m_FollowOffset: {x: 0, y: 5.75, z: -15}
   m_XDamping: 0.1
   m_YDamping: 0
   m_ZDamping: 0
