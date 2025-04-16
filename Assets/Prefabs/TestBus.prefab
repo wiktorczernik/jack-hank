@@ -16663,7 +16663,7 @@ MonoBehaviour:
   _prepareDuration: 1.25
   _workDuration: 10
   _cooldownDuration: 10
-  maxSpeed: 150
+  maxSpeed: 220
   accelerationForce: 125
 --- !u!114 &5774747425646821380
 MonoBehaviour:
