@@ -1,5 +1,6 @@
 using Cinemachine;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -12,8 +13,14 @@ public class CameraController : MonoBehaviour
     [Header("State")]
     public bool duringCinematic = false;
     public float shakeIntensity = 0f;
+    public float speedTargetFov = 0f;
 
     [Header("Settings")]
+    public float speedFovLerp = 1.5f;
+    public float speedMinFov = 55f;
+    public float speedMaxFov = 70f;
+    public float effectsMinSpeed = 70f;
+    public float effectsMaxSpeed = 140f;
     public float shakeMaxAmplitude = 50f;
     public float shakeRiseRate = 4f;
     public float shakeFallRate = 0.5f;
@@ -80,18 +87,21 @@ public class CameraController : MonoBehaviour
     {
         return 1 / (1 + Mathf.Exp(10 / (start - finish) * (x - (start + finish) / 2)));
     }
+    private void ManageSpeedFov()
+    {
+        float currentFov = virtualCamera.m_Lens.FieldOfView;
+        virtualCamera.m_Lens.FieldOfView = Mathf.Lerp(currentFov, speedTargetFov, speedFovLerp * Time.deltaTime);
+    }
     private void ApplySpeedEffects()
     {
+        float currentFov = virtualCamera.m_Lens.FieldOfView;
         float speed = playerVehicle.physics.GetForwardSpeed() * 3.6f;
-        float minSpeed = 70, maxSpeed = 140;
-
-        float maxFov = 55;
-        float minFov = 45;
+        float minSpeed = effectsMinSpeed, maxSpeed = effectsMaxSpeed;
 
         if (speed < minSpeed) {
             var s_ = SpeedLines.shape;
             s_.radius = 100f;
-            virtualCamera.m_Lens.FieldOfView = 55;
+            speedTargetFov = 55;
             blurMaterial.SetFloat("_Level", 0);
             return;
         }
@@ -107,13 +117,12 @@ public class CameraController : MonoBehaviour
 
         blurMaterial.SetFloat("_Level", lvl);
 
-        virtualCamera.m_Lens.FieldOfView = maxFov - (maxFov - minFov) * fovCurve.Evaluate(Mathf.Min(Mathf.Max(speed - minSpeed, 0) / (maxSpeed - minSpeed), 1f));
-
-        //SpeedLines.Play();
+        speedTargetFov = speedMinFov + (speedMaxFov - speedMinFov) * fovCurve.Evaluate(Mathf.Min(Mathf.Max(speed - minSpeed, 0) / (maxSpeed - minSpeed), 1f));
     }
 
     private void OnEnable()
     {
+        speedTargetFov = speedMinFov;
         playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
         CinematicPlayer.onBeginPlay += OnCinematicBegin;
         CinematicPlayer.onFrameUpdate += OnCinematicFrameUpdate;
@@ -130,6 +139,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         ApplySpeedEffects();
+        ManageSpeedFov();
     }
 
 #if UNITY_EDITOR
