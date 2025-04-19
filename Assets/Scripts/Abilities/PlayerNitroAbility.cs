@@ -6,6 +6,9 @@ public class PlayerNitroAbility : PlayerVehicleAbility
     public float maxSpeed = 150f;
     public float accelerationForce = 150f;
 
+    [Header("Nitro Effects")]
+    [SerializeField] ParticleSystem[] particleVisuals;
+
     protected override void OnWorkTick()
     {
         var rigidbody = physics.bodyRigidbody;
@@ -21,5 +24,15 @@ public class PlayerNitroAbility : PlayerVehicleAbility
         }
 
         rigidbody.AddForce(nitroForce, ForceMode.Impulse);
+    }
+
+    public void ActivateNitroEffects()
+    {
+        foreach (ParticleSystem effect in particleVisuals) effect.Play();
+    }
+
+    public void DeactivateNitroEffects()
+    {
+        foreach (ParticleSystem effect in particleVisuals) effect.Stop();
     }
 }
