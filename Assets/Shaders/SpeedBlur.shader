@@ -2,8 +2,9 @@ Shader "PostProcessing/SpeedBlur"
 {
     Properties
     {
-        _BlurMap ("BlurMap", 2D) = "black" {}
-        _Width ("Width", int) = 230
+        _BlurMap ("Blur Map", 2D) = "black" {}
+        _BlurThreshold ("Blur Threshold", float) = 0.2
+        _BlurSize ("Blur Size", float) = 5
         _Level ("Level", float) = 0
     }
     SubShader
@@ -26,52 +27,32 @@ Shader "PostProcessing/SpeedBlur"
             SAMPLER(sampler_BlitTexture);
 
             sampler2D _BlurMap;
-            float _Width;
-            float _Level;
+            // Poziom intensywnoœci bluru zadawany przez skrypty
+            half _Level;
+            // Minimalna wymagana intensywnoœæ do osi¹gniêcia bluru
+            half _BlurThreshold;
+            half _BlurSize;
 
-            float lvl(int x) {
-                if (x <= _Width * _Level) return x / _Width * _Level;
-                return 1;
-            }
 
             half4 Frag(Varyings input) : SV_Target
             {
-                int m = 1;
-                int M = 3;
+                // Intensywnoœæ bluru wedle tekstury
+                half intensity = tex2D(_BlurMap, input.texcoord);
+                // Intensywnoœæ bluru w danym punkcie pomno¿one przez zadany poziom bluru
+                half leveledIntensity = intensity * _Level;
 
-                float red = tex2D(_BlurMap, input.texcoord);
-                int size = round(red * (M - m)) + m;
+                
+                if (leveledIntensity <= _BlurThreshold) return SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord);
 
-                if (red <= 1 - _Level) return SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord);
+                half screenXfrag = 1 / _ScreenParams.x;
+                screenXfrag *= _BlurSize * leveledIntensity;
+                
+                half4 outputColor = 0;
+                outputColor += SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord + half4(-screenXfrag, 0, 0,0));
+                outputColor += SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord + half4(screenXfrag, 0, 0,0));
+                outputColor /= 2;
 
-                half4 col = 0;
-
-                if (red <= 1.25 - _Level) {
-                    for (int i = -1; i <= 1; i++) {
-                        for (int j = -1; j <= 1; j++) {
-                            col = col + SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord + float4(i/_ScreenParams.x,j/_ScreenParams.y,0,0));
-                        }
-                    }
-                    return col / 9;
-                }
-                else if (red <= 1.50 - _Level) {
-                    for (int i = -3; i <= 3; i++) {
-                        for (int j = -3; j <= 3; j++) {
-                            col = col + SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord + float4(i/_ScreenParams.x,j/_ScreenParams.y,0,0));
-                        }
-                    }
-                    return col / 49; // UWAGA!!!!111!1!!!!!1!
-                    // TA MAGICZNA LICZBA OZNACZA -> -> ->::::::
-                    // œredni¹ arytmetyczn¹ wszytskich kana³ów koloru zmiennej 'col' (box blur), tak jak inne magiczne liczby przy return
-                }
-                else {
-                    for (int i = -5; i <= 5; i++) {
-                        for (int j = -5; j <= 5; j++) {
-                            col = col + SAMPLE_TEXTURE2D(_BlitTexture, sampler_BlitTexture, input.texcoord + float4(i/_ScreenParams.x,j/_ScreenParams.y,0,0));
-                        }
-                    }
-                    return col / 121;
-                }
+                return outputColor;
             }
 
             ENDHLSL
