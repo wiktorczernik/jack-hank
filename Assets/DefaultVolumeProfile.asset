@@ -485,6 +485,7 @@ MonoBehaviour:
   - {fileID: 8656350845039576176}
   - {fileID: 7684718113215769652}
   - {fileID: -8095836017790649659}
+  - {fileID: 8347291481980775884}
 --- !u!114 &245591792380481327
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -726,6 +727,25 @@ MonoBehaviour:
   balance:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &8347291481980775884
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4536b560b40d17841a0fa1069c07d33a, type: 3}
+  m_Name: SpeedBlurEffectVolumeComponent
+  m_EditorClassIdentifier: 
+  active: 1
+  Level:
+    m_OverrideState: 1
+    m_Value: 1
+  Width:
+    m_OverrideState: 1
+    m_Value: 230
 --- !u!114 &8656350845039576176
 MonoBehaviour:
   m_ObjectHideFlags: 3
