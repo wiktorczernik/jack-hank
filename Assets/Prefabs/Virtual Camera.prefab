@@ -91,6 +91,12 @@ MonoBehaviour:
   playerVehicle: {fileID: 0}
   duringCinematic: 0
   shakeIntensity: 0
+  speedTargetFov: 0
+  speedFovLerp: 1.5
+  speedMinFov: 55
+  speedMaxFov: 70
+  effectsMinSpeed: 70
+  effectsMaxSpeed: 140
   shakeMaxAmplitude: 50
   shakeRiseRate: 4
   shakeFallRate: 0.5
