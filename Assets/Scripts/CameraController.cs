@@ -1,6 +1,7 @@
 using Cinemachine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CameraController : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class CameraController : MonoBehaviour
     public float shakeRiseRate = 4f;
     public float shakeFallRate = 0.5f;
     public float shakeFrequency = 0.05f;
+
+    [Header("Effects")]
+    [SerializeField] Material blurMaterial;
+    [SerializeField] ParticleSystem SpeedLines;
+    [SerializeField] AnimationCurve fovCurve;
 
     public void Shake(float intensity)
     {
@@ -70,6 +76,42 @@ public class CameraController : MonoBehaviour
         duringCinematic = false;
     }
 
+    float CurveEasing(float x, float start, float finish)
+    {
+        return 1 / (1 + Mathf.Exp(10 / (start - finish) * (x - (start + finish) / 2)));
+    }
+    private void ApplySpeedEffects()
+    {
+        float speed = playerVehicle.physics.GetForwardSpeed() * 3.6f;
+        float minSpeed = 70, maxSpeed = 140;
+
+        float maxFov = 55;
+        float minFov = 45;
+
+        if (speed < minSpeed) {
+            var s_ = SpeedLines.shape;
+            s_.radius = 100f;
+            virtualCamera.m_Lens.FieldOfView = 55;
+            blurMaterial.SetFloat("_Level", 0);
+            return;
+        }
+
+        float lvl = CurveEasing(speed, minSpeed, maxSpeed);
+
+        var main = SpeedLines.main;
+        main.startSpeed = Mathf.Lerp(8, 20, lvl);
+        var emmision = SpeedLines.emission;
+        emmision.rateOverTime = Mathf.Lerp(75, 120, lvl);
+        var shape = SpeedLines.shape;
+        shape.radius = Mathf.Lerp(11, 8, lvl);
+
+        blurMaterial.SetFloat("_Level", lvl);
+
+        virtualCamera.m_Lens.FieldOfView = maxFov - (maxFov - minFov) * fovCurve.Evaluate(Mathf.Min(Mathf.Max(speed - minSpeed, 0) / (maxSpeed - minSpeed), 1f));
+
+        //SpeedLines.Play();
+    }
+
     private void OnEnable()
     {
         playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
@@ -83,6 +125,11 @@ public class CameraController : MonoBehaviour
         CinematicPlayer.onBeginPlay -= OnCinematicBegin;
         CinematicPlayer.onFrameUpdate -= OnCinematicFrameUpdate;
         CinematicPlayer.onEndPlay -= OnCinematicEnd;
+    }
+
+    private void Update()
+    {
+        ApplySpeedEffects();
     }
 
 #if UNITY_EDITOR
