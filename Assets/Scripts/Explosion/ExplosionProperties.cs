@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct ExplosionProperties
 {
-    public ExplosionProperties(Transform epicenterTransform, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance)
+    public ExplosionProperties(Transform epicenterTransform, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, GameEntity initiator = null)
     {
         this._epicenterParentTransform = epicenterTransform;
         this._epicenterPosition = Vector3.zero;
@@ -12,8 +12,9 @@ public struct ExplosionProperties
         this.epicenterRadius = epicenterRadius;
         this.shakeIntensity = shakeIntensity;
         this.shakeMaxDistance = shakeMaxDistance;
+        this.initiator = initiator;
     }
-    public ExplosionProperties(Vector3 epicenterPosition, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance)
+    public ExplosionProperties(Vector3 epicenterPosition, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, GameEntity initiator = null)
     {
         this._epicenterParentTransform = null;
         this._epicenterPosition = epicenterPosition;
@@ -21,6 +22,7 @@ public struct ExplosionProperties
         this.epicenterRadius = epicenterRadius;
         this.shakeIntensity = shakeIntensity;
         this.shakeMaxDistance = shakeMaxDistance;
+        this.initiator = initiator;
     }
 
     /// <summary>
@@ -39,6 +41,7 @@ public struct ExplosionProperties
     {
         get => _epicenterParentTransform == null ? _epicenterPosition : _epicenterParentTransform.position;
     }
+    public GameEntity initiator;
     /// <summary>
     /// Explosion force that objects within epicenter will feel
     /// </summary>

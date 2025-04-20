@@ -379,6 +379,7 @@ public class GameEntity : MonoBehaviour
     /// <param name="explosionProps">Explosion properties</param>
     public void Explode(ExplosionProperties explosionProps)
     {
+        if (explosionProps.initiator == this) return;
         if (!canBeExploded) return;
         exploded = true;
         InternalExplode(explosionProps);
