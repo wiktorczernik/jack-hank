@@ -31349,8 +31349,8 @@ MonoBehaviour:
   _state: 0
   _displayName: Rocket Ride
   _prepareDuration: 1.25
-  _workDuration: 10
-  _cooldownDuration: 10
+  _workDuration: 8
+  _cooldownDuration: 15
   maxSpeed: 220
   accelerationForce: 125
   particleVisuals:
@@ -31408,10 +31408,10 @@ MonoBehaviour:
   _prepareDuration: 0
   _workDuration: 0.25
   _cooldownDuration: 2
-  jumpVelocity: 50
+  jumpVelocity: 40
   jumpTilt: -1
   stabilizationForce: 50
-  trajectoryAngle: 0.5
+  trajectoryAngle: 0.8
 --- !u!114 &3356494008966536327
 MonoBehaviour:
   m_ObjectHideFlags: 0
