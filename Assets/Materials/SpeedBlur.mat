@@ -109,6 +109,8 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlitScaleBias: 0
+    - _BlurSize: 5
+    - _BlurThreshold: 0.2
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0

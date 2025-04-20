@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -24,6 +26,10 @@ public class BotVehicle : Vehicle
     [Header("Hard turning")]
     public float hardTurnThresholdAngle = 90f;
     public float hardTurnMaxSpeed = 10f;
+
+    [Header("Behaviour")]
+    [Description("In km/h")] public float speedDamageThreshold = 40f;
+    public float dmgReceivedPerSpeedUnit = 3f;
 
 
     private void Awake()
@@ -109,7 +115,7 @@ public class BotVehicle : Vehicle
         }
         if (Mathf.Abs(angYdiff) > hardTurnThresholdAngle)
         {
-            Debug.Log($"{curAng.y} {destAng.y}");
+            // Debug.Log($"{curAng.y} {destAng.y}");
             if (physics.speedKmh > hardTurnMaxSpeed)
             {
                 doAccelerate = false && doAccelerate;
@@ -150,6 +156,29 @@ public class BotVehicle : Vehicle
     private void FixedUpdate()
     {
         if (isFollowing) FollowTick();
+    }
+
+    public void ReceivePhysicalDamage(Collision collision)
+    {
+        Transform current = collision.collider.transform;
+        bool isVehicle = false;
+        while (!isVehicle)
+        {
+            if (current == null) break;
+            isVehicle = current.TryGetComponent(out Vehicle v);
+            current = current.parent;
+        }
+
+        if (!isVehicle) return;
+        if (collision.relativeVelocity.magnitude * 3.6f < speedDamageThreshold) return;
+
+        float damage = (collision.relativeVelocity.magnitude * 3.6f - speedDamageThreshold) * dmgReceivedPerSpeedUnit;
+        Hurt(damage);
+    }
+
+    protected override void OnDeathInternal()
+    {
+        SelfExplode();
     }
 
 
