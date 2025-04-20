@@ -101,5 +101,19 @@ public class SmashableEntity : GameEntity
 
 public enum SmashableType
 {
-    Cow, RoadSign, LightingPole, TrafficBarrier, TrafficLight, TrafficCone, OutdoorTable, Stall, Crate, Cart, Bench, Trash, Hydrant, SmallSign
+    Cow, 
+    RoadSign, 
+    LightingPole, 
+    TrafficBarrier, 
+    TrafficLight, 
+    TrafficCone, 
+    OutdoorTable, 
+    Stall, 
+    Crate, 
+    Cart, 
+    Bench, 
+    Trash, 
+    Hydrant, 
+    SmallSign, 
+    Barrel
 }
