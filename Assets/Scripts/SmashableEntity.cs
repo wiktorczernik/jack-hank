@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using System.Collections.Generic;
 
 public class SmashableEntity : GameEntity
 {
@@ -9,11 +10,13 @@ public class SmashableEntity : GameEntity
     public bool wasHit = false;
     public bool hittable = true;
     public SmashableType SmashableType => smashableType;
+    public List<AudioClip> audioClips;
     [Header("Components")]
     [SerializeField] protected CollisionEventEmitter collisionEvents;
     [SerializeField] protected Rigidbody[] usedRigidbodies;
     [SerializeField] protected Collider[] usedColliders;
     [SerializeField] private SmashableType smashableType;
+    [SerializeField] protected AudioSource audioSource;
 
 
     protected override void InternalExplode(ExplosionProperties explosionProps)
@@ -64,6 +67,14 @@ public class SmashableEntity : GameEntity
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.None;
             }
+
+            int clip = Random.Range(0, audioClips.Count);
+            if (clip >= 0 && audioClips.Count > 0)
+            {
+                audioSource.clip = audioClips[clip];
+                audioSource.Play();
+            }
+
             OnHitEvent();
             OnHit?.Invoke(this);
             wasHit = true;
