@@ -409,8 +409,6 @@ public class VehiclePhysics : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        bool isPlaying = GameManager.isDuringRun;
-
         CheckGrounded();
 
         ManageDriftState();
@@ -418,15 +416,15 @@ public class VehiclePhysics : MonoBehaviour
         HandleWheels();
         HandleSkidmarks();
 
-        if (input.y > 0 && isPlaying && isGrounded)
+        if (input.y > 0 && isGrounded)
         {
             Accelerate(input.y);
         }
-        if (input.y < 0 && isPlaying && isGrounded)
+        if (input.y < 0  && isGrounded)
         {
             Brake(-input.y);
         }
-        if (isPlaying && isGrounded)
+        if (isGrounded)
         {
             DoTurn(input.x);
             DoDrift(input.x);
