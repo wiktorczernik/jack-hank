@@ -34,7 +34,7 @@ public class GameSceneManager : MonoBehaviour
     }
     public static IEnumerator LoadMenuAsync()
     {
-        yield return LoadActiveSceneAsync(GameScenes.menu, onMenuLoadBegin, onMenuLoadEnd);
+        yield return LoadActiveSceneAsync(GameScenes.menu, () => onMenuLoadBegin?.Invoke(), () => onMenuLoadEnd?.Invoke());
     }
 
     #region Helpers
@@ -69,7 +69,7 @@ public class GameSceneManager : MonoBehaviour
 
         var loginScene = SceneManager.GetSceneByName(sceneName);
         SceneManager.SetActiveScene(loginScene);
-
+        
         endEvent?.Invoke();
         isLoading = false;
         loadingProgress = 0.0f;

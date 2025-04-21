@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class BotVehicle : Vehicle
     [Header("Hard turning")]
     public float hardTurnThresholdAngle = 90f;
     public float hardTurnMaxSpeed = 10f;
+
+    [Header("Events")] public Action OnArrived;
 
 
     private void Awake()
@@ -53,6 +56,7 @@ public class BotVehicle : Vehicle
 
     private void Arrive()
     {
+        OnArrived?.Invoke();
         physics.input = Vector3.zero;
         arrived = true;
         isFollowing = false;

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using LevelManagement;
 
 namespace AccountManagement
 {
@@ -18,9 +19,11 @@ namespace AccountManagement
 
         public LevelStatistics GetLevelStatistics(int levelID)
         {
-            return _playerAccountData.openedLevels.First(level => level.levelID == levelID).Clone() as LevelStatistics;
+            return _playerAccountData.openedLevels.First(level => level.LevelID == levelID).Clone() as LevelStatistics;
         }
-        
+
+
+
         public PlayerAccountData GetData()
         {
             return _playerAccountData.Clone() as PlayerAccountData;

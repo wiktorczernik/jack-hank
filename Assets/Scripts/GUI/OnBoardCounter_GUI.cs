@@ -7,9 +7,9 @@ public class OnBoardCounter_GUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (GameManager.isDuringRun)
+        if (GameManager.IsDuringRun)
         {
-            label.text = GameManager.runInfo.PassengersOnBoard.ToString();
+            label.text = GameManager.RunInfo.PassengersOnBoard.ToString();
         }
     }
 }
