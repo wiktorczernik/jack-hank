@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,12 @@ public class SceneExit : MonoBehaviour
     [SerializeField] private TriggerEventEmitter turnOnBotZone;
     [SerializeField] private Transform pointToDesignateFroBot;
     [SerializeField] private BotVehicle botVehicle;
+    [SerializeField] private bool showStatisticsOnExit;
+    [Header("GUI")]
+    [SerializeField] private FinishText_GUI finishText;
+    [SerializeField] private FadeTransition_GUI fadeTransition;
+
+    public event Action OnExit;
 
     private void Awake()
     {
@@ -45,7 +52,29 @@ public class SceneExit : MonoBehaviour
     private void OnPlayerEnterExitZone(Collider other)
     {
         if (!other.gameObject.CompareTag("Vehicle")) return;
+        
+        fadeTransition.StartFadeIn();
 
+        fadeTransition.OnFadeInEnded += AfterFadeIn;
+    }
+
+    private void AfterFadeIn()
+    {
+        if (showStatisticsOnExit)
+        {
+            finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
+            finishText.OnEndAnimation += LateExit;
+        }
+        else
+        {
+            OnExit?.Invoke();
+            SceneManager.LoadScene(nextSceneName);
+        }
+    }
+
+    private void LateExit()
+    {
+        OnExit?.Invoke();
         SceneManager.LoadScene(nextSceneName);
     }
 

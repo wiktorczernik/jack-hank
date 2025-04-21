@@ -4,7 +4,6 @@ using UnityEngine.Serialization;
 
 public class LevelSelectMenuManager : MonoBehaviour
 {
-   
     [SerializeField] private Transform botDestination;
     
     private LevelSelectMenuScroller _levelScroller;
@@ -12,7 +11,6 @@ public class LevelSelectMenuManager : MonoBehaviour
     private SceneExit _sceneExit;
     public static LevelSelectMenuState State { get; private set; }
     public static LevelInfo[] NextLevels { get; private set; }
-    
     
     private static LevelSelectMenuManager _instance;
     private static bool _initialized;
@@ -41,6 +39,7 @@ public class LevelSelectMenuManager : MonoBehaviour
         nextLevelsUI.OnLevelSelected += SetLevelSelectedState;
 
         _instance._sceneExit = FindFirstObjectByType<SceneExit>();
+        _instance._sceneExit.OnExit += ResetState;
         
         _instance._levelScroller = FindFirstObjectByType<LevelSelectMenuScroller>();
         _instance._levelScroller.StartScrolling();
@@ -49,6 +48,12 @@ public class LevelSelectMenuManager : MonoBehaviour
         _instance._botVehicle.isFollowing = false;
         
         _initialized = true;
+    }
+
+    private static void ResetState()
+    {
+        _initialized = false;
+        State = LevelSelectMenuState.Idle;
     }
 
     private void Awake()

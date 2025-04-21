@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class GameRunInfo
 {
@@ -39,6 +40,11 @@ public class GameRunInfo
         if (bonusType == PlayerBonusTypes.Passenger) AddPassenger();
         
         _pointsByBonusTypes[bonusType] += value;
+    }
+
+    public Dictionary<PlayerBonusTypes, int> GetPointsByBonusTypes()
+    {
+        return _pointsByBonusTypes.ToDictionary((pair) => pair.Key, (pair) => pair.Value);
     }
     
     public void AddPassenger()
