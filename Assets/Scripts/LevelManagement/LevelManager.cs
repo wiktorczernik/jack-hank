@@ -38,16 +38,16 @@ namespace LevelManagement
 
                 levelDefinitionsNodes.Pop();
 
-                var levelSave = levelsStatistics.Find(level => level.levelID == node.LevelID);
+                var levelSave = levelsStatistics.Find(level => level.LevelID == node.LevelID);
                 var lastLevelsInfo = _levels.Where(level =>
                     node.LastLevels.FirstOrDefault(last => last.LevelID == level.LevelID) != null).ToList();
                 var areLastLevelsPassed = lastLevelsInfo.All(level => level.Status == LevelStatus.Passed);
 
                 var levelStatus = levelSave switch
                 {
-                    { isPassed: true } when !areLastLevelsPassed => throw new Exception("Level validation failed!"),
+                    { IsPassed: true } when !areLastLevelsPassed => throw new Exception("Level validation failed!"),
                     null => areLastLevelsPassed ? LevelStatus.Available : LevelStatus.Unavailable,
-                    _ => levelSave.isPassed ? LevelStatus.Passed : LevelStatus.Available
+                    _ => levelSave.IsPassed ? LevelStatus.Passed : LevelStatus.Available
                 };
 
                 _levels.Add(new LevelInfo(levelStatus, node, levelSave));
@@ -69,6 +69,11 @@ namespace LevelManagement
             if (!_isInitializedWithLevels) throw new Exception("LevelManager has not been initialized!");
 
             return _levels.ToList();
+        }
+
+        public static List<LevelInfo> GetAvailableLevels()
+        {
+            return _levels.Where(level => level.Status == LevelStatus.Available).ToList();
         }
 
         private static LevelDefinition[] GetLevelTreeLeafs()
