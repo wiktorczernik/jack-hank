@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0456710f30f9a5144b8d1e6f2f248461, type: 3}
       propertyPath: m_Name
-      value: Bench_1
+      value: Bench
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -113,6 +113,7 @@ MonoBehaviour:
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 6246276668465621473}
     _epicenterPosition: {x: 0, y: -0.5, z: 0}
+    initiator: {fileID: 591588859448648142}
     force: 200
     epicenterRadius: 1
     shakeIntensity: 0.2

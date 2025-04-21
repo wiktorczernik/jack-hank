@@ -112,6 +112,7 @@ MonoBehaviour:
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 5536395715616348584}
     _epicenterPosition: {x: 0, y: -0.5, z: 0}
+    initiator: {fileID: 0}
     force: 200
     epicenterRadius: 20
     shakeIntensity: 2
@@ -119,19 +120,7 @@ MonoBehaviour:
   bountyPointsReward: 105
   OnHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7593933829907497114}
-        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
-        m_MethodName: SelfExplode
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   wasHit: 0
   hittable: 1
   collisionEvents: {fileID: 625653608332987882}
