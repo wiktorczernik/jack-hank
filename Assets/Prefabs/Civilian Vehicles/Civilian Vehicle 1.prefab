@@ -50,6 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d9640d192d1ee418d24606120544c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
+  distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -256,6 +259,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d9640d192d1ee418d24606120544c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
+  distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -10264,6 +10270,7 @@ GameObject:
   - component: {fileID: 9165154653561585143}
   - component: {fileID: 920412616002126312}
   - component: {fileID: 8049625386355856952}
+  - component: {fileID: 7915724856385818524}
   m_Layer: 0
   m_Name: Civilian Vehicle 1
   m_TagString: Vehicle
@@ -10331,6 +10338,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc73a9b1feeac494294d4aee7459ec8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canReceiveDamage: 1
+  canBeHealed: 1
+  _health: 100
+  _maxHealth: 100
+  exploded: 0
+  canBeExploded: 1
+  canSelfExplode: 1
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 6347187237283905811}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    initiator: {fileID: 920412616002126312}
+    force: 3000
+    epicenterRadius: 10
+    shakeIntensity: 1
+    shakeMaxDistance: 150
   physics: {fileID: 8049625386355856952}
   arrived: 0
   isFollowing: 1
@@ -10343,6 +10365,8 @@ MonoBehaviour:
   destinationArriveMaxSpeed: 20
   hardTurnThresholdAngle: 90
   hardTurnMaxSpeed: 10
+  speedDamageThreshold: 40
+  dmgReceivedPerSpeedUnit: 1.667
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10355,6 +10379,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b6cf9c54d3da640967afdce37c48e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
+  groundNormal: {x: 0, y: 1, z: 0}
+  lastVelocity: {x: 0, y: 0, z: 0}
+  airTimeState:
+    timePassed: 0
+    groundHeight: 0
+    maxGroundHeight: 0
   isDrifting: 0
   isDriftingRight: 0
   input: {x: 0, y: 0, z: 0}
@@ -10366,6 +10397,34 @@ MonoBehaviour:
   maxBackwardSpeed: 15
   forwardAcceleration: 3250
   forwardBrakeForce: 4500
+  hitAlignTorque: 50
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9871719
+      inSlope: -0.006936253
+      outSlope: -0.006936253
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.2405324
+    - serializedVersion: 3
+      time: 1
+      value: 0.25
+      inSlope: -1.0398812
+      outSlope: -1.0398812
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.099405944
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  allowAirRoll: 0
+  airRollForce: 1
+  airRollMinTime: 1.25
   turnForce: 3000
   turnAginForce: 3000
   turnStabilization: 8
@@ -10417,6 +10476,7 @@ MonoBehaviour:
   - {fileID: 1712791839570977324}
   - {fileID: 8330458456530461051}
   bonusWheelGravity: 50
+  driftBonusAcceleration: 1.5
   driftMinSpeed: 15
   driftTurnForce: 3500
   driftMoveForce: 1500
@@ -10429,12 +10489,46 @@ MonoBehaviour:
   driftEndAngular: 0.5
   driftEndTime: 0
   bodyRigidbody: {fileID: 9165154653561585143}
+  collisionEvents: {fileID: 7915724856385818524}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
   smokeSourceRight: {fileID: 1171526438022583130}
+--- !u!114 &7915724856385818524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 920412616002126312}
+        m_TargetAssemblyTypeName: BotVehicle, Assembly-CSharp
+        m_MethodName: ReceivePhysicalDamage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnStay:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4854346634697848216
 GameObject:
   m_ObjectHideFlags: 0
@@ -10445,7 +10539,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3878800678360203441}
   - component: {fileID: 7777228443190461095}
-  - component: {fileID: 7498811702490313808}
   m_Layer: 0
   m_Name: BusNew
   m_TagString: Vehicle
@@ -10490,27 +10583,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.62, y: 1.4845451, z: 7.851068}
   m_Center: {x: -0.0022283792, y: 1.6854647, z: -3.5233848}
---- !u!114 &7498811702490313808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4854346634697848216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStay:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExit:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &5410269321559603637
 GameObject:
   m_ObjectHideFlags: 0
@@ -10712,6 +10784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d9640d192d1ee418d24606120544c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
+  distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
@@ -11276,6 +11351,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d9640d192d1ee418d24606120544c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
+  distanceToGround: Infinity
+  groundNormal: {x: 0, y: 1, z: 0}
   isDrivable: 1
   isTurnable: 1
   isDrifting: 0
