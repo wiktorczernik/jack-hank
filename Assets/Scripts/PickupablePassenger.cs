@@ -24,10 +24,7 @@ public class PickupablePassenger : SmashableEntity
     }
     protected virtual void OnPickupEvent()
     {
-        foreach(Rigidbody rb in usedRigidbodies)
-        {
-            rb.AddForce(Vector3.up * 5000, ForceMode.Force);
-        }
+        usedRigidbody.AddForce(Vector3.up * 5000, ForceMode.Force);
         Debug.Log(nameof(OnPickupEvent));
         StopLookingForPlayerVehicle();
     }

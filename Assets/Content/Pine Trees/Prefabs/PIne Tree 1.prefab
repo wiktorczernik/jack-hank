@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8382027160325796317}
-  - component: {fileID: 5504753787994327957}
+  - component: {fileID: 7831133174636774429}
   m_Layer: 0
   m_Name: Pine Tree LOD1
   m_TagString: Untagged
@@ -33,24 +33,21 @@ Transform:
   - {fileID: 5224807824170564527}
   m_Father: {fileID: 6978874289423431430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1183024399 &5504753787994327957
-LookAtConstraint:
+--- !u!114 &7831133174636774429
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3750211083546163742}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_Roll: 0
-  m_WorldUpObject: {fileID: 0}
-  m_UseUpObject: 0
-  m_Active: 1
-  m_IsLocked: 1
-  m_Sources: []
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1055fe3af60d28d458a22853211f13c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pitch: 0
+  yaw: 1
+  roll: 0
 --- !u!1 &4847020879076078177
 GameObject:
   m_ObjectHideFlags: 0

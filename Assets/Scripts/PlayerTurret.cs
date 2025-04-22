@@ -1,0 +1,167 @@
+using System.Collections;
+using UnityEngine;
+
+public class PlayerTurret : MonoBehaviour
+{
+    [Header("Parts")]
+    [SerializeField] Transform Rotor;
+    [SerializeField] Transform Head;
+    [SerializeField] Transform Nozzle;
+    [SerializeField] Transform RaycastOrigin;
+
+    [Header("Turret Stats")]
+    public int ammo;
+    public float damage;
+    [Tooltip("In rounds per second")] public float fireRate;
+    public bool canFire;
+    public GameEntity fireTarget;
+    public bool targetInProximity;
+
+    [Header("Visual Effects")]
+    [SerializeField] ParticleSystem[] particles;
+    public float maxNozzleAnimTime = 0.3f;
+    public Vector3 nozzleStartPos;
+    public Vector3 nozzleEndPos;
+    public Light lightSource;
+
+    private void Start()
+    {
+        StartCoroutine(nameof(StartSchoolShootingWinkWink));
+    }
+    IEnumerator StartSchoolShootingWinkWink()
+    {
+        yield return new WaitForSeconds(4f);
+        AllowFire();
+    }
+
+    private void Update()
+    {
+        LookAtTarget();
+    }
+
+    public void AllowFire()
+    {
+        if (canFire) return;
+        canFire = true;
+        InvokeRepeating(nameof(TryFire), 0f, 1f / fireRate);
+    }
+    public void DisallowFire()
+    {
+        if (!canFire) return;
+        canFire = false;
+        CancelInvoke(nameof(TryFire));
+    }
+    private void TryFire()
+    {
+        CheckTargetProximity();
+
+        if (!targetInProximity || ammo <= 0f)
+        {
+            return;
+        }
+
+        ForceFire();
+    }
+    public void ForceFire()
+    {
+        foreach (ParticleSystem system in particles) system.Play();
+        ammo -= 1;
+        StartCoroutine(NozzleAnimation(Mathf.Min(maxNozzleAnimTime, 1f / fireRate)));
+
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit)) return;
+
+        Transform current = hit.transform;
+        GameEntity E = null;
+        while (true)
+        {
+            if (!current.TryGetComponent(out GameEntity entity))
+            {
+                current = current.parent;
+                if (current == null) break;
+            }
+            else
+            {
+                E = entity; 
+                break;
+            }
+        }
+        if (E == null) return;
+        E.Hurt(damage);
+    }
+    IEnumerator NozzleAnimation(float animTime)
+    {
+        lightSource.enabled = true;
+        float timePassed = 0f;
+        float shotPerc = 0.2f;
+
+        while (timePassed < shotPerc * animTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timePassed += Time.deltaTime;
+
+            Nozzle.localPosition = Vector3.Lerp(nozzleStartPos, nozzleEndPos, timePassed / shotPerc / animTime);
+        }
+
+        lightSource.enabled = false;
+
+        while (timePassed < animTime)
+        {
+            yield return new WaitForEndOfFrame();
+            timePassed += Time.deltaTime;
+
+            Nozzle.localPosition = Vector3.Lerp(nozzleEndPos, nozzleStartPos,
+                (timePassed - animTime * shotPerc) / (1 - shotPerc) / animTime);
+        }
+    }
+
+    public void CheckTargetProximity()
+    {
+        if (fireTarget == null)
+        {
+            targetInProximity = false;
+            return;
+        }
+
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit)) return;
+
+        Transform current = hit.transform;
+        while (true)
+        {
+            if (current.TryGetComponent(out GameEntity entity) && entity == fireTarget)
+            {
+                targetInProximity = true;
+                return;
+            }
+            current = current.parent;
+            if (current == null) break;
+        }
+
+        targetInProximity = false;
+    }
+
+    private void LookAtTarget()
+    {
+        if (fireTarget == null) return;
+
+        Vector3 pos = fireTarget.transform.position;
+        pos.y = Rotor.position.y;
+
+        Rotor.LookAt(pos);
+
+        Head.LookAt(fireTarget.transform.position);
+
+        foreach (ParticleSystem system in particles)
+        {
+            var main = system.main;
+            main.startRotationX = Head.rotation.eulerAngles.x * Mathf.Deg2Rad;
+            main.startRotationY = Head.rotation.eulerAngles.y * Mathf.Deg2Rad;
+            main.startRotationZ = Head.rotation.eulerAngles.z * Mathf.Deg2Rad;
+        }
+    }
+
+    public void LoadAmmo(int amount)
+    {
+        if (amount <= 0) return;
+        ammo += amount;
+    }
+}
