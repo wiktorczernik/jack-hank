@@ -2,12 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
-
 
 public class PlayerVehicle : Vehicle
 {
-    public PlayerVehicleSeatController seatsController;
     public TriggerEventEmitter pickupRightTrigger;
     public TriggerEventEmitter pickupLeftTrigger;
     public CollisionEventEmitter vehicleCollision;
@@ -15,7 +12,22 @@ public class PlayerVehicle : Vehicle
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
     public UnityEvent<ExplosionProperties> onExplosionNearby;
 
-    [SerializeField] Transform _seatsContainer;
+    [SerializeField] private Transform _seatsContainer;
+
+    private Rigidbody _rigidbody;
+    public PlayerVehicleSeatController seatsController;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void OnEnable()
+    {
+        InitSeatsController();
+        pickupRightTrigger.OnEnter.AddListener(col => OnTryPickupPassenger(pickupRightTrigger, col));
+        pickupLeftTrigger.OnEnter.AddListener(col => OnTryPickupPassenger(pickupLeftTrigger, col));
+    }
 
 
     public void NotifyExplosionNearby(ExplosionProperties properties)
@@ -28,11 +40,10 @@ public class PlayerVehicle : Vehicle
         physics.input = value.Get<Vector2>();
     }
 
-    private void OnEnable()
+    public void SetTransform(Vector3 position, Quaternion rotation)
     {
-        InitSeatsController();
-        pickupRightTrigger.OnEnter.AddListener((Collider col) => OnTryPickupPassenger(pickupRightTrigger, col));
-        pickupLeftTrigger.OnEnter.AddListener((Collider col ) => OnTryPickupPassenger(pickupLeftTrigger, col));
+        _rigidbody.position = position;
+        _rigidbody.rotation = rotation;
     }
 
     private void OnTryPickupPassenger(TriggerEventEmitter trigger, Collider col)
@@ -44,33 +55,34 @@ public class PlayerVehicle : Vehicle
         if (!passenger.isAlive || passenger.wasPickedUp) return;
         OnPickupPassengerEvent(trigger, passenger);
         onPickupPassenger?.Invoke(trigger, passenger);
-        PlayerVehicleSeat seat = seatsController.Occupy(passenger);
+        var seat = seatsController.Occupy(passenger);
         if (seat == null) return;
         StartCoroutine(MovePassengerToSeat(seat));
-
     }
-    IEnumerator MovePassengerToSeat(PlayerVehicleSeat seat)
+
+    private IEnumerator MovePassengerToSeat(PlayerVehicleSeat seat)
     {
-        PickupablePassenger passenger = seat.passenger;
+        var passenger = seat.passenger;
         passenger.SetRigidbodyKinematic(true);
         passenger.DisableColliders();
-        Vector3 initPos = passenger.transform.position;
-        Vector3 initScale = passenger.transform.localScale;
+        var initPos = passenger.transform.position;
+        var initScale = passenger.transform.localScale;
         yield return null;
-        float time = 0f;
-        float maxTime = 0.2f;
+        var time = 0f;
+        var maxTime = 0.2f;
         while (time < maxTime)
         {
             time = Mathf.Clamp(time + Time.deltaTime, 0, maxTime);
             passenger.transform.position = Vector3.Lerp(initPos, seat.point.position, time / maxTime);
             passenger.transform.localScale = Vector3.Lerp(initScale, initScale * 0.5f, time / maxTime);
             yield return null;
-            
         }
+
         yield return null;
         passenger.transform.SetParent(seat.point);
         passenger.transform.position = seat.point.position;
     }
+
     private void OnPickupPassengerEvent(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
         passenger.NotifyPickup();
@@ -78,12 +90,9 @@ public class PlayerVehicle : Vehicle
 
     private void InitSeatsController()
     {
-        int count = _seatsContainer.childCount;
-        Transform[] points = new Transform[count];
-        for (int i = 0; i < count; i++)
-        {
-            points[i] = _seatsContainer.GetChild(i);
-        }
+        var count = _seatsContainer.childCount;
+        var points = new Transform[count];
+        for (var i = 0; i < count; i++) points[i] = _seatsContainer.GetChild(i);
         seatsController = new PlayerVehicleSeatController(points);
     }
 }

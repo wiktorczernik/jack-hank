@@ -7,33 +7,44 @@ public abstract class BossFightManager : MonoBehaviour
     [SerializeField] protected Boss bossPrefab;
     [SerializeField] protected Transform bossSpawnPoint;
     [SerializeField] private TriggerEventEmitter beginTrigger;
+    [SerializeField] private PlayerVehicle player;
+
     [SerializeField] private CinematicSequence beginCutscene;
     [SerializeField] private Transform beginCutsceneTransform;
+    [SerializeField] private Transform playerSpawnAfterBeginCutscene;
+
     [SerializeField] private CinematicSequence endCutscene;
     [SerializeField] private Transform endCutsceneTransform;
+    [SerializeField] private Transform playerSpawnAfterEndCutscene;
+
+    private Boss bossInstance;
 
     public bool duringFight { get; private set; }
     public bool wasTriggered { get; private set; }
 
     private void Awake()
     {
+        var errorMessageStart = $"component [{GetType().Name}]; game object [{name}]:";
+
         if (!beginTrigger)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No trigger for boss fight!");
+            Debug.LogError($"{errorMessageStart} No trigger for boss fight!");
         if (!bossPrefab)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No boss prefab!");
+            Debug.LogError($"{errorMessageStart} No boss prefab!");
         if (!bossSpawnPoint)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No boss spawn point!");
+            Debug.LogError($"{errorMessageStart} No boss spawn point!");
         if (!beginCutscene)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No begin cutscene!");
+            Debug.LogError($"{errorMessageStart} No begin cutscene!");
         if (!beginCutsceneTransform)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No begin cutscene transform!");
+            Debug.LogError($"{errorMessageStart} No begin cutscene transform!");
         if (!endCutscene)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No end cutscene!");
+            Debug.LogError($"{errorMessageStart} No end cutscene!");
         if (!endCutsceneTransform)
-            Debug.LogError($"component [{GetType().Name}]; game object [{name}]: No end cutscene transform!");
+            Debug.LogError($"{errorMessageStart} No end cutscene transform!");
+
+        bossInstance = Instantiate(bossPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);
 
         beginTrigger.OnEnter.AddListener(OnTriggerEnter);
-        bossPrefab.onDeath += OnBossDeath;
+        bossInstance.onDeath += OnBossDeath;
     }
 
     private void OnTriggerEnter(Collider triggerCollider)
@@ -85,7 +96,9 @@ public abstract class BossFightManager : MonoBehaviour
 
         void OnCutsceneEnd()
         {
+            player.SetTransform(playerSpawnAfterBeginCutscene.position, playerSpawnAfterBeginCutscene.rotation);
             OnBeginInterval();
+            bossInstance.Activate();
             duringFight = true;
             OnBegin?.Invoke();
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
