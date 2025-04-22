@@ -1,5 +1,129 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2201835411792051072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4411493303724550069}
+  - component: {fileID: 7636692277080075267}
+  - component: {fileID: 8504283555517050170}
+  - component: {fileID: 2844444182958676092}
+  - component: {fileID: 6472629772052521843}
+  m_Layer: 0
+  m_Name: Model
+  m_TagString: Smashable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4411493303724550069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201835411792051072}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 829669593871133245}
+  m_Father: {fileID: 6150418728961929896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &7636692277080075267
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201835411792051072}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
+  m_Size: 1
+  m_FadeMode: 0
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.010849324
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2002053191213928786}
+  m_Enabled: 1
+--- !u!54 &8504283555517050170
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201835411792051072}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2844444182958676092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201835411792051072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStay:
+    m_PersistentCalls:
+      m_Calls: []
+  OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &6472629772052521843
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201835411792051072}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2.3427052, z: 1}
+  m_Center: {x: 0, y: 1.1713526, z: 7.833784e-16}
 --- !u!1 &2470967479069385551
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +137,7 @@ GameObject:
   - component: {fileID: 7002440759664510893}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: Smashable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,12 +150,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470967479069385551}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6150418728961929896}
+  m_Father: {fileID: 4966548601394050799}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2527352051753670970
 ParticleSystem:
@@ -41,8 +165,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470967479069385551}
   serializedVersion: 8
-  lengthInSec: 5
-  simulationSpeed: 1
+  lengthInSec: 20
+  simulationSpeed: 5
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -4833,7 +4957,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!1 &9105002236396754172
+--- !u!1 &4497367650543158184
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4841,111 +4965,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6150418728961929896}
-  - component: {fileID: 4786112791896505276}
-  - component: {fileID: 300732464767000573}
+  - component: {fileID: 3751539445124034386}
+  - component: {fileID: 1082829116590495387}
   m_Layer: 0
-  m_Name: Hydrant
-  m_TagString: Untagged
+  m_Name: Audio Source
+  m_TagString: Smashable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6150418728961929896
+--- !u!4 &3751539445124034386
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9105002236396754172}
+  m_GameObject: {fileID: 4497367650543158184}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1178.71, y: 90.471436, z: 162.81}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 829669593871133245}
-  - {fileID: 4541233062091012125}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 6150418728961929896}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4786112791896505276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9105002236396754172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dda6d46a5bbf43c489729901173ec691, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canReceiveDamage: 1
-  canBeHealed: 0
-  _health: 100
-  _maxHealth: 100
-  exploded: 0
-  canBeExploded: 1
-  canSelfExplode: 0
-  selfExplosionProps:
-    _epicenterParentTransform: {fileID: 6150418728961929896}
-    _epicenterPosition: {x: 0, y: -0.5, z: 0}
-    initiator: {fileID: 0}
-    force: 500
-    epicenterRadius: 2
-    shakeIntensity: 0.5
-    shakeMaxDistance: 100
-  bountyPointsReward: 150
-  OnHit:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4786112791896505276}
-        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
-        m_MethodName: SelfExplode
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2527352051753670970}
-        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  wasHit: 0
-  hittable: 1
-  audioClips: []
-  collisionEvents: {fileID: 7531647004358671582}
-  usedRigidbodies:
-  - {fileID: 347993030994818006}
-  usedColliders:
-  - {fileID: 7765444652652271578}
-  smashableType: 12
-  audioSource: {fileID: 300732464767000573}
---- !u!82 &300732464767000573
+--- !u!82 &1082829116590495387
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9105002236396754172}
+  m_GameObject: {fileID: 4497367650543158184}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -7337931169737410063, guid: 61e8ad659cace6f48a98dea3f180731d, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5030,25 +5086,150 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &6400027305338364899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4966548601394050799}
+  m_Layer: 0
+  m_Name: Particles
+  m_TagString: Smashable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4966548601394050799
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6400027305338364899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4541233062091012125}
+  m_Father: {fileID: 6150418728961929896}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9105002236396754172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6150418728961929896}
+  - component: {fileID: 4786112791896505276}
+  m_Layer: 0
+  m_Name: Hydrant
+  m_TagString: Smashable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6150418728961929896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105002236396754172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 4411493303724550069}
+  - {fileID: 3751539445124034386}
+  - {fileID: 4966548601394050799}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4786112791896505276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105002236396754172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda6d46a5bbf43c489729901173ec691, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canReceiveDamage: 1
+  canBeHealed: 0
+  _health: 100
+  _maxHealth: 100
+  exploded: 0
+  canBeExploded: 1
+  canSelfExplode: 0
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 6150418728961929896}
+    _epicenterPosition: {x: 0, y: -0.5, z: 0}
+    initiator: {fileID: 0}
+    force: 500
+    epicenterRadius: 2
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
+  wasHit: 0
+  hittable: 1
+  bountyPointsReward: 150
+  model: {fileID: 2201835411792051072}
+  smashableType: 12
+  shouldBecomeDebris: 0
+  debrisPrefab: {fileID: 0}
+  usedRigidbody: {fileID: 8504283555517050170}
+  usedColliders:
+  - {fileID: 6472629772052521843}
+  collisionEvents: {fileID: 2844444182958676092}
+  OnHit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2527352051753670970}
+        m_TargetAssemblyTypeName: UnityEngine.ParticleSystem, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  hitFreezeRotation: 0
+  hitConstrains: 0
+  hitIsKinematic: 0
+  impactAudios: []
+  audioSource: {fileID: 1082829116590495387}
 --- !u!1001 &867274314810707414
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 6150418728961929896}
+    m_TransformParent: {fileID: 4411493303724550069}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5090,6 +5271,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -5098,96 +5283,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: FireHydrant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
+      propertyPath: m_TagString
+      value: Smashable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7765444652652271578}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7531647004358671582}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 347993030994818006}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
---- !u!1 &56370539875397767 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
-  m_PrefabInstance: {fileID: 867274314810707414}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &7765444652652271578
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56370539875397767}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.51509887, y: 0.7723595, z: 0.3991627}
-  m_Center: {x: 0, y: 0.38720042, z: 0.017001145}
---- !u!114 &7531647004358671582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56370539875397767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d354b80702e098a4dbc659df835281f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStay:
-    m_PersistentCalls:
-      m_Calls: []
-  OnExit:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!54 &347993030994818006
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56370539875397767}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!4 &829669593871133245 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
+  m_PrefabInstance: {fileID: 867274314810707414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2002053191213928786 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 304e7f4ffa670aa47b75278d4b02adad, type: 3}
   m_PrefabInstance: {fileID: 867274314810707414}
   m_PrefabAsset: {fileID: 0}
