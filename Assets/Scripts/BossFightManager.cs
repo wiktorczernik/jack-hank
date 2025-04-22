@@ -21,7 +21,7 @@ public abstract class BossFightManager : MonoBehaviour
         if (!bossSpawnPoint)
             Debug.LogError($"[{GetType().Name}] component in [{name}] game object: No boss spawn point!");
         
-        bossFightTrigger.OnEnter.AddListener((triggerCollider) => { IsTriggered = true; });
+        bossFightTrigger.OnEnter.AddListener(OnTriggerEnter);
     }
 
     public void Begin()
@@ -42,6 +42,14 @@ public abstract class BossFightManager : MonoBehaviour
         OnBegin?.Invoke();
        
     }
+
+    private void OnTriggerEnter(Collider triggerCollider)
+    {
+        IsTriggered = true;
+        HandleTriggerEnter();
+    }
+
+    protected abstract void HandleTriggerEnter();
 
     protected abstract IEnumerator PrepareCo();
 
