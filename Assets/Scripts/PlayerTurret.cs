@@ -24,16 +24,6 @@ public class PlayerTurret : MonoBehaviour
     public Vector3 nozzleEndPos;
     public Light lightSource;
 
-    private void Start()
-    {
-        StartCoroutine(nameof(StartSchoolShootingWinkWink));
-    }
-    IEnumerator StartSchoolShootingWinkWink()
-    {
-        yield return new WaitForSeconds(4f);
-        AllowFire();
-    }
-
     private void Update()
     {
         LookAtTarget();
