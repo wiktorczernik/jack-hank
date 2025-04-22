@@ -9,6 +9,7 @@ public class SmashableEntity : GameEntity
     [Header("Main")]
     public bool hittable = true;
     public int bountyPointsReward;
+    public float destroyTime = 10f;
     public GameObject model;
     [SerializeField] protected SmashableType smashableType;
 
@@ -78,6 +79,17 @@ public class SmashableEntity : GameEntity
             OnHitEvent();
             OnHit?.Invoke(this);
             wasHit = true;
+
+            if (shouldBecomeDebris)
+            {
+                // Model's transform
+                var modTrans = model.transform;
+                var debrisInstance = Instantiate(debrisPrefab, modTrans.position, modTrans.rotation, gameObject.transform);
+                debrisInstance.transform.localScale = modTrans.localScale;
+                Destroy(model);
+            }
+
+            Invoke(nameof(SelfDestroy), destroyTime);
         }
     }
 
@@ -90,11 +102,23 @@ public class SmashableEntity : GameEntity
         usedRigidbody.freezeRotation = hitFreezeRotation;
         usedRigidbody.constraints = hitConstrains;
         usedRigidbody.isKinematic = hitIsKinematic;
-        usedRigidbody.AddExplosionForce(explosionProps.force, explosionProps.epicenterPosition, explosionProps.epicenterRadius);
 
         OnHitEvent();
         OnHit?.Invoke(this);
         wasHit = true;
+
+        if (shouldBecomeDebris)
+        {
+            // Model's transform
+            var modTrans = model.transform;
+            var debrisInstance = Instantiate(debrisPrefab, modTrans.position, modTrans.rotation, gameObject.transform);
+            debrisInstance.transform.localScale = modTrans.localScale;
+            Destroy(model);
+        }
+
+        usedRigidbody.AddExplosionForce(explosionProps.force, explosionProps.epicenterPosition, explosionProps.epicenterRadius);
+
+        Invoke(nameof(SelfDestroy), destroyTime);
     }
 
     public void SetRigidbodyKinematic(bool flag)
@@ -130,6 +154,11 @@ public class SmashableEntity : GameEntity
 
         audioSource.clip = clip;
         audioSource.Play();
+    }
+    
+    private void SelfDestroy()
+    {
+        Destroy(gameObject);
     }
     #endregion
 
