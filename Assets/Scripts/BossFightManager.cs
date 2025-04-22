@@ -65,6 +65,7 @@ public abstract class BossFightManager : MonoBehaviour
 
         void OnCutsceneEnd()
         {
+            OnEnd?.Invoke();
             HandleBossDeath();
             duringFight = true;
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
@@ -72,6 +73,8 @@ public abstract class BossFightManager : MonoBehaviour
     }
 
     public event Action OnBegin;
+    public event Action OnRestart;
+    public event Action OnEnd;
 
     public void Begin()
     {
@@ -80,6 +83,7 @@ public abstract class BossFightManager : MonoBehaviour
 
     public void Restart()
     {
+        OnRestart?.Invoke();
         OnRestartInterval();
     }
 
