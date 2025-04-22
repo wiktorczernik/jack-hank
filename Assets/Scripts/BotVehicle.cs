@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
@@ -32,6 +33,9 @@ public class BotVehicle : Vehicle
     public float dmgReceivedPerSpeedUnit = 3f;
 
 
+    public event Action onArrived;
+
+
     private void Awake()
     {
         
@@ -59,6 +63,7 @@ public class BotVehicle : Vehicle
 
     private void Arrive()
     {
+        onArrived?.Invoke();
         physics.input = Vector3.zero;
         arrived = true;
         isFollowing = false;
