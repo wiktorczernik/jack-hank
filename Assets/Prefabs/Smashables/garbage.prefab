@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 601510414937875213}
   - component: {fileID: 757647730102268431}
   m_Layer: 0
-  m_Name: Garbage
+  m_Name: garbage
   m_TagString: Smashable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   wasHit: 0
   hittable: 1
   bountyPointsReward: 100
+  destroyTime: 10
   model: {fileID: 7624772340052430261}
   smashableType: 11
   shouldBecomeDebris: 0
@@ -289,7 +290,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &7177903186310593523
 MonoBehaviour:

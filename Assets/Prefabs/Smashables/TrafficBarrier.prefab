@@ -80,7 +80,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &2387553207454846285
 MonoBehaviour:
@@ -317,6 +317,7 @@ MonoBehaviour:
   wasHit: 0
   hittable: 1
   bountyPointsReward: 150
+  destroyTime: 10
   model: {fileID: 277844116386964141}
   smashableType: 3
   shouldBecomeDebris: 0
