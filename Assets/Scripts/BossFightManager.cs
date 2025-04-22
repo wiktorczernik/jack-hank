@@ -17,7 +17,7 @@ public abstract class BossFightManager : MonoBehaviour
     [SerializeField] private Transform endCutsceneTransform;
     [SerializeField] private Transform playerSpawnAfterEndCutscene;
 
-    private Boss bossInstance;
+    private Boss _bossInstance;
 
     public bool duringFight { get; private set; }
     public bool wasTriggered { get; private set; }
@@ -41,10 +41,10 @@ public abstract class BossFightManager : MonoBehaviour
         if (!endCutsceneTransform)
             Debug.LogError($"{errorMessageStart} No end cutscene transform!");
 
-        bossInstance = Instantiate(bossPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);
+        _bossInstance = Instantiate(bossPrefab, bossSpawnPoint.position, bossSpawnPoint.rotation);
 
         beginTrigger.OnEnter.AddListener(OnTriggerEnter);
-        bossInstance.onDeath += OnBossDeath;
+        _bossInstance.onDeath += OnBossDeath;
     }
 
     private void OnTriggerEnter(Collider triggerCollider)
@@ -98,7 +98,7 @@ public abstract class BossFightManager : MonoBehaviour
         {
             player.SetTransform(playerSpawnAfterBeginCutscene.position, playerSpawnAfterBeginCutscene.rotation);
             OnBeginInterval();
-            bossInstance.Activate();
+            _bossInstance.Activate();
             duringFight = true;
             OnBegin?.Invoke();
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
