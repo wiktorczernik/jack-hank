@@ -1,36 +1,43 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
-using System.Collections.Generic;
 
 public class SmashableEntity : GameEntity
 {
-    public int bountyPointsReward;
-    public UnityEvent<SmashableEntity> OnHit;
+    [Header("State")]
     public bool wasHit = false;
+
+    [Header("Main")]
     public bool hittable = true;
-    public SmashableType SmashableType => smashableType;
-    public List<AudioClip> audioClips;
-    [Header("Components")]
+    public int bountyPointsReward;
+    public float destroyTime = 10f;
+    public GameObject model;
+    [SerializeField] protected SmashableType smashableType;
+
+    [Header("Debris")]
+    /// <summary>
+    /// Tells if should delete main model and spawn debris on hit
+    /// </summary>
+    public bool shouldBecomeDebris = false;
+    public GameObject debrisPrefab;
+
+    [Header("Physics")]
+    [SerializeField] protected Rigidbody usedRigidbody;
+    [SerializeField] protected Collider[] usedColliders = new Collider[0];
     [SerializeField] protected CollisionEventEmitter collisionEvents;
-    [SerializeField] protected Rigidbody[] usedRigidbodies;
-    [SerializeField] protected Collider[] usedColliders;
-    [SerializeField] private SmashableType smashableType;
+
+    [Header("Physics On Hit")]
+    public UnityEvent<SmashableEntity> OnHit;
+    public bool hitFreezeRotation = false;
+    public RigidbodyConstraints hitConstrains = RigidbodyConstraints.None;
+    public bool hitIsKinematic = false;
+
+    [Header("Audio")]
+    [SerializeField] protected AudioClip[] impactAudios = new AudioClip[0];
     [SerializeField] protected AudioSource audioSource;
 
+    public SmashableType SmashableType => smashableType;
 
-    protected override void InternalExplode(ExplosionProperties explosionProps)
-    {
-        foreach (Rigidbody rb in usedRigidbodies)
-        {
-            rb.freezeRotation = false;
-            rb.constraints = RigidbodyConstraints.None;
-            rb.AddExplosionForce(explosionProps.force, explosionProps.epicenterPosition, explosionProps.epicenterRadius);
-        }
-        OnHitEvent();
-        OnHit?.Invoke(this);
-        wasHit = true;
-    }
+
 
     #region Event subscribing
     private void OnEnable()
@@ -62,22 +69,27 @@ public class SmashableEntity : GameEntity
             Vector3 contactPoint = collision.contacts[0].point;
             Vector3 contactNormal = collision.contacts[0].normal;
             float relativeSpeed = collision.relativeVelocity.magnitude;
-            foreach(Rigidbody rb in usedRigidbodies)
-            {
-                rb.freezeRotation = false;
-                rb.constraints = RigidbodyConstraints.None;
-            }
 
-            int clip = Random.Range(0, audioClips.Count);
-            if (clip >= 0 && audioClips.Count > 0)
-            {
-                audioSource.clip = audioClips[clip];
-                audioSource.Play();
-            }
+            usedRigidbody.freezeRotation = hitFreezeRotation;
+            usedRigidbody.constraints = hitConstrains;
+            usedRigidbody.isKinematic = hitIsKinematic;
+
+            PlayImpactAudio();
 
             OnHitEvent();
             OnHit?.Invoke(this);
             wasHit = true;
+
+            if (shouldBecomeDebris)
+            {
+                // Model's transform
+                var modTrans = model.transform;
+                var debrisInstance = Instantiate(debrisPrefab, modTrans.position, modTrans.rotation, gameObject.transform);
+                debrisInstance.transform.localScale = modTrans.localScale;
+                Destroy(model);
+            }
+
+            Invoke(nameof(SelfDestroy), destroyTime);
         }
     }
 
@@ -85,13 +97,33 @@ public class SmashableEntity : GameEntity
     {
 
     }
+    protected override void InternalExplode(ExplosionProperties explosionProps)
+    {
+        usedRigidbody.freezeRotation = hitFreezeRotation;
+        usedRigidbody.constraints = hitConstrains;
+        usedRigidbody.isKinematic = hitIsKinematic;
+
+        OnHitEvent();
+        OnHit?.Invoke(this);
+        wasHit = true;
+
+        if (shouldBecomeDebris)
+        {
+            // Model's transform
+            var modTrans = model.transform;
+            var debrisInstance = Instantiate(debrisPrefab, modTrans.position, modTrans.rotation, gameObject.transform);
+            debrisInstance.transform.localScale = modTrans.localScale;
+            Destroy(model);
+        }
+
+        usedRigidbody.AddExplosionForce(explosionProps.force, explosionProps.epicenterPosition, explosionProps.epicenterRadius);
+
+        Invoke(nameof(SelfDestroy), destroyTime);
+    }
 
     public void SetRigidbodyKinematic(bool flag)
     {
-        foreach (Rigidbody rb in usedRigidbodies)
-        {
-            rb.isKinematic = flag;
-        }
+        usedRigidbody.isKinematic = flag;
     }
     public void EnableColliders()
     {
@@ -107,6 +139,72 @@ public class SmashableEntity : GameEntity
             c.enabled = false;
         }
     }
+    public void PlayImpactAudio()
+    {
+        if (impactAudios.Length == 0) return;
+
+        int clipIndex = Random.Range(0, impactAudios.Length);
+        var clip = impactAudios[clipIndex];
+
+        if (!clip)
+        {
+            Debug.LogError("Smashable entity has null audio clip!", this);
+            return;
+        }
+
+        audioSource.clip = clip;
+        audioSource.Play();
+    }
+    
+    private void SelfDestroy()
+    {
+        Destroy(gameObject);
+    }
+    #endregion
+
+    #region Editor
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (!model)
+        {
+            Debug.LogError("Smashable model game object wasn't filled in!", this);
+            return;
+        }
+        if (!usedRigidbody)
+        {
+            usedRigidbody = model.GetComponentInChildren<Rigidbody>();
+            if (!usedRigidbody)
+            {
+                Debug.LogError("Smashable entity doesn't have attached rigidbody to it!", this);
+            }
+        }
+        if (!audioSource)
+        {
+            audioSource = GetComponentInChildren<AudioSource>();
+            if (!audioSource)
+            {
+                Debug.LogError("Smashable entity doesn't have attached audio source to it!", this);
+            }
+        }
+        if (usedColliders.Length == 0)
+        {
+            usedColliders = model.GetComponentsInChildren<Collider>();
+            if (usedColliders.Length == 0)
+            {
+                Debug.LogError("Smashable entity doesn't have any colliders attached to it!", this);
+            }
+        }
+        if (!collisionEvents)
+        {
+            collisionEvents = model.GetComponentInChildren<CollisionEventEmitter>();
+            if (!collisionEvents)
+            {
+                Debug.LogError("Smashable entity doesn't have collision event emitter attached to it!", this);
+            }
+        }
+    }
+#endif
     #endregion
 }
 
