@@ -29,7 +29,7 @@ public class SceneEnter : MonoBehaviour
         playersBot.destinationPoint = botDestination.position;
         playersBot.followMaxSpeed = 100;
 
-        playersBot.OnArrived += () => OnPlayerEndEntering?.Invoke();
+        playersBot.onArrived += () => OnPlayerEndEntering?.Invoke();
         fadeTransition.OnFadeOutEnded -= AfterFadeOut;
     }
 }
