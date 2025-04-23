@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Bonus_GUI bonusGUI;
     [SerializeField] private LevelDefinition debugLevelDefinition;
     [SerializeField] private FadeTransition_GUI fadeTransition;
+    [SerializeField] private BossFightManager bossFightManager;
+    [SerializeField] private SceneEnter sceneEnter;
+
     public static LevelTaskDefinition[] LevelTasks => _definition.LevelTasks;
     public static GameRunInfo RunInfo { get; private set; }
     public static bool IsDuringRun { get; private set; }
@@ -27,7 +30,23 @@ public class GameManager : MonoBehaviour
         if (Debug.isDebugBuild && !_isInitialized)
             Initialize(debugLevelDefinition);
 
-        if (!_isInitialized) Debug.LogError("Game Manager was not initialzied");
+        if (!_isInitialized) Debug.LogError("Game Manager was not initialized");
+
+        if (PlayerPrefs.HasKey("StartFromBossFight"))
+        {
+            sceneEnter.Disable();
+            Local.bossFightManager.Begin();
+            foreach (var bonusType in RunInfo.GetBonusTypes())
+            {
+                var key = bonusType.ToString();
+                RunInfo.ChangeBonusBountyBy(PlayerPrefs.GetInt(key), bonusType);
+
+                PlayerPrefs.DeleteKey(key);
+            }
+
+            PlayerPrefs.DeleteKey("StartFromBossFight");
+            PlayerPrefs.Save();
+        }
 
         BeginRun();
     }
@@ -102,6 +121,11 @@ public class GameManager : MonoBehaviour
 
     public static void RestartBossFight()
     {
+        PlayerPrefs.SetInt("StartFromBossFight", 1);
+        var runStats = RunInfo.GetPointsByBonusTypes();
+        foreach (var key in runStats.Keys) PlayerPrefs.SetInt(key.ToString(), runStats[key]);
+        SceneManager.LoadScene(_definition.SceneName);
+        PlayerPrefs.Save();
     }
 
     private void BeginRun()
