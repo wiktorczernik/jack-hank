@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public struct ExplosionProperties
 {
-    public ExplosionProperties(Transform epicenterTransform, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, GameEntity initiator = null)
+    public ExplosionProperties(Transform epicenterTransform, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, float damage, GameEntity initiator = null)
     {
         this._epicenterParentTransform = epicenterTransform;
         this._epicenterPosition = Vector3.zero;
@@ -13,8 +13,10 @@ public struct ExplosionProperties
         this.shakeIntensity = shakeIntensity;
         this.shakeMaxDistance = shakeMaxDistance;
         this.initiator = initiator;
+        this.damage = damage;
+        this.damageFalloff = new AnimationCurve();
     }
-    public ExplosionProperties(Vector3 epicenterPosition, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, GameEntity initiator = null)
+    public ExplosionProperties(Vector3 epicenterPosition, float force, float epicenterRadius, float shakeIntensity, float shakeMaxDistance, float damage, GameEntity initiator = null)
     {
         this._epicenterParentTransform = null;
         this._epicenterPosition = epicenterPosition;
@@ -23,6 +25,8 @@ public struct ExplosionProperties
         this.shakeIntensity = shakeIntensity;
         this.shakeMaxDistance = shakeMaxDistance;
         this.initiator = initiator;
+        this.damage = damage;
+        this.damageFalloff = new AnimationCurve();
     }
 
     /// <summary>
@@ -58,4 +62,7 @@ public struct ExplosionProperties
     /// Maximum distance where player camera can still feel explosion shake
     /// </summary>
     public float shakeMaxDistance;
+
+    public float damage;
+    public AnimationCurve damageFalloff;
 }
