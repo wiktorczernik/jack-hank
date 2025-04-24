@@ -17,7 +17,14 @@ public class Missle : ProjectileEntity
         Destroy(gameObject);
     }
 
-    public void OnDestroy()
+    bool expl = false;
+    public void Explode()
+    {
+        if (expl) return;
+        SelfExplode(1);
+        expl = true;
+    }
+    public void Destroy()
     {
         Destroy(gameObject);
     }
