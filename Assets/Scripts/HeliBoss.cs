@@ -40,10 +40,15 @@ public class HeliBoss : BotVehicle
         yield return new WaitForSeconds(timeBeforeBurst);
         for (int i = 0; i < burstFireCount; ++i)
         {
-            Fire();
+            float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
+            if (targetDistance >= burstMinDistance)
+            {
+                Fire();
+            }
             yield return new WaitForSeconds(burstFireTiming);
         }
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
+        yield return null;
     }
     private void ResetBurstCooldown()
     {
