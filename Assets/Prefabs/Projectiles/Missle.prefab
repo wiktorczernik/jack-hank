@@ -61,9 +61,43 @@ MonoBehaviour:
     _epicenterPosition: {x: 0, y: 0, z: 0}
     initiator: {fileID: 8408371746896047754}
     force: 2000
-    epicenterRadius: 10
-    shakeIntensity: 1
+    epicenterRadius: 15
+    shakeIntensity: 1000
     shakeMaxDistance: 100
+    damage: 60
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.7060021
+        value: 0.74123466
+        inSlope: -1.1572566
+        outSlope: -1.1572566
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: -4.837853
+        outSlope: -4.837853
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.07674741
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   isStationary: 1
   acceleration: 80
   startSpeed: 0
@@ -126,8 +160,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8408371746896047754}
-        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
-        m_MethodName: SelfExplode
+        m_TargetAssemblyTypeName: Missle, Assembly-CSharp
+        m_MethodName: Destroy
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -139,12 +173,12 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8408371746896047754}
         m_TargetAssemblyTypeName: Missle, Assembly-CSharp
-        m_MethodName: OnDestroy
+        m_MethodName: Explode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
