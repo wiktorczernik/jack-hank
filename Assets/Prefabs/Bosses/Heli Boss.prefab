@@ -10410,7 +10410,8 @@ MonoBehaviour:
   missilePrefab: {fileID: 6692929710012273737, guid: bc1bd58d744769344af283e96ab816e5, type: 3}
   ground: {fileID: 0}
   missileShootAnchor: {fileID: 443845243258357876}
-  burstMinDistance: 40
+  timeBeforeBurst: 3
+  burstMinDistance: 30
   burstFireTiming: 1
   burstFireCount: 5
   burstCooldown: 10
