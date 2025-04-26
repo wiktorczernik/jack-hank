@@ -8,6 +8,7 @@ TagManager:
   - Passenger
   - Smashable
   - Bus
+  - Ammo
   layers:
   - Default
   - TransparentFX
