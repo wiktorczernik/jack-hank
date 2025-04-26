@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &326847768126256072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 443845243258357876}
+  m_Layer: 0
+  m_Name: Missile Shoot Anchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &443845243258357876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326847768126256072}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1.1111112, z: 1.3333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6347187237283905811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &857439912187868500
 GameObject:
   m_ObjectHideFlags: 0
@@ -10297,6 +10328,7 @@ Transform:
   - {fileID: 2391960054740651281}
   - {fileID: 3484621251597863864}
   - {fileID: 3878800678360203441}
+  - {fileID: 443845243258357876}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &9165154653561585143
@@ -10324,7 +10356,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 84
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &6888268730309464205
 MonoBehaviour:
@@ -10375,12 +10407,18 @@ MonoBehaviour:
   speedDamageThreshold: 40
   dmgReceivedPerSpeedUnit: 1.667
   target: {fileID: 0}
-  missilePrefab: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
+  missilePrefab: {fileID: 6692929710012273737, guid: bc1bd58d744769344af283e96ab816e5, type: 3}
   ground: {fileID: 0}
+  missileShootAnchor: {fileID: 443845243258357876}
+  burstMinDistance: 40
+  burstFireTiming: 1
+  burstFireCount: 5
+  burstCooldown: 10
+  burstCooldowned: 0
   currentHeight: 0
-  playerVerticalOffset: 15
+  playerVerticalOffset: 10
   playerForwardDistance: 50
-  verticalAlignSpeed: 0.065
+  verticalAlignSpeed: 10
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10407,10 +10445,10 @@ MonoBehaviour:
   driftEndBuildup: 0
   speedKmh: 0
   speedKmhForward: 0
-  maxForwardSpeed: 150
+  maxForwardSpeed: 300
   maxBackwardSpeed: 15
-  forwardAcceleration: 3250
-  forwardBrakeForce: 4500
+  forwardAcceleration: 6500
+  forwardBrakeForce: 4000
   hitAlignTorque: 50
   accelerationCurve:
     serializedVersion: 2
@@ -10439,8 +10477,8 @@ MonoBehaviour:
   allowAirRoll: 0
   airRollForce: 1
   airRollMinTime: 1.25
-  turnForce: 3000
-  turnAginForce: 3000
+  turnForce: 6000
+  turnAginForce: 6000
   turnStabilization: 8
   turnForceCurve:
     serializedVersion: 2
@@ -10552,7 +10590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3878800678360203441}
-  - component: {fileID: 7777228443190461095}
+  - component: {fileID: 5553859051881242756}
   m_Layer: 0
   m_Name: BusNew
   m_TagString: Vehicle
@@ -10576,14 +10614,14 @@ Transform:
   - {fileID: 2338411975905567414}
   m_Father: {fileID: 6347187237283905811}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!65 &7777228443190461095
-BoxCollider:
+--- !u!136 &5553859051881242756
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4854346634697848216}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: bad7c7133de76064ea7cdc50d503a054, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -10592,11 +10630,13 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.62, y: 1.4845451, z: 7.851068}
-  m_Center: {x: -0.0022283792, y: 1.6854647, z: -3.5233848}
+  serializedVersion: 2
+  m_Radius: 1.36
+  m_Height: 7.851068
+  m_Direction: 2
+  m_Center: {x: 0, y: 2.1, z: -3.62}
 --- !u!1 &5410269321559603637
 GameObject:
   m_ObjectHideFlags: 0
