@@ -28,16 +28,19 @@ public class Explosion : MonoBehaviour
             if (smashable)
             {
                 if (distance > properties.epicenterRadius) continue;
+                smashable.Hurt(properties.damage * properties.damageFalloff.Evaluate(distance / properties.epicenterRadius));
                 smashable.Explode(properties);
                 continue;
             }
 
-            PlayerVehicle pVehicle = collider.GetComponentInParent<PlayerVehicle>();
+            Vehicle vehicle = collider.GetComponentInParent<Vehicle>();
 
-            if (pVehicle)
+            if (vehicle)
             {
                 if (distance > properties.shakeMaxDistance) continue;
-                pVehicle.NotifyExplosionNearby(properties);
+                vehicle.Hurt(properties.damage * properties.damageFalloff.Evaluate(distance / properties.epicenterRadius));
+
+                if (vehicle is PlayerVehicle) ((PlayerVehicle)vehicle).NotifyExplosionNearby(properties);
             }
         }
     }

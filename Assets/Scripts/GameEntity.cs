@@ -365,10 +365,10 @@ public class GameEntity : MonoBehaviour
     /// <summary>
     /// Produces explosion
     /// </summary>
-    public void SelfExplode()
+    public void SelfExplode(int explosionId = 0)
     {
         if (!canSelfExplode) return;
-        ExplosionMaster.Create(selfExplosionProps);
+        ExplosionMaster.Create(selfExplosionProps, explosionId);
         exploded = true;
         InternalSelfExplode();
         onSelfExplode?.Invoke(selfExplosionProps);
