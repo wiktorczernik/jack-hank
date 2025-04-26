@@ -15838,6 +15838,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2776185109776725372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5092422079568603940}
+  m_Layer: 0
+  m_Name: AmmoTransitionSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5092422079568603940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776185109776725372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.63, z: -3.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3878800678360203441}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2840022149983546605
 GameObject:
   m_ObjectHideFlags: 0
@@ -31020,10 +31051,15 @@ MonoBehaviour:
   onPickupPassenger:
     m_PersistentCalls:
       m_Calls: []
+  onPickupAmmo:
+    m_PersistentCalls:
+      m_Calls: []
   onExplosionNearby:
     m_PersistentCalls:
       m_Calls: []
+  playerTurret: {fileID: 8281056764299186668}
   _seatsContainer: {fileID: 6318858428641228763}
+  _ammoTransitionSpot: {fileID: 5092422079568603940}
 --- !u!54 &9165154653561585143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31684,6 +31720,7 @@ Transform:
   - {fileID: 6744854428881861219}
   - {fileID: 8338468418992239086}
   - {fileID: 5599509400308132885}
+  - {fileID: 5092422079568603940}
   m_Father: {fileID: 6347187237283905811}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &7777228443190461095
@@ -33777,3 +33814,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1484992498570801135, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
   m_PrefabInstance: {fileID: 6426272655061353466}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8281056764299186668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3153238467616117270, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+  m_PrefabInstance: {fileID: 6426272655061353466}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c126185ee9320fa49b37e3dab46f6521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
