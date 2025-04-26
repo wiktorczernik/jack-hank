@@ -65,7 +65,7 @@ MonoBehaviour:
     shakeIntensity: 1
     shakeMaxDistance: 100
   isStationary: 1
-  acceleration: 30
+  acceleration: 80
   startSpeed: 0
   homingTarget: {fileID: 0}
   localTargetShift: {x: 0, y: -1.5, z: 4.5}
