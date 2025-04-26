@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HeliBoss : BotVehicle
@@ -6,6 +7,15 @@ public class HeliBoss : BotVehicle
     public PlayerVehicle target;
     public Missle missilePrefab;
     public GameObject ground;
+    public Transform missileShootAnchor;
+
+    [Header("Heli Burst Fire")]
+    public float timeBeforeBurst = 3f;
+    public float burstMinDistance = 30f;
+    public float burstFireTiming = 0.1f;
+    public int burstFireCount = 5;
+    public float burstCooldown = 5f;
+    public bool burstCooldowned = false;
 
     [Header("Boss Follow Options")]
     public float currentHeight = 0;
@@ -13,13 +23,32 @@ public class HeliBoss : BotVehicle
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
 
-    public void FuckingShoot()
+    public void Fire()
     {
-        Missle instance = Instantiate(missilePrefab, transform.position + Vector3.down * 5, Quaternion.identity);
+        Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
         instance.homingTarget = target.transform;
+        instance.transform.LookAt(target.transform);
         instance.Shoot();
     }
-
+    public void BurstFire()
+    {
+        StartCoroutine(BurstFireCo());
+    }
+    IEnumerator BurstFireCo()
+    {
+        burstCooldowned = true;
+        yield return new WaitForSeconds(timeBeforeBurst);
+        for (int i = 0; i < burstFireCount; ++i)
+        {
+            Fire();
+            yield return new WaitForSeconds(burstFireTiming);
+        }
+        Invoke(nameof(ResetBurstCooldown), burstCooldown);
+    }
+    private void ResetBurstCooldown()
+    {
+        burstCooldowned = false;
+    }
     private void SeekPlayerView()
     {
         arrived = false;
@@ -29,8 +58,19 @@ public class HeliBoss : BotVehicle
 
         Vector3 destinationOffset = Quaternion.Euler(Vector3.up * target.transform.eulerAngles.y) * Vector3.forward;
         destinationOffset *= playerForwardDistance;
-
+        Vector3 velocityOffset = target.physics.bodyRigidbody.linearVelocity;
+        velocityOffset.y = 0;
+        destinationOffset += velocityOffset;
         destinationPoint += destinationOffset;
+    }
+    private void TryBurstFire()
+    {
+        if (burstCooldowned) return;
+        float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
+        if (targetDistance > burstMinDistance)
+        {
+            BurstFire();
+        }
     }
     private void AlignGround()
     {
@@ -48,12 +88,12 @@ public class HeliBoss : BotVehicle
     {
         base.Awake();
         currentHeight = transform.position.y;
-        //InvokeRepeating(nameof(FuckingShoot), 1f, 1f);
     }
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
         AlignGround();
         SeekPlayerView();
+        TryBurstFire();
     }
 }
