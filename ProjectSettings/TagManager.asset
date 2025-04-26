@@ -9,6 +9,7 @@ TagManager:
   - Smashable
   - Bus
   - Debris
+  - Ammo
   layers:
   - Default
   - TransparentFX
