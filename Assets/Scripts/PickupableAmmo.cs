@@ -23,7 +23,7 @@ public class PickupableAmmo : SmashableEntity
     protected virtual void OnPickupEvent()
     {
         DisableColliders();
-        usedRigidbody.AddForce(Vector3.up * 5000, ForceMode.Force);
+        //usedRigidbody.AddForce(Vector3.up * 5000, ForceMode.Force);
     }
     protected override void OnHitEvent()
     {
