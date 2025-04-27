@@ -2,22 +2,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 public class GameRunInfo
 {
-    public float Time = 0;
-    public int AllBountyPoints => _pointsByBonusTypes.Sum(pair => pair.Value) ;
-    public int PassengersOnBoard = 0;
-    
     private const string FormatTimeTemplate = "{0}:{1}.{2}";
+
     private readonly Dictionary<PlayerBonusTypes, int> _pointsByBonusTypes = new()
     {
-        { PlayerBonusTypes.DestructionCombo , 0},
-        { PlayerBonusTypes.Drift , 0},
-        { PlayerBonusTypes.Flying, 0},
-        { PlayerBonusTypes.Passenger, 0},
+        { PlayerBonusTypes.DestructionCombo, 0 },
+        { PlayerBonusTypes.Drift, 0 },
+        { PlayerBonusTypes.Flying, 0 },
+        { PlayerBonusTypes.Passenger, 0 }
     };
+
+    public int PassengersOnBoard;
+    public float Time = 0;
+    public int AllBountyPoints => _pointsByBonusTypes.Sum(pair => pair.Value);
 
     public string GetTimeFormatted()
     {
@@ -27,7 +27,7 @@ public class GameRunInfo
 
         var secondsPadded = Mathf.RoundToInt(seconds).ToString().PadLeft(2, '0');
         var millisecondPadded = millisecond.ToString().Substring(2, 2).PadLeft(2, '0');
-        
+
         return string.Format(FormatTimeTemplate, minutes, secondsPadded, millisecondPadded);
     }
 
@@ -36,17 +36,23 @@ public class GameRunInfo
         if (!_pointsByBonusTypes.ContainsKey(bonusType))
             throw new NotImplementedException(
                 "Bonus type has not implemented in GameRunInfo!!! Please add a BonusType!");
-        
+
         if (bonusType == PlayerBonusTypes.Passenger) AddPassenger();
-        
+
         _pointsByBonusTypes[bonusType] += value;
+        Debug.Log(AllBountyPoints);
     }
 
     public Dictionary<PlayerBonusTypes, int> GetPointsByBonusTypes()
     {
-        return _pointsByBonusTypes.ToDictionary((pair) => pair.Key, (pair) => pair.Value);
+        return _pointsByBonusTypes.ToDictionary(pair => pair.Key, pair => pair.Value);
     }
-    
+
+    public PlayerBonusTypes[] GetBonusTypes()
+    {
+        return _pointsByBonusTypes.Keys.ToArray();
+    }
+
     public void AddPassenger()
     {
         PassengersOnBoard++;
@@ -54,7 +60,7 @@ public class GameRunInfo
 }
 
 public enum GameRunPhase
-{ 
+{
     Loading,
     Preparation,
     Introduction,
