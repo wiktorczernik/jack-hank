@@ -66,6 +66,7 @@ public class PlayerTurret : MonoBehaviour
     {
         foreach (ParticleSystem system in particles) system.Play();
         ammo -= 1;
+        onFire?.Invoke();
         StartCoroutine(NozzleAnimation(Mathf.Min(maxNozzleAnimTime, 1f / fireRate)));
 
         if (targetInProximity)
@@ -93,7 +94,6 @@ public class PlayerTurret : MonoBehaviour
         }
         if (E == null) return;
         E.Hurt(damage);
-        onFire?.Invoke();
     }
     IEnumerator NozzleAnimation(float animTime)
     {

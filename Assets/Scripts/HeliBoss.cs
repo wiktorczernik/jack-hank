@@ -8,8 +8,7 @@ public class HeliBoss : BotVehicle
     public UnityEvent onBurstPrepare;
     public UnityEvent onBurstStart;
     public UnityEvent onBurstEnd;
-    public UnityEvent onSuccessFire;
-    public UnityEvent onFailFire;
+    public UnityEvent onFire;
 
     [Header("Boss Properties")]
     public PlayerVehicle target;
@@ -50,15 +49,8 @@ public class HeliBoss : BotVehicle
         for (int i = 0; i < burstFireCount; ++i)
         {
             float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
-            if (targetDistance >= burstMinDistance)
-            {
-                onSuccessFire?.Invoke();
-                Fire();
-            }
-            else
-            {
-                onFailFire?.Invoke();
-            }
+            onFire?.Invoke();
+            Fire();
             yield return new WaitForSeconds(burstFireTiming);
         }
         onBurstEnd?.Invoke();
