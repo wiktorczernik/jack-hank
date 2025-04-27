@@ -46,10 +46,17 @@ public class PlayerVehicle : Vehicle
         physics.input = value.Get<Vector2>();
     }
 
-    public void SetTransform(Vector3 position, Quaternion rotation)
+    public void Teleport(Vector3 position, Quaternion rotation)
     {
         _rigidbody.position = position;
         _rigidbody.rotation = rotation;
+        physics.TeleportWheels(position);
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        _rigidbody.position = position;
+        physics.TeleportWheels(position);
     }
 
     private void OnTryPickupPassenger(TriggerEventEmitter trigger, Collider col)

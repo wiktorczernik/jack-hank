@@ -143,6 +143,23 @@ public class VehiclePhysics : MonoBehaviour
         force = Mathf.Clamp01(force) * wheelGroundFactor;
         bodyRigidbody.AddForceAtPosition(driftRotation * direction * acceleration * force, centerOfMass.position);
     }
+    
+    public void TeleportWheels(Vector3 position)
+    {
+        var leftBackWheel = wheels[3];
+        var leftFrontWheel = wheels[1];
+        var rightBackWheel = wheels[2];
+        var rightFrontWheel = wheels[0];
+
+        var vectorToLeftFront = leftFrontWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
+        var vectorToRightBack = rightBackWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
+        var vectorToRightFront = rightFrontWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
+
+        leftBackWheel.useRigidbody.position = position;
+        leftFrontWheel.useRigidbody.position = position + vectorToLeftFront;
+        rightBackWheel.useRigidbody.position = position + vectorToRightBack;
+        rightFrontWheel.useRigidbody.position = position + vectorToRightFront;
+    }
 
     public void Brake(float force = 1.0f)
     {
