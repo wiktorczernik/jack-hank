@@ -18,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Main Camera Effects
-  - 
+  - Ground
   - 
   - 
   - 
@@ -49,3 +49,5 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  - Explosion Decal
+  - Boss Haircross
