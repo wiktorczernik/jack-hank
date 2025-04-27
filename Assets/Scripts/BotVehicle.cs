@@ -36,7 +36,7 @@ public class BotVehicle : Vehicle
     public event Action onArrived;
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
         
         if (_destinationQueueSpline != null && _destinationQueueSpline.Spline.Count > 0)
@@ -158,7 +158,7 @@ public class BotVehicle : Vehicle
             physics.input.x = turnStep;
         }
     }
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (isFollowing) FollowTick();
     }

@@ -17,6 +17,9 @@ public class PlayerTurret : MonoBehaviour
     public GameEntity fireTarget;
     public bool targetInProximity;
 
+    [Header("Raycasting")]
+    public LayerMask mask;
+
     [Header("Visual Effects")]
     [SerializeField] ParticleSystem[] particles;
     public float maxNozzleAnimTime = 0.3f;
@@ -58,7 +61,13 @@ public class PlayerTurret : MonoBehaviour
         ammo -= 1;
         StartCoroutine(NozzleAnimation(Mathf.Min(maxNozzleAnimTime, 1f / fireRate)));
 
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit)) return;
+        if (targetInProximity)
+        {
+            fireTarget.Hurt(damage);
+            return;
+        }
+
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
 
         Transform current = hit.transform;
         GameEntity E = null;
@@ -112,7 +121,7 @@ public class PlayerTurret : MonoBehaviour
             return;
         }
 
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit)) return;
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
 
         Transform current = hit.transform;
         while (true)

@@ -15418,6 +15418,9 @@ MonoBehaviour:
   canFire: 0
   fireTarget: {fileID: 0}
   targetInProximity: 0
+  mask:
+    serializedVersion: 2
+    m_Bits: 17
   particles:
   - {fileID: 7912522854581503113}
   - {fileID: 4871567153276527090}

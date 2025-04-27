@@ -9,11 +9,12 @@ TagManager:
   - Smashable
   - Bus
   - Debris
+  - Ammo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Helicopter Ground
   - Water
   - UI
   - 

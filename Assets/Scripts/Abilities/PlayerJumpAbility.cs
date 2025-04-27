@@ -2,22 +2,29 @@ using UnityEngine;
 
 public class PlayerJumpAbility : PlayerVehicleAbility
 {
+    [Header("State")]
+    [SerializeField] float speedBeforeJump;
     [Header("Jump settings")]
-    [SerializeField] float jumpVelocity = 50f;
-    [SerializeField] float jumpTilt = -1f;
+    [SerializeField] float pitchTilt = -1f;
+    [SerializeField] float upwardSpeed = 30f;
+    [SerializeField] float minForwardSpeed = 50f;
     [SerializeField] float stabilizationForce = 50f;
-    [Range(0f, 1f)]
-    [SerializeField] float trajectoryAngle = 0.5f;
 
     protected override void OnWorkBegin()
     {
-        Rigidbody useRigidbody = physics.bodyRigidbody;
-        Vector3 jumpTrajectory = vehicle.transform.up * trajectoryAngle;
-        jumpTrajectory += vehicle.transform.forward;
-        jumpTrajectory.Normalize();
+        physics.onLand += OnLand;
 
-        useRigidbody.AddForce(jumpTrajectory * jumpVelocity, ForceMode.VelocityChange);
-        useRigidbody.AddTorque(-transform.right * jumpTilt, ForceMode.VelocityChange);
+        Rigidbody useRigidbody = physics.bodyRigidbody;
+        Vector3 horizontalVelocity = Vector3.ProjectOnPlane(useRigidbody.linearVelocity, physics.transform.up);
+        speedBeforeJump = Mathf.Max(minForwardSpeed, horizontalVelocity.magnitude);
+
+        float forwardSpeed = speedBeforeJump;
+        Vector3 jumpVelocity = Vector3.zero;
+        jumpVelocity += vehicle.transform.forward * forwardSpeed;
+        jumpVelocity += vehicle.transform.up * upwardSpeed;
+
+        useRigidbody.linearVelocity = jumpVelocity;
+        useRigidbody.AddTorque(-transform.right * pitchTilt, ForceMode.VelocityChange);
     }
     protected override void OnWorkTick()
     {
@@ -33,5 +40,12 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     public override bool UsageConditionsSatisfied()
     {
         return physics.isGrounded;
+    }
+
+    private void OnLand(VehiclePhysics.AirTimeState airTime)
+    {
+        physics.bodyRigidbody.linearVelocity = vehicle.transform.forward * speedBeforeJump;
+        physics.bodyRigidbody.angularVelocity = Vector3.zero;
+        physics.onLand -= OnLand;
     }
 }
