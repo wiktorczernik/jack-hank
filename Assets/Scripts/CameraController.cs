@@ -6,8 +6,13 @@ using UnityEngine.Rendering;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("Cinemachine Components")]
+    public CinemachineBrain brain;
     public CinemachineVirtualCamera virtualCamera;
     public CinemachineBasicMultiChannelPerlin perlinNoise;
+    public CinemachineTransposer transposer;
+    public CinemachineComposer composer;
+    [Header("Player")]
     public PlayerVehicle playerVehicle;
 
     [Header("State")]
@@ -73,14 +78,20 @@ public class CameraController : MonoBehaviour
     private void OnCinematicBegin()
     {
         duringCinematic = true;
+        composer.enabled = false;
+        transposer.enabled = false;
     }
     private void OnCinematicFrameUpdate(CinematicSequence.CameraFrameState frameState)
     {
         virtualCamera.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
+        transposer.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
+        composer.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
     }
     private void OnCinematicEnd()
     {
         duringCinematic = false;
+        composer.enabled = true;
+        transposer.enabled = true;
     }
 
     float CurveEasing(float x, float start, float finish)
@@ -136,6 +147,12 @@ public class CameraController : MonoBehaviour
         CinematicPlayer.onEndPlay -= OnCinematicEnd;
     }
 
+    private void Awake()
+    {
+        brain = Camera.main.GetComponent<CinemachineBrain>();
+        transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
+        composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
+    }
     private void Update()
     {
         ApplySpeedEffects();
