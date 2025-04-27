@@ -19,7 +19,7 @@ public class HeliBossFightManager : BossFightManager
         var heliBoss = FindFirstObjectByType<HeliBoss>();
 
         playerVehicle.playerTurret.fireTarget = heliBoss;
-        playerVehicle.playerTurret.ammo = 50;
+        PlayerTurret.ammo = 50;
         playerVehicle.playerTurret.AllowFire();
 
     }
