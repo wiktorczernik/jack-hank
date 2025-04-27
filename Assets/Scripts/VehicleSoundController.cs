@@ -20,4 +20,26 @@ public class VehicleSoundController : MonoBehaviour
         driftSoundSource.pitch = driftPitchCurve.Evaluate(driftFactor);
         engineSoundSource.pitch = engineFactor;
     }
+
+    private void OnEnable()
+    {
+        CinematicPlayer.onBeginPlay += OnCinematicBegin;
+        CinematicPlayer.onEndPlay += OnCinematicEnd;
+    }
+    private void OnDisable()
+    {
+        CinematicPlayer.onBeginPlay -= OnCinematicBegin;
+        CinematicPlayer.onEndPlay -= OnCinematicEnd;
+    }
+
+    private void OnCinematicBegin()
+    {
+        engineSoundSource.enabled = false;
+        driftSoundSource.enabled = false;
+    }
+    private void OnCinematicEnd()
+    {
+        engineSoundSource.enabled = true;
+        driftSoundSource.enabled = true;
+    }
 }

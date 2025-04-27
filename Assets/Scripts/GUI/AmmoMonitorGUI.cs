@@ -31,11 +31,12 @@ public class AmmoMonitorGUI : MonoBehaviour
 
     private void OnFire()
     {
+        Debug.Log(PlayerTurret.ammo);
         UpdateCounter();
     }
     private void UpdateCounter()
     {
-        Counter.text = PlayerTurret.ammo.ToString();
+        Counter.SetText(PlayerTurret.ammo.ToString());
     }
     private void Show()
     {
