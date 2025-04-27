@@ -5,15 +5,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerVehicle : Vehicle
 {
+    [SerializeField] private Transform _seatsContainer;
+    [SerializeField] private Transform _ammoTransitionSpot;
+
     public TriggerEventEmitter pickupRightTrigger;
     public TriggerEventEmitter pickupLeftTrigger;
     public CollisionEventEmitter vehicleCollision;
 
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
     public UnityEvent<ExplosionProperties> onExplosionNearby;
+    public UnityEvent<TriggerEventEmitter, PickupableAmmo> onPickupAmmo;
 
-    [SerializeField] private Transform _seatsContainer;
-
+    public PlayerTurret playerTurret;
     private Rigidbody _rigidbody;
     public PlayerVehicleSeatController seatsController;
 
@@ -27,6 +30,9 @@ public class PlayerVehicle : Vehicle
         InitSeatsController();
         pickupRightTrigger.OnEnter.AddListener(col => OnTryPickupPassenger(pickupRightTrigger, col));
         pickupLeftTrigger.OnEnter.AddListener(col => OnTryPickupPassenger(pickupLeftTrigger, col));
+
+        pickupRightTrigger.OnEnter.AddListener(col => OnTryPickupAmmo(pickupRightTrigger, col));
+        pickupLeftTrigger.OnEnter.AddListener(col => OnTryPickupAmmo(pickupLeftTrigger, col));
     }
 
 
@@ -94,5 +100,43 @@ public class PlayerVehicle : Vehicle
         var points = new Transform[count];
         for (var i = 0; i < count; i++) points[i] = _seatsContainer.GetChild(i);
         seatsController = new PlayerVehicleSeatController(points);
+    }
+
+    private void OnTryPickupAmmo(TriggerEventEmitter trigger, Collider col)
+    {
+        if (!col) return;
+        if (col.tag != "Ammo") return;
+        if (!col.TryGetComponent(out PickupableAmmo ammo)) return;
+        if (!ammo.isAlive || ammo.wasPickedUp) return;
+        playerTurret.LoadAmmo(ammo.ammoInside);
+        OnPickupAmmoEvent(trigger, ammo);
+        onPickupAmmo?.Invoke(trigger, ammo);
+        StartCoroutine(MoveAmmoInside(ammo));
+    }
+
+    private IEnumerator MoveAmmoInside(PickupableAmmo ammo)
+    {
+        ammo.SetRigidbodyKinematic(true);
+        ammo.DisableColliders();
+        var initPos = ammo.transform.position;
+        var initScale = ammo.transform.localScale;
+        yield return null;
+        var time = 0f;
+        var maxTime = 0.2f;
+        while (time < maxTime)
+        {
+            time = Mathf.Clamp(time + Time.deltaTime, 0, maxTime);
+            ammo.transform.position = Vector3.Lerp(initPos, _ammoTransitionSpot.position, time / maxTime);
+            ammo.transform.localScale = Vector3.Lerp(initScale, initScale * 0.5f, time / maxTime);
+            yield return null;
+        }
+
+        yield return null;
+        Destroy(ammo.gameObject);
+    }
+
+    private void OnPickupAmmoEvent(TriggerEventEmitter trigger, PickupableAmmo ammo)
+    {
+        ammo.NotifyPickup();
     }
 }
