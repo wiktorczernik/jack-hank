@@ -31452,10 +31452,11 @@ MonoBehaviour:
   _prepareDuration: 0
   _workDuration: 1.5
   _cooldownDuration: 0.25
-  jumpVelocity: 35
-  jumpTilt: 0
+  speedBeforeJump: 0
+  pitchTilt: 2
+  upwardSpeed: 30
+  minForwardSpeed: 30
   stabilizationForce: 50
-  trajectoryAngle: 0.75
 --- !u!114 &3356494008966536327
 MonoBehaviour:
   m_ObjectHideFlags: 0
