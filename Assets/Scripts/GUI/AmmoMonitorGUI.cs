@@ -3,20 +3,42 @@ using UnityEngine;
 
 public class AmmoMonitorGUI : MonoBehaviour
 {
+    [SerializeField] GameObject Visuals;
     [SerializeField] TMP_Text Counter;
     [SerializeField] Color LowColor;
     [SerializeField] Color Color;
     [SerializeField] int LowColorThreshold;
-    [SerializeField] PlayerTurret TargetTurret;
 
-    public bool isTurnedOn = true;
-
-    private void Update()
+    private void OnEnable()
     {
-        Counter.gameObject.SetActive(isTurnedOn);
-        if (!isTurnedOn) return;
+        PlayerTurret.onAllowFire += Show;
+        PlayerTurret.onDisallowFire += Hide;
+        PlayerTurret.onFire += OnFire;
 
-        Counter.text = TargetTurret.ammo.ToString();
-        Counter.color = TargetTurret.ammo <= LowColorThreshold ? LowColor : Color;
+        Hide();
+    }
+    private void OnDisable()
+    {
+        PlayerTurret.onAllowFire -= Show;
+        PlayerTurret.onDisallowFire -= Hide;
+        PlayerTurret.onFire -= OnFire;
+    }
+
+    private void OnFire()
+    {
+        UpdateCounter();
+    }
+    private void UpdateCounter()
+    {
+        Counter.text = PlayerTurret.ammo.ToString();
+    }
+    private void Show()
+    {
+        Visuals.SetActive(true);
+        UpdateCounter();
+    }
+    private void Hide()
+    {
+        Visuals.SetActive(false);
     }
 }
