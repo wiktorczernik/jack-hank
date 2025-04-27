@@ -13,6 +13,7 @@ public class HeliBoss : BotVehicle
     [Header("Boss Properties")]
     public PlayerVehicle target;
     public Missle missilePrefab;
+    public HelibossTargetManager targetsPrefab;
     public GameObject ground;
     public Transform missileShootAnchor;
 
@@ -30,11 +31,15 @@ public class HeliBoss : BotVehicle
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
 
-    public void Fire()
+    public void Fire(HelibossTargetManager htm)
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
-        instance.homingTarget = target.transform;
-        instance.transform.LookAt(target.transform);
+
+        Transform crosshair = htm.FindNextTarget(out int id);
+        htm.RegisterMissle(instance, id);
+
+        instance.homingTarget = crosshair;
+        instance.transform.LookAt(crosshair);
         instance.Shoot();
     }
     public void BurstFire()
@@ -45,14 +50,19 @@ public class HeliBoss : BotVehicle
     {
         burstCooldowned = true;
         onBurstPrepare?.Invoke();
+
+        HelibossTargetManager htm = Instantiate(targetsPrefab, target.transform);
+        htm.targetVehicle = target.physics;
+
         yield return new WaitForSeconds(timeBeforeBurst);
         for (int i = 0; i < burstFireCount; ++i)
         {
             float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
             onFire?.Invoke();
-            Fire();
+            Fire(htm);
             yield return new WaitForSeconds(burstFireTiming);
         }
+        htm.QueueForDeletion();
         onBurstEnd?.Invoke();
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
         yield return null;
