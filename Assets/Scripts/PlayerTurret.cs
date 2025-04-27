@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerTurret : MonoBehaviour
 {
     public static bool canFire;
+    public static int ammo;
+    public static Action onFire;
     public static Action onAllowFire;
     public static Action onDisallowFire;
 
@@ -15,7 +17,6 @@ public class PlayerTurret : MonoBehaviour
     [SerializeField] Transform RaycastOrigin;
 
     [Header("Turret Stats")]
-    public int ammo;
     public float damage;
     [Tooltip("In rounds per second")] public float fireRate;
     public GameEntity fireTarget;
@@ -92,6 +93,7 @@ public class PlayerTurret : MonoBehaviour
         }
         if (E == null) return;
         E.Hurt(damage);
+        onFire?.Invoke();
     }
     IEnumerator NozzleAnimation(float animTime)
     {
