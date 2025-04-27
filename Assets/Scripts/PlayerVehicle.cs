@@ -18,11 +18,13 @@ public class PlayerVehicle : Vehicle
 
     public PlayerTurret playerTurret;
     private Rigidbody _rigidbody;
+    private VehiclePhysics _vehiclePhysics;
     public PlayerVehicleSeatController seatsController;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _vehiclePhysics = GetComponent<VehiclePhysics>();
     }
 
     private void OnEnable()
@@ -50,6 +52,13 @@ public class PlayerVehicle : Vehicle
     {
         _rigidbody.position = position;
         _rigidbody.rotation = rotation;
+        _vehiclePhysics.TeleportWheels(position);
+    }
+
+    public void SetTransform(Vector3 position)
+    {
+        _rigidbody.position = position;
+        _vehiclePhysics.TeleportWheels(position);
     }
 
     private void OnTryPickupPassenger(TriggerEventEmitter trigger, Collider col)
