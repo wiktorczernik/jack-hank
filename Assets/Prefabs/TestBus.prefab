@@ -31046,7 +31046,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   physics: {fileID: 8049625386355856952}
   _seatsContainer: {fileID: 6318858428641228763}
-  _ammoTransitionSpot: {fileID: 0}
+  _ammoTransitionSpot: {fileID: 5092422079568603940}
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
   vehicleCollision: {fileID: 3356494008966536327}
@@ -31059,7 +31059,7 @@ MonoBehaviour:
   onPickupAmmo:
     m_PersistentCalls:
       m_Calls: []
-  playerTurret: {fileID: 0}
+  playerTurret: {fileID: 8281056764299186668}
 --- !u!54 &9165154653561585143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31450,7 +31450,7 @@ MonoBehaviour:
   _state: 0
   _displayName: Jo-Jump
   _prepareDuration: 0
-  _workDuration: 1.5
+  _workDuration: 0.5
   _cooldownDuration: 0.25
   speedBeforeJump: 0
   pitchTilt: 2
@@ -33815,3 +33815,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1484992498570801135, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
   m_PrefabInstance: {fileID: 6426272655061353466}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8281056764299186668 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3153238467616117270, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+  m_PrefabInstance: {fileID: 6426272655061353466}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c126185ee9320fa49b37e3dab46f6521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
