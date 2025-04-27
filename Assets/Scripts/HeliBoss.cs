@@ -1,8 +1,16 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HeliBoss : BotVehicle
 {
+    [Header("Heli Events")]
+    public UnityEvent onBurstPrepare;
+    public UnityEvent onBurstStart;
+    public UnityEvent onBurstEnd;
+    public UnityEvent onSuccessFire;
+    public UnityEvent onFailFire;
+
     [Header("Boss Properties")]
     public PlayerVehicle target;
     public Missle missilePrefab;
@@ -17,7 +25,7 @@ public class HeliBoss : BotVehicle
     public float burstCooldown = 5f;
     public bool burstCooldowned = false;
 
-    [Header("Boss Follow Options")]
+    [Header("Heli Follow Options")]
     public float currentHeight = 0;
     public float playerVerticalOffset = 20f;
     public float playerForwardDistance = 30f;
@@ -37,16 +45,23 @@ public class HeliBoss : BotVehicle
     IEnumerator BurstFireCo()
     {
         burstCooldowned = true;
+        onBurstPrepare?.Invoke();
         yield return new WaitForSeconds(timeBeforeBurst);
         for (int i = 0; i < burstFireCount; ++i)
         {
             float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
             if (targetDistance >= burstMinDistance)
             {
+                onSuccessFire?.Invoke();
                 Fire();
+            }
+            else
+            {
+                onFailFire?.Invoke();
             }
             yield return new WaitForSeconds(burstFireTiming);
         }
+        onBurstEnd?.Invoke();
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
         yield return null;
     }
@@ -92,7 +107,10 @@ public class HeliBoss : BotVehicle
     protected override void Awake()
     {
         base.Awake();
+        //GameObject.Find("TestBus").GetComponent<PlayerVehicle>().playerTurret.AllowFire();
         currentHeight = transform.position.y;
+        burstCooldowned = true;
+        Invoke(nameof(ResetBurstCooldown), burstCooldown);
     }
     protected override void FixedUpdate()
     {

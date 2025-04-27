@@ -67,7 +67,7 @@ public class PlayerTurret : MonoBehaviour
             return;
         }
 
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, mask)) return;
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
 
         Transform current = hit.transform;
         GameEntity E = null;
@@ -121,7 +121,7 @@ public class PlayerTurret : MonoBehaviour
             return;
         }
 
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, mask)) return;
+        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
 
         Transform current = hit.transform;
         while (true)
