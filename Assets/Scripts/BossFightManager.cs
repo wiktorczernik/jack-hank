@@ -57,6 +57,8 @@ public abstract class BossFightManager : MonoBehaviour
 
     private void OnBossDeath()
     {
+        OnBossDeathInterval();
+
         CinematicPlayer.PlaySequence(endCutscene, endCutsceneTransform.position, endCutsceneTransform.rotation,
             endCutsceneTransform.localScale);
 
@@ -66,7 +68,7 @@ public abstract class BossFightManager : MonoBehaviour
         void OnCutsceneEnd()
         {
             OnEnd?.Invoke();
-            HandleBossDeath();
+            AfterEndCutscene();
             duringFight = true;
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
         }
@@ -114,8 +116,8 @@ public abstract class BossFightManager : MonoBehaviour
     protected abstract IEnumerator PrepareCo();
 
     protected abstract void OnBeginInterval();
-
-    protected abstract void HandleBossDeath();
-
     protected abstract void OnRestartInterval();
+
+    protected abstract void OnBossDeathInterval();
+    protected abstract void AfterEndCutscene();
 }
