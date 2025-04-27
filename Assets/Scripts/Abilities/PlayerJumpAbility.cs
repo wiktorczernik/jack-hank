@@ -10,6 +10,11 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     [SerializeField] float minForwardSpeed = 50f;
     [SerializeField] float stabilizationForce = 50f;
 
+
+    public override bool ContinueWorkWhile()
+    {
+        return !physics.isGrounded;
+    }
     protected override void OnWorkBegin()
     {
         physics.onLand += OnLand;

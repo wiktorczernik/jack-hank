@@ -146,6 +146,7 @@ public class PlayerVehicleAbility : MonoBehaviour
     /// Were conditions defined for this ability satisfied
     /// </summary>
     public virtual bool UsageConditionsSatisfied() => true;
+    public virtual bool ContinueWorkWhile() => false;
     /// <summary>
     /// Called at the beginning of preparation stage
     /// </summary>
@@ -218,7 +219,7 @@ public class PlayerVehicleAbility : MonoBehaviour
     {
         if (_workTime > float.Epsilon)
         {
-            if (_workTime < _workDuration) // stay
+            if (_workTime < _workDuration || ContinueWorkWhile()) // stay
             {
                 OnWorkTick();
                 onWorkTick?.Invoke();

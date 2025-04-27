@@ -15,6 +15,12 @@ public class HeliBossFightManager : BossFightManager
 
     protected override void OnBeginInterval()
     {
+        var playerVehicle = FindFirstObjectByType<PlayerVehicle>();
+        var heliBoss = FindFirstObjectByType<HeliBoss>();
+
+        playerVehicle.playerTurret.fireTarget = heliBoss;
+        playerVehicle.playerTurret.ammo = 50;
+        playerVehicle.playerTurret.AllowFire();
 
     }
 
