@@ -15414,7 +15414,7 @@ MonoBehaviour:
   RaycastOrigin: {fileID: 6684326915665550971}
   ammo: 0
   damage: 10
-  fireRate: 2
+  fireRate: 5
   canFire: 0
   fireTarget: {fileID: 0}
   targetInProximity: 0

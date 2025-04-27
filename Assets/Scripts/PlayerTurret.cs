@@ -1,8 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerTurret : MonoBehaviour
 {
+    public static bool canFire;
+    public static Action onAllowFire;
+    public static Action onDisallowFire;
+
     [Header("Parts")]
     [SerializeField] Transform Rotor;
     [SerializeField] Transform Head;
@@ -13,7 +18,6 @@ public class PlayerTurret : MonoBehaviour
     public int ammo;
     public float damage;
     [Tooltip("In rounds per second")] public float fireRate;
-    public bool canFire;
     public GameEntity fireTarget;
     public bool targetInProximity;
 
@@ -36,12 +40,14 @@ public class PlayerTurret : MonoBehaviour
     {
         if (canFire) return;
         canFire = true;
+        onAllowFire?.Invoke();
         InvokeRepeating(nameof(TryFire), 0f, 1f / fireRate);
     }
     public void DisallowFire()
     {
         if (!canFire) return;
         canFire = false;
+        onDisallowFire?.Invoke();
         CancelInvoke(nameof(TryFire));
     }
     private void TryFire()
