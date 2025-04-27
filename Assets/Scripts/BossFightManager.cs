@@ -102,7 +102,7 @@ public abstract class BossFightManager : MonoBehaviour
 
         void OnCutsceneEnd()
         {
-            player.SetTransform(playerSpawnAfterBeginCutscene.position, playerSpawnAfterBeginCutscene.rotation);
+            player.Teleport(playerSpawnAfterBeginCutscene.position, playerSpawnAfterBeginCutscene.rotation);
             OnBeginInterval();
             _bossInstance.Activate();
             duringFight = true;
