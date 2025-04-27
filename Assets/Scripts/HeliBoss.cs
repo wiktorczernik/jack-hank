@@ -109,6 +109,7 @@ public class HeliBoss : BotVehicle
         base.Awake();
         //GameObject.Find("TestBus").GetComponent<PlayerVehicle>().playerTurret.AllowFire();
         currentHeight = transform.position.y;
+        ground.transform.SetParent(null);
         burstCooldowned = true;
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
     }

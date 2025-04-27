@@ -5282,6 +5282,59 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &3099071437635419331
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7387131177088570740}
+  - component: {fileID: 883370725232287441}
+  m_Layer: 3
+  m_Name: Platform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7387131177088570740
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099071437635419331}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 15, y: 1.1111112, z: 20}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6347187237283905811}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &883370725232287441
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3099071437635419331}
+  m_Material: {fileID: 13400000, guid: bad7c7133de76064ea7cdc50d503a054, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: -1, z: 0}
 --- !u!1 &3957898251522069711
 GameObject:
   m_ObjectHideFlags: 0
@@ -10125,6 +10178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6347187237283905811}
   - component: {fileID: 9165154653561585143}
+  - component: {fileID: 3500769445313802214}
   - component: {fileID: 6888268730309464205}
   - component: {fileID: 8049625386355856952}
   - component: {fileID: 7915724856385818524}
@@ -10157,6 +10211,7 @@ Transform:
   - {fileID: 3484621251597863864}
   - {fileID: 3878800678360203441}
   - {fileID: 443845243258357876}
+  - {fileID: 7387131177088570740}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &9165154653561585143
@@ -10186,6 +10241,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3500769445313802214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8028694816915314fa65229d23b9cd11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6888268730309464205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10200,8 +10267,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canReceiveDamage: 1
   canBeHealed: 1
-  _health: 100
-  _maxHealth: 100
+  _health: 1000
+  _maxHealth: 1000
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 0
@@ -10275,7 +10342,7 @@ MonoBehaviour:
       m_Calls: []
   target: {fileID: 0}
   missilePrefab: {fileID: 6692929710012273737, guid: bc1bd58d744769344af283e96ab816e5, type: 3}
-  ground: {fileID: 0}
+  ground: {fileID: 3099071437635419331}
   missileShootAnchor: {fileID: 443845243258357876}
   timeBeforeBurst: 5
   burstMinDistance: 20
