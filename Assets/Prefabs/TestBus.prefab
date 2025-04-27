@@ -15838,6 +15838,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2776185109776725372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5092422079568603940}
+  m_Layer: 0
+  m_Name: AmmoTransitionSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5092422079568603940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776185109776725372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.63, z: -3.84}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3878800678360203441}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2840022149983546605
 GameObject:
   m_ObjectHideFlags: 0
@@ -31006,7 +31037,16 @@ MonoBehaviour:
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   physics: {fileID: 8049625386355856952}
+  _seatsContainer: {fileID: 6318858428641228763}
+  _ammoTransitionSpot: {fileID: 0}
   pickupRightTrigger: {fileID: 4174879054022182403}
   pickupLeftTrigger: {fileID: 1991286314898252981}
   vehicleCollision: {fileID: 3356494008966536327}
@@ -31016,7 +31056,10 @@ MonoBehaviour:
   onExplosionNearby:
     m_PersistentCalls:
       m_Calls: []
-  _seatsContainer: {fileID: 6318858428641228763}
+  onPickupAmmo:
+    m_PersistentCalls:
+      m_Calls: []
+  playerTurret: {fileID: 0}
 --- !u!54 &9165154653561585143
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -31036,7 +31079,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -31400,19 +31443,20 @@ MonoBehaviour:
   onStateUpdate:
     m_PersistentCalls:
       m_Calls: []
-  _requiredMana: 50
+  _requiredMana: 0
   _prepareTime: 0
   _workTime: 0
   _cooldownTime: 0
   _state: 0
   _displayName: Jo-Jump
   _prepareDuration: 0
-  _workDuration: 0.25
-  _cooldownDuration: 2
-  jumpVelocity: 40
-  jumpTilt: -1
+  _workDuration: 1.5
+  _cooldownDuration: 0.25
+  speedBeforeJump: 0
+  pitchTilt: 2
+  upwardSpeed: 30
+  minForwardSpeed: 30
   stabilizationForce: 50
-  trajectoryAngle: 0.8
 --- !u!114 &3356494008966536327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31677,6 +31721,7 @@ Transform:
   - {fileID: 6744854428881861219}
   - {fileID: 8338468418992239086}
   - {fileID: 5599509400308132885}
+  - {fileID: 5092422079568603940}
   m_Father: {fileID: 6347187237283905811}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &7777228443190461095
