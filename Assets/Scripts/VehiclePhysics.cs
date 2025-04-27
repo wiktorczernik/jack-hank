@@ -9,51 +9,134 @@ public class VehiclePhysics : MonoBehaviour
     public event Action<AirTimeState> onAir;
     public event Action<AirTimeState> onLand;
 
-    public void TeleportWheels(Vector3 position)
-    {
-        var leftBackWheel = wheels[3];
-        var leftFrontWheel = wheels[1];
-        var rightBackWheel = wheels[2];
-        var rightFrontWheel = wheels[0];
+    #region State
+    [Header("State")]
+    public bool isGrounded = false;
+    public Vector3 groundNormal = Vector3.up;
+    public Vector3 lastVelocity = Vector3.zero;
+    public AirTimeState airTimeState = new AirTimeState(0f, 0f, 0f);
+    public bool isDrifting = false;
+    public bool isDriftingRight = false;
+    public Vector3 input = Vector3.zero;
+    public float driftAngular = 0;
+    public float driftEndBuildup = 0;
+    public int speedKmh;
+    public int speedKmhForward;
+    #endregion
 
-        var vectorToLeftFront = leftFrontWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
-        var vectorToRightBack = rightBackWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
-        var vectorToRightFront = rightFrontWheel.useRigidbody.position - leftBackWheel.useRigidbody.position;
+    #region Speed
+    [Header("Speed")]
+    public float maxForwardSpeed = 100;
+    public float maxBackwardSpeed = 15;
+    public float forwardAcceleration = 2300;
+    public float forwardBrakeForce = 4500f;
+    public float hitAlignTorque = 50f;
+    public AnimationCurve accelerationCurve = new AnimationCurve(
+            new Keyframe(0.0f, 0.9871719f, -0.006936253f, -0.006936253f)
+            {
+                weightedMode = WeightedMode.Out,
+                outWeight = 0.2405324f
+            },
+            new Keyframe(1.0f, 0.25f, -1.0398812f, -1.0398812f)
+            {
+                weightedMode = WeightedMode.In,
+                inWeight = 0.099405944f
+            }
+        );
+    #endregion
 
-        leftBackWheel.useRigidbody.position = position;
-        leftFrontWheel.useRigidbody.position = position + vectorToLeftFront;
-        rightBackWheel.useRigidbody.position = position + vectorToRightBack;
-        rightFrontWheel.useRigidbody.position = position + vectorToRightFront;
-    }
+    #region Air roll
+    [Header("Air roll")]
+    public bool allowAirRoll = false;
+    public float airRollForce = 1f;
+    public float airRollMinTime = 1.25f;
+    #endregion
+
+    #region Turning
+    [Header("Turning")]
+    public float turnForce = 5000;
+    public float turnAginForce = 7500;
+    public float turnStabilization = 8;
+    public AnimationCurve turnForceCurve = new AnimationCurve(
+            new Keyframe(0.00029324335628189147f, -0.00036793947219848633f, -0.035219479352235797f, -0.035219479352235797f, 0.3333333432674408f, 0.4983673095703125f),
+            new Keyframe(0.16586846113204957f, 0.7770610451698303f, 2.478717088699341f, 2.478717088699341f, 0.2105962336063385f, 0.07951834797859192f),
+            new Keyframe(0.6138836145401001f, 0.8381440043449402f, -0.3972685933113098f, -0.3972685933113098f, 0.14587171375751496f, 0.163782998919487f),
+            new Keyframe(0.99560546875f, 0.7938946485519409f, -0.059095773845911029f, -0.059095773845911029f, 0.07981926202774048f, 0.0f)
+        );
+    #endregion
+
+    #region Wheels
+    [Header("Wheels")]
+    public VehicleWheel[] wheels;
+    public float bonusWheelGravity = 50;
+    #endregion
+
+    #region Drifting
+    [Header("Drifting")]
+    public float driftBonusAcceleration = 1.5f;
+    public float driftMinSpeed = 15f;
+    public float driftTurnForce = 3000f;
+    public float driftMoveForce = 1500f;
+    public float driftLeanAngle = 15f;
+    public float driftClimbRate = 1.7f;
+    public float driftClimbAginRate = 3.75f;
+    public float driftSinkRate = 6.25f;
+    public float driftMaxAngular = 1.5f;
+    public float driftStartAngular = 1.1f;
+    public float driftEndAngular = 0.5f;
+    public float driftEndTime = 0.5f;
+    #endregion
+
+    #region Physics
+    [Header("Physics")]
+    public Rigidbody bodyRigidbody;
+    public CollisionEventEmitter collisionEvents;
+    public Transform centerOfMass;
+    public float frictionForce = 750f;
+    #endregion
+
+    #region Visuals
+    [Header("Visuals")]
+    [Obsolete]
+    public VehicleSkidmarkSource skidmarkSourceLeft;
+    [Obsolete]
+    public VehicleSkidmarkSource skidmarkSourceRight;
+    [Obsolete]
+    public ParticleSystem smokeSourceLeft;
+    [Obsolete]
+    public ParticleSystem smokeSourceRight;
+    #endregion
+
 
     public float GetForwardSpeed()
     {
         return Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward);
     }
-
     public void Accelerate(float force = 1.0f, bool useCurve = true)
     {
-        var direction = transform.forward;
-        var driftRotation = Quaternion.identity;
+        Vector3 direction = transform.forward;
+        Quaternion driftRotation = Quaternion.identity;
         float driftFactor = 0;
         if (isDrifting)
         {
             driftFactor = Mathf.Abs(driftAngular / driftMaxAngular);
             driftRotation = Quaternion.Euler(0, driftFactor * driftLeanAngle, 0);
         }
-
-        var sp = Vector3.Dot(bodyRigidbody.linearVelocity, direction) * 3.6f;
+        float sp = Vector3.Dot(bodyRigidbody.linearVelocity, direction) * 3.6f;
         if (sp > maxForwardSpeed)
         {
             Debug.Log("Capped front");
             return;
         }
-
-        var wheelGroundFactor = 0.0f;
-        foreach (var wheel in wheels)
+        float wheelGroundFactor = 0.0f;
+        foreach(var wheel in wheels)
+        {
             if (wheel.CheckGround())
+            {
                 wheelGroundFactor += 0.25f;
-        var acceleration = forwardAcceleration;
+            }
+        }
+        float acceleration = forwardAcceleration;
         acceleration += driftFactor * driftBonusAcceleration;
         acceleration *= accelerationCurve.Evaluate(speedKmhForward / maxForwardSpeed);
 
@@ -68,26 +151,26 @@ public class VehiclePhysics : MonoBehaviour
             Debug.Log("Capped back");
             return;
         }
-
         force = Mathf.Clamp01(force);
         bodyRigidbody.AddForceAtPosition(-transform.forward * forwardBrakeForce * force, centerOfMass.position);
     }
-
     public void DoTurn(float input)
     {
         if (input == 0) return;
         input = Mathf.Clamp(input, -1, 1);
         if (isDrifting) return;
-        var sp = Mathf.Abs(Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward));
-        if (GetForwardSpeed() < 0) input = -input;
+        float sp = Mathf.Abs(Vector3.Dot(bodyRigidbody.linearVelocity, transform.forward));
+        if (GetForwardSpeed() < 0)
+        {
+            input = -input;
+        }
         sp *= 3.6f;
         sp /= maxForwardSpeed;
         sp = Mathf.Clamp01(sp);
         sp = turnForceCurve.Evaluate(sp);
-        var isCounter = Mathf.Sign(bodyRigidbody.angularVelocity.y) != Mathf.Sign(input);
+        bool isCounter = Mathf.Sign(bodyRigidbody.angularVelocity.y) != Mathf.Sign(input);
         bodyRigidbody.AddTorque(transform.up * input * (isCounter ? turnAginForce : turnForce) * sp);
     }
-
     public void DoDrift(float input)
     {
         if (!isDrifting) return;
@@ -95,32 +178,33 @@ public class VehiclePhysics : MonoBehaviour
         if (input != 0)
         {
             float driftSign = isDriftingRight ? 1 : -1;
-            var chosenFactor = driftClimbRate;
-            if (Mathf.Sign(input) != Mathf.Sign(driftAngular)) chosenFactor = driftClimbAginRate;
+            float chosenFactor = driftClimbRate;
+            if (Mathf.Sign(input) != Mathf.Sign(driftAngular))
+            {
+                chosenFactor = driftClimbAginRate;
+            }
             driftAngular += input * chosenFactor * Time.fixedDeltaTime;
         }
         else
         {
             driftAngular = Mathf.SmoothStep(driftAngular, 0, driftSinkRate * Time.fixedDeltaTime);
         }
-
         driftAngular = Mathf.Clamp(driftAngular, -driftMaxAngular, driftMaxAngular);
-        var newAngular = bodyRigidbody.angularVelocity;
+        Vector3 newAngular = bodyRigidbody.angularVelocity;
         newAngular.y = driftAngular;
         bodyRigidbody.angularVelocity = newAngular;
     }
-
     public void DoAirRoll(Vector3 input)
     {
         if (isGrounded || !allowAirRoll) return;
         if (airTimeState.timePassed < airRollMinTime) return;
 
-        var sideForce = transform.up;
+        Vector3 sideForce = transform.up;
         sideForce *= airRollForce;
         sideForce *= input.x;
         sideForce *= Time.fixedDeltaTime;
-
-        var forwardForce = transform.right;
+        
+        Vector3 forwardForce = transform.right;
         forwardForce *= airRollForce;
         forwardForce *= input.y;
         forwardForce *= Time.fixedDeltaTime;
@@ -128,21 +212,16 @@ public class VehiclePhysics : MonoBehaviour
         bodyRigidbody.AddTorque(sideForce, ForceMode.VelocityChange);
         bodyRigidbody.AddTorque(forwardForce, ForceMode.VelocityChange);
     }
-
     [Obsolete]
-    public bool IsGrounded()
+    public bool IsGrounded() => isGrounded;
+    void CheckGrounded()
     {
-        return isGrounded;
-    }
-
-    private void CheckGrounded()
-    {
-        var oldGrounded = isGrounded;
-        var newGrounded = false;
-        var newDistance = Mathf.Infinity;
+        bool oldGrounded = isGrounded;
+        bool newGrounded = false;
+        float newDistance = Mathf.Infinity;
         var newState = airTimeState;
         // Average of ground normals under wheels
-        var newGroundNormal = Vector3.zero;
+        Vector3 newGroundNormal = Vector3.zero;
 
         foreach (var wheel in wheels)
         {
@@ -151,16 +230,14 @@ public class VehiclePhysics : MonoBehaviour
             newDistance = Mathf.Min(newDistance, wheel.distanceToGround);
             newGroundNormal += wheel.groundNormal;
         }
-
         newGroundNormal /= wheels.Length;
 
-        if (oldGrounded || (oldGrounded && !newGrounded))
+        if (oldGrounded || oldGrounded && !newGrounded)
         {
             newState.timePassed = 0;
             newState.groundHeight = 0;
             newState.maxGroundHeight = 0;
         }
-
         if (!newGrounded)
         {
             newState.timePassed += Time.fixedDeltaTime;
@@ -184,25 +261,27 @@ public class VehiclePhysics : MonoBehaviour
             onAir?.Invoke(airTimeState);
         }
     }
-
-    private void HandleWheels()
+    void HandleWheels()
     {
-        foreach (var wheel in wheels)
+        foreach(VehicleWheel wheel in wheels)
         {
             wheel.isDrifting = isDrifting;
             wheel.ApplyFriction();
             wheel.ApplyGravity(bonusWheelGravity);
         }
     }
-
-    private void HandleSkidmarks()
+    void HandleSkidmarks()
     {
+        
         if (wheels[2].CheckGround())
         {
             if (isDrifting)
             {
-                var factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - driftEndAngular;
-                if (factor > 0.1f && driftEndBuildup <= float.Epsilon) smokeSourceRight.Play();
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - driftEndAngular;
+                if (factor > 0.1f && driftEndBuildup <= float.Epsilon)
+                {
+                    smokeSourceRight.Play();
+                }
                 skidmarkSourceRight.StartEmitting();
             }
             else
@@ -216,13 +295,15 @@ public class VehiclePhysics : MonoBehaviour
             smokeSourceRight.Stop();
             skidmarkSourceRight.StopEmitting();
         }
-
         if (wheels[3].CheckGround())
         {
             if (isDrifting)
             {
-                var factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - driftEndAngular;
-                if (factor > 0.1f) smokeSourceLeft.Play();
+                float factor = Mathf.Abs(bodyRigidbody.angularVelocity.y) - driftEndAngular;
+                if (factor > 0.1f)
+                {
+                    smokeSourceLeft.Play();
+                }
                 skidmarkSourceLeft.StartEmitting();
             }
             else
@@ -238,10 +319,10 @@ public class VehiclePhysics : MonoBehaviour
         }
     }
 
-    private void DampenVelocity(Collision collision)
+    void DampenVelocity(Collision collision)
     {
-        var newVelocity = lastVelocity;
-        var reflect = true;
+        Vector3 newVelocity = lastVelocity;
+        bool reflect = true;
         var hitObject = collision.gameObject;
 
         GameEntity ent;
@@ -251,34 +332,31 @@ public class VehiclePhysics : MonoBehaviour
                 reflect = false;
         }
         else
-        {
             reflect = false;
-        }
 
         if (reflect)
         {
-            var hitPointPos = Vector3.zero;
-            var hitPointNormal = Vector3.zero;
+            Vector3 hitPointPos = Vector3.zero;
+            Vector3 hitPointNormal = Vector3.zero;
             foreach (var contact in collision.contacts)
             {
                 hitPointPos += contact.point;
                 hitPointNormal += contact.normal;
             }
-
             hitPointPos /= collision.contacts.Length;
             hitPointNormal /= collision.contacts.Length;
             newVelocity = Vector3.Reflect(newVelocity, hitPointNormal);
         }
 
         bodyRigidbody.linearVelocity = newVelocity;
-
+        
         lastVelocity = newVelocity;
     }
 
     private void ManageDriftState()
     {
-        var angY = bodyRigidbody.angularVelocity.y;
-        var absAngY = Mathf.Abs(angY);
+        float angY = bodyRigidbody.angularVelocity.y;
+        float absAngY = Mathf.Abs(angY);
 
         if (isDrifting)
         {
@@ -309,18 +387,82 @@ public class VehiclePhysics : MonoBehaviour
             }
         }
     }
-
     private void ApplyFriction()
     {
-        var velocity = bodyRigidbody.linearVelocity;
-        var magnitude = velocity.magnitude;
+        Vector3 velocity = bodyRigidbody.linearVelocity;
+        float magnitude = velocity.magnitude;
         if (magnitude > float.Epsilon)
         {
-            var frictionForce = -velocity.normalized;
+            Vector3 frictionForce = -velocity.normalized;
             frictionForce *= this.frictionForce;
             bodyRigidbody.AddForce(frictionForce);
         }
     }
+
+    private void OnEnable()
+    {
+        collisionEvents.OnEnter.AddListener(DampenVelocity);
+    }
+    private void OnDisable()
+    {
+        collisionEvents.OnEnter.RemoveListener(DampenVelocity);
+    }
+    private void FixedUpdate()
+    {
+        CheckGrounded();
+
+        ManageDriftState();
+
+        HandleWheels();
+        HandleSkidmarks();
+
+        if (input.y > 0 && isGrounded)
+        {
+            Accelerate(input.y);
+        }
+        if (input.y < 0  && isGrounded)
+        {
+            Brake(-input.y);
+        }
+        if (isGrounded)
+        {
+            DoTurn(input.x);
+            DoDrift(input.x);
+        }
+        ApplyFriction();
+        if (!isDrifting && input.x == 0)
+        {
+            Vector3 av = bodyRigidbody.angularVelocity;
+            av.y = 0;
+            bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, turnStabilization * Time.fixedDeltaTime);
+        }
+        if (!isGrounded && allowAirRoll)
+        {
+            DoAirRoll(input);
+        }
+        speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
+        speedKmhForward = Mathf.Abs(speedKmh);
+        lastVelocity = bodyRigidbody.linearVelocity;
+}
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (bodyRigidbody == null)
+        {
+            bodyRigidbody = GetComponent<Rigidbody>();
+            bodyRigidbody.maxLinearVelocity = maxForwardSpeed;
+        }
+        if (centerOfMass == null)
+        {
+            centerOfMass = bodyRigidbody.transform;
+        }
+        if (wheels == null || wheels.Length == 0)
+        {
+            wheels = GetComponentsInChildren<VehicleWheel>();
+        }
+    }
+#endif
 
     [Serializable]
     public struct AirTimeState
@@ -328,8 +470,8 @@ public class VehiclePhysics : MonoBehaviour
         public AirTimeState(float timePassed, float distToGround, float maxDistToGround)
         {
             this.timePassed = timePassed;
-            groundHeight = distToGround;
-            maxGroundHeight = maxDistToGround;
+            this.groundHeight = distToGround;
+            this.maxGroundHeight = maxDistToGround;
         }
 
         public float timePassed;
