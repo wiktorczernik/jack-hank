@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerJumpAbility : PlayerVehicleAbility
 {
+    [Header("State")]
+    [SerializeField] float speedBeforeJump;
     [Header("Jump settings")]
     [SerializeField] float jumpVelocity = 50f;
     [SerializeField] float jumpTilt = -1f;
@@ -11,9 +13,12 @@ public class PlayerJumpAbility : PlayerVehicleAbility
 
     protected override void OnWorkBegin()
     {
+        physics.onLand += OnLand;
+
         Rigidbody useRigidbody = physics.bodyRigidbody;
+        speedBeforeJump = useRigidbody.linearVelocity.magnitude;
         Vector3 jumpTrajectory = vehicle.transform.up * trajectoryAngle;
-        jumpTrajectory += vehicle.transform.forward;
+        jumpTrajectory += vehicle.transform.forward * (1 - trajectoryAngle);
         jumpTrajectory.Normalize();
 
         useRigidbody.AddForce(jumpTrajectory * jumpVelocity, ForceMode.VelocityChange);
@@ -33,5 +38,11 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     public override bool UsageConditionsSatisfied()
     {
         return physics.isGrounded;
+    }
+
+    private void OnLand(VehiclePhysics.AirTimeState airTime)
+    {
+        physics.bodyRigidbody.linearVelocity = vehicle.transform.forward * speedBeforeJump;
+        physics.onLand -= OnLand;
     }
 }
