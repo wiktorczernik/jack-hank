@@ -33,6 +33,14 @@ public class PlayerVehicle : Vehicle
 
         pickupRightTrigger.OnEnter.AddListener(col => OnTryPickupAmmo(pickupRightTrigger, col));
         pickupLeftTrigger.OnEnter.AddListener(col => OnTryPickupAmmo(pickupLeftTrigger, col));
+
+        CinematicPlayer.onBeginPlay += OnCinematicBegin;
+        CinematicPlayer.onEndPlay += OnCinematicEnd;
+    }
+    private void OnDisable()
+    {
+        CinematicPlayer.onBeginPlay -= OnCinematicBegin;
+        CinematicPlayer.onEndPlay -= OnCinematicEnd;
     }
 
 
@@ -145,5 +153,16 @@ public class PlayerVehicle : Vehicle
     private void OnPickupAmmoEvent(TriggerEventEmitter trigger, PickupableAmmo ammo)
     {
         ammo.NotifyPickup();
+    }
+
+    private void OnCinematicBegin()
+    {
+        _rigidbody.isKinematic = true;
+        physics.enabled = false;
+    }
+    private void OnCinematicEnd()
+    {
+        _rigidbody.isKinematic = false;
+        physics.enabled = true;
     }
 }
