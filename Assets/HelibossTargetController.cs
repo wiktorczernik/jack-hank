@@ -5,16 +5,19 @@ public class HelibossTargetController : MonoBehaviour
     public Missle assignedMissle;
     public float farShift;
     public float closeShift;
+    public float distanceThreshold;
 
-    float CurveEasing(float x, float start, float finish)
+    Vector2 v3xz(Vector3 v)
     {
-        return 1 / (1 + Mathf.Exp(10 / (start - finish) * (x - (start + finish) / 2)));
+        return new Vector2(v.x, v.z);
     }
     private void Update()
     {
+        if (!assignedMissle) return;
+
         Vector3 localPos = transform.localPosition;
-        float distance = (transform.position - assignedMissle.transform.position).magnitude;
-        float val = CurveEasing(distance, 4f, 0.5f);
-        localPos.y = closeShift * val + farShift * (1 - val);
+        float distance = (v3xz(transform.position) - v3xz(assignedMissle.transform.position)).magnitude;
+        localPos.y = distance < distanceThreshold ? closeShift : farShift;
+        transform.localPosition = localPos;
     }
 }
