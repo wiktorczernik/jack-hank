@@ -225,5 +225,6 @@ public enum SmashableType
     Hydrant, 
     SmallSign, 
     Barrel,
-    WaterTower
+    WaterTower,
+    Cardboard
 }
