@@ -165,8 +165,8 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2470967479069385551}
   serializedVersion: 8
-  lengthInSec: 20
-  simulationSpeed: 5
+  lengthInSec: 10
+  simulationSpeed: 2
   stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
@@ -5180,6 +5180,13 @@ MonoBehaviour:
     epicenterRadius: 2
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   wasHit: 0
   hittable: 1
   bountyPointsReward: 150

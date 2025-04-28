@@ -224,5 +224,6 @@ public enum SmashableType
     Trash, 
     Hydrant, 
     SmallSign, 
-    Barrel
+    Barrel,
+    WaterTower
 }
