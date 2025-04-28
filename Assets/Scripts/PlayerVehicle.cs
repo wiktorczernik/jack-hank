@@ -165,4 +165,9 @@ public class PlayerVehicle : Vehicle
         _rigidbody.isKinematic = false;
         physics.enabled = true;
     }
+
+    protected override void OnDeathInternal()
+    {
+        GameManager.PlayerDeathRestart();
+    }
 }

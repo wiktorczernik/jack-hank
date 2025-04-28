@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         return LevelCompletenessMark.S;
     }
 
-    public static void RestartLevel()
+    public static void PlayerDeathRestart()
     {
         Local.fadeTransition.StartFadeIn();
         Local.fadeTransition.OnFadeInEnded += AfterFadeIn;
@@ -114,9 +114,15 @@ public class GameManager : MonoBehaviour
 
         void AfterFadeIn()
         {
-            SceneManager.LoadScene(_definition.SceneName);
             Local.fadeTransition.OnFadeInEnded -= AfterFadeIn;
+            if (Local.bossFightManager.duringFight) RestartBossFight();
+            else RestartLevel();
         }
+    }
+
+    public static void RestartLevel()
+    {
+        SceneManager.LoadScene(_definition.SceneName);
     }
 
     public static void RestartBossFight()
