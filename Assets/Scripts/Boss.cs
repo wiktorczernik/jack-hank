@@ -10,7 +10,7 @@ public abstract class Boss : MonoBehaviour
         OnActivate();
     }
 
-    private void DieHandle()
+    public void Die()
     {
         PrepareDie();
         onDeath?.Invoke();
