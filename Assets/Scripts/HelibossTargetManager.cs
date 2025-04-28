@@ -12,23 +12,21 @@ public class HelibossTargetManager : MonoBehaviour
     private int loadedMissles = 0;
     private bool queuedForDeletion = false;
 
-    public Transform FindNextTarget(out int id)
+    public Transform FindNextTarget(Missle missle)
     {
-        id = -1;
+        int id = -1;
         if (positionsList.childCount == 0) return null;
 
         Transform randomPos = positionsList.GetChild(Random.Range(0, positionsList.childCount));
         id = int.Parse(randomPos.name);
         randomPos.parent = transform;
         GameObject crosshair = Instantiate(crosshairPrefab, randomPos);
-        return crosshair.transform;
-    }
 
-    public void RegisterMissle(Missle missle, int id)
-    {
         loadedMissles++;
-        transform.Find($"{id}").GetComponent<HelibossTargetController>().assignedMissle = missle;
+        randomPos.GetComponent<HelibossTargetController>().assignedMissle = missle;
         missle.onSelfExplode += (_) => CancelTarget(id);
+
+        return crosshair.transform;
     }
 
     void CancelTarget(int id)

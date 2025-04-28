@@ -35,8 +35,7 @@ public class HeliBoss : BotVehicle
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
-        Transform crosshair = htm.FindNextTarget(out int id);
-        htm.RegisterMissle(instance, id);
+        Transform crosshair = htm.FindNextTarget(instance);
 
         instance.homingTarget = crosshair;
         instance.transform.LookAt(crosshair);
