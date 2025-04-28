@@ -10,6 +10,7 @@ public class HeliBossInfo : Boss
         instance = GetComponent<HeliBoss>();
         instance.enabled = false;
         instance.physics.enabled = false;
+        instance.onDeath += Die;
     }
 
     protected override void OnActivate()
@@ -17,6 +18,7 @@ public class HeliBossInfo : Boss
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
         instance.physics.enabled = true;
+        instance.onDeath -= Die;
     }
 
     protected override void PrepareDie()
