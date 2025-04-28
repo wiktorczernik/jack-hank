@@ -40,7 +40,6 @@ public class GameRunInfo
         if (bonusType == PlayerBonusTypes.Passenger) AddPassenger();
 
         _pointsByBonusTypes[bonusType] += value;
-        Debug.Log(AllBountyPoints);
     }
 
     public Dictionary<PlayerBonusTypes, int> GetPointsByBonusTypes()
