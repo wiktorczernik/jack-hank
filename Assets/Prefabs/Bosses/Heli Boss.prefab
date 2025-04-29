@@ -10301,21 +10301,14 @@ MonoBehaviour:
   hardTurnMaxSpeed: 10
   speedDamageThreshold: 40
   dmgReceivedPerSpeedUnit: 1.667
-  onBurstPrepare:
+  isDuringBurst: 0
+  isBurstCooldowned: 0
+  missilesLeft: -1
+  activeCrosshairs: []
+  shotMissiles: []
+  onBurstBegin:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3800255605740550355}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onBurstStart:
     m_PersistentCalls:
       m_Calls: []
@@ -10327,15 +10320,15 @@ MonoBehaviour:
       m_Calls: []
   target: {fileID: 0}
   missilePrefab: {fileID: 6692929710012273737, guid: bc1bd58d744769344af283e96ab816e5, type: 3}
-  targetsPrefab: {fileID: 5145536075751421136, guid: b6f101e3c85633b4fbe053cd4e8e072a, type: 3}
+  crosshairPrefab: {fileID: 402068446918780979, guid: a6f5980df9e577146ba6b1423615a664, type: 3}
   ground: {fileID: 3099071437635419331}
   missileShootAnchor: {fileID: 443845243258357876}
   timeBeforeBurst: 5
   burstMinDistance: 20
   burstFireTiming: 0.5
-  burstFireCount: 3
+  burstMaxFirings: 5
   burstCooldown: 8
-  burstCooldowned: 0
+  sideCrosshairDistance: 10
   currentHeight: 0
   playerVerticalOffset: 10
   playerForwardDistance: 50
