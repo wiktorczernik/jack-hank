@@ -65,7 +65,7 @@ public class ProjectileEntity : GameEntity
 
             angle = Mathf.Abs(Vector3.Angle(projFwd, targetVector));
 
-            if (angle <= snapAngle) transform.LookAt(homingTarget);
+            if (angle <= snapAngle) transform.LookAt(homingTarget.position + targetShift + homingTarget.rotation * localTargetShift);
         }
 
         rigidbody_.AddForce(projFwd * (acceleration + (applyBoost ? turnBackBoost : 0f)), ForceMode.Acceleration);

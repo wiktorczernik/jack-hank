@@ -29,6 +29,7 @@ public class MissleCrosshair : MonoBehaviour
         }
         isVisible = false;
         decal.enabled = false;
+        Destroy(gameObject);
     }
 
     private void Awake()
