@@ -10355,7 +10355,7 @@ MonoBehaviour:
   currentHeight: 0
   playerVerticalOffset: 10
   playerForwardDistance: 50
-  verticalAlignSpeed: 10
+  verticalAlignSpeed: 5
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0
