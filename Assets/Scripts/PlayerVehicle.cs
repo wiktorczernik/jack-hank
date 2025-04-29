@@ -37,6 +37,7 @@ public class PlayerVehicle : Vehicle
         CinematicPlayer.onBeginPlay += OnCinematicBegin;
         CinematicPlayer.onEndPlay += OnCinematicEnd;
     }
+
     private void OnDisable()
     {
         CinematicPlayer.onBeginPlay -= OnCinematicBegin;
@@ -56,8 +57,9 @@ public class PlayerVehicle : Vehicle
 
     public void Teleport(Vector3 position, Quaternion rotation)
     {
+        var rotationCorrection = Quaternion.Euler(0, 90, 0);
         _rigidbody.position = position;
-        _rigidbody.rotation = rotation;
+        _rigidbody.rotation = rotation * rotationCorrection;
         physics.TeleportWheels(position);
     }
 
@@ -160,6 +162,7 @@ public class PlayerVehicle : Vehicle
         _rigidbody.isKinematic = true;
         physics.enabled = false;
     }
+
     private void OnCinematicEnd()
     {
         _rigidbody.isKinematic = false;
