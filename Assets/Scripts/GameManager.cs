@@ -59,6 +59,12 @@ public class GameManager : MonoBehaviour
     public void Initialize(LevelDefinition definition)
     {
         if (_isInitialized) return;
+
+        PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
+        Local = this;
+        RunInfo = new GameRunInfo();
+        IsDuringRun = true;
+
         if (definition == null)
         {
             Debug.LogError("Game Manager can not be initialized with null Level Definition");
@@ -136,10 +142,6 @@ public class GameManager : MonoBehaviour
 
     private void BeginRun()
     {
-        PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
-        Local = this;
-        RunInfo = new GameRunInfo();
-        IsDuringRun = true;
         OnRunBegin?.Invoke(RunInfo);
     }
 
