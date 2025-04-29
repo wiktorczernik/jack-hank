@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,8 +22,10 @@ public class PlayerAbility_GUI : MonoBehaviour
     [SerializeField] Sprite iconActiveSprite;
     [SerializeField] Sprite iconInactiveSprite;
 
-    private void OnEnable()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => ability != null);
+
         ability.onStateUpdate.AddListener(UpdateBorder);
         ability.onStateUpdate.AddListener(UpdateIcon);
         ability.onStateUpdate.AddListener(UpdateLoading);
