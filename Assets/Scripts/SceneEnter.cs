@@ -15,7 +15,7 @@ public class SceneEnter : MonoBehaviour
     {
         if (!useEnter) return;
 
-        player.GetComponent<Rigidbody>().position = startingPosition.position;
+        player.Teleport(startingPosition.position, startingPosition.rotation);
 
         fadeTransition.PrepareFadeOut();
         fadeTransition.StartFadeOut();
