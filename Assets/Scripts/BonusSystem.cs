@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,7 +14,8 @@ public class BonusSystem : MonoBehaviour
     private int _hitBonusPool;
 
     private Dictionary<PlayerBonusTypes, InUpdateBonus> _inUpdateBonuses;
-    
+
+    [SerializeField]
     private VehiclePhysics _playerVehicleController;
 
     private void InitializeInUpdateBonuses()
@@ -27,10 +29,13 @@ public class BonusSystem : MonoBehaviour
         };
     }
     
-    private void Start()
+    private IEnumerator Start()
     {
         InitializeInUpdateBonuses();
-        _playerVehicleController = GameManager.PlayerVehicle.GetComponent<VehiclePhysics>();
+
+        yield return new WaitUntil(() => GameManager.PlayerVehicle != null);
+
+        _playerVehicleController = GameManager.PlayerVehicle.GetComponentInChildren<VehiclePhysics>();
         GameManager.PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
         
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))
@@ -53,7 +58,9 @@ public class BonusSystem : MonoBehaviour
     }
 
     private void Update()
-    {   
+    {
+        if (_playerVehicleController == null) return;
+
         foreach (var (bonusType, bonusState) in _inUpdateBonuses)
         {
             var isAfterBonus = Time.time - bonusState.LastBonusTime >= bonusState.TimeIntervalInSeconds;
