@@ -61,36 +61,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: snapAngle
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: acceleration
-      value: 45
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: rotationRate
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: turnBackBoost
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: maxBoostingLookAngle
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: turnBackDecceleration
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: minBoostingVelocityAngle
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
-      propertyPath: minDampeningVelocityAngle
-      value: 20
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

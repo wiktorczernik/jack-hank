@@ -1,11 +1,20 @@
 using System.Collections;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class HeliBoss : BotVehicle
 {
+    [Header("Burst Fire State")]
+    public bool isDuringBurst;
+    public bool isBurstTimedOut = false;
+    public bool isBurstCooldowned = false;
+    public int missilesLeft = -1;
+    public MissleCrosshair[] activeCrosshairs;
+    public Missle[] shotMissiles;
+
     [Header("Heli Events")]
-    public UnityEvent onBurstPrepare;
+    public UnityEvent onBurstBegin;
     public UnityEvent onBurstStart;
     public UnityEvent onBurstEnd;
     public UnityEvent onFire;
@@ -13,17 +22,18 @@ public class HeliBoss : BotVehicle
     [Header("Boss Properties")]
     public PlayerVehicle target;
     public Missle missilePrefab;
-    public HelibossTargetManager targetsPrefab;
+    public MissleCrosshair crosshairPrefab;
     public GameObject ground;
     public Transform missileShootAnchor;
 
     [Header("Heli Burst Fire")]
+    public float burstTimeOut = 5f;
     public float timeBeforeBurst = 3f;
     public float burstMinDistance = 30f;
     public float burstFireTiming = 0.1f;
-    public int burstFireCount = 5;
+    public int burstMaxFirings = 5;
     public float burstCooldown = 5f;
-    public bool burstCooldowned = false;
+    public float sideCrosshairDistance = 10f;
 
     [Header("Heli Follow Options")]
     public float currentHeight = 0;
@@ -31,44 +41,88 @@ public class HeliBoss : BotVehicle
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
 
-    public void Fire(HelibossTargetManager htm)
+    public Missle Fire(MissleCrosshair crosshair)
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
-        Transform crosshair = htm.FindNextTarget(instance);
+        instance.enabled = false;
 
-        instance.homingTarget = crosshair;
-        instance.transform.LookAt(crosshair);
+        instance.homingTarget = crosshair.transform;
+
+        instance.transform.LookAt(instance.homingTarget);
         instance.Shoot();
+
+        return instance;
     }
     public void BurstFire()
     {
         StartCoroutine(BurstFireCo());
     }
+    private void CreateCrosshairs()
+    {
+        for (int i = 0; i < burstMaxFirings; ++i)
+        {
+            activeCrosshairs[i] = Instantiate(crosshairPrefab);
+            activeCrosshairs[i].Show();
+        }
+    }
+    private void DestroyCrosshairs()
+    {
+        foreach (var crosshair in activeCrosshairs)
+        {
+            Destroy(crosshair);
+        }
+    }
     IEnumerator BurstFireCo()
     {
-        burstCooldowned = true;
-        onBurstPrepare?.Invoke();
+        CreateCrosshairs();
+        isBurstCooldowned = true;
+        isDuringBurst = true;
 
-        HelibossTargetManager htm = Instantiate(targetsPrefab, target.transform);
-        htm.targetVehicle = target.physics;
+        onBurstBegin?.Invoke();
 
+        missilesLeft = 0;
         yield return new WaitForSeconds(timeBeforeBurst);
-        for (int i = 0; i < burstFireCount; ++i)
+        for (int i = 0; i < burstMaxFirings; ++i)
         {
-            float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
+            missilesLeft++;
+
+            var crosshair = activeCrosshairs[i];
+            var missile = Fire(crosshair);
+
+            void ExplosionEventHandler(ExplosionProperties p)
+            {
+                OnMissileExplode(missile, crosshair);
+                missile.onSelfExplode -= ExplosionEventHandler;
+            }
+
+            missile.onSelfExplode += ExplosionEventHandler;
+            missile.enabled = true;
+            shotMissiles[i] = missile;
+
             onFire?.Invoke();
-            Fire(htm);
+
             yield return new WaitForSeconds(burstFireTiming);
         }
-        htm.QueueForDeletion();
+
+        Invoke(nameof(TimeOutBurst), burstTimeOut);
+
+        yield return new WaitUntil(() => missilesLeft <= 0 || isBurstTimedOut == true);
+
+        isBurstTimedOut = false;
         onBurstEnd?.Invoke();
+        DestroyCrosshairs();
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
-        yield return null;
+
+        missilesLeft = -1;
+    }
+    public void TimeOutBurst()
+    {
+        isBurstTimedOut = true;
     }
     private void ResetBurstCooldown()
     {
-        burstCooldowned = false;
+        isBurstCooldowned = false;
     }
     private void SeekPlayerView()
     {
@@ -86,7 +140,7 @@ public class HeliBoss : BotVehicle
     }
     private void TryBurstFire()
     {
-        if (burstCooldowned) return;
+        if (isBurstCooldowned) return;
         float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
         if (targetDistance > burstMinDistance)
         {
@@ -104,21 +158,54 @@ public class HeliBoss : BotVehicle
 
         ground.transform.position = newPos;
     }
+    private void OnMissileExplode(Missle missile, MissleCrosshair crosshair)
+    {
+        crosshair.Hide();
+        missilesLeft--;
+    }
 
     protected override void Awake()
     {
         base.Awake();
-        //GameObject.Find("TestBus").GetComponent<PlayerVehicle>().playerTurret.AllowFire();
+
+        shotMissiles = new Missle[burstMaxFirings];
+        activeCrosshairs = new MissleCrosshair[burstMaxFirings];
+
         currentHeight = transform.position.y;
         ground.transform.SetParent(null);
-        burstCooldowned = true;
+        isBurstCooldowned = true;
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
     }
+
+
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
         AlignGround();
         SeekPlayerView();
         TryBurstFire();
+    }
+    protected void LateUpdate()
+    {
+        if (!isDuringBurst) return;
+
+        var targetPos = target.GetPosition();
+        MissleCrosshair crosshair = activeCrosshairs[0];
+        crosshair.SetPosition(targetPos);
+
+        // TODO: make it random?
+        int sideCount = burstMaxFirings - 1;
+        float angleOffset = 0;
+        float stepAngle = 360 / sideCount;
+
+        for (int i = 0; i < sideCount; ++i)
+        {
+            crosshair = activeCrosshairs[1 + i];
+            float angle = i * stepAngle;
+            angle += angleOffset;
+            targetPos = target.GetPosition();
+            targetPos += Quaternion.Euler(Vector3.up * angle) * Vector3.forward * sideCrosshairDistance;
+            crosshair.SetPosition(targetPos);
+        }
     }
 }

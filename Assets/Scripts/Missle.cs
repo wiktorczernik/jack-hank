@@ -13,6 +13,7 @@ public class Missle : ProjectileEntity
 
     protected override void InternalExplode(ExplosionProperties explosionProps)
     {
+        Kill();
         Debug.Log("Internal Explode");
         Destroy(gameObject);
     }
