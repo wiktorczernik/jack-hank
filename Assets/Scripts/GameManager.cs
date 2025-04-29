@@ -25,12 +25,14 @@ public class GameManager : MonoBehaviour
     public static bool IsDuringRun { get; private set; }
     public static PlayerVehicle PlayerVehicle { get; private set; }
 
-    private void Awake()
+    private void OnEnable()
     {
         if (Debug.isDebugBuild && !_isInitialized)
             Initialize(debugLevelDefinition);
 
         if (!_isInitialized) Debug.LogError("Game Manager was not initialized");
+
+        SetupReferences();
 
         if (PlayerPrefs.HasKey("StartFromBossFight"))
         {
@@ -56,14 +58,16 @@ public class GameManager : MonoBehaviour
         if (IsDuringRun) GameRunFrameTick();
     }
 
-    public void Initialize(LevelDefinition definition)
+    public void SetupReferences()
     {
-        if (_isInitialized) return;
-
         PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
         Local = this;
         RunInfo = new GameRunInfo();
         IsDuringRun = true;
+    }
+    public void Initialize(LevelDefinition definition)
+    {
+        if (_isInitialized) return;
 
         if (definition == null)
         {
