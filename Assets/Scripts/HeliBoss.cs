@@ -44,9 +44,11 @@ public class HeliBoss : BotVehicle
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
+        crosshair.Show();
+
         instance.enabled = false;
         instance.homingTarget = crosshair.transform;
-        instance.transform.LookAt(instance.homingTarget);
+        instance.transform.LookAt(crosshair.transform);
 
         return instance;
     }
@@ -59,7 +61,6 @@ public class HeliBoss : BotVehicle
         for (int i = 0; i < burstMaxFirings; ++i)
         {
             activeCrosshairs[i] = Instantiate(crosshairPrefab);
-            activeCrosshairs[i].Show();
         }
     }
     private void DestroyCrosshairs()
