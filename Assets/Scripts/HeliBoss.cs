@@ -14,7 +14,6 @@ public class HeliBoss : BotVehicle
     public Missle[] shotMissiles;
 
     [Header("Heli Events")]
-    public UnityEvent onBurstBegin;
     public UnityEvent onBurstStart;
     public UnityEvent onBurstEnd;
     public UnityEvent onFire;
@@ -41,16 +40,13 @@ public class HeliBoss : BotVehicle
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
 
-    public Missle Fire(MissleCrosshair crosshair)
+    public Missle CreateMissile(MissleCrosshair crosshair)
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
         instance.enabled = false;
-
         instance.homingTarget = crosshair.transform;
-
         instance.transform.LookAt(instance.homingTarget);
-        instance.Shoot();
 
         return instance;
     }
@@ -79,7 +75,7 @@ public class HeliBoss : BotVehicle
         isBurstCooldowned = true;
         isDuringBurst = true;
 
-        onBurstBegin?.Invoke();
+        onBurstStart?.Invoke();
 
         missilesLeft = 0;
         yield return new WaitForSeconds(timeBeforeBurst);
@@ -88,7 +84,7 @@ public class HeliBoss : BotVehicle
             missilesLeft++;
 
             var crosshair = activeCrosshairs[i];
-            var missile = Fire(crosshair);
+            var missile = CreateMissile(crosshair);
 
             void ExplosionEventHandler(ExplosionProperties p)
             {
@@ -98,6 +94,7 @@ public class HeliBoss : BotVehicle
 
             missile.onSelfExplode += ExplosionEventHandler;
             missile.enabled = true;
+            missile.Shoot();
             shotMissiles[i] = missile;
 
             onFire?.Invoke();
@@ -111,8 +108,8 @@ public class HeliBoss : BotVehicle
 
         isBurstTimedOut = false;
         onBurstEnd?.Invoke();
-        DestroyCrosshairs();
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
+        DestroyCrosshairs();
 
         missilesLeft = -1;
     }
@@ -191,7 +188,8 @@ public class HeliBoss : BotVehicle
 
         var targetPos = target.GetPosition();
         MissleCrosshair crosshair = activeCrosshairs[0];
-        crosshair.SetPosition(targetPos);
+        if (crosshair)
+            crosshair.SetPosition(targetPos);
 
         // TODO: make it random?
         int sideCount = burstMaxFirings - 1;
@@ -205,7 +203,8 @@ public class HeliBoss : BotVehicle
             angle += angleOffset;
             targetPos = target.GetPosition();
             targetPos += Quaternion.Euler(Vector3.up * angle) * Vector3.forward * sideCrosshairDistance;
-            crosshair.SetPosition(targetPos);
+            if (crosshair)
+                crosshair.SetPosition(targetPos);
         }
     }
 }

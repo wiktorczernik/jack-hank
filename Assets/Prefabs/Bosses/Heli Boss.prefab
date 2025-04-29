@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 326847768126256072}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1.1111112, z: 1.3333334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10302,30 +10302,53 @@ MonoBehaviour:
   speedDamageThreshold: 40
   dmgReceivedPerSpeedUnit: 1.667
   isDuringBurst: 0
+  isBurstTimedOut: 0
   isBurstCooldowned: 0
   missilesLeft: -1
   activeCrosshairs: []
   shotMissiles: []
-  onBurstBegin:
-    m_PersistentCalls:
-      m_Calls: []
   onBurstStart:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3800255605740550355}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onBurstEnd:
     m_PersistentCalls:
       m_Calls: []
   onFire:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7408429752309465163}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   target: {fileID: 0}
   missilePrefab: {fileID: 6692929710012273737, guid: bc1bd58d744769344af283e96ab816e5, type: 3}
   crosshairPrefab: {fileID: 402068446918780979, guid: a6f5980df9e577146ba6b1423615a664, type: 3}
   ground: {fileID: 3099071437635419331}
   missileShootAnchor: {fileID: 443845243258357876}
+  burstTimeOut: 5
   timeBeforeBurst: 5
   burstMinDistance: 20
-  burstFireTiming: 0.5
+  burstFireTiming: 1.5
   burstMaxFirings: 5
   burstCooldown: 8
   sideCrosshairDistance: 10
