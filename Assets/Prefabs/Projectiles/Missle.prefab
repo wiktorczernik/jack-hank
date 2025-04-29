@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2221329765588397504}
   - component: {fileID: 7226317557669483591}
   - component: {fileID: 4465437490619678073}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Missle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 4061142883736248439}
   - component: {fileID: 4367067445926972301}
   - component: {fileID: 629915836831635365}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5147,6 +5147,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 297a686c9ff6a3b42abee00fe24f2a23, type: 3}
       propertyPath: m_Name
       value: missle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 297a686c9ff6a3b42abee00fe24f2a23, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
