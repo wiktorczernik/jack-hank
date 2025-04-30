@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
+using JackHank.Cinematics;
+
 public class IntroCutscenePlayer : MonoBehaviour
 {
     [SerializeField] private CinematicSequence introCutscene;
