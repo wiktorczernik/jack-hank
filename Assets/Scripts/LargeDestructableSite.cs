@@ -1,38 +1,108 @@
-using System.Linq;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LargeDestructableSite : GameEntity
 {
-    public SmashableEntity[] supportEntities;
+    [Header("State")]
+    /// <summary>
+    /// Tells is this site being destroyed
+    /// </summary>
+    public bool wasDestroyed = false;
     public bool isBeingDestroyed = false;
-    public int supportHitCount = 0;
-    public Rigidbody[] usedRigidbodies;
+    /// <summary>
+    /// Tells how many supports already have been destroyed
+    /// </summary>
+    public int hitSupportsCount = 0;
 
-    private void OnEnable()
+    [Header("Debris")]
+    /// <summary>
+    /// List of rigidbodies that will act as debris
+    /// </summary>
+    public Rigidbody[] debrisRigidbodies;
+
+    [Header("Support")]
+    /// <summary>
+    /// How many supports should player destroy to begin total destruction
+    /// </summary>
+    public int maxSupportsDestroyed = 1;
+    /// <summary>
+    /// Tells if all supports will be smashed when site starts crumbling
+    /// </summary>
+    public bool smashSupportsOnDestroy = true;
+    /// <summary>
+    /// List of supporting entities
+    /// </summary>
+    public SmashableEntity[] supports;
+    
+    [Header("Cinematics")]
+    public CinematicSequence cinematicSequence;
+    public Transform cinematicParent;
+
+    [Header("Events")]
+    public UnityEvent onDestructionBegin;
+    public UnityEvent onDestructionEnd;
+
+
+
+    private void Awake()
     {
-        foreach (var entity in supportEntities)
+        foreach (var entity in supports)
         {
+            if (entity == null) continue;
             entity.OnHit.AddListener(OnSupportSmashed);
         }
     }
 
     private void OnSupportSmashed(SmashableEntity support)
     {
-        supportHitCount++;
-        if (supportHitCount == supportEntities.Length)
+        hitSupportsCount++;
+        if (hitSupportsCount >= maxSupportsDestroyed)
         {
-            BeginDestruction();
+            StartCoroutine(DestructionCoroutine());
         }
     }
 
-    private void BeginDestruction()
+    private IEnumerator DestructionCoroutine()
     {
         isBeingDestroyed = true;
+        onDestructionBegin?.Invoke();
 
-        foreach(Rigidbody rb in usedRigidbodies)
+        foreach (Rigidbody rb in debrisRigidbodies)
         {
+            rb.isKinematic = false;
             rb.freezeRotation = false;
             rb.constraints = RigidbodyConstraints.None;
         }
+
+        if (smashSupportsOnDestroy)
+        {
+            foreach (SmashableEntity entity in supports)
+            {
+                if (entity == null) continue;
+                if (!entity.wasHit)
+                {
+                    // TODO: Do force hit!
+                    // entity.ForceHit();
+                }
+            }
+        }
+
+        yield return null;
+
+        wasDestroyed = true;
+        isBeingDestroyed = false;
+        onDestructionEnd?.Invoke();
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        var supportsParent = transform.GetChild(0);
+        var debrisParent = transform.GetChild(1);
+
+        supports = supportsParent.GetComponentsInChildren<SmashableEntity>();
+        debrisRigidbodies = debrisParent.GetComponentsInChildren<Rigidbody>();
+    }
+#endif
 }
