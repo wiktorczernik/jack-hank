@@ -9,13 +9,15 @@ public class LargeDestructableSite : GameEntity
     /// Tells is this site being destroyed
     /// </summary>
     public bool wasDestroyed = false;
+    public bool wasChainDestroyed = false;
     public bool isBeingDestroyed = false;
     /// <summary>
     /// Tells how many supports already have been destroyed
     /// </summary>
     public int hitSupportsCount = 0;
 
-    [Header("Debris")]
+    [Header("Destruction")]
+    public LargeDestructableSite[] chainedDestructables;
     /// <summary>
     /// List of rigidbodies that will act as debris
     /// </summary>
@@ -43,41 +45,61 @@ public class LargeDestructableSite : GameEntity
     public Vector3 cinematicEndVelocity;
 
     [Header("Events")]
-    public UnityEvent onDestructionBegin;
-    public UnityEvent onDestructionEnd;
+    /// <summary>
+    /// True - if destruction is chained
+    /// </summary>
+    public UnityEvent<bool> onDestructionBegin;
+    /// <summary>
+    /// True - if destruction is chained
+    /// </summary>
+    public UnityEvent<bool> onDestructionEnd;
 
 
-
-    private void Awake()
+    public void StartDestruction()
     {
-        foreach (var entity in supports)
+        isBeingDestroyed = true;
+        onDestructionBegin?.Invoke(false);
+
+        ProceedDestruction();
+        StartCoroutine(FinishDestruction());
+    }
+    public void StartChainedDestruction()
+    {
+        isBeingDestroyed = true;
+        onDestructionBegin?.Invoke(true);
+
+        ProceedDestruction();
+
+        wasDestroyed = true;
+        wasChainDestroyed = true;
+        isBeingDestroyed = false;
+        onDestructionEnd?.Invoke(true);
+
+        foreach (var chain in chainedDestructables)
         {
-            if (entity == null) continue;
-            entity.OnHit.AddListener(OnSupportSmashed);
+            if (chain.wasDestroyed) continue;
+            chain.StartChainedDestruction();
         }
     }
-
+    #region Event handlers
     private void OnSupportSmashed(SmashableEntity support)
     {
         hitSupportsCount++;
         if (hitSupportsCount >= maxSupportsDestroyed)
         {
-            StartCoroutine(DestructionCoroutine());
+            StartDestruction();
         }
     }
-
-    private IEnumerator DestructionCoroutine()
+    #endregion
+    #region Helpers
+    private void ProceedDestruction()
     {
-        isBeingDestroyed = true;
-        onDestructionBegin?.Invoke();
-
         foreach (Rigidbody rb in debrisRigidbodies)
         {
             rb.isKinematic = false;
             rb.freezeRotation = false;
             rb.constraints = RigidbodyConstraints.None;
         }
-
         if (smashSupportsOnDestroy)
         {
             foreach (SmashableEntity entity in supports)
@@ -90,7 +112,9 @@ public class LargeDestructableSite : GameEntity
                 }
             }
         }
-
+    }
+    private IEnumerator FinishDestruction()
+    {
         if (cinematicSequence != null && cinematicParent != null)
         {
             CinematicPlayer.PlaySequence(cinematicSequence, cinematicParent.position, cinematicParent.rotation, cinematicParent.localScale);
@@ -104,10 +128,26 @@ public class LargeDestructableSite : GameEntity
         }
 
         wasDestroyed = true;
+        wasChainDestroyed = false;
         isBeingDestroyed = false;
-        onDestructionEnd?.Invoke();
+        onDestructionEnd?.Invoke(false);
+        
+        foreach(var chain in chainedDestructables)
+        {
+            chain.StartChainedDestruction();
+        }
     }
+    #endregion
 
+    #region Unity Messages
+    private void Awake()
+    {
+        foreach (var entity in supports)
+        {
+            if (entity == null) continue;
+            entity.OnHit.AddListener(OnSupportSmashed);
+        }
+    }
 #if UNITY_EDITOR
     private void OnValidate()
     {
@@ -118,4 +158,5 @@ public class LargeDestructableSite : GameEntity
         debrisRigidbodies = debrisParent.GetComponentsInChildren<Rigidbody>();
     }
 #endif
+    #endregion
 }
