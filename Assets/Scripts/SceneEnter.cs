@@ -9,24 +9,33 @@ public class SceneEnter : MonoBehaviour
     [SerializeField] private FadeTransition_GUI fadeTransition;
     [SerializeField] private bool useEnter = true;
 
+    private bool _isDisabled;
+
     private Rigidbody _rigidbody;
+
+    public bool UseEnter => useEnter;
 
     private void Start()
     {
-        if (!useEnter) return;
+        if (!useEnter || _isDisabled) return;
 
-        player.Teleport(startingPosition.position, startingPosition.rotation);
-
-        fadeTransition.PrepareFadeOut();
-        fadeTransition.StartFadeOut();
-        fadeTransition.OnFadeOutEnded += AfterFadeOut;
+        TeleportPlayerAtEnter();
     }
 
     public event Action OnPlayerEndEntering;
 
     public void Disable()
     {
-        useEnter = false;
+        _isDisabled = true;
+    }
+
+    public void TeleportPlayerAtEnter()
+    {
+        player.Teleport(startingPosition.position, startingPosition.rotation);
+
+        fadeTransition.PrepareFadeOut();
+        fadeTransition.StartFadeOut();
+        fadeTransition.OnFadeOutEnded += AfterFadeOut;
     }
 
     private void AfterFadeOut()
