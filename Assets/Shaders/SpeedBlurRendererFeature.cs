@@ -137,7 +137,7 @@ public sealed class SpeedBlurRendererFeature : ScriptableRendererFeature
         public CustomPostRenderPass(string passName, Material material)
         {
             profilingSampler = new ProfilingSampler(passName);
-            m_Material = material;
+            m_Material = new Material(material);
 
             // * The 'requiresIntermediateTexture' field needs to be set to 'true' when a ScriptableRenderPass intends to sample
             //   the active color buffer
