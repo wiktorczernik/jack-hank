@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+using JHCinematics;
+
+
 public class PlayerVehicle : Vehicle
 {
     [SerializeField] private Transform _seatsContainer;

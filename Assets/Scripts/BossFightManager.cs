@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
+using JHCinematics;
+
 public abstract class BossFightManager : MonoBehaviour
 {
     [SerializeField] protected Boss bossPrefab;

@@ -1,6 +1,8 @@
 using TMPro;
 using UnityEngine;
 
+using JHCinematics;
+
 public class AmmoMonitorGUI : MonoBehaviour
 {
     public bool isVisible = false;
