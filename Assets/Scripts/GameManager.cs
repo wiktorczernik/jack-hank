@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
 
+    [Header("Optional dependency")] [SerializeField]
+    private IntroCutscenePlayer introCutscenePlayer;
+
     public static LevelTaskDefinition[] LevelTasks => _definition.LevelTasks;
     public static GameRunInfo RunInfo { get; private set; }
     public static bool IsDuringRun { get; private set; }
@@ -48,6 +51,14 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.DeleteKey("StartFromBossFight");
             PlayerPrefs.Save();
+        }
+        else if (introCutscenePlayer != null && introCutscenePlayer.WillPlay())
+        {
+            sceneEnter.Disable();
+            introCutscenePlayer.OnceOnSceneFinished += () =>
+            {
+                if (sceneEnter.UseEnter) sceneEnter.TeleportPlayerAtEnter();
+            };
         }
 
         BeginRun();
