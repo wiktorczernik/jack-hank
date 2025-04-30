@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7690187cb2b44c59b41ddf759f81732c, type: 3}
   m_Name: Level2
   m_EditorClassIdentifier: 
-  levelID: 1
-  sceneName: Level2
-  lastLevels: []
+  levelID: 2
+  sceneName: Leve2
+  lastLevels:
+  - {fileID: 11400000, guid: 32efd32a7588783429beb62512119ab0, type: 2}
   levelTasks: []
   e: 0
   d: 0
