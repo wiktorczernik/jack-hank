@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(HeliBoss))]
 public class HeliBossInfo : Boss
 {
-    HeliBoss instance;
+    private HeliBoss instance;
 
     private void Awake()
     {
@@ -18,11 +18,13 @@ public class HeliBossInfo : Boss
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
         instance.physics.enabled = true;
-        instance.onDeath -= Die;
     }
 
     protected override void PrepareDie()
     {
-
+        instance.enabled = false;
+        instance.physics.enabled = false;
+        instance.onDeath -= Die;
+        instance.gameObject.SetActive(false);
     }
 }
