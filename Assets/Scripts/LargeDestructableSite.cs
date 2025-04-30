@@ -38,6 +38,9 @@ public class LargeDestructableSite : GameEntity
     [Header("Cinematics")]
     public CinematicSequence cinematicSequence;
     public Transform cinematicParent;
+    public Transform cinematicEndWarp;
+    public bool cinematicOverrideVelocity;
+    public Vector3 cinematicEndVelocity;
 
     [Header("Events")]
     public UnityEvent onDestructionBegin;
@@ -88,7 +91,17 @@ public class LargeDestructableSite : GameEntity
             }
         }
 
-        yield return null;
+        if (cinematicSequence != null && cinematicParent != null)
+        {
+            CinematicPlayer.PlaySequence(cinematicSequence, cinematicParent.position, cinematicParent.rotation, cinematicParent.localScale);
+            yield return null;
+            yield return new WaitUntil(() => !CinematicPlayer.isPlaying );
+            GameManager.PlayerVehicle.Teleport(cinematicEndWarp.position, cinematicEndWarp.rotation);
+            if (cinematicOverrideVelocity)
+            {
+                GameManager.PlayerVehicle.physics.bodyRigidbody.linearVelocity = cinematicEndWarp.rotation * cinematicEndVelocity;
+            }
+        }
 
         wasDestroyed = true;
         isBeingDestroyed = false;
