@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace JHCinematics
+namespace JackHank.Cinematics
 {
     [CreateAssetMenu(fileName = "Cinematic Sequence", menuName = "Jack&Hank/Cinematic Sequence", order = 1)]
     public class CinematicSequence : ScriptableObject

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-using JHCinematics;
+using JackHank.Cinematics;
 
 public class SceneExit : MonoBehaviour
 {

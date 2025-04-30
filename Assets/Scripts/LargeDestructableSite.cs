@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-using JHCinematics;
+using JackHank.Cinematics;
 
 
 public class LargeDestructableSite : GameEntity

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-using JHCinematics;
+using JackHank.Cinematics;
 
 public class AmmoMonitorGUI : MonoBehaviour
 {

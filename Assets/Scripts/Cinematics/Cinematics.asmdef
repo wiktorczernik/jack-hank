@@ -1,8 +1,14 @@
 {
-    "name": "JHCinematics",
-    "rootNamespace": "JHCinematics",
+    "name": "JackHank.Cinematics",
+    "rootNamespace": "JackHank.Cinematics",
     "references": [],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor",
+        "LinuxStandalone64",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
