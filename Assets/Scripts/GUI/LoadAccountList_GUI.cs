@@ -1,16 +1,15 @@
-using System;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class LoadAccountList_GUI : MonoBehaviour
 {
-    [FormerlySerializedAs("buttonLoadAccount")] [SerializeField] private SelectAccountButton_GUI buttonLoadAccountButtonGUI;
+    [FormerlySerializedAs("buttonLoadAccount")] [SerializeField]
+    private SelectAccountButton_GUI buttonLoadAccountButtonGUI;
+
     [SerializeField] private TextMeshProUGUI noAccountsText;
     private bool _isAccountSelected;
-    
+
     private void Start()
     {
         var names = AccountManager.GetSavedAccountsNames();
@@ -22,9 +21,8 @@ public class LoadAccountList_GUI : MonoBehaviour
         }
 
         for (var i = 0; i < names.Count; i++)
-        {
-            Instantiate(buttonLoadAccountButtonGUI, transform).Initialize(i, names[i], OnAccountSelected, OnAccountNotExist);
-        }
+            Instantiate(buttonLoadAccountButtonGUI, transform)
+                .Initialize(i, names[i], OnAccountSelected, OnAccountNotExist);
     }
 
     private void OnAccountSelected(string accountName)
@@ -33,11 +31,10 @@ public class LoadAccountList_GUI : MonoBehaviour
 
         AccountManager.LogInAccount(accountName);
         _isAccountSelected = true;
-        GameSceneManager.LoadMenu();
+        GameSceneManager.LoadFirstLevel();
     }
 
     private void OnAccountNotExist()
     {
-        
     }
 }
