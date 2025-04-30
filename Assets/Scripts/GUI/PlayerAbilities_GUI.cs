@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using JHCinematics;
+
 public class PlayerAbilities_GUI : MonoBehaviour
 {
     public PlayerVehicleAbilities abilities;

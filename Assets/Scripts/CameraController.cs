@@ -1,8 +1,8 @@
 using Cinemachine;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Rendering;
+
+using JHCinematics;
 
 public class CameraController : MonoBehaviour
 {
