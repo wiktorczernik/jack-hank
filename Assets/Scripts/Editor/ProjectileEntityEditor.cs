@@ -1,25 +1,29 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(ProjectileEntity), true)]
-public class ProjectileEntityEditor : Editor
+
+namespace JackHank.Editor
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(ProjectileEntity), true)]
+    public class ProjectileEntityEditor : Editor
     {
-        base.OnInspectorGUI();
-
-        ProjectileEntity entity = (ProjectileEntity)target;
-
-        using (var horizontalScope = new GUILayout.HorizontalScope("box"))
+        public override void OnInspectorGUI()
         {
-            if (GUILayout.Button("Shoot"))
-            {
-                entity.Shoot();
-            }
+            base.OnInspectorGUI();
 
-            if (GUILayout.Button("Halt"))
+            ProjectileEntity entity = (ProjectileEntity)target;
+
+            using (var horizontalScope = new GUILayout.HorizontalScope("box"))
             {
-                entity.Halt();
+                if (GUILayout.Button("Shoot"))
+                {
+                    entity.Shoot();
+                }
+
+                if (GUILayout.Button("Halt"))
+                {
+                    entity.Halt();
+                }
             }
         }
     }
