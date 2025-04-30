@@ -2,7 +2,7 @@ using Cinemachine;
 using System.Collections;
 using UnityEngine;
 
-using JHCinematics;
+using JackHank.Cinematics;
 
 public class CameraController : MonoBehaviour
 {

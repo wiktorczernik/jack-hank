@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace JHCinematics
+namespace JackHank.Cinematics
 {
     public class CinematicPlayer : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using JHCinematics;
+using JackHank.Cinematics;
 
 public class PlayerAbilities_GUI : MonoBehaviour
 {
