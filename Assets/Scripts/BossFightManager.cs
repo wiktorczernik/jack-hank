@@ -69,9 +69,10 @@ public abstract class BossFightManager : MonoBehaviour
 
         void OnCutsceneEnd()
         {
+            player.Teleport(playerSpawnAfterEndCutscene.position, playerSpawnAfterEndCutscene.rotation);
             OnEnd?.Invoke();
             AfterEndCutscene();
-            duringFight = true;
+            duringFight = false;
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
         }
     }

@@ -1,11 +1,11 @@
 using System.Collections;
-using UnityEngine;
 
 public class HeliBossFightManager : BossFightManager
 {
+    private PlayerVehicle player;
+
     protected override void AfterEndCutscene()
     {
-
     }
 
     protected override void HandleTriggerEnter()
@@ -15,23 +15,21 @@ public class HeliBossFightManager : BossFightManager
 
     protected override void OnBeginInterval()
     {
-        var playerVehicle = FindFirstObjectByType<PlayerVehicle>();
+        player = FindFirstObjectByType<PlayerVehicle>();
         var heliBoss = FindFirstObjectByType<HeliBoss>();
 
-        playerVehicle.playerTurret.fireTarget = heliBoss;
+        player.playerTurret.fireTarget = heliBoss;
         PlayerTurret.ammo = 50;
-        playerVehicle.playerTurret.AllowFire();
-
+        player.playerTurret.AllowFire();
     }
 
     protected override void OnBossDeathInterval()
     {
-
+        player.playerTurret.fireTarget = null;
     }
 
     protected override void OnRestartInterval()
     {
-
     }
 
     protected override IEnumerator PrepareCo()
