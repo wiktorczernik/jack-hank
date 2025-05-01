@@ -8,6 +8,7 @@ namespace JackHank.EditorUtils.Toolbar
         const float windowPadding = 10f;
         const float elementPadding = 5f;
         const float buttonWidth = 100f;
+        const float largeButtonWidth = 200f;
 
         [MenuItem("Window/JackHank/Toolbar")]
         public static void ShowWindow()
@@ -28,16 +29,27 @@ namespace JackHank.EditorUtils.Toolbar
                 position: new Vector2(windowPadding + buttonWidth + elementPadding, windowPadding),
                 size: new Vector2(buttonWidth, position.height - 2 * windowPadding)
             );
+            Rect cinemaSkipRect = new Rect(
+                position: new Vector2(windowPadding + buttonWidth + elementPadding + buttonWidth + elementPadding, windowPadding),
+                size: new Vector2(largeButtonWidth, position.height - 2 * windowPadding)
+            );
 
             GUI.enabled = !EditorApplication.isCompiling && !EditorApplication.isPlaying;
             if (GUI.Button(playHereRect, "Play Here"))
             {
                 ToolbarLogic.RequestPlayHere();
             }
+            
             GUI.enabled = !EditorApplication.isCompiling && !EditorApplication.isPlaying;
             if (GUI.Button(domainReloadRect, "Reload Domain"))
             {
                 ToolbarLogic.RequestDomainReload();
+            }
+
+            GUI.enabled = !EditorApplication.isPlaying;
+            if (GUI.Button(cinemaSkipRect, ToolbarLogic.autoSkipCinematics ? "Disable Cinema Skip" : "Enable Cinema Skip"))
+            {
+                ToolbarLogic.ToggleCinematicAutoskip();
             }
         }
     }

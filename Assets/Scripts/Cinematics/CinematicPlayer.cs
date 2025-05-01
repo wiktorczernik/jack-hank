@@ -7,6 +7,10 @@ namespace JackHank.Cinematics
     public class CinematicPlayer : MonoBehaviour
     {
         /// <summary>
+        /// Determines if every sequence will be automatically skipped
+        /// </summary>
+        public static bool autoSkip { get; set; } = false;
+        /// <summary>
         /// Tells if some sequence is being played
         /// </summary>
         public static bool isPlaying { get; private set; }
@@ -94,23 +98,30 @@ namespace JackHank.Cinematics
             playedSequence = sequence;
             onBeginPlay?.Invoke();
 
-            float timePassed = 0f;
-            while (timePassed <= sequence.duration)
+            if (!autoSkip)
             {
-                CinematicSequence.CameraFrameState tickState = new();
-                tickState.worldPosition = cameraAnchor.position;
-                tickState.rotation = cameraAnchor.rotation;
-                timePassed += Time.deltaTime;
-                onFrameUpdate?.Invoke(tickState);
+                float timePassed = 0f;
+                while (timePassed <= sequence.duration)
+                {
+                    CinematicSequence.CameraFrameState tickState = new();
+                    tickState.worldPosition = cameraAnchor.position;
+                    tickState.rotation = cameraAnchor.rotation;
+                    timePassed += Time.deltaTime;
+                    onFrameUpdate?.Invoke(tickState);
+                    yield return null;
+                }
+                CinematicSequence.CameraFrameState lastState = new();
+                lastState.worldPosition = cameraAnchor.position;
+                lastState.rotation = cameraAnchor.rotation;
+                onFrameUpdate?.Invoke(lastState);
+            }
+            else
+            {
                 yield return null;
             }
 
-            CinematicSequence.CameraFrameState lastState = new();
-            lastState.worldPosition = cameraAnchor.position;
-            lastState.rotation = cameraAnchor.rotation;
-            onFrameUpdate?.Invoke(lastState);
 
-            isPlaying = false;
+                isPlaying = false;
             playedSequence = null;
             onEndPlay?.Invoke();
 
