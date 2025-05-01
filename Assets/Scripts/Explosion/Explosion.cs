@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour
@@ -14,6 +15,7 @@ public class Explosion : MonoBehaviour
     {
         visuals.Init();
         Collider[] colliders = Physics.OverlapSphere(transform.position, properties.shakeMaxDistance);
+        List<Vehicle> affectedVehicles = new List<Vehicle>();
         foreach(var collider in colliders)
         {
             Vector3 cPosition = collider.transform.position;
@@ -35,10 +37,12 @@ public class Explosion : MonoBehaviour
 
             Vehicle vehicle = collider.GetComponentInParent<Vehicle>();
 
-            if (vehicle)
+            if (vehicle && !affectedVehicles.Contains(vehicle))
             {
                 if (distance > properties.shakeMaxDistance) continue;
                 vehicle.Hurt(properties.damage * properties.damageFalloff.Evaluate(distance / properties.epicenterRadius));
+                //Debug.Log(properties.damage * properties.damageFalloff.Evaluate(distance / properties.epicenterRadius) + " " + properties.damageFalloff.Evaluate(distance / properties.epicenterRadius));
+                affectedVehicles.Add(vehicle);
 
                 if (vehicle is PlayerVehicle) ((PlayerVehicle)vehicle).NotifyExplosionNearby(properties);
             }

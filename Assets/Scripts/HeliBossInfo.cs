@@ -18,6 +18,8 @@ public class HeliBossInfo : Boss
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
         instance.physics.enabled = true;
+        
+        BossHPManager.DisplayBoss(instance);
     }
 
     protected override void PrepareDie()

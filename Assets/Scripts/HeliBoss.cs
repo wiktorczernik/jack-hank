@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HeliBoss : BotVehicle
+public class HeliBoss : BotVehicle, IBossBarApplicable
 {
     [Header("Burst Fire State")]
     public bool isDuringBurst;
@@ -39,6 +39,15 @@ public class HeliBoss : BotVehicle
     public float playerVerticalOffset = 20f;
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
+
+    [Header("Bossbar")]
+    public Color primaryColor;
+    public Color secondaryColor;
+    public string bossTitle;
+    public Color PrimaryColor => primaryColor;
+    public Color SecondaryColor => secondaryColor;
+    public string BossTitle => bossTitle;
+    public GameEntity Self => this;
 
     public Missle CreateMissile(MissleCrosshair crosshair)
     {
