@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using LevelManagement;
 
 namespace AccountManagement
 {
     public class PlayerAccount
     {
-        private PlayerAccountData _playerAccountData;
+        private readonly PlayerAccountData _playerAccountData;
 
         public PlayerAccount(PlayerAccountData data)
         {
@@ -14,7 +13,7 @@ namespace AccountManagement
 
         public PlayerAccount(string accountName)
         {
-            _playerAccountData = new PlayerAccountData() { AccountName = accountName };
+            _playerAccountData = new PlayerAccountData { AccountName = accountName };
         }
 
         public LevelStatistics GetLevelStatistics(int levelID)
@@ -22,7 +21,10 @@ namespace AccountManagement
             return _playerAccountData.openedLevels.First(level => level.LevelID == levelID).Clone() as LevelStatistics;
         }
 
-
+        public bool HasWatchedIntoCutscene()
+        {
+            return _playerAccountData.hasWatchedIntroCutscene;
+        }
 
         public PlayerAccountData GetData()
         {
