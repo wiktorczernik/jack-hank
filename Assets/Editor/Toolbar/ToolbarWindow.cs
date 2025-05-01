@@ -5,6 +5,10 @@ namespace JackHank.EditorUtils.Toolbar
 {
     public class ToolbarWindow : EditorWindow
     {
+        const float windowPadding = 10f;
+        const float elementPadding = 5f;
+        const float buttonWidth = 100f;
+
         [MenuItem("Window/JackHank/Toolbar")]
         public static void ShowWindow()
         {
@@ -16,21 +20,25 @@ namespace JackHank.EditorUtils.Toolbar
         }
         void OnGUI()
         {
-            float padding = 10;
+            Rect playHereRect = new Rect(
+                position: new Vector2(windowPadding, windowPadding), 
+                size: new Vector2(buttonWidth, position.height - 2 * windowPadding)
+            );
+            Rect domainReloadRect = new Rect(
+                position: new Vector2(windowPadding + buttonWidth + elementPadding, windowPadding),
+                size: new Vector2(buttonWidth, position.height - 2 * windowPadding)
+            );
 
-            Rect playHereRect = new Rect(new Vector2(padding, padding), new Vector2(100, position.height - 2 * padding));
-
-            GUI.enabled = !EditorApplication.isPlaying;
-            if (GUI.Button(playHereRect, "Play"))
-            {
-                ToolbarLogic.PlayHere();
-            }
-            GUI.enabled = !EditorApplication.isPlaying;
+            GUI.enabled = !EditorApplication.isCompiling && !EditorApplication.isPlaying;
             if (GUI.Button(playHereRect, "Play Here"))
             {
-                ToolbarLogic.PlayHere();
+                ToolbarLogic.RequestPlayHere();
             }
-            GUI.enabled = true;
+            GUI.enabled = !EditorApplication.isCompiling && !EditorApplication.isPlaying;
+            if (GUI.Button(domainReloadRect, "Reload Domain"))
+            {
+                ToolbarLogic.RequestDomainReload();
+            }
         }
     }
 }
