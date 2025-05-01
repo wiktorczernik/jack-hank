@@ -10356,6 +10356,9 @@ MonoBehaviour:
   playerVerticalOffset: 10
   playerForwardDistance: 50
   verticalAlignSpeed: 5
+  primaryColor: {r: 0.7529412, g: 0.2784314, b: 0.23921569, a: 1}
+  secondaryColor: {r: 0.5764706, g: 0.3647059, b: 0.3647059, a: 1}
+  bossTitle: Heliboss
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,6 +19,8 @@ public class HeliBossInfo : Boss
         instance.enabled = true;
         instance.physics.enabled = true;
         instance.onDeath -= Die;
+
+        BossHPManager.DisplayBoss(instance);
     }
 
     protected override void PrepareDie()
