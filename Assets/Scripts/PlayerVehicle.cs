@@ -3,6 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+using JackHank.Cinematics;
+
+
 public class PlayerVehicle : Vehicle
 {
     [SerializeField] private Transform _seatsContainer;
@@ -57,9 +60,8 @@ public class PlayerVehicle : Vehicle
 
     public void Teleport(Vector3 position, Quaternion rotation)
     {
-        var rotationCorrection = Quaternion.Euler(0, 90, 0);
         _rigidbody.position = position;
-        _rigidbody.rotation = rotation * rotationCorrection;
+        _rigidbody.rotation = rotation;
         physics.TeleportWheels(position);
     }
 

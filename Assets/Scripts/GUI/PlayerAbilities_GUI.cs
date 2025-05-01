@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using JackHank.Cinematics;
+
 public class PlayerAbilities_GUI : MonoBehaviour
 {
     public PlayerVehicleAbilities abilities;

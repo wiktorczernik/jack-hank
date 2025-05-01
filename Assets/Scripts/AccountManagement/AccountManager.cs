@@ -1,16 +1,15 @@
 using System;
-using System.Linq;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using AccountManagement;
 using LevelManagement;
 using UnityEngine;
 
 public static class AccountManager
 {
-    public static PlayerAccount LoggedInPlayerAccount { get; private set; }
-
     private static readonly string SaveFolderPath = Application.persistentDataPath + "/saves";
+    public static PlayerAccount LoggedInPlayerAccount { get; private set; }
 
     public static List<string> GetSavedAccountsNames()
     {
@@ -30,18 +29,18 @@ public static class AccountManager
     public static void LogInAccount(string accountName)
     {
         ProcessSaveDirectory();
-        
+
         var savePath = GetAccountSavePath(accountName);
-        
+
         if (!File.Exists(savePath)) throw new Exception("Account not found");
 
         var accountData = new PlayerAccountData
         {
             AccountName = accountName
         };
-        
+
         JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), accountData);
-        
+
         LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
 
         LoggedInPlayerAccount = new PlayerAccount(accountData);
@@ -52,12 +51,17 @@ public static class AccountManager
         LoggedInPlayerAccount = null;
     }
 
+    public static bool IsLoggedIn()
+    {
+        return LoggedInPlayerAccount != null;
+    }
+
     public static void SaveCurrentAccount()
     {
         ProcessSaveDirectory();
-        
+
         File.WriteAllText(
-            GetAccountSavePath(LoggedInPlayerAccount.GetAccountName()), 
+            GetAccountSavePath(LoggedInPlayerAccount.GetAccountName()),
             JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
     }
 
@@ -65,7 +69,7 @@ public static class AccountManager
     {
         if (ExistsSavedAccount(accountName)) throw new Exception("Account already exists");
         if (LoggedInPlayerAccount != null) throw new Exception("There is logged in another account");
-        
+
         ProcessSaveDirectory();
         LoggedInPlayerAccount = new PlayerAccount(accountName);
         File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
@@ -81,7 +85,7 @@ public static class AccountManager
     private static void ProcessSaveDirectory()
     {
         if (Directory.Exists(SaveFolderPath)) return;
-        
+
         Directory.CreateDirectory(SaveFolderPath);
     }
 }
