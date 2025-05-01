@@ -2,16 +2,22 @@ using UnityEngine;
 using UnityEditor;
 using Unity.EditorCoroutines.Editor;
 using System.Collections;
+using JackHank.Cinematics;
 
 // ensure class initializer is called whenever scripts recompile
 [InitializeOnLoadAttribute]
 public static class ToolbarLogic
 {
-    static bool startedPlayHere = false;
+    public static bool requestedPlayhere { get; private set; }
+    public static bool autoSkipCinematics
+    {
+        get => CinematicPlayer.autoSkip;
+        private set => CinematicPlayer.autoSkip = value;
+    }
 
     public static void RequestPlayHere()
     {
-        startedPlayHere = true;
+        requestedPlayhere = true;
         SetFirstBehaviourEnabled<SceneEnter>(false);
         EditorApplication.isPlaying = true;
     }
@@ -19,10 +25,14 @@ public static class ToolbarLogic
     {
         EditorUtility.RequestScriptReload();
     }
+    public static void ToggleCinematicAutoskip()
+    {
+        autoSkipCinematics = !autoSkipCinematics;
+    }
 
     static void OnEnterPlayMode()
     {
-        if (startedPlayHere)
+        if (requestedPlayhere)
         {
             var player = FindFirstBehaviour<PlayerVehicle>();
             Vector3 cameraPos;
@@ -44,7 +54,7 @@ public static class ToolbarLogic
     }
     static void OnEnterEditMode()
     {
-        startedPlayHere = false;
+        requestedPlayhere = false;
         SetFirstBehaviourEnabled<SceneEnter>(true);
     }
 
