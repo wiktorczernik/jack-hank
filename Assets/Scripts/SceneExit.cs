@@ -1,8 +1,8 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
+
+using JackHank.Cinematics;
 
 public class SceneExit : MonoBehaviour
 {

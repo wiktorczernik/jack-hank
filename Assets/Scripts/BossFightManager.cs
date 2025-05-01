@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
+using JackHank.Cinematics;
+
 public abstract class BossFightManager : MonoBehaviour
 {
     [SerializeField] protected Boss bossPrefab;
@@ -67,9 +69,10 @@ public abstract class BossFightManager : MonoBehaviour
 
         void OnCutsceneEnd()
         {
+            player.Teleport(playerSpawnAfterEndCutscene.position, playerSpawnAfterEndCutscene.rotation);
             OnEnd?.Invoke();
             AfterEndCutscene();
-            duringFight = true;
+            duringFight = false;
             CinematicPlayer.onEndPlay -= OnCutsceneEnd;
         }
     }
