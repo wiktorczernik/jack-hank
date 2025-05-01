@@ -45,6 +45,7 @@ public class SceneEnter : MonoBehaviour
         playersBot.followMode = BotVehicle.FollowMode.Single;
         playersBot.destinationPoint = botDestination.position;
         playersBot.followMaxSpeed = 100;
+        playersBot.destinationArriveMaxSpeed = 200;
 
         playersBot.onArrived += () => OnPlayerEndEntering?.Invoke();
         fadeTransition.OnFadeOutEnded -= AfterFadeOut;
