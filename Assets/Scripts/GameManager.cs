@@ -1,4 +1,5 @@
 using System;
+using JackHank.Cinematics;
 using LevelManagement;
 using LevelTask;
 using UnityEngine;
@@ -20,10 +21,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
 
+    [Header("Optional dependency")] [SerializeField]
+    private IntroCutscenePlayer introCutscenePlayer;
+
     public static LevelTaskDefinition[] LevelTasks => _definition.LevelTasks;
     public static GameRunInfo RunInfo { get; private set; }
     public static bool IsDuringRun { get; private set; }
     public static PlayerVehicle PlayerVehicle { get; private set; }
+
+    private void Update()
+    {
+        if (IsDuringRun) GameRunFrameTick();
+    }
 
     private void OnEnable()
     {
@@ -49,13 +58,16 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.DeleteKey("StartFromBossFight");
             PlayerPrefs.Save();
         }
+        else if (introCutscenePlayer != null && introCutscenePlayer.WillPlay())
+        {
+            sceneEnter.Disable();
+            introCutscenePlayer.OnceOnSceneFinished += () =>
+            {
+                if (sceneEnter.UseEnter) sceneEnter.TeleportPlayerAtEnter();
+            };
+        }
 
         BeginRun();
-    }
-
-    private void Update()
-    {
-        if (IsDuringRun) GameRunFrameTick();
     }
 
     public void SetupReferences()
@@ -65,6 +77,7 @@ public class GameManager : MonoBehaviour
         RunInfo = new GameRunInfo();
         IsDuringRun = true;
     }
+
     public void Initialize(LevelDefinition definition)
     {
         if (_isInitialized) return;
@@ -88,18 +101,21 @@ public class GameManager : MonoBehaviour
 
     public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
     {
+        if (CinematicPlayer.isPlaying) return;
         RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
         Local.bonusGUI.ShowBonus(bonusPool, bonusType);
     }
 
     public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType)
     {
+        if (CinematicPlayer.isPlaying) return;
         RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
         Local.bonusGUI.ShowBonus(bonusValue, bonusType);
     }
 
     public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
     {
+        if (CinematicPlayer.isPlaying) return;
         RunInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
         Local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
     }
@@ -161,6 +177,9 @@ public class GameManager : MonoBehaviour
     private void GameRunFrameTick()
     {
         if (!IsDuringRun) return;
+
+
+        if (CinematicPlayer.isPlaying) return;
 
         RunInfo.Time += Time.deltaTime;
     }
