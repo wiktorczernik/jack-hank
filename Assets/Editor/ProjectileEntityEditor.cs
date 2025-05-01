@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 
 
-namespace JackHank.Editor
+namespace JackHank.EditorUtils
 {
     [CustomEditor(typeof(ProjectileEntity), true)]
     public class ProjectileEntityEditor : Editor
