@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameEntity : MonoBehaviour
@@ -362,6 +363,15 @@ public class GameEntity : MonoBehaviour
     /// </summary>
     protected virtual void OnDeathInternal() { }
 
+    public void SelfExplodeDelayed(float delay)
+    {
+        IEnumerator Coroutinee()
+        {
+            yield return new WaitForSeconds(delay);
+            SelfExplode();
+        }
+        StartCoroutine(Coroutinee());
+    }
     /// <summary>
     /// Produces explosion
     /// </summary>
