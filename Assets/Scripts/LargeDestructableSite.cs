@@ -1,8 +1,7 @@
 using System.Collections;
+using JackHank.Cinematics;
 using UnityEngine;
 using UnityEngine.Events;
-
-using JackHank.Cinematics;
 
 
 public class LargeDestructableSite : GameEntity
@@ -20,6 +19,9 @@ public class LargeDestructableSite : GameEntity
     public int hitSupportsCount = 0;
 
     [Header("Destruction")]
+    public float debrisDelay = 1f;
+    public float chainMinDelay = 1;
+    public float chainMaxDelay = 3;
     public LargeDestructableSite[] chainedDestructables;
     /// <summary>
     /// List of rigidbodies that will act as debris
@@ -63,7 +65,7 @@ public class LargeDestructableSite : GameEntity
         isBeingDestroyed = true;
         onDestructionBegin?.Invoke(false);
 
-        ProceedDestruction();
+        StartCoroutine(CreateDebris());
         StartCoroutine(FinishDestruction());
     }
     public void StartChainedDestruction()
@@ -71,17 +73,27 @@ public class LargeDestructableSite : GameEntity
         isBeingDestroyed = true;
         onDestructionBegin?.Invoke(true);
 
-        ProceedDestruction();
+        StartCoroutine(CreateDebris());
 
         wasDestroyed = true;
         wasChainDestroyed = true;
         isBeingDestroyed = false;
         onDestructionEnd?.Invoke(true);
 
+        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)Time.time);
         foreach (var chain in chainedDestructables)
         {
-            if (chain.wasDestroyed) continue;
-            chain.StartChainedDestruction();
+            float time = random.NextFloat(chainMinDelay, chainMaxDelay);
+
+            IEnumerator DelayedChain()
+            {
+                yield return new WaitForSeconds(time);
+                if (chain.isBeingDestroyed) yield break;
+                if (chain.wasDestroyed) yield break;
+                chain.StartChainedDestruction();
+            }
+
+            StartCoroutine(DelayedChain());
         }
     }
     #region Event handlers
@@ -95,8 +107,10 @@ public class LargeDestructableSite : GameEntity
     }
     #endregion
     #region Helpers
-    private void ProceedDestruction()
+    private IEnumerator CreateDebris()
     {
+        yield return new WaitForSeconds(debrisDelay);
+
         foreach (Rigidbody rb in debrisRigidbodies)
         {
             rb.isKinematic = false;
@@ -134,10 +148,21 @@ public class LargeDestructableSite : GameEntity
         wasChainDestroyed = false;
         isBeingDestroyed = false;
         onDestructionEnd?.Invoke(false);
-        
-        foreach(var chain in chainedDestructables)
+
+        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)Time.time);
+        foreach (var chain in chainedDestructables)
         {
-            chain.StartChainedDestruction();
+            float time = random.NextFloat(chainMinDelay, chainMaxDelay);
+
+            IEnumerator DelayedChain()
+            {
+                yield return new WaitForSeconds(time);
+                if (chain.isBeingDestroyed) yield break;
+                if (chain.wasDestroyed) yield break;
+                chain.StartChainedDestruction();
+            }
+
+            StartCoroutine(DelayedChain());
         }
     }
     #endregion
