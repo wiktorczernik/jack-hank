@@ -157,8 +157,10 @@ public class LargeDestructableSite : GameEntity
         var supportsParent = transform.GetChild(0);
         var debrisParent = transform.GetChild(1);
 
-        supports = supportsParent.GetComponentsInChildren<SmashableEntity>();
-        debrisRigidbodies = debrisParent.GetComponentsInChildren<Rigidbody>();
+        if (supports == null || supports.Length == 0)
+            supports = supportsParent.GetComponentsInChildren<SmashableEntity>();
+        if (debrisRigidbodies == null || debrisRigidbodies.Length == 0)
+            debrisRigidbodies = debrisParent.GetComponentsInChildren<Rigidbody>();
     }
 #endif
     #endregion
