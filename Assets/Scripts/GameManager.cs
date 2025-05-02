@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     public static void PlayerDeathRestart()
     {
+        PlayerVehicle.playerTurret.DisallowFire();
         Local.fadeTransition.StartFadeIn();
         Local.fadeTransition.OnFadeInEnded += AfterFadeIn;
 

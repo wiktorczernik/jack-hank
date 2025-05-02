@@ -22,17 +22,34 @@ public class PlayerAbility_GUI : MonoBehaviour
     [SerializeField] Sprite iconActiveSprite;
     [SerializeField] Sprite iconInactiveSprite;
 
+    bool initialized = false;
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => ability != null);
 
+        initialized = true;
+        AddListeners();
+    }
+    private void OnDisable()
+    {
+        if (!initialized) return;
+        RemoveListeners();
+    }
+    private void OnEnable()
+    {
+        if (!initialized) return;
+        AddListeners();
+    }
+
+    private void AddListeners()
+    {
         ability.onStateUpdate.AddListener(UpdateBorder);
         ability.onStateUpdate.AddListener(UpdateIcon);
         ability.onStateUpdate.AddListener(UpdateLoading);
         ability.onCooldownTick.AddListener(UpdateCooldownSlider);
         ability.onCooldownEnd.AddListener(UpdateCooldownSlider);
     }
-    private void OnDisable()
+    private void RemoveListeners()
     {
         ability.onStateUpdate.RemoveListener(UpdateBorder);
         ability.onStateUpdate.RemoveListener(UpdateIcon);
