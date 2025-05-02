@@ -104,6 +104,9 @@ MonoBehaviour:
   wasChainDestroyed: 0
   isBeingDestroyed: 0
   hitSupportsCount: 0
+  debrisDelay: 1
+  chainMinDelay: 2
+  chainMaxDelay: 4
   chainedDestructables: []
   debrisRigidbodies:
   - {fileID: 7447982466739477067}
