@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Collider)), System.Serializable]
 public class TriggerEventEmitter : BaseColliderEventEmitter<Collider>
 {
     void OnTriggerEnter(Collider other) => OnEnter?.Invoke(other);
