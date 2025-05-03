@@ -284,9 +284,57 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7343331172465130696, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3973107660126017756, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3556817346404478780, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3528278965460299338, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
       propertyPath: m_Name
       value: Destructable Barn 1 Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337295398627588303, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4392836646565859033, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5039687269024256309, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607467360003835633, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289776048922875581, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471496338278676438, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 7367147454358306421, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7754964794730939599, guid: 7b2c2f6cd8c3d0d4fad7623c4383912c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

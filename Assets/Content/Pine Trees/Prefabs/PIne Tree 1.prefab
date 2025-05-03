@@ -176,17 +176,17 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7751294863957618108}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
+  m_LocalReferencePoint: {x: -1, y: 19.499983, z: -1.364242e-12}
+  m_Size: 53.00037
   m_FadeMode: 1
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.00272711
+  - screenRelativeHeight: 0.031140653
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 5742716786294590868}
-  - screenRelativeHeight: 0.00072340923
+  - screenRelativeHeight: 0.007245222
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 6638606981755619976}
@@ -239,9 +239,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 5ec9d049d4dcb3543803cf83133d6af6, type: 3}
+      propertyPath: m_StaticShadowCaster
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5ec9d049d4dcb3543803cf83133d6af6, type: 3}
       propertyPath: m_Name
       value: Pine Tree LOD0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5ec9d049d4dcb3543803cf83133d6af6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 5ec9d049d4dcb3543803cf83133d6af6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
