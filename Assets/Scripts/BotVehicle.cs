@@ -182,6 +182,8 @@ public class BotVehicle : Vehicle
 
     protected override void OnDeathInternal()
     {
+        physics.enabled = false;
+        this.enabled = false;
         SelfExplode();
     }
 

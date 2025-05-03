@@ -134,6 +134,10 @@ public class GameManager : MonoBehaviour
     public static void PlayerDeathRestart()
     {
         PlayerVehicle.playerTurret.DisallowFire();
+        PlayerVehicle._botDirect.enabled = false;
+        PlayerVehicle.physics.enabled = false;
+        PlayerVehicle.enabled = false;
+
         Local.fadeTransition.StartFadeIn();
         Local.fadeTransition.OnFadeInEnded += AfterFadeIn;
 
