@@ -30978,6 +30978,7 @@ GameObject:
   - component: {fileID: 5774747425646821380}
   - component: {fileID: 3356494008966536327}
   - component: {fileID: 8409974713711607995}
+  - component: {fileID: 1318795595491404067}
   m_Layer: 0
   m_Name: TestBus
   m_TagString: Vehicle
@@ -31508,6 +31509,54 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1318795595491404067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc73a9b1feeac494294d4aee7459ec8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canReceiveDamage: 1
+  canBeHealed: 1
+  _health: 100
+  _maxHealth: 100
+  exploded: 0
+  canBeExploded: 0
+  canSelfExplode: 0
+  selfExplosionProps:
+    _epicenterParentTransform: {fileID: 0}
+    _epicenterPosition: {x: 0, y: 0, z: 0}
+    initiator: {fileID: 0}
+    force: 500
+    epicenterRadius: 10
+    shakeIntensity: 0.5
+    shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  physics: {fileID: 8049625386355856952}
+  arrived: 0
+  isFollowing: 0
+  destinationPoint: {x: 0, y: 0, z: 0}
+  loopQueue: 0
+  followMode: 0
+  followMaxSpeed: 60
+  _destinationQueueSpline: {fileID: 0}
+  destinationArriveMaxDistance: 15
+  destinationArriveMaxSpeed: 20
+  hardTurnThresholdAngle: 90
+  hardTurnMaxSpeed: 10
+  speedDamageThreshold: 40
+  dmgReceivedPerSpeedUnit: 3
 --- !u!1 &4541372557963350123
 GameObject:
   m_ObjectHideFlags: 0
