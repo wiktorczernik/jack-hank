@@ -23,9 +23,12 @@ public class PlayerVehicle : Vehicle
     private Rigidbody _rigidbody;
     public PlayerVehicleSeatController seatsController;
 
+    public BotVehicle _botDirect;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _botDirect = GetComponent<BotVehicle>();
     }
 
     private void OnEnable()

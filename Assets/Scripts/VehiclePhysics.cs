@@ -375,6 +375,12 @@ public class VehiclePhysics : MonoBehaviour
         float angY = bodyRigidbody.angularVelocity.y;
         float absAngY = Mathf.Abs(angY);
 
+        if (!isGrounded)
+        {
+            isDrifting = false;
+            return;
+        }
+
         if (isDrifting)
         {
             if (absAngY < driftEndAngular || speedKmh < driftMinSpeed)
