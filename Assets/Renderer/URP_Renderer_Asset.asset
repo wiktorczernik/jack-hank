@@ -42,8 +42,7 @@ MonoBehaviour:
   - {fileID: 1591330070244977855}
   - {fileID: -8819370654649069409}
   - {fileID: 7118196287646668398}
-  - {fileID: 5327173792378324977}
-  m_RendererFeatureMap: bf6c5985448a15169f5023db1d4d9b856e16af4ecfe9c862f1077bef56eced49
+  m_RendererFeatureMap: bf6c5985448a15169f5023db1d4d9b856e16af4ecfe9c862
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -53,7 +52,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 359
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -84,15 +83,15 @@ MonoBehaviour:
   m_Active: 1
   m_Settings:
     AOMethod: 0
-    Downsample: 0
-    AfterOpaque: 0
-    Source: 1
-    NormalSamples: 2
-    Intensity: 0.25
+    Downsample: 1
+    AfterOpaque: 1
+    Source: 0
+    NormalSamples: 0
+    Intensity: 0.5
     DirectLightingStrength: 0.167
-    Radius: 1.5
+    Radius: 0.75
     Samples: 0
-    BlurQuality: 0
+    BlurQuality: 1
     Falloff: 100
     SampleCount: -1
   m_BlueNoise256Textures:
@@ -104,20 +103,6 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 3302065f671a8450b82c9ddf07426f3a, type: 3}
   - {fileID: 2800000, guid: 56a77a3e8d64f47b6afe9e3c95cb57d5, type: 3}
   m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
---- !u!114 &5327173792378324977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e32e72b6a3f58a24c9033e2b9275eea0, type: 3}
-  m_Name: ScreenSpaceShadows
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  m_Shader: {fileID: 4800000, guid: 0f854b35a0cf61a429bd5dcfea30eddd, type: 3}
 --- !u!114 &7118196287646668398
 MonoBehaviour:
   m_ObjectHideFlags: 0
