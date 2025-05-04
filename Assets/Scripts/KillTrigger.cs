@@ -74,9 +74,9 @@ public class KillTrigger : MonoBehaviour
             i++;
         }
 
-        UpdateMesh();
-
         CheckForSelf();
+
+        UpdateMesh();
 
         foreach (var child in ChildNodes)
         {
