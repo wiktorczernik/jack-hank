@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[Serializable, ExecuteInEditMode, RequireComponent(typeof(TriggerEventEmitter))]
+[Serializable, RequireComponent(typeof(TriggerEventEmitter))]
+#if UNITY_EDITOR
+[ExecuteInEditMode]
+#endif
 public class KillTrigger : MonoBehaviour
 {
     [Header("Behaviour")]
@@ -38,19 +41,23 @@ public class KillTrigger : MonoBehaviour
             v.Kill();
         }
 
+#if UNITY_EDITOR
         OnValidate();
+#endif
     }
 
 
     Vector3 lastPos = Vector3.zero;
+#if UNITY_EDITOR
     private void Update()
     {
         if (lastPos != transform.position) OnValidate();
         lastPos = transform.position;
     }
+#endif
 
 
-
+#if UNITY_EDITOR
     public void OnValidate()
     {
         emitter = GetComponent<TriggerEventEmitter>();
@@ -95,6 +102,7 @@ public class KillTrigger : MonoBehaviour
             for (; targetIdx > 0; targetIdx--) UnityEditorInternal.ComponentUtility.MoveComponentUp(trigger);
         }
     }
+#endif
     bool looking = false;
     void CheckForSelf()
     {
@@ -284,12 +292,14 @@ public class KillTrigger : MonoBehaviour
         mc.sharedMesh = mesh;
         triggers.Add(mc);
     }
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1f, 0f, 0f, 1f);
         if (Selection.activeObject == gameObject) Gizmos.color = new Color(0f, 1f, 0f, 1f);
         foreach (Mesh mesh in gizmosMeshes) Gizmos.DrawWireMesh(mesh);
     }
+#endif
 
     public GameObject MakeNewConnection()
     {
@@ -311,7 +321,9 @@ public class KillTrigger : MonoBehaviour
         }
 
         ChildNodes = new List<KillTrigger>(ChildNodes) { node }.ToArray();
+#if UNITY_EDITOR
         OnValidate();
+#endif
 
         return newNode;
     }
@@ -320,6 +332,8 @@ public class KillTrigger : MonoBehaviour
         var list = new List<KillTrigger>(ChildNodes);
         list.RemoveAll(b => b == null);
         ChildNodes = list.ToArray();
+#if UNITY_EDITOR
         OnValidate();
+#endif
     }
 }
