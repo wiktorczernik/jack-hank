@@ -47,20 +47,16 @@ public class KillTrigger : MonoBehaviour
     }
 
 
-    Vector3 lastPos = Vector3.zero;
 #if UNITY_EDITOR
+    Vector3 lastPos = Vector3.zero;
+    bool needForReload = false;
     private void Update()
     {
         if (lastPos != transform.position) OnValidate();
         lastPos = transform.position;
-    }
-#endif
 
+        if (!needForReload) return;
 
-#if UNITY_EDITOR
-    public void OnValidate()
-    {
-        emitter = GetComponent<TriggerEventEmitter>();
         triggers = new List<MeshCollider>(GetComponents<MeshCollider>());
         int i = 0;
         foreach (var trigger in triggers)
@@ -73,10 +69,21 @@ public class KillTrigger : MonoBehaviour
             DestroyImmediate(trigger);
             i++;
         }
+        UpdateMesh();
+
+        needForReload = false;
+    }
+#endif
+
+
+#if UNITY_EDITOR
+    public void OnValidate()
+    {
+        emitter = GetComponent<TriggerEventEmitter>();
 
         CheckForSelf();
 
-        UpdateMesh();
+        needForReload = true;
 
         foreach (var child in ChildNodes)
         {
@@ -220,55 +227,55 @@ public class KillTrigger : MonoBehaviour
             gizmos.Add(fwd * Radius + transform.position - right * Radius + Vector3.up * HalfHeight);
             float hheight = adapt ? trigger.HalfHeight : HalfHeight;
             float radius = adapt ? trigger.Radius : Radius;
-            gizmos.Add(-fwd * radius + trigger.transform.position + right * radius + Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position + right * radius - Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position - right * radius - Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position - right * radius + Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position + right * radius + Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position + right * radius - Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position - right * radius - Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position - right * radius + Vector3.up * hheight);
             vertices.Add(fwd * Radius + right * Radius + Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius + right * Radius - Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius - right * Radius - Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius - right * Radius + Vector3.up * HalfHeight);
-            vertices.Add(-fwd * radius + dir + right * radius + Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir + right * radius - Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir - right * radius - Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir - right * radius + Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir + right * radius + Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir + right * radius - Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir - right * radius - Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir - right * radius + Vector3.up * hheight);
 
             indices.Add(0);
-            indices.Add(1);
             indices.Add(2);
-            indices.Add(0);
-            indices.Add(2);
-            indices.Add(3);
-            indices.Add(0);
-            indices.Add(5);
-            indices.Add(1);
-            indices.Add(0);
-            indices.Add(4);
-            indices.Add(5);
-            indices.Add(0);
-            indices.Add(7);
-            indices.Add(4);
+            indices.Add(1); //
             indices.Add(0);
             indices.Add(3);
+            indices.Add(2); //
+            indices.Add(0);
+            indices.Add(1);
+            indices.Add(5); //
+            indices.Add(0);
+            indices.Add(5);
+            indices.Add(4); //
+            indices.Add(0);
+            indices.Add(4);
+            indices.Add(7); //
+            indices.Add(0);
             indices.Add(7);
+            indices.Add(3); //
+            indices.Add(1);
+            indices.Add(2);
+            indices.Add(6); //
             indices.Add(1);
             indices.Add(6);
+            indices.Add(5); //
             indices.Add(2);
-            indices.Add(1);
-            indices.Add(5);
-            indices.Add(6);
-            indices.Add(2);
+            indices.Add(3);
+            indices.Add(6); //
             indices.Add(6);
             indices.Add(3);
-            indices.Add(6);
-            indices.Add(7);
-            indices.Add(3);
+            indices.Add(7); //
             indices.Add(5);
-            indices.Add(4);
             indices.Add(6);
+            indices.Add(4); //
             indices.Add(6);
-            indices.Add(4);
             indices.Add(7);
+            indices.Add(4); //
             #endregion
 
             bridge.vertices = vertices.ToArray();
