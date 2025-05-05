@@ -9,36 +9,22 @@ public class Bonus_GUI : MonoBehaviour
 {
     [SerializeField] private Vector2 offsetFromCenterToRight;
     [SerializeField] private int circleRadius;
-    [Min(0)][SerializeField] private int curveBeginningInCelsius;
-    [Min(0)][SerializeField] private int ticketsOffsetInCelsius;
-    
+    [Min(0)] [SerializeField] private int curveBeginningInCelsius;
+    [Min(0)] [SerializeField] private int ticketsOffsetInCelsius;
+    [TextArea] [SerializeField] private string passengerKilledMassage;
+    [TextArea] [SerializeField] private string passengerPickedUpMassage;
+    [TextArea] [SerializeField] private string largeSiteDestroyedMassage;
+
+    private readonly PlayerBonusTypes[] _bigBonuses = { PlayerBonusTypes.Passenger, PlayerBonusTypes.LargeDestruction };
+
     private readonly PlayerBonusTypes[] _miniBonuses =
         { PlayerBonusTypes.Drift, PlayerBonusTypes.Flying, PlayerBonusTypes.DestructionCombo };
 
-    private readonly PlayerBonusTypes[] _bigBonuses = { PlayerBonusTypes.Passenger };
+    private BigBonusBoard_GUI _bigBonusBoard;
+    private LinkedList<Tuple<int, string>> _bigBonusesList;
     private BonusTicket_GUI[] _bonusTickets;
     private RectTransform[] _bonusTicketsRect;
-    private LinkedList<Tuple<int, string>> _bigBonusesList;
-    private BigBonusBoard_GUI _bigBonusBoard;
 
-    public void ShowBonus(int bonus, PlayerBonusTypes bonusType)
-    {
-        if (bonusType == PlayerBonusTypes.DestructionCombo)
-        {
-            Debug.LogError("There is another way to show destruction combo bonus");
-            return;
-        }
-        
-        if (_bigBonuses.Any(bigBonus => bigBonus == bonusType)) ShowBigBonus(bonus, bonusType);
-        else ShowMiniBonus(bonus, bonusType);
-    }
-
-    public void ShowDestructionComboBonus(int bonus, int combo)
-    {
-        _bonusTickets.First(t => t.BonusType == PlayerBonusTypes.DestructionCombo)
-            .ChangeBonusValueOn(bonus, combo);
-    }
-    
     private void Start()
     {
         _bonusTickets = new BonusTicket_GUI[_miniBonuses.Length];
@@ -48,7 +34,7 @@ public class Bonus_GUI : MonoBehaviour
         _bigBonusesList = new LinkedList<Tuple<int, string>>();
 
         if (_bigBonusBoard == null) throw new Exception("There is no bonus board");
-        
+
         for (var i = 0; i < _miniBonuses.Length; i++)
         {
             var ticket = GetComponentsInChildren<BonusTicket_GUI>(true)
@@ -56,22 +42,40 @@ public class Bonus_GUI : MonoBehaviour
 
             if (ticket == null)
             {
-               Debug.LogError($"BonusTicket of type '{_miniBonuses[i].ToString()}' was not found");
-               return;
+                Debug.LogError($"BonusTicket of type '{_miniBonuses[i].ToString()}' was not found");
+                return;
             }
 
             _bonusTickets[i] = ticket;
             _bonusTicketsRect[i] = ticket.GetComponent<RectTransform>();
         }
-        
+
         UpdateTicketsPosition();
     }
 
     private void Update()
     {
         if (Application.isPlaying) return;
-        
+
         UpdateTicketsPosition();
+    }
+
+    public void ShowBonus(int bonus, PlayerBonusTypes bonusType)
+    {
+        if (bonusType == PlayerBonusTypes.DestructionCombo)
+        {
+            Debug.LogError("There is another way to show destruction combo bonus");
+            return;
+        }
+
+        if (_bigBonuses.Any(bigBonus => bigBonus == bonusType)) ShowBigBonus(bonus, bonusType);
+        else ShowMiniBonus(bonus, bonusType);
+    }
+
+    public void ShowDestructionComboBonus(int bonus, int combo)
+    {
+        _bonusTickets.First(t => t.BonusType == PlayerBonusTypes.DestructionCombo)
+            .ChangeBonusValueOn(bonus, combo);
     }
 
     private void UpdateTicketsPosition()
@@ -81,9 +85,10 @@ public class Bonus_GUI : MonoBehaviour
             var rect = _bonusTicketsRect[i];
             var angleOnCurveInCelsius = curveBeginningInCelsius + ticketsOffsetInCelsius * i;
             var angleOnCurveInRadians = angleOnCurveInCelsius * (math.PI / 180);
-            var x = (float)(Math.Cos(angleOnCurveInRadians) * circleRadius + offsetFromCenterToRight.x - circleRadius + rect.rect.width / 2);
+            var x = (float)(Math.Cos(angleOnCurveInRadians) * circleRadius + offsetFromCenterToRight.x - circleRadius +
+                            rect.rect.width / 2);
             var y = (float)(Math.Sin(angleOnCurveInRadians) * circleRadius + offsetFromCenterToRight.y);
-            
+
             rect.anchoredPosition = new Vector2(x, y);
             rect.rotation = Quaternion.AngleAxis(angleOnCurveInCelsius, Vector3.forward);
         }
@@ -91,7 +96,16 @@ public class Bonus_GUI : MonoBehaviour
 
     private void ShowBigBonus(int bonus, PlayerBonusTypes bonusTypes)
     {
-        _bigBonusesList.AddLast(new Tuple<int, string>(bonus, bonusTypes.ToString()));
+        var message = bonusTypes.ToString();
+
+        if (bonusTypes == PlayerBonusTypes.LargeDestruction)
+            message = largeSiteDestroyedMassage;
+        else if (bonusTypes == PlayerBonusTypes.Passenger && bonus >= 0)
+            message = passengerPickedUpMassage;
+        else if (bonusTypes == PlayerBonusTypes.Passenger)
+            message = passengerKilledMassage;
+
+        _bigBonusesList.AddLast(new Tuple<int, string>(bonus, message));
         ShowBigBonusBoard();
     }
 
