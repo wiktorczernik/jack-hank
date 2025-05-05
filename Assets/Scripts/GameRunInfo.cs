@@ -12,7 +12,8 @@ public class GameRunInfo
         { PlayerBonusTypes.DestructionCombo, 0 },
         { PlayerBonusTypes.Drift, 0 },
         { PlayerBonusTypes.Flying, 0 },
-        { PlayerBonusTypes.Passenger, 0 }
+        { PlayerBonusTypes.Passenger, 0 },
+        { PlayerBonusTypes.LargeDestruction, 0 }
     };
 
     public int PassengersOnBoard;

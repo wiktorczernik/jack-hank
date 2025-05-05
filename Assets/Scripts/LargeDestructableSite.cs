@@ -2,7 +2,7 @@ using System.Collections;
 using JackHank.Cinematics;
 using UnityEngine;
 using UnityEngine.Events;
-
+using Random = Unity.Mathematics.Random;
 
 public class LargeDestructableSite : GameEntity
 {
@@ -10,21 +10,24 @@ public class LargeDestructableSite : GameEntity
     /// <summary>
     /// Tells is this site being destroyed
     /// </summary>
-    public bool wasDestroyed = false;
-    public bool wasChainDestroyed = false;
-    public bool isBeingDestroyed = false;
-    /// <summary>
-    /// Tells how many supports already have been destroyed
-    /// </summary>
-    public int hitSupportsCount = 0;
+    public bool wasDestroyed;
 
-    [Header("Destruction")]
-    public float debrisDelay = 1f;
+    public bool wasChainDestroyed;
+    public bool isBeingDestroyed;
+
+    /// <summary>
+    ///     Tells how many supports already have been destroyed
+    /// </summary>
+    public int hitSupportsCount;
+
+    [Header("Destruction")] public float debrisDelay = 1f;
+
     public float chainMinDelay = 1;
     public float chainMaxDelay = 3;
     public LargeDestructableSite[] chainedDestructables;
+
     /// <summary>
-    /// List of rigidbodies that will act as debris
+    ///     List of rigidbodies that will act as debris
     /// </summary>
     public Rigidbody[] debrisRigidbodies;
 
@@ -33,17 +36,19 @@ public class LargeDestructableSite : GameEntity
     /// How many supports should player destroy to begin total destruction
     /// </summary>
     public int maxSupportsDestroyed = 1;
+
     /// <summary>
-    /// Tells if all supports will be smashed when site starts crumbling
+    ///     Tells if all supports will be smashed when site starts crumbling
     /// </summary>
     public bool smashSupportsOnDestroy = true;
+
     /// <summary>
-    /// List of supporting entities
+    ///     List of supporting entities
     /// </summary>
     public SmashableEntity[] supports;
-    
-    [Header("Cinematics")]
-    public CinematicSequence cinematicSequence;
+
+    [Header("Cinematics")] public CinematicSequence cinematicSequence;
+
     public Transform cinematicParent;
     public Transform cinematicEndWarp;
     public bool cinematicOverrideVelocity;
@@ -54,10 +59,13 @@ public class LargeDestructableSite : GameEntity
     /// True - if destruction is chained
     /// </summary>
     public UnityEvent<bool> onDestructionBegin;
+
     /// <summary>
-    /// True - if destruction is chained
+    ///     True - if destruction is chained
     /// </summary>
     public UnityEvent<bool> onDestructionEnd;
+
+    [Header("Bonus")] public int bountyPointsReward;
 
 
     public void StartDestruction()
@@ -68,6 +76,7 @@ public class LargeDestructableSite : GameEntity
         StartCoroutine(CreateDebris());
         StartCoroutine(FinishDestruction());
     }
+
     public void StartChainedDestruction()
     {
         isBeingDestroyed = true;
@@ -80,10 +89,10 @@ public class LargeDestructableSite : GameEntity
         isBeingDestroyed = false;
         onDestructionEnd?.Invoke(true);
 
-        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)Time.time);
+        var random = new Random((uint)Time.time);
         foreach (var chain in chainedDestructables)
         {
-            float time = random.NextFloat(chainMinDelay, chainMaxDelay);
+            var time = random.NextFloat(chainMinDelay, chainMaxDelay);
 
             IEnumerator DelayedChain()
             {
@@ -96,30 +105,32 @@ public class LargeDestructableSite : GameEntity
             StartCoroutine(DelayedChain());
         }
     }
+
     #region Event handlers
+
     private void OnSupportSmashed(SmashableEntity support)
     {
         hitSupportsCount++;
-        if (hitSupportsCount >= maxSupportsDestroyed)
-        {
-            StartDestruction();
-        }
+        if (hitSupportsCount >= maxSupportsDestroyed) StartDestruction();
     }
+
     #endregion
+
     #region Helpers
+
     private IEnumerator CreateDebris()
     {
         yield return new WaitForSeconds(debrisDelay);
 
-        foreach (Rigidbody rb in debrisRigidbodies)
+        foreach (var rb in debrisRigidbodies)
         {
             rb.isKinematic = false;
             rb.freezeRotation = false;
             rb.constraints = RigidbodyConstraints.None;
         }
+
         if (smashSupportsOnDestroy)
-        {
-            foreach (SmashableEntity entity in supports)
+            foreach (var entity in supports)
             {
                 if (entity == null) continue;
                 if (!entity.wasHit)
@@ -128,20 +139,20 @@ public class LargeDestructableSite : GameEntity
                     // entity.ForceHit();
                 }
             }
-        }
     }
+
     private IEnumerator FinishDestruction()
     {
         if (cinematicSequence != null && cinematicParent != null)
         {
-            CinematicPlayer.PlaySequence(cinematicSequence, cinematicParent.position, cinematicParent.rotation, cinematicParent.localScale);
+            CinematicPlayer.PlaySequence(cinematicSequence, cinematicParent.position, cinematicParent.rotation,
+                cinematicParent.localScale);
             yield return null;
-            yield return new WaitUntil(() => !CinematicPlayer.isPlaying );
+            yield return new WaitUntil(() => !CinematicPlayer.isPlaying);
             GameManager.PlayerVehicle.Teleport(cinematicEndWarp.position, cinematicEndWarp.rotation);
             if (cinematicOverrideVelocity)
-            {
-                GameManager.PlayerVehicle.physics.bodyRigidbody.linearVelocity = cinematicEndWarp.rotation * cinematicEndVelocity;
-            }
+                GameManager.PlayerVehicle.physics.bodyRigidbody.linearVelocity =
+                    cinematicEndWarp.rotation * cinematicEndVelocity;
         }
 
         wasDestroyed = true;
@@ -149,10 +160,12 @@ public class LargeDestructableSite : GameEntity
         isBeingDestroyed = false;
         onDestructionEnd?.Invoke(false);
 
-        Unity.Mathematics.Random random = new Unity.Mathematics.Random((uint)Time.time);
+        GameManager.UpdateBonus(bountyPointsReward, PlayerBonusTypes.LargeDestruction);
+
+        var random = new Random((uint)Time.time);
         foreach (var chain in chainedDestructables)
         {
-            float time = random.NextFloat(chainMinDelay, chainMaxDelay);
+            var time = random.NextFloat(chainMinDelay, chainMaxDelay);
 
             IEnumerator DelayedChain()
             {
@@ -165,9 +178,11 @@ public class LargeDestructableSite : GameEntity
             StartCoroutine(DelayedChain());
         }
     }
+
     #endregion
 
     #region Unity Messages
+
     private void Awake()
     {
         foreach (var entity in supports)
@@ -188,5 +203,6 @@ public class LargeDestructableSite : GameEntity
             debrisRigidbodies = debrisParent.GetComponentsInChildren<Rigidbody>();
     }
 #endif
+
     #endregion
 }

@@ -3,5 +3,6 @@
     Flying,
     Drift,
     DestructionCombo,
-    Passenger,
+    LargeDestruction,
+    Passenger
 }
