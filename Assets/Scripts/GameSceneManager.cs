@@ -62,6 +62,11 @@ public class GameSceneManager : MonoBehaviour
             () => onMenuLoadEnd?.Invoke());
     }
 
+    public static void ReloadLevel()
+    {
+        _instance.StartCoroutine(LoadActiveSceneAsync(SceneManager.GetActiveScene().name, null, null));
+    }
+
     #region Helpers
 
     private static IEnumerator LoadActiveSceneAsync(string sceneName, Action beginEvent, Action endEvent)

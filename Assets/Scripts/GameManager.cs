@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     public static void RestartLevel()
     {
-        SceneManager.LoadScene(_definition.SceneName);
+        GameSceneManager.ReloadLevel();
     }
 
     public static void RestartBossFight()
@@ -163,8 +163,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("StartFromBossFight", 1);
         var runStats = RunInfo.GetPointsByBonusTypes();
         foreach (var key in runStats.Keys) PlayerPrefs.SetInt(key.ToString(), runStats[key]);
-        SceneManager.LoadScene(_definition.SceneName);
         PlayerPrefs.Save();
+
+        GameSceneManager.ReloadLevel();
     }
 
     private void BeginRun()
