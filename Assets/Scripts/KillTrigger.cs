@@ -32,6 +32,8 @@ public class KillTrigger : MonoBehaviour
 
         void TryKillCollider(Collider c)
         {
+            if (c.isTrigger) return;
+
             Vehicle v = c.GetComponentInParent<Vehicle>();
             if (!v) return;
 
@@ -308,6 +310,7 @@ public class KillTrigger : MonoBehaviour
             node.makeClone = true;
             node.HalfHeight = HalfHeight;
             node.Radius = Radius;
+            node.meshPolygonPrecision = meshPolygonPrecision;
         }
 
         ChildNodes = new List<KillTrigger>(ChildNodes) { node }.ToArray();
