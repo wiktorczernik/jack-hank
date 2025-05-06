@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour
 
     public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType)
     {
+        if (bonusType == PlayerBonusTypes.LargeDestruction) Debug.Log("Large Destruction");
+
         if (CinematicPlayer.isPlaying) return;
         RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
         Local.bonusGUI.ShowBonus(bonusValue, bonusType);
@@ -153,7 +155,7 @@ public class GameManager : MonoBehaviour
 
     public static void RestartLevel()
     {
-        SceneManager.LoadScene(_definition.SceneName);
+        GameSceneManager.ReloadLevel();
     }
 
     public static void RestartBossFight()
@@ -161,8 +163,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("StartFromBossFight", 1);
         var runStats = RunInfo.GetPointsByBonusTypes();
         foreach (var key in runStats.Keys) PlayerPrefs.SetInt(key.ToString(), runStats[key]);
-        SceneManager.LoadScene(_definition.SceneName);
         PlayerPrefs.Save();
+
+        GameSceneManager.ReloadLevel();
     }
 
     private void BeginRun()

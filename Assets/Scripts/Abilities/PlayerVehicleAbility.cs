@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -114,6 +113,15 @@ public class PlayerVehicleAbility : MonoBehaviour
     public UnityEvent onCooldownEnd;
 
     /// <summary>
+    /// Called on turn off
+    /// </summary>
+    public UnityEvent onTurnOff;
+    /// <summary>
+    /// Called on turn on
+    /// </summary>
+    public UnityEvent onTurnOn;
+
+    /// <summary>
     /// Called whenether state of ability changes. Arguments are: previous state, new state
     /// </summary>
     public UnityEvent<AbilityState, AbilityState> onStateUpdate;
@@ -140,6 +148,29 @@ public class PlayerVehicleAbility : MonoBehaviour
     public void Init(PlayerVehicle p)
     {
         vehicle = p;
+    }
+
+    public void TurnOff()
+    {
+        if (_turnOffAfterCurrentState || state == AbilityState.TurnOff) return;
+
+        if (_state == AbilityState.Ready)
+        {
+            _state = AbilityState.TurnOff;
+            onStateUpdate?.Invoke(AbilityState.Ready, _state);
+        }
+        else
+            _turnOffAfterCurrentState = true;
+    }
+
+    public void TurnOn()
+    {
+        if (_state != AbilityState.TurnOff) return;
+
+        _state = AbilityState.Ready;
+        onStateUpdate?.Invoke(AbilityState.TurnOff, AbilityState.Ready);
+        OnTurnOn();
+        onTurnOn?.Invoke();
     }
 
     /// <summary>
@@ -186,7 +217,26 @@ public class PlayerVehicleAbility : MonoBehaviour
     /// <summary>
     /// Called when ability state changed
     /// </summary>
+    
+    /// <summary>
+    /// Called on turn off
+    /// </summary>
+    protected virtual void OnTurnOff() { }
+    /// <summary>
+    /// Called on turn on
+    /// </summary>
+    protected virtual void OnTurnOn() {}
+    
     protected virtual void OnStateChange(AbilityState previousState, AbilityState newState) { }
+    
+    private bool _turnOffAfterCurrentState;
+
+    void InternalTurnOff()
+    {
+        _turnOffAfterCurrentState = false;
+        OnTurnOff();
+        onTurnOff?.Invoke();
+    }
 
     // TODO: Those methods are very similar, maybe create generic one?
     void PrepareSeq()
@@ -202,10 +252,12 @@ public class PlayerVehicleAbility : MonoBehaviour
             {
                 _prepareTime = 0;
                 var oldState = _state;
-                _state = AbilityState.Work;
+                _state = _turnOffAfterCurrentState ? AbilityState.TurnOff : AbilityState.Work;
                 onStateUpdate?.Invoke(oldState, _state);
                 OnPrepareEnd();
                 onPrepareEnd?.Invoke();
+                
+                if (_turnOffAfterCurrentState) InternalTurnOff();
             }
         }
         else // begin
@@ -228,10 +280,12 @@ public class PlayerVehicleAbility : MonoBehaviour
             {
                 _workTime = 0;
                 var oldState = _state;
-                _state = AbilityState.Cooldown;
+                _state = _turnOffAfterCurrentState ? AbilityState.TurnOff : AbilityState.Cooldown;
                 onStateUpdate?.Invoke(oldState, _state);
                 OnWorkEnd();
                 onWorkEnd?.Invoke();
+                
+                if (_turnOffAfterCurrentState) InternalTurnOff();
             }
         }
         else // begin
@@ -241,6 +295,7 @@ public class PlayerVehicleAbility : MonoBehaviour
         }
         _workTime += Time.fixedDeltaTime;
     }
+
     void CooldownSeq()
     {
         if (_cooldownTime > float.Epsilon)
@@ -254,10 +309,12 @@ public class PlayerVehicleAbility : MonoBehaviour
             {
                 _cooldownTime = 0;
                 var oldState = _state;
-                _state = AbilityState.Ready;
+                _state = _turnOffAfterCurrentState ? AbilityState.TurnOff : AbilityState.Ready;
                 onStateUpdate?.Invoke(oldState, _state);
                 OnCooldownEnd();
                 onCooldownEnd?.Invoke();
+
+                if (_turnOffAfterCurrentState) InternalTurnOff();
             }
         }
         else // begin
@@ -265,6 +322,7 @@ public class PlayerVehicleAbility : MonoBehaviour
             OnCooldownBegin();
             onCooldownBegin?.Invoke();
         }
+
         _cooldownTime += Time.fixedDeltaTime;
     }
 
@@ -350,6 +408,10 @@ public class PlayerVehicleAbility : MonoBehaviour
         /// <summary>
         /// When ability is cooldowned (resting)
         /// </summary>
-        Cooldown
+        Cooldown,
+        /// <summary>
+        /// When ability is turned off
+        /// </summary>
+        TurnOff
     }
 }

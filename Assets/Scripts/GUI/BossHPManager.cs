@@ -99,7 +99,6 @@ public class BossHPManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null) Destroy(this);
-        else Instance = this;
+        Instance = this;
     }
 }
