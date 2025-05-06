@@ -11,7 +11,6 @@ public class BillboardBehaviour : MonoBehaviour
         var currentCamera = Camera.main;
 
         if (!currentCamera) return;
-        //Debug.Log("BILLBOARD");
 
         var lastAngles = transform.eulerAngles;
         

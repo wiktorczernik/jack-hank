@@ -28,6 +28,7 @@ public class PlayerAbility_GUI : MonoBehaviour
         yield return new WaitUntil(() => ability != null);
 
         initialized = true;
+        FirstUpdate();
         AddListeners();
     }
     private void OnDisable()
@@ -38,6 +39,8 @@ public class PlayerAbility_GUI : MonoBehaviour
     private void OnEnable()
     {
         if (!initialized) return;
+
+        FirstUpdate();
         AddListeners();
     }
 
@@ -56,6 +59,14 @@ public class PlayerAbility_GUI : MonoBehaviour
         ability.onStateUpdate.RemoveListener(UpdateLoading);
         ability.onCooldownTick.RemoveListener(UpdateCooldownSlider);
         ability.onCooldownEnd.RemoveListener(UpdateCooldownSlider);
+    }
+
+    private void FirstUpdate()
+    {
+        UpdateBorder(ability.state, ability.state);
+        UpdateIcon(ability.state, ability.state);
+        UpdateLoading(ability.state, ability.state);
+        UpdateCooldownSlider();
     }
 
     private void UpdateBorder(PlayerVehicleAbility.AbilityState oldState, PlayerVehicleAbility.AbilityState newState)
