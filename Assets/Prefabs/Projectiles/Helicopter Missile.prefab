@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: closeShift
-      value: -1.4
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: startSpeed
@@ -94,11 +94,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: localTargetShift.y
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: localTargetShift.z
-      value: 4.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
       propertyPath: maxBoostingLookAngle

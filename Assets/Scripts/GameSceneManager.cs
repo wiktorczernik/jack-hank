@@ -64,7 +64,29 @@ public class GameSceneManager : MonoBehaviour
 
     public static void ReloadLevel()
     {
-        _instance.StartCoroutine(LoadActiveSceneAsync(SceneManager.GetActiveScene().name, null, null));
+        _instance.StartCoroutine(ReloadLevelCo());
+    }
+    private static IEnumerator ReloadLevelCo()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        string sceneName = activeScene.name;
+
+        AsyncOperation unload = SceneManager.UnloadSceneAsync(activeScene.name);
+        yield return new WaitUntil(() => !unload.isDone);
+
+        AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        load.allowSceneActivation = false;
+
+        while (!load.isDone)
+        {
+            if (load.progress >= 0.9f)
+            {
+                load.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
     }
 
     #region Helpers
