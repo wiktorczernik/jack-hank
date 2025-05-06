@@ -62,6 +62,33 @@ public class GameSceneManager : MonoBehaviour
             () => onMenuLoadEnd?.Invoke());
     }
 
+    public static void ReloadLevel()
+    {
+        _instance.StartCoroutine(ReloadLevelCo());
+    }
+    private static IEnumerator ReloadLevelCo()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        string sceneName = activeScene.name;
+
+        AsyncOperation unload = SceneManager.UnloadSceneAsync(activeScene.name);
+        yield return new WaitUntil(() => !unload.isDone);
+
+        AsyncOperation load = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        load.allowSceneActivation = false;
+
+        while (!load.isDone)
+        {
+            if (load.progress >= 0.9f)
+            {
+                load.allowSceneActivation = true;
+            }
+            yield return null;
+        }
+
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+    }
+
     #region Helpers
 
     private static IEnumerator LoadActiveSceneAsync(string sceneName, Action beginEvent, Action endEvent)

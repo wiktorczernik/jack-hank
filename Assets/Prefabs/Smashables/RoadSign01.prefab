@@ -61,6 +61,13 @@ MonoBehaviour:
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   wasHit: 0
   hittable: 1
   bountyPointsReward: 50
@@ -125,13 +132,13 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4964139985802840353}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 1
-  m_FadeMode: 0
+  m_LocalReferencePoint: {x: -0.00007736683, y: 1.9821165, z: 0.00051273406}
+  m_Size: 4.0965466
+  m_FadeMode: 1
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.014650399
+  - screenRelativeHeight: 0.0005666426
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8962463782822940960}

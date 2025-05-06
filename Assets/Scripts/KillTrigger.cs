@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[Serializable, ExecuteInEditMode, RequireComponent(typeof(TriggerEventEmitter))]
+[Serializable, RequireComponent(typeof(TriggerEventEmitter))]
+#if UNITY_EDITOR
+[ExecuteInEditMode]
+#endif
 public class KillTrigger : MonoBehaviour
 {
     [Header("Behaviour")]
@@ -40,22 +43,22 @@ public class KillTrigger : MonoBehaviour
             v.Kill();
         }
 
+#if UNITY_EDITOR
         OnValidate();
+#endif
     }
 
 
+#if UNITY_EDITOR
     Vector3 lastPos = Vector3.zero;
+    bool needForReload = false;
     private void Update()
     {
         if (lastPos != transform.position) OnValidate();
         lastPos = transform.position;
-    }
 
+        if (!needForReload) return;
 
-
-    public void OnValidate()
-    {
-        emitter = GetComponent<TriggerEventEmitter>();
         triggers = new List<MeshCollider>(GetComponents<MeshCollider>());
         int i = 0;
         foreach (var trigger in triggers)
@@ -68,10 +71,21 @@ public class KillTrigger : MonoBehaviour
             DestroyImmediate(trigger);
             i++;
         }
+        UpdateMesh();
+
+        needForReload = false;
+    }
+#endif
+
+
+#if UNITY_EDITOR
+    public void OnValidate()
+    {
+        emitter = GetComponent<TriggerEventEmitter>();
 
         CheckForSelf();
 
-        UpdateMesh();
+        needForReload = true;
 
         foreach (var child in ChildNodes)
         {
@@ -97,6 +111,7 @@ public class KillTrigger : MonoBehaviour
             for (; targetIdx > 0; targetIdx--) UnityEditorInternal.ComponentUtility.MoveComponentUp(trigger);
         }
     }
+#endif
     bool looking = false;
     void CheckForSelf()
     {
@@ -214,55 +229,55 @@ public class KillTrigger : MonoBehaviour
             gizmos.Add(fwd * Radius + transform.position - right * Radius + Vector3.up * HalfHeight);
             float hheight = adapt ? trigger.HalfHeight : HalfHeight;
             float radius = adapt ? trigger.Radius : Radius;
-            gizmos.Add(-fwd * radius + trigger.transform.position + right * radius + Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position + right * radius - Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position - right * radius - Vector3.up * hheight);
-            gizmos.Add(-fwd * radius + trigger.transform.position - right * radius + Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position + right * radius + Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position + right * radius - Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position - right * radius - Vector3.up * hheight);
+            gizmos.Add(-fwd * trigger.Radius + trigger.transform.position - right * radius + Vector3.up * hheight);
             vertices.Add(fwd * Radius + right * Radius + Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius + right * Radius - Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius - right * Radius - Vector3.up * HalfHeight);
             vertices.Add(fwd * Radius - right * Radius + Vector3.up * HalfHeight);
-            vertices.Add(-fwd * radius + dir + right * radius + Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir + right * radius - Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir - right * radius - Vector3.up * hheight);
-            vertices.Add(-fwd * radius + dir - right * radius + Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir + right * radius + Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir + right * radius - Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir - right * radius - Vector3.up * hheight);
+            vertices.Add(-fwd * trigger.Radius + dir - right * radius + Vector3.up * hheight);
 
             indices.Add(0);
-            indices.Add(1);
             indices.Add(2);
-            indices.Add(0);
-            indices.Add(2);
-            indices.Add(3);
-            indices.Add(0);
-            indices.Add(5);
-            indices.Add(1);
-            indices.Add(0);
-            indices.Add(4);
-            indices.Add(5);
-            indices.Add(0);
-            indices.Add(7);
-            indices.Add(4);
+            indices.Add(1); //
             indices.Add(0);
             indices.Add(3);
+            indices.Add(2); //
+            indices.Add(0);
+            indices.Add(1);
+            indices.Add(5); //
+            indices.Add(0);
+            indices.Add(5);
+            indices.Add(4); //
+            indices.Add(0);
+            indices.Add(4);
+            indices.Add(7); //
+            indices.Add(0);
             indices.Add(7);
+            indices.Add(3); //
+            indices.Add(1);
+            indices.Add(2);
+            indices.Add(6); //
             indices.Add(1);
             indices.Add(6);
+            indices.Add(5); //
             indices.Add(2);
-            indices.Add(1);
-            indices.Add(5);
-            indices.Add(6);
-            indices.Add(2);
+            indices.Add(3);
+            indices.Add(6); //
             indices.Add(6);
             indices.Add(3);
-            indices.Add(6);
-            indices.Add(7);
-            indices.Add(3);
+            indices.Add(7); //
             indices.Add(5);
-            indices.Add(4);
             indices.Add(6);
+            indices.Add(4); //
             indices.Add(6);
-            indices.Add(4);
             indices.Add(7);
+            indices.Add(4); //
             #endregion
 
             bridge.vertices = vertices.ToArray();
@@ -286,12 +301,14 @@ public class KillTrigger : MonoBehaviour
         mc.sharedMesh = mesh;
         triggers.Add(mc);
     }
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = new Color(1f, 0f, 0f, 1f);
         if (Selection.activeObject == gameObject) Gizmos.color = new Color(0f, 1f, 0f, 1f);
         foreach (Mesh mesh in gizmosMeshes) Gizmos.DrawWireMesh(mesh);
     }
+#endif
 
     public GameObject MakeNewConnection()
     {
@@ -314,7 +331,9 @@ public class KillTrigger : MonoBehaviour
         }
 
         ChildNodes = new List<KillTrigger>(ChildNodes) { node }.ToArray();
+#if UNITY_EDITOR
         OnValidate();
+#endif
 
         return newNode;
     }
@@ -323,6 +342,8 @@ public class KillTrigger : MonoBehaviour
         var list = new List<KillTrigger>(ChildNodes);
         list.RemoveAll(b => b == null);
         ChildNodes = list.ToArray();
+#if UNITY_EDITOR
         OnValidate();
+#endif
     }
 }
