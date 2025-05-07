@@ -37,7 +37,7 @@ public class KillTrigger : MonoBehaviour
         {
             if (c.isTrigger) return;
 
-            Vehicle v = c.GetComponentInParent<Vehicle>();
+            PlayerVehicle v = c.GetComponentInParent<PlayerVehicle>();
             if (!v) return;
 
             v.Kill();
