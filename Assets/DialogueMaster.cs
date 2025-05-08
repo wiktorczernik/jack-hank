@@ -18,6 +18,8 @@ public class DialogueMaster : MonoBehaviour
 
     private void Update()
     {
+        if (!_source) return;
+
         if (isPlaying != oldIsPlaying)
             if (isPlaying) onDialogueStart?.Invoke();
             else onDialogueEnd?.Invoke();
