@@ -43,6 +43,7 @@ public class FadeTransition_GUI : MonoBehaviour
         _anim.Play("FadeIn");
 
         yield return new WaitForSeconds(_anim["FadeIn"].length);
+        _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 0);
 
         _isBusy = false;
         OnFadeInEnded?.Invoke();
