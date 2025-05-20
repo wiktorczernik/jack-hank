@@ -7,6 +7,5 @@ public class RunFinish : MonoBehaviour
         if (!other.gameObject.CompareTag("Vehicle")) return;
             
         GameManager.FinishRun();
-        Debug.Log("Player finished");
     }
 }
