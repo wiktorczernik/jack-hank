@@ -13,7 +13,15 @@ public class DialogueMaster : MonoBehaviour
 
     private AudioSource _source;
 
-    public static bool isPlaying => master._source.isPlaying;
+    public static bool isPlaying
+    {
+        get
+        {
+            if (!master) return false;
+            if (!master._source) return false;
+            return master._source.isPlaying;
+        }
+    }
     private bool oldIsPlaying = isPlaying;
 
     private void Update()
