@@ -6,29 +6,29 @@ public class Bootstrap : MonoBehaviour
 {
     private IEnumerator Start()
     {
-        var loginLoad = SceneManager.LoadSceneAsync(GameScenes.login, LoadSceneMode.Additive);
+        var mainMenuLoad = SceneManager.LoadSceneAsync(GameScenes.mainMenu, LoadSceneMode.Additive);
         var essentialsLoad = SceneManager.LoadSceneAsync(GameScenes.essentials, LoadSceneMode.Additive);
-
-        loginLoad.allowSceneActivation = false;
+        
         essentialsLoad.allowSceneActivation = false;
+        mainMenuLoad.allowSceneActivation = false;
 
-        while (!loginLoad.isDone || !essentialsLoad.isDone)
+        while (!essentialsLoad.isDone || !mainMenuLoad.isDone)
         {
-            if (loginLoad.progress >= 0.9f && essentialsLoad.progress >= 0.9f)
+            if (essentialsLoad.progress >= 0.9f && mainMenuLoad.progress >= 0.9f)
             {
                 // Audio listener is removed to prevent warnings
                 var listener = Camera.main.GetComponent<AudioListener>();
                 Destroy(listener);
-
-                loginLoad.allowSceneActivation = true;
+                
                 essentialsLoad.allowSceneActivation = true;
+                mainMenuLoad.allowSceneActivation = true;
 
                 SceneManager.UnloadSceneAsync(GameScenes.bootstrap);
 
                 yield return null;
 
-                var loginScene = SceneManager.GetSceneByName(GameScenes.login);
-                SceneManager.SetActiveScene(loginScene);
+                var mainMenu = SceneManager.GetSceneByName(GameScenes.mainMenu);
+                SceneManager.SetActiveScene(mainMenu);
             }
             yield return null;
         }

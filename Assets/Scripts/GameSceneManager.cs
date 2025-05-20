@@ -22,10 +22,11 @@ public class GameSceneManager : MonoBehaviour
     public static event Action onLoadTick;
     public static event Action onMenuLoadBegin;
     public static event Action onMenuLoadEnd;
+    public static event Action onLoginLoadBegin;
+    public static event Action onLoginLoadEnd;
     public static event Action<LevelInfo> onLevelLoadBegin;
     public static event Action<LevelInfo> onLevelLoadEnd;
-
-
+    
     public static void LoadLevel(LevelInfo level)
     {
         _instance.StartCoroutine(LoadLevelAsync(level));
@@ -60,6 +61,16 @@ public class GameSceneManager : MonoBehaviour
     {
         yield return LoadActiveSceneAsync(GameScenes.menu, () => onMenuLoadBegin?.Invoke(),
             () => onMenuLoadEnd?.Invoke());
+    }
+    
+    public static void LoadLogin()
+    {
+        _instance.StartCoroutine(LoadLoginAsync());
+    }
+    
+    public static IEnumerator LoadLoginAsync()
+    {
+        yield return LoadActiveSceneAsync(GameScenes.login, () => onLoginLoadBegin?.Invoke(), () => onLoginLoadEnd?.Invoke());
     }
 
     public static void ReloadLevel()
