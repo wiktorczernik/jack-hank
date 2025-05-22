@@ -25,6 +25,12 @@ public class PlayerTurret : MonoBehaviour
     [Header("Raycasting")]
     public LayerMask mask;
 
+    [Header("Sound effects")]
+    public AudioSource audioSource;
+    public AudioClip[] shotClips;
+    public float shotMinPitch = 0.7f;
+    public float shotMaxPitch = 1.3f;
+
     [Header("Visual Effects")]
     [SerializeField] ParticleSystem[] particles;
     public float maxNozzleAnimTime = 0.3f;
@@ -69,6 +75,10 @@ public class PlayerTurret : MonoBehaviour
         onFire?.Invoke();
         StartCoroutine(NozzleAnimation(Mathf.Min(maxNozzleAnimTime, 1f / fireRate)));
 
+        audioSource.clip = shotClips[UnityEngine.Random.Range(0, shotClips.Length)];
+        audioSource.pitch = UnityEngine.Random.Range(shotMinPitch, shotMaxPitch);
+        audioSource.Play();
+
         if (targetInProximity)
         {
             fireTarget.Hurt(damage);
@@ -93,7 +103,9 @@ public class PlayerTurret : MonoBehaviour
             }
         }
         if (E == null) return;
+        
         E.Hurt(damage);
+
     }
     IEnumerator NozzleAnimation(float animTime)
     {
