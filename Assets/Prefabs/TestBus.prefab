@@ -31175,6 +31175,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   driftVolumeLerp: 5
+  driftVolume: 0.75
   driftSoundSource: {fileID: 0}
   engineSoundSource: {fileID: 0}
 --- !u!114 &8049625386355856952
@@ -31385,6 +31386,12 @@ MonoBehaviour:
   onCooldownEnd:
     m_PersistentCalls:
       m_Calls: []
+  onTurnOff:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnOn:
+    m_PersistentCalls:
+      m_Calls: []
   onStateUpdate:
     m_PersistentCalls:
       m_Calls: []
@@ -31440,6 +31447,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onCooldownEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnOff:
+    m_PersistentCalls:
+      m_Calls: []
+  onTurnOn:
     m_PersistentCalls:
       m_Calls: []
   onStateUpdate:
@@ -32378,7 +32391,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

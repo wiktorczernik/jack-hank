@@ -1,9 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Splines;
-
 
 public class BotVehicle : Vehicle
 {
@@ -16,8 +14,10 @@ public class BotVehicle : Vehicle
     public FollowMode followMode = FollowMode.Single;
     public float followMaxSpeed = 60f;
 
-    [Header("Folllow")]
-    [SerializeField] SplineContainer _destinationQueueSpline;
+    [Header("Follow")]
+    public float startFollowDelay = 0;
+    private float _startFollowTimer = 0;
+    [SerializeField] private SplineContainer _destinationQueueSpline;
 
     [Header("Destination")]
     public float destinationArriveMaxDistance = 15f;
@@ -28,37 +28,59 @@ public class BotVehicle : Vehicle
     public float hardTurnMaxSpeed = 10f;
 
     [Header("Behaviour")]
-    [Description("In km/h")] public float speedDamageThreshold = 40f;
+    [Tooltip("In km/h")]
+    public float speedDamageThreshold = 40f;
     public float dmgReceivedPerSpeedUnit = 3f;
-
 
     public event Action onArrived;
 
 
     protected virtual void Awake()
     {
-        
         if (_destinationQueueSpline != null && _destinationQueueSpline.Spline.Count > 0)
         {
             foreach (var knot in _destinationQueueSpline.Spline.Knots)
             {
-                Vector3 localPos = knot.Position;
-                Vector3 worldPos = _destinationQueueSpline.transform.TransformPoint(localPos);
+                Vector3 worldPos = _destinationQueueSpline.transform.TransformPoint(knot.Position);
                 destinationQueue.Enqueue(worldPos);
             }
-            destinationPoint = destinationQueue.Dequeue();
+
+            if (destinationQueue.Count > 0)
+            {
+                destinationPoint = destinationQueue.Dequeue();
+            }
         }
     }
 
     #region Helpers
-    private bool InArriveZone() => DistanceToDest() < destinationArriveMaxDistance;
-    private bool IsArriveSpeedCorrect() => physics.speedKmhForward < destinationArriveMaxSpeed;
-    private float DistanceToDest() => Vector3.Distance(transform.position, destinationPoint);
-    private Vector3 DirectionToDest() => destinationPoint - transform.position;
-    private bool IsQueueEmpty() => destinationQueue.Count == 0;
-    private bool IsFollowingSingle() => followMode == FollowMode.Single;
-    private bool IsFollowingQueue() => followMode == FollowMode.Queue;
+
+    private bool InArriveZone()
+    {
+        return Vector3.Distance(transform.position, destinationPoint) < destinationArriveMaxDistance;
+    }
+
+    private bool IsArriveSpeedCorrect()
+    {
+        return physics.speedKmh < destinationArriveMaxSpeed;
+    }
+
+    private bool IsQueueEmpty()
+    {
+        return destinationQueue.Count == 0;
+    }
+
+    private bool IsFollowingSingle()
+    {
+        return followMode == FollowMode.Single;
+    }
+
+    private bool IsFollowingQueue()
+    {
+        return followMode == FollowMode.Queue;
+    }
+
     #endregion
+
 
     private void Arrive()
     {
@@ -68,74 +90,81 @@ public class BotVehicle : Vehicle
         isFollowing = false;
     }
 
+
     private void FollowTick()
     {
-        if (arrived) return;
+        if (_startFollowTimer < startFollowDelay)
+        {
+            _startFollowTimer += Time.fixedDeltaTime;
+            return;
+        }
 
-        float distance = DistanceToDest();
-        Vector3 destDir = DirectionToDest();
-        destDir.y *= -Mathf.Cos(destDir.y);
+        Vector3 rawDir = destinationPoint - transform.position;
+        rawDir.y = 0f;
+        if (rawDir.sqrMagnitude < 0.01f)
+        {
+            return;
+        }
+
         Vector3 curAng = transform.rotation.eulerAngles;
-        if (curAng.y > 180)
-        {
-            curAng.y -= 360f;
-        }
-        Vector3 destAng = Quaternion.LookRotation(destDir).eulerAngles;
-        if (destAng.y > 180)
-        {
-            destAng.y -= 360f;
-        }
-        // Difference between destination Y angle and current Y angle;
-        float angYdiff = destAng.y - curAng.y;
-        float angYdiffA = Mathf.Abs(angYdiff);
+        Vector3 destAng = Quaternion.LookRotation(rawDir).eulerAngles;
+        float angYdiff = Mathf.DeltaAngle(curAng.y, destAng.y);
+        float angYabs = Mathf.Abs(angYdiff);
 
         bool doAccelerate = true;
         bool doBreak = false;
         bool doTurn = true;
-        bool doHardTurn = false;
 
-        if (InArriveZone()) {
+        float distance = rawDir.magnitude;
+
+        if (distance < destinationArriveMaxDistance)
+        {
             doAccelerate = false;
-            doBreak = false;
             doTurn = false;
+
             if ((IsFollowingQueue() && IsQueueEmpty() || IsFollowingSingle()) &&
-                !IsArriveSpeedCorrect())
+                physics.speedKmh > destinationArriveMaxSpeed)
             {
                 doBreak = true;
             }
-            if (
-                (IsArriveSpeedCorrect() && IsFollowingSingle()) 
-                ||
-                (IsArriveSpeedCorrect() && IsFollowingQueue() && IsQueueEmpty())
-            ) {
+
+            if ((physics.speedKmh <= destinationArriveMaxSpeed && IsFollowingSingle()) ||
+                (physics.speedKmh <= destinationArriveMaxSpeed && IsFollowingQueue() && IsQueueEmpty()))
+            {
                 Arrive();
                 return;
             }
-            if (IsFollowingQueue() && !IsQueueEmpty()) {
-                if (loopQueue) destinationQueue.Enqueue(destinationPoint);
+
+            if (IsFollowingQueue() && !IsQueueEmpty())
+            {
+                if (loopQueue)
+                {
+                    destinationQueue.Enqueue(destinationPoint);
+                }
+
                 destinationPoint = destinationQueue.Dequeue();
                 Debug.Log("Arrived at queue point");
             }
         }
-        if (Mathf.Abs(angYdiff) > hardTurnThresholdAngle)
+
+        if (angYabs > hardTurnThresholdAngle)
         {
-            // Debug.Log($"{curAng.y} {destAng.y}");
             if (physics.speedKmh > hardTurnMaxSpeed)
             {
-                doAccelerate = false && doAccelerate;
-                doBreak = true && doBreak;
-                doTurn = true && doTurn;
-                doHardTurn = true;
+                doAccelerate = false;
+                doBreak = true;
+                doTurn = true;
             }
             else
             {
-                doAccelerate = true && doAccelerate;
-                doBreak = false && doBreak;
-                doTurn = true && doTurn;
-                doHardTurn = true;
+                doAccelerate = true;
+                doBreak = false;
+                doTurn = true;
             }
         }
-        if (physics.speedKmh > followMaxSpeed) {
+
+        if (physics.speedKmh > followMaxSpeed)
+        {
             doAccelerate = false;
             doBreak = true;
         }
@@ -144,46 +173,59 @@ public class BotVehicle : Vehicle
         {
             physics.input.y = 1f;
         }
-        if (doBreak)
+        else if (doBreak)
         {
             physics.input.y = -1f;
         }
+        else
+        {
+            physics.input.y = 0f;
+        }
+
         if (doTurn)
         {
-            float turnStep = curAng.y > destAng.y ? -1f : 1f;
-            if (angYdiffA < 90) {
-                turnStep *= angYdiffA / 90f;
-            }
-            physics.input.x = turnStep;
+            float steeringAmount = Mathf.Min(angYabs / 90f, 1f);
+            physics.input.x = Mathf.Sign(angYdiff) * steeringAmount;
+        }
+        else
+        {
+            physics.input.x = 0f;
         }
     }
+
+
     protected virtual void FixedUpdate()
     {
-        if (isFollowing) FollowTick();
+        if (isFollowing)
+        {
+            FollowTick();
+        }
     }
+
 
     public void ReceivePhysicalDamage(Collision collision)
     {
         Transform current = collision.collider.transform;
-        bool isVehicle = false;
-        while (!isVehicle)
+        while (current != null)
         {
-            if (current == null) break;
-            isVehicle = current.TryGetComponent(out Vehicle v);
+            if (current.TryGetComponent<Vehicle>(out Vehicle v))
+            {
+                float impactSpeedKmh = collision.relativeVelocity.magnitude * 3.6f;
+                if (impactSpeedKmh < speedDamageThreshold) return;
+
+                float damage = (impactSpeedKmh - speedDamageThreshold) * dmgReceivedPerSpeedUnit;
+                Hurt(damage);
+                return;
+            }
             current = current.parent;
         }
-
-        if (!isVehicle) return;
-        if (collision.relativeVelocity.magnitude * 3.6f < speedDamageThreshold) return;
-
-        float damage = (collision.relativeVelocity.magnitude * 3.6f - speedDamageThreshold) * dmgReceivedPerSpeedUnit;
-        Hurt(damage);
     }
+
 
     protected override void OnDeathInternal()
     {
         physics.enabled = false;
-        this.enabled = false;
+        enabled = false;
         SelfExplode();
     }
 

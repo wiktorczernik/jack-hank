@@ -107,7 +107,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
 --- !u!153 &1754507601643921490
 ConfigurableJoint:
@@ -316,7 +316,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
 --- !u!153 &6582577405405240925
 ConfigurableJoint:
@@ -10307,7 +10307,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4409508978620240855}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0.1
   m_AngularDrag: 0.1
   m_CenterOfMass: {x: 0, y: -1, z: 0}
@@ -10432,8 +10432,8 @@ MonoBehaviour:
   allowAirRoll: 0
   airRollForce: 1
   airRollMinTime: 1.25
-  turnForce: 3000
-  turnAginForce: 3000
+  turnForce: 5000
+  turnAginForce: 5000
   turnStabilization: 8
   turnForceCurve:
     serializedVersion: 2
@@ -10848,7 +10848,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
 --- !u!153 &321183809788251971
 ConfigurableJoint:
@@ -11415,7 +11415,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
 --- !u!153 &663347084425971500
 ConfigurableJoint:
