@@ -3,6 +3,7 @@ using System.Collections;
 public class HeliBossFightManager : BossFightManager
 {
     private PlayerVehicle player;
+    public int initAmmoCount = 12;
 
     protected override void AfterEndCutscene()
     {
@@ -19,7 +20,7 @@ public class HeliBossFightManager : BossFightManager
         var heliBoss = FindFirstObjectByType<HeliBoss>();
 
         player.playerTurret.fireTarget = heliBoss;
-        PlayerTurret.ammo = 50;
+        PlayerTurret.ammo = initAmmoCount;
         player.playerTurret.AllowFire();
     }
 
