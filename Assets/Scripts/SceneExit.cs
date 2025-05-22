@@ -21,6 +21,7 @@ public class SceneExit : MonoBehaviour
     [SerializeField] private FadeTransition_GUI fadeTransition;
 
     public event Action OnExit;
+    public bool finishing = false;
 
     private void Awake()
     {
@@ -52,7 +53,9 @@ public class SceneExit : MonoBehaviour
     private void OnPlayerEnterExitZone(Collider other)
     {
         if (!other.gameObject.CompareTag("Vehicle")) return;
-        
+        if (finishing) return;
+        finishing = true;
+
         fadeTransition.StartFadeIn();
 
         fadeTransition.OnFadeInEnded += AfterFadeIn;
@@ -68,14 +71,14 @@ public class SceneExit : MonoBehaviour
         else
         {
             OnExit?.Invoke();
-            SceneManager.LoadScene(nextSceneName);
+            GameSceneManager.LoadActiveScene(nextSceneName, null, null);
         }
     }
 
     private void LateExit()
     {
         OnExit?.Invoke();
-        SceneManager.LoadScene(nextSceneName);
+        GameSceneManager.LoadActiveScene(nextSceneName, null, null);
     }
 
     private enum OutSceneNextSceneInputType

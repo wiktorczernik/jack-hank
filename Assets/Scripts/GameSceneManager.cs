@@ -101,8 +101,16 @@ public class GameSceneManager : MonoBehaviour
     }
 
     #region Helpers
-
-    private static IEnumerator LoadActiveSceneAsync(string sceneName, Action beginEvent, Action endEvent)
+    public static void LoadActiveScene(string sceneName, Action beginEvent, Action endEvent)
+    {
+        _instance.StartCoroutine(
+            LoadActiveSceneAsync(
+                sceneName,
+                () => { beginEvent?.Invoke(); },
+                () => { endEvent?.Invoke(); })
+            );
+    }
+    public static IEnumerator LoadActiveSceneAsync(string sceneName, Action beginEvent, Action endEvent)
     {
         isLoading = true;
         loadingProgress = 0.0f;
