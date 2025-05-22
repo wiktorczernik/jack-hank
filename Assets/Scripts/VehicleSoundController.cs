@@ -10,6 +10,7 @@ public class VehicleSoundController : MonoBehaviour
     public AnimationCurve driftPitchCurve;
     public AnimationCurve engineVolumeCurve;
     public float driftVolumeLerp = 3f;
+    public float driftVolume = 0.75f;
 
     public AudioSource driftSoundSource;
     public AudioSource engineSoundSource;
@@ -19,7 +20,7 @@ public class VehicleSoundController : MonoBehaviour
         float driftFactor = Mathf.Abs(vehicleController.bodyRigidbody.angularVelocity.y);
         driftFactor = Mathf.Clamp01(driftFactor - 0.8f);
         float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f;
-        driftSoundSource.volume = Mathf.Lerp(driftSoundSource.volume, driftVolumeCurve.Evaluate(driftFactor), driftVolumeLerp * Time.deltaTime);
+        driftSoundSource.volume = Mathf.Lerp(driftSoundSource.volume, driftVolumeCurve.Evaluate(driftFactor), driftVolumeLerp * Time.deltaTime) * driftVolume;
         driftSoundSource.pitch = driftPitchCurve.Evaluate(driftFactor);
         engineSoundSource.pitch = engineFactor;
     }
