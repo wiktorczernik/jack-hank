@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3943258405365006948}
@@ -69,6 +69,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 150
   destroyTime: 10
@@ -86,8 +87,14 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
+  impactAudios:
+  - {fileID: 8300000, guid: 4d054ec8944f5f14a9787a6d0199368e, type: 3}
+  - {fileID: 8300000, guid: 1256ef89af6b9604f90c303c4686224c, type: 3}
+  - {fileID: 8300000, guid: 3595219272936bf448004cb8f7d9d183, type: 3}
+  - {fileID: 8300000, guid: 44ffb32840a0fa04f8cf47b75a761e18, type: 3}
   audioSource: {fileID: 83108585916150259}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &4082936245034834293
 GameObject:
   m_ObjectHideFlags: 0
