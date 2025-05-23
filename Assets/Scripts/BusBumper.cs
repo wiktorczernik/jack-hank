@@ -22,18 +22,13 @@ public class BusBumper : MonoBehaviour
     {
         SmashableEntity smashable = collider.GetComponentInParent<SmashableEntity>();
 
-        if (smashable)
+        if (smashable && smashable.bumpable)
         {
             smashable.ForceHit();
 
             Vector3 originalAngles = transform.localEulerAngles;
             Vector3 newAngles = originalAngles;
-            
-            float randomAngle = newAngles.x = Random.Range(-45, 0);
-            if (Random.Range(1, 2) == 2)
-                newAngles.x = 0 + randomAngle;
-            else
-                newAngles.x = -180 - randomAngle;
+            newAngles.x = Random.Range(-180, 0);
 
             transform.localEulerAngles = newAngles;
 

@@ -44,7 +44,6 @@ MonoBehaviour:
   - {fileID: 7118196287646668398}
   m_RendererFeatureMap: bf6c5985448a15169f5023db1d4d9b856e16af4ecfe9c862
   m_UseNativeRenderPass: 0
-  xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 2
   m_OpaqueLayerMask:
@@ -82,16 +81,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   m_Settings:
-    AOMethod: 0
+    AOMethod: 1
     Downsample: 1
     AfterOpaque: 1
     Source: 0
-    NormalSamples: 0
-    Intensity: 0.5
+    NormalSamples: 2
+    Intensity: 1
     DirectLightingStrength: 0.167
-    Radius: 0.75
+    Radius: 0.6
     Samples: 0
-    BlurQuality: 1
+    BlurQuality: 0
     Falloff: 100
     SampleCount: -1
   m_BlueNoise256Textures:

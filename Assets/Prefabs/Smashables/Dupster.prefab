@@ -69,6 +69,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 100
   destroyTime: 10
@@ -86,7 +87,10 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
+  impactAudios:
+  - {fileID: 8300000, guid: c72cd7b0767753e4fb20d06693f0931d, type: 3}
+  - {fileID: 8300000, guid: ad8e9a30a7101d24caf8d07d96df7578, type: 3}
+  - {fileID: 8300000, guid: 666c7d1ff3bb030448641cf8aae7c75d, type: 3}
   audioSource: {fileID: 9055117501618649955}
 --- !u!1 &5450098198667076270
 GameObject:
@@ -257,7 +261,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

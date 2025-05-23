@@ -6,22 +6,53 @@ using JackHank.Cinematics;
 public class VehicleSoundController : MonoBehaviour
 {
     public VehiclePhysics vehicleController;
-    public AnimationCurve driftVolumeCurve;
-    public AnimationCurve driftPitchCurve;
     public AnimationCurve engineVolumeCurve;
     public float driftVolumeLerp = 3f;
-    public float driftVolume = 0.75f;
+    public float driftRealVolume = 0.75f;
+    public float driftMinNormalVolume = 0.3f;
+    public float driftMinPitch = 0.7f;
+    public float driftGainPitch = 0.3f;
+    [Header("Environment Bump")]
+    public float bumpMinPitch = 0.5f;
+    public float bumpMaxPitch = 1.5f;
 
     public AudioSource driftSoundSource;
     public AudioSource engineSoundSource;
+    public AudioSource bumpSoundSource;
+
+    public void PlayEnvironmentBump()
+    {
+        if (bumpSoundSource.isPlaying) return;
+        bumpSoundSource.pitch = Random.Range(bumpMinPitch, bumpMaxPitch);
+        bumpSoundSource.Play();
+    }
 
     private void Update()
     {
-        float driftFactor = Mathf.Abs(vehicleController.bodyRigidbody.angularVelocity.y);
-        driftFactor = Mathf.Clamp01(driftFactor - 0.8f);
+        float driftFactor = Mathf.Clamp01(Mathf.Abs(vehicleController.driftAngular / vehicleController.driftMaxAngular));
+
+        float targetDriftVolume;
+        if (!vehicleController.isDrifting)
+        {
+            targetDriftVolume = 0;
+        }
+        else
+        {
+            targetDriftVolume = driftMinNormalVolume;
+            targetDriftVolume += driftFactor * (1 - driftMinNormalVolume);
+        }
+
+        float currentDriftVolume = Mathf.Lerp(driftSoundSource.volume, targetDriftVolume, driftVolumeLerp * Time.deltaTime);
+        currentDriftVolume *= driftRealVolume;
+        
+        float currentDriftPitch = driftMinPitch; 
+        currentDriftPitch += driftFactor * driftGainPitch;
+
         float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f;
-        driftSoundSource.volume = Mathf.Lerp(driftSoundSource.volume, driftVolumeCurve.Evaluate(driftFactor), driftVolumeLerp * Time.deltaTime) * driftVolume;
-        driftSoundSource.pitch = driftPitchCurve.Evaluate(driftFactor);
+        
+        driftSoundSource.volume = currentDriftVolume;
+        driftSoundSource.pitch = currentDriftPitch;
+        
         engineSoundSource.pitch = engineFactor;
     }
 
