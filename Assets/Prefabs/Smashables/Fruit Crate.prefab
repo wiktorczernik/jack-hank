@@ -250,7 +250,10 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
+  impactAudios:
+  - {fileID: 8300000, guid: ca0d5ab535182ea46b0a0eae062816fd, type: 3}
+  - {fileID: 8300000, guid: cdfa85fc2516ebe4681157ecf7201671, type: 3}
+  - {fileID: 8300000, guid: e90f4d8ee1d8dc745bc58ee3ec707027, type: 3}
   audioSource: {fileID: 5402337300790694731}
 --- !u!65 &7108776159647298546
 BoxCollider:
@@ -259,7 +262,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8690843688572003983}
-  m_Material: {fileID: 13400000, guid: bad7c7133de76064ea7cdc50d503a054, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

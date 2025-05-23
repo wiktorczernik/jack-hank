@@ -143,7 +143,6 @@ public class BotVehicle : Vehicle
                 }
 
                 destinationPoint = destinationQueue.Dequeue();
-                Debug.Log("Arrived at queue point");
             }
         }
 
