@@ -21,7 +21,7 @@ public class SmashableEntity : GameEntity
     public GameObject debrisPrefab;
 
     [Header("Physics")]
-    [SerializeField] protected Rigidbody usedRigidbody;
+    public Rigidbody usedRigidbody;
     [SerializeField] protected Collider[] usedColliders = new Collider[0];
     [SerializeField] protected CollisionEventEmitter collisionEvents;
 
@@ -54,21 +54,14 @@ public class SmashableEntity : GameEntity
     private void OnColliderHit(Collision collision)
     {
         if (collision.collider == null) return;
-
-        SmashableEntity otherSmashable;
-        bool isVehicleOrPass = collision.gameObject.tag == "Vehicle" || collision.gameObject.tag == "Passenger";
-        bool isSmashable = collision.gameObject.TryGetComponent(out otherSmashable);
-
-        if (!isVehicleOrPass && !isSmashable) return;
-        
+        if (collision.relativeVelocity.magnitude < 5f) return;
+        ForceHit();
+    }
+    public void ForceHit()
+    {
         if (!wasHit)
         {
             if (!hittable) return;
-            if (isSmashable && !otherSmashable.wasHit) return;
-
-            Vector3 contactPoint = collision.contacts[0].point;
-            Vector3 contactNormal = collision.contacts[0].normal;
-            float relativeSpeed = collision.relativeVelocity.magnitude;
 
             usedRigidbody.freezeRotation = hitFreezeRotation;
             usedRigidbody.constraints = hitConstrains;

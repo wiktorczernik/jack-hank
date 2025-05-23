@@ -165,7 +165,6 @@ public class VehiclePhysics : MonoBehaviour
     {
         if (Vector3.Dot(bodyRigidbody.linearVelocity, -transform.forward) * 3.6f > maxBackwardSpeed)
         {
-            Debug.Log("Capped back");
             return;
         }
         force = Mathf.Clamp01(force);
