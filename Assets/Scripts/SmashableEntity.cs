@@ -7,6 +7,7 @@ public class SmashableEntity : GameEntity
     public bool wasHit = false;
 
     [Header("Main")]
+    public bool bumpable = true;
     public bool hittable = true;
     public int bountyPointsReward;
     public float destroyTime = 10f;
@@ -34,6 +35,8 @@ public class SmashableEntity : GameEntity
     [Header("Audio")]
     [SerializeField] protected AudioClip[] impactAudios = new AudioClip[0];
     [SerializeField] protected AudioSource audioSource;
+    [SerializeField] protected float impactMinPitch = 0.75f;
+    [SerializeField] protected float impactMaxPitch = 1.25f;
 
     public SmashableType SmashableType => smashableType;
 
@@ -145,6 +148,7 @@ public class SmashableEntity : GameEntity
             return;
         }
 
+        audioSource.pitch = Random.Range(impactMinPitch, impactMaxPitch);
         audioSource.clip = clip;
         audioSource.Play();
     }

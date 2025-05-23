@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,6 +9,7 @@ public class VehiclePhysics : MonoBehaviour
     public event Action<AirTimeState> onTakeOff;
     public event Action<AirTimeState> onAir;
     public event Action<AirTimeState> onLand;
+    public UnityEvent<Collision> onEnvironmentBump;
 
     #region State
     [Header("State")]
@@ -362,6 +364,7 @@ public class VehiclePhysics : MonoBehaviour
             hitPointPos /= collision.contacts.Length;
             hitPointNormal /= collision.contacts.Length;
             newVelocity = Vector3.Reflect(newVelocity, hitPointNormal);
+            onEnvironmentBump?.Invoke(collision);
         }
 
         bodyRigidbody.linearVelocity = newVelocity;
