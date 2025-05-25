@@ -77,6 +77,7 @@ public abstract class BossFightManager : MonoBehaviour
         }
     }
 
+    public event Action OnPrepareBegin;
     public event Action OnBegin;
     public event Action OnRestart;
     public event Action OnEnd;
@@ -94,6 +95,7 @@ public abstract class BossFightManager : MonoBehaviour
 
     private IEnumerator BeginCo()
     {
+        OnPrepareBegin?.Invoke();
         yield return PrepareCo();
 
         CinematicPlayer.PlaySequence(beginCutscene, beginCutsceneTransform.position, beginCutsceneTransform.rotation,

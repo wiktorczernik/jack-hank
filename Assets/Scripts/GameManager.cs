@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public static Action<GameRunInfo> OnRunBegin;
     public static Action<GameRunInfo> OnRunFinish;
+    public static Action OnDeath;
 
     private static LevelDefinition _definition;
     private static LevelTaskTracker[] _levelTaskTrackers;
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Bonus_GUI bonusGUI;
     [SerializeField] private LevelDefinition debugLevelDefinition;
     [SerializeField] private FadeTransition_GUI fadeTransition;
-    [SerializeField] private BossFightManager bossFightManager;
+    public BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
 
     [Header("Optional dependency")] [SerializeField]
@@ -46,6 +47,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("StartFromBossFight"))
         {
             sceneEnter.Disable();
+            
             Local.bossFightManager.Begin();
             foreach (var bonusType in RunInfo.GetBonusTypes())
             {
@@ -64,10 +66,14 @@ public class GameManager : MonoBehaviour
             introCutscenePlayer.OnceOnSceneFinished += () =>
             {
                 if (sceneEnter.UseEnter) sceneEnter.TeleportPlayerAtEnter();
+
+                BeginRun();
             };
         }
-
-        BeginRun();
+        else
+        {
+            BeginRun();
+        }
     }
 
     public void SetupReferences()
@@ -140,6 +146,8 @@ public class GameManager : MonoBehaviour
         PlayerVehicle.physics.enabled = false;
         PlayerVehicle.enabled = false;
 
+        OnDeath?.Invoke();
+
         Local.fadeTransition.StartFadeIn();
         Local.fadeTransition.OnFadeInEnded += AfterFadeIn;
 
@@ -148,8 +156,15 @@ public class GameManager : MonoBehaviour
         void AfterFadeIn()
         {
             Local.fadeTransition.OnFadeInEnded -= AfterFadeIn;
-            if (Local.bossFightManager.duringFight) RestartBossFight();
-            else RestartLevel();
+            if (Local.bossFightManager.duringFight)
+            {
+                RestartBossFight();
+            }
+            else
+            {
+                FinishRun();
+                RestartLevel();
+            }
         }
     }
 
