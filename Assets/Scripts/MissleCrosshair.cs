@@ -7,9 +7,15 @@ public class MissleCrosshair : MonoBehaviour
 
     DecalProjector decal;
 
+    public bool Detached = false;
+    public void Detach()
+    {
+        Detached = true;
+    }
     
     public void SetPosition(Vector3 position)
     {
+        if (Detached) return;
         transform.position = position;
     }
     public void Show()
