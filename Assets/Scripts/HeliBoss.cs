@@ -184,6 +184,21 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
     }
 
+    private void OnEnable()
+    {
+        GameManager.PlayerVehicle.GetComponent<PlayerJumpAbility>().onWorkBegin.AddListener(DetachCrosshairs);
+    }
+    private void OnDisable()
+    {
+        GameManager.PlayerVehicle.GetComponent<PlayerJumpAbility>().onWorkBegin.RemoveListener(DetachCrosshairs);
+    }
+    void DetachCrosshairs()
+    {
+        foreach (MissleCrosshair cross in activeCrosshairs)
+        {
+            cross.Detach();
+        }
+    }
 
     protected override void FixedUpdate()
     {
