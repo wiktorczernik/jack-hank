@@ -3,17 +3,17 @@ using UnityEngine;
 public class LevelSelectMenuScroller : MonoBehaviour
 { 
     [SerializeField] private float scrollSpeedInKmh = 100f;
+    [SerializeField] private bool isStopped = true;
     private Renderer _rend;
-    private bool _isStopped = true;
 
     public void StartScrolling()
     {
-        _isStopped = false;
+        isStopped = false;
     }
 
     public void StopScrolling()
     {
-        _isStopped = true;
+        isStopped = true;
     }
     
     private void Awake()
@@ -23,9 +23,10 @@ public class LevelSelectMenuScroller : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if (_isStopped) return;
+        if (isStopped) return;
         
         var distanceInMetersPerDeltaTime = (scrollSpeedInKmh * 1000) * (Time.deltaTime / 3600);
-        _rend.material.mainTextureOffset += new Vector2(0, -(distanceInMetersPerDeltaTime / transform.localScale.z));
+        var oneTileSizeInMeters = transform.localScale.z / _rend.material.mainTextureScale.y;
+        _rend.material.mainTextureOffset += new Vector2(0, -(distanceInMetersPerDeltaTime / oneTileSizeInMeters));
     }
 }

@@ -27,7 +27,17 @@ public class GameRunInfo
         var millisecond = seconds % 1;
 
         var secondsPadded = Mathf.RoundToInt(seconds).ToString().PadLeft(2, '0');
-        var millisecondPadded = millisecond.ToString().Substring(2, 2).PadLeft(2, '0');
+        string millisecondPadded;
+        try
+        {
+            millisecondPadded = millisecond.ToString().Substring(2, 2).PadLeft(2, '0');
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+       
 
         return string.Format(FormatTimeTemplate, minutes, secondsPadded, millisecondPadded);
     }

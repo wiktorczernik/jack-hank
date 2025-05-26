@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AccountManagement;
 
 namespace LevelManagement
@@ -22,10 +23,14 @@ namespace LevelManagement
                 _status = value;
             }
         }
-    
-        private readonly LevelInfo[] _lastLevels = Array.Empty<LevelInfo>();
 
-        public LevelInfo[] LastLevels => _lastLevels.Clone() as LevelInfo[];
+        public int[] LastLevelsIDs {
+            get
+            {
+                return _definition.LastLevels.Select(def => def.LevelID).ToArray();
+            }
+            
+        }
 
         public LevelInfo(LevelStatus status, LevelDefinition definition, LevelStatistics statistics = null)
         {

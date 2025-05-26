@@ -73,7 +73,30 @@ namespace LevelManagement
 
         public static List<LevelInfo> GetAvailableLevels()
         {
+            
             return _levels.Where(level => level.Status == LevelStatus.Available).ToList();
+        }
+
+        public static void SetLevelAsCompleted(LevelDefinition definition)
+        {
+            if (_levels.FindIndex(level => level.LevelID == definition.LevelID) == -1) return;
+            
+            _levels.Find(value => value.LevelID == definition.LevelID).Status = LevelStatus.Passed;
+
+            foreach (var level in _levels)
+            {
+                var isNextLevel = false;
+                var isAvailable = true;
+
+                foreach (var lastLevelId in level.LastLevelsIDs)
+                {
+                    var lastLevel = _levels.First(level => level.LevelID == lastLevelId);
+                    isNextLevel = lastLevel.LevelID == definition.LevelID;
+                    if (lastLevel.Status != LevelStatus.Passed) isAvailable = false;
+                }
+                
+                if (isAvailable && isNextLevel) level.Status = LevelStatus.Available;
+            }
         }
 
         private static LevelDefinition[] GetLevelTreeLeafs()

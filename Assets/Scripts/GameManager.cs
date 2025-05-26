@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private FadeTransition_GUI fadeTransition;
     public BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
+    [SerializeField] private SceneExit sceneExit;
 
     [Header("Optional dependency")] [SerializeField]
     private IntroCutscenePlayer introCutscenePlayer;
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour
     public void Initialize(LevelDefinition definition)
     {
         if (_isInitialized) return;
+        sceneExit.OnExit += OnLevelEnds;
 
         if (definition == null)
         {
@@ -205,5 +207,11 @@ public class GameManager : MonoBehaviour
         if (CinematicPlayer.isPlaying) return;
 
         RunInfo.Time += Time.deltaTime;
+    }
+
+    private void OnLevelEnds()
+    {
+        AccountManager.LoggedInPlayerAccount.SetLevelAsCompleted(_definition, RunInfo.GetPointsByBonusTypes());
+        LevelManager.SetLevelAsCompleted(_definition);
     }
 }
