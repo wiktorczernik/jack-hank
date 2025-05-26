@@ -78,7 +78,7 @@ public class SceneExit : MonoBehaviour
     private void LateExit()
     {
         OnExit?.Invoke();
-        GameSceneManager.LoadActiveScene(nextSceneName, null, null);
+        GameSceneManager.LoadMenu();
     }
 
     private enum OutSceneNextSceneInputType

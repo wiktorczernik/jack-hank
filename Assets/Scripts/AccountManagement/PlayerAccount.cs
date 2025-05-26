@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using LevelManagement;
 
 namespace AccountManagement
 {
@@ -34,6 +36,26 @@ namespace AccountManagement
         public string GetAccountName()
         {
             return _playerAccountData.AccountName;
+        }
+
+        public void SetLevelAsCompleted(LevelDefinition completedLevel, Dictionary<PlayerBonusTypes, int> bonuses)
+        {
+            if (_playerAccountData.openedLevels.FirstOrDefault(level => level.LevelID == completedLevel.LevelID) ==
+                null) return;
+
+            var playerLevelStats = _playerAccountData.openedLevels;
+            
+            var newLevelStats = new LevelStatistics[playerLevelStats.Length + 1].Concat(playerLevelStats).ToArray();
+            var completedLevelStats = new LevelStatistics
+            {
+                LevelID = completedLevel.LevelID,
+                IsPassed = true,
+                Bonuses = bonuses
+            };
+
+            _playerAccountData.bouncy += bonuses.Sum(pair => pair.Value);
+            newLevelStats[playerLevelStats.Length] = completedLevelStats;
+            _playerAccountData.openedLevels = newLevelStats;
         }
     }
 }

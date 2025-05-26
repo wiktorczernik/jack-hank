@@ -5,10 +5,11 @@ using UnityEngine.Serialization;
 public class LevelSelectMenuManager : MonoBehaviour
 {
     [SerializeField] private Transform botDestination;
+    [SerializeField] private SceneExit _sceneExit;
     
     private LevelSelectMenuScroller _levelScroller;
     private BotVehicle _botVehicle;
-    private SceneExit _sceneExit;
+    
     public static LevelSelectMenuState State { get; private set; }
     public static LevelInfo[] NextLevels { get; private set; }
     

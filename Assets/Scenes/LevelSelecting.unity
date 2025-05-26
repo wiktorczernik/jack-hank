@@ -265,7 +265,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118182624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
@@ -455,7 +455,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 46c3c94f294653047a9949fda156ec53, type: 2}
+  - {fileID: 2100000, guid: d0a9f7eaf41313e41ab9014b888ce6e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -513,6 +513,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeedInKmh: 100
+  isStopped: 1
 --- !u!1 &376979415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1481,6 +1482,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8409974713711607995, guid: f067cd52613b4b44dbfe17d4b08a77d2, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1517,16 +1522,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc73a9b1feeac494294d4aee7459ec8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canReceiveDamage: 1
+  canBeHealed: 1
+  _health: 100
+  _maxHealth: 100
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
     _epicenterPosition: {x: 0, y: 0, z: 0}
+    initiator: {fileID: 0}
     force: 500
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   physics: {fileID: 1718138441}
   arrived: 0
   isFollowing: 0
@@ -1534,11 +1551,14 @@ MonoBehaviour:
   loopQueue: 0
   followMode: 0
   followMaxSpeed: 60
+  startFollowDelay: 0
   _destinationQueueSpline: {fileID: 0}
   destinationArriveMaxDistance: 15
   destinationArriveMaxSpeed: 20
   hardTurnThresholdAngle: 90
   hardTurnMaxSpeed: 10
+  speedDamageThreshold: 40
+  dmgReceivedPerSpeedUnit: 3
 --- !u!1 &1767819002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1584,6 +1604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botDestination: {fileID: 751675271}
+  _sceneExit: {fileID: 1800408309}
 --- !u!1 &1800408308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1617,8 +1638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c5d51d8f139442b98f9c0fe53f96f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howToTakeSceneName: 0
-  nextSceneName: 
+  howToTakeSceneName: 1
+  nextSceneName: Level2
   exitZone: {fileID: 1800408314}
   useBotWhenPlayerInTrigger: 0
   turnOnBotZone: {fileID: 2014449364}
@@ -1627,6 +1648,8 @@ MonoBehaviour:
   showStatisticsOnExit: 0
   finishText: {fileID: 0}
   fadeTransition: {fileID: 1438514940}
+  finishing: 0
+  temp: 0
 --- !u!23 &1800408311
 MeshRenderer:
   m_ObjectHideFlags: 0
