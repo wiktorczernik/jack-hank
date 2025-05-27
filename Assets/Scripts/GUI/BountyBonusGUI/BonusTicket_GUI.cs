@@ -1,24 +1,32 @@
 ﻿using TMPro;
 using UnityEngine;
 
+[ExecuteAlways]
 public class BonusTicket_GUI : MonoBehaviour
 {
     [SerializeField] private string bonusName;
     [SerializeField] private PlayerBonusTypes bonusType;
     [SerializeField] private float timeToShowWithoutUpdatesInSeconds;
+    [SerializeField] private float offsetBetweenTextAndBonus;
+    [SerializeField] private TMP_Text bonusValueText;
+    [SerializeField] private TMP_Text bonusDescriptionText;
     
     public PlayerBonusTypes BonusType => bonusType;
     
     private float _lastUpdateInSeconds;
-    private TMP_Text _text;
+    private Animation _anim;
 
     public void ChangeBonusValueOn(int value)
     {
         _lastUpdateInSeconds = Time.time;
         gameObject.SetActive(true);
         enabled = true;
-        
-        _text.text = $"+{value} {bonusName.ToUpper()}: ";
+
+        _anim.Play("valueChanged");
+
+        bonusValueText.text = $"+{value}";
+        bonusDescriptionText.text = bonusName;
+        UpdateTextPosition();
     }
     
     public void ChangeBonusValueOn(int value, int comboValue)
@@ -34,21 +42,36 @@ public class BonusTicket_GUI : MonoBehaviour
         gameObject.SetActive(true);
         enabled = true;
         
-        _text.text = $"X{comboValue} +{value} {bonusName.ToUpper()}";
+        _anim.Play("valueChanged");
+        
+        bonusValueText.text = $"X{comboValue} +{value}";
+        bonusDescriptionText.text = bonusName;
+        UpdateTextPosition();
+    }
+
+    private void UpdateTextPosition()
+    {
+        bonusDescriptionText.rectTransform.anchoredPosition = new Vector2(bonusValueText.preferredWidth + offsetBetweenTextAndBonus, 0);
     }
 
     private void Start()
     {
-        _text = GetComponent<TMP_Text>();
+        if (!Application.isPlaying) return;
+        
         gameObject.SetActive(false);
         enabled = false;
+        _anim = GetComponentInChildren<Animation>();
     }
 
     private void Update()
     {
-        if (!(Time.time - _lastUpdateInSeconds > timeToShowWithoutUpdatesInSeconds)) return;
+        if (Application.isPlaying)
+        {
+            if (!(Time.time - _lastUpdateInSeconds > timeToShowWithoutUpdatesInSeconds)) return;
         
-        gameObject.SetActive(false);
-        enabled = false;
+            gameObject.SetActive(false);
+            enabled = false;
+        }
+        UpdateTextPosition();
     }
 }
