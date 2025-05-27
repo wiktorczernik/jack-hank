@@ -112,7 +112,7 @@ public class CameraController : MonoBehaviour
         if (speed < minSpeed) {
             var s_ = SpeedLines.shape;
             s_.radius = 100f;
-            speedTargetFov = 55;
+            speedTargetFov = speedMinFov;
             blurMaterial.SetFloat("_Level", 0);
             return;
         }

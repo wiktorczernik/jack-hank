@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour
 
     void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         GameManager.OnRunBegin += OnRunBegin;
         GameManager.OnRunFinish += OnRunEnd;
     }
@@ -25,6 +26,17 @@ public class MusicManager : MonoBehaviour
         GameManager.Local.bossFightManager.OnPrepareBegin += StopMusic;
         GameManager.OnDeath += StopMusic;
         GameManager.Local.bossFightManager.OnEnd += StopMusic;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnRunBegin -= OnRunBegin;
+        GameManager.OnRunFinish -= OnRunEnd;
+        GameManager.Local.bossFightManager.OnBegin -= OnBossBegin;
+        GameManager.Local.bossFightManager.OnRestart -= StopMusic;
+        GameManager.Local.bossFightManager.OnPrepareBegin -= StopMusic;
+        GameManager.OnDeath -= StopMusic;
+        GameManager.Local.bossFightManager.OnEnd -= StopMusic;
     }
 
     void OnBossBegin()

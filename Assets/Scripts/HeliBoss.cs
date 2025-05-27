@@ -196,7 +196,10 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     {
         foreach (MissleCrosshair cross in activeCrosshairs)
         {
-            cross.Detach();
+            if (cross.isVisible)
+            {
+                cross.Detach();
+            }
         }
     }
 

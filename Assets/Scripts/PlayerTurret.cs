@@ -32,6 +32,7 @@ public class PlayerTurret : MonoBehaviour
     public float shotMaxPitch = 1.3f;
 
     [Header("Visual Effects")]
+    public Animator animator;
     [SerializeField] ParticleSystem[] particles;
     public float maxNozzleAnimTime = 0.3f;
     public Vector3 nozzleStartPos;
@@ -46,6 +47,7 @@ public class PlayerTurret : MonoBehaviour
     public void AllowFire()
     {
         if (canFire) return;
+        animator.SetTrigger("On Enter");
         canFire = true;
         onAllowFire?.Invoke();
         InvokeRepeating(nameof(TryFire), 0f, 1f / fireRate);
@@ -53,6 +55,7 @@ public class PlayerTurret : MonoBehaviour
     public void DisallowFire()
     {
         if (!canFire) return;
+        animator.SetTrigger("On Exit");
         canFire = false;
         onDisallowFire?.Invoke();
         CancelInvoke(nameof(TryFire));
