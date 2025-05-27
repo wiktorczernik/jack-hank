@@ -10295,6 +10295,7 @@ MonoBehaviour:
   loopQueue: 1
   followMode: 0
   followMaxSpeed: 150
+  startFollowDelay: 0
   _destinationQueueSpline: {fileID: 0}
   destinationArriveMaxDistance: 10
   destinationArriveMaxSpeed: 20
@@ -10349,7 +10350,7 @@ MonoBehaviour:
   burstTimeOut: 5
   timeBeforeBurst: 5
   burstMinDistance: 20
-  burstFireTiming: 1.5
+  burstFireTiming: 2
   burstMaxFirings: 5
   burstCooldown: 8
   sideCrosshairDistance: 10
@@ -10372,6 +10373,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b6cf9c54d3da640967afdce37c48e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onEnvironmentBump:
+    m_PersistentCalls:
+      m_Calls: []
   isGrounded: 0
   groundNormal: {x: 0, y: 1, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
