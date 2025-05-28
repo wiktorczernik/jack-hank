@@ -7,11 +7,10 @@ using JackHank.Cinematics;
 public class CameraController : MonoBehaviour
 {
     [Header("Cinemachine Components")]
+    public new Camera camera;
     public CinemachineBrain brain;
     public CinemachineVirtualCamera virtualCamera;
     public CinemachineBasicMultiChannelPerlin perlinNoise;
-    public CinemachineTransposer transposer;
-    public CinemachineComposer composer;
     [Header("Player")]
     public PlayerVehicle playerVehicle;
 
@@ -78,21 +77,12 @@ public class CameraController : MonoBehaviour
     private void OnCinematicBegin()
     {
         duringCinematic = true;
-        composer.enabled = false;
-        transposer.enabled = false;
-    }
-    private void OnCinematicFrameUpdate(CinematicSequence.CameraFrameState frameState)
-    {
-        virtualCamera.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
-        transposer.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
-        composer.ForceCameraPosition(frameState.worldPosition, frameState.rotation);
+        camera.enabled = false;
     }
     private void OnCinematicEnd()
     {
-        Debug.Log("OnCinematicEnd");
         duringCinematic = false;
-        composer.enabled = true;
-        transposer.enabled = true;
+        camera.enabled = true;
     }
 
     float CurveEasing(float x, float start, float finish)
@@ -137,22 +127,19 @@ public class CameraController : MonoBehaviour
         speedTargetFov = speedMinFov;
         playerVehicle.onExplosionNearby.AddListener(OnExplosionNearby);
         CinematicPlayer.onBeginPlay += OnCinematicBegin;
-        CinematicPlayer.onFrameUpdate += OnCinematicFrameUpdate;
         CinematicPlayer.onEndPlay += OnCinematicEnd;
     }
     private void OnDisable()
     {
         playerVehicle.onExplosionNearby.RemoveListener(OnExplosionNearby);
         CinematicPlayer.onBeginPlay -= OnCinematicBegin;
-        CinematicPlayer.onFrameUpdate -= OnCinematicFrameUpdate;
         CinematicPlayer.onEndPlay -= OnCinematicEnd;
     }
 
     private void Awake()
     {
         brain = Camera.main.GetComponent<CinemachineBrain>();
-        transposer = virtualCamera.GetCinemachineComponent<CinemachineTransposer>();
-        composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
+        perlinNoise = virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
     private void Update()
     {
