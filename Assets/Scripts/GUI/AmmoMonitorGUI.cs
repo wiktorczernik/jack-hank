@@ -33,7 +33,6 @@ public class AmmoMonitorGUI : MonoBehaviour
 
     private void OnFire()
     {
-        Debug.Log(PlayerTurret.ammo);
         UpdateCounter();
     }
     private void UpdateCounter()

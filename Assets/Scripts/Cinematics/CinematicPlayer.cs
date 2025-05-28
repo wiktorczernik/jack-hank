@@ -9,19 +9,7 @@ namespace JackHank.Cinematics
         /// <summary>
         /// Determines if every sequence will be automatically skipped
         /// </summary>
-        public static bool autoSkip
-        {
-            get
-            {
-                if (!_instance) return false;
-                return _instance._autoskip;
-            }
-            set
-            {
-                if (!_instance) return;
-                _instance._autoskip = value;
-            }
-        }
+        public static bool autoSkip { get; set; }
         /// <summary>
         /// Tells if some sequence is being played
         /// </summary>
@@ -71,7 +59,6 @@ namespace JackHank.Cinematics
         static CinematicPlayer _instance;
 
         [SerializeField] bool _isPlaying;
-        [SerializeField] bool _autoskip;
         [SerializeField] CinematicSequence _playedSequence;
 
 

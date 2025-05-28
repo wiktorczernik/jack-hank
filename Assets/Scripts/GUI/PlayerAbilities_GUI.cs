@@ -8,22 +8,14 @@ public class PlayerAbilities_GUI : MonoBehaviour
 
     public PlayerAbility_GUI nitro;
     public PlayerAbility_GUI jump;
-
-    private void Awake()
-    {
-        nitro.ability = abilities.nitro;
-        jump.ability = abilities.jump;
-    }
-    /*
+    
     private void OnEnable()
     {
-        CinematicPlayer.onBeginPlay += OnBeginCinematic;
-        CinematicPlayer.onEndPlay += OnEndCinematic;
+        OnEndCinematic();
     }
     private void OnDisable()
     {
-        CinematicPlayer.onBeginPlay -= OnBeginCinematic;
-        CinematicPlayer.onEndPlay -= OnEndCinematic;
+        OnBeginCinematic();
     }
 
     private void OnBeginCinematic()
@@ -33,7 +25,10 @@ public class PlayerAbilities_GUI : MonoBehaviour
     }
     private void OnEndCinematic()
     {
+        Debug.Log("On End Cinematic");
+        nitro.ability = abilities.nitro;
+        jump.ability = abilities.jump;
         nitro.gameObject.SetActive(true);
         jump.gameObject.SetActive(true);
-    }*/
+    }
 }
