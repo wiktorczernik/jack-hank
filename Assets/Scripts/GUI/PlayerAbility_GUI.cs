@@ -22,59 +22,32 @@ public class PlayerAbility_GUI : MonoBehaviour
     [SerializeField] Sprite iconActiveSprite;
     [SerializeField] Sprite iconInactiveSprite;
 
-    bool initialized = false;
-    private IEnumerator Start()
-    {
-        yield return new WaitUntil(() => ability != null);
+    [SerializeField] bool initialized = false;
 
+
+    private void OnEnable()
+    {
+        if (!ability)
+        {
+            Debug.LogError("Can't initialize PlayerAbility GUI", ability);
+            return;
+        }
         initialized = true;
-        FirstUpdate();
-        AddListeners();
     }
     private void OnDisable()
     {
-        if (!initialized) return;
-        RemoveListeners();
-    }
-    private void OnEnable()
-    {
-        if (!initialized) return;
-
-        FirstUpdate();
-        AddListeners();
-    }
-
-    private void AddListeners()
-    {
-        ability.onStateUpdate.AddListener(UpdateBorder);
-        ability.onStateUpdate.AddListener(UpdateIcon);
-        ability.onStateUpdate.AddListener(UpdateLoading);
-        ability.onCooldownTick.AddListener(UpdateCooldownSlider);
-        ability.onCooldownEnd.AddListener(UpdateCooldownSlider);
-    }
-    private void RemoveListeners()
-    {
-        ability.onStateUpdate.RemoveListener(UpdateBorder);
-        ability.onStateUpdate.RemoveListener(UpdateIcon);
-        ability.onStateUpdate.RemoveListener(UpdateLoading);
-        ability.onCooldownTick.RemoveListener(UpdateCooldownSlider);
-        ability.onCooldownEnd.RemoveListener(UpdateCooldownSlider);
-    }
-
-    private void FirstUpdate()
-    {
-        UpdateBorder(ability.state, ability.state);
-        UpdateIcon(ability.state, ability.state);
-        UpdateLoading(ability.state, ability.state);
-        UpdateCooldownSlider();
+        initialized = false;
+        ability = null;
     }
 
     private void UpdateBorder(PlayerVehicleAbility.AbilityState oldState, PlayerVehicleAbility.AbilityState newState)
     {
+        borderImage.enabled = true;
         borderImage.sprite = ability.isReady ? borderActiveSprite : borderInactiveSprite;
     }
     private void UpdateIcon(PlayerVehicleAbility.AbilityState oldState, PlayerVehicleAbility.AbilityState newState)
     {
+        iconImage.enabled = true;
         iconImage.sprite = ability.isBusy ? iconInactiveSprite : iconActiveSprite;
     }
     private void UpdateLoading(PlayerVehicleAbility.AbilityState oldState, PlayerVehicleAbility.AbilityState newState)
@@ -83,10 +56,19 @@ public class PlayerAbility_GUI : MonoBehaviour
     }
     private void UpdateCooldownSlider()
     {
+        cooldownSlider.enabled = ability.isCooldowned;
         cooldownSlider.value = ability.cooldownFraction;
     }
     private void Update()
     {
+        if (!initialized) return;
+        if (!ability) return;
+
+        UpdateBorder(ability.state, ability.state);
+        UpdateIcon(ability.state, ability.state);
+        UpdateLoading(ability.state, ability.state);
+        UpdateCooldownSlider();
+
         var rect = loadingRect;
         rect.Rotate(Vector3.forward * loadingRotateSpeed * Time.deltaTime);
     }
