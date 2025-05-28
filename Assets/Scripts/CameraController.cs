@@ -89,6 +89,7 @@ public class CameraController : MonoBehaviour
     }
     private void OnCinematicEnd()
     {
+        Debug.Log("OnCinematicEnd");
         duringCinematic = false;
         composer.enabled = true;
         transposer.enabled = true;

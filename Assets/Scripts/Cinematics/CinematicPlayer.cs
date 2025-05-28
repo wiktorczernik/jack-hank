@@ -9,15 +9,27 @@ namespace JackHank.Cinematics
         /// <summary>
         /// Determines if every sequence will be automatically skipped
         /// </summary>
-        public static bool autoSkip { get; set; } = false;
+        public static bool autoSkip
+        {
+            get => _instance._autoskip;
+            set => _instance._autoskip = value;
+        }
         /// <summary>
         /// Tells if some sequence is being played
         /// </summary>
-        public static bool isPlaying { get; private set; }
+        public static bool isPlaying
+        {
+            get => _instance._isPlaying;
+            private set => _instance._isPlaying = value;
+        }
         /// <summary>
         /// Sequence that is being played at the momemnt
         /// </summary>
-        public static CinematicSequence playedSequence { get; private set; }
+        public static CinematicSequence playedSequence
+        {
+            get => _instance._playedSequence;
+            private set => _instance._playedSequence = value;
+        }
 
         /// <summary>
         /// Called each frame of played cinematic sequence
@@ -33,6 +45,10 @@ namespace JackHank.Cinematics
         public static Action onEndPlay;
 
         static CinematicPlayer _instance;
+
+        [SerializeField] bool _isPlaying;
+        [SerializeField] bool _autoskip;
+        [SerializeField] CinematicSequence _playedSequence;
 
 
         private void Awake()
@@ -129,11 +145,6 @@ namespace JackHank.Cinematics
             onEndPlay?.Invoke();
 
             Destroy(instance);
-        }
-
-        private void Start()
-        {
-            Application.targetFrameRate = 60;
         }
     }
 }
