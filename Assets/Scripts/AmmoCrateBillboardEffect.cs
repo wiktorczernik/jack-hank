@@ -6,6 +6,7 @@ public class AmmoCrateBillboardEffect : MonoBehaviour
 
     private void Update()
     {
+        if (!Camera.main) return;
         Particles.LookAt(Camera.main.transform);
     }
 }

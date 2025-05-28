@@ -11,24 +11,48 @@ namespace JackHank.Cinematics
         /// </summary>
         public static bool autoSkip
         {
-            get => _instance._autoskip;
-            set => _instance._autoskip = value;
+            get
+            {
+                if (!_instance) return false;
+                return _instance._autoskip;
+            }
+            set
+            {
+                if (!_instance) return;
+                _instance._autoskip = value;
+            }
         }
         /// <summary>
         /// Tells if some sequence is being played
         /// </summary>
         public static bool isPlaying
         {
-            get => _instance._isPlaying;
-            private set => _instance._isPlaying = value;
+            get
+            {
+                if (!_instance) return false;
+                return _instance._isPlaying;
+            }
+            private set
+            {
+                if (!_instance) return;
+                _instance._isPlaying = value;
+            }
         }
         /// <summary>
         /// Sequence that is being played at the momemnt
         /// </summary>
         public static CinematicSequence playedSequence
         {
-            get => _instance._playedSequence;
-            private set => _instance._playedSequence = value;
+            get
+            {
+                if (!_instance) return null;
+                return _instance._playedSequence;
+            }
+            private set
+            {
+                if (!_instance) return;
+                _instance._playedSequence = value;
+            }
         }
 
         /// <summary>
@@ -67,6 +91,7 @@ namespace JackHank.Cinematics
         public static bool PlaySequence(CinematicSequence sequence, Vector3 worldPos, Quaternion rotation, Vector3 scale, Transform parent = null)
         {
             if (isPlaying) return false;
+            if (!_instance) return false;
             _instance.StartCoroutine(PlaySequenceCo(sequence, worldPos, rotation, scale, parent));
             return true;
         }
@@ -79,6 +104,11 @@ namespace JackHank.Cinematics
         /// <param name="parent">Parent of spawned prefab</param>
         public static IEnumerator PlaySequenceCo(CinematicSequence sequence, Vector3 worldPos, Quaternion rotation, Vector3 scale, Transform parent = null)
         {
+            if (!_instance)
+            {
+                Debug.LogError("Tried to play cinematic sequence when singleton is null!");
+                yield break;
+            }
             if (isPlaying)
             {
                 Debug.LogError("Tried to play cinematic sequence when it's already playing.", _instance);
@@ -140,7 +170,7 @@ namespace JackHank.Cinematics
             }
 
 
-                isPlaying = false;
+            isPlaying = false;
             playedSequence = null;
             onEndPlay?.Invoke();
 
