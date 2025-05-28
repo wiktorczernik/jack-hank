@@ -27,6 +27,11 @@ namespace AccountManagement
         {
             return _playerAccountData.hasWatchedIntroCutscene;
         }
+        
+        public void SetPlayerWatchedIntroCutscene()
+        {
+            _playerAccountData.hasWatchedIntroCutscene = true;
+        }
 
         public PlayerAccountData GetData()
         {

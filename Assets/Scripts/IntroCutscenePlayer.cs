@@ -47,6 +47,8 @@ public class IntroCutscenePlayer : MonoBehaviour
             OnceOnSceneFinished.Invoke();
             foreach (var @delegate in OnceOnSceneFinished.GetInvocationList()) OnceOnSceneFinished -= (Action)@delegate;
 
+            AccountManager.LoggedInPlayerAccount.SetPlayerWatchedIntroCutscene();
+
             CinematicPlayer.onEndPlay -= AfterIntroCutscene;
         }
     }
