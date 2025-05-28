@@ -8,7 +8,7 @@ public class SceneEnter : MonoBehaviour
     [SerializeField] private Transform botDestination;
     [SerializeField] private FadeTransition_GUI fadeTransition;
     [SerializeField] private bool useEnter = true;
-
+    [Range(0, 200)][SerializeField] private float initialSpeedInKmH = 35f;
     private bool _isDisabled;
 
     private Rigidbody _rigidbody;
@@ -32,22 +32,13 @@ public class SceneEnter : MonoBehaviour
     public void TeleportPlayerAtEnter()
     {
         player.Teleport(startingPosition.position, startingPosition.rotation);
-
+        fadeTransition.OnFadeOutStarted += AfterFadeOut;
         fadeTransition.PrepareFadeOut();
         fadeTransition.StartFadeOut();
-        fadeTransition.OnFadeOutEnded += AfterFadeOut;
     }
 
     private void AfterFadeOut()
     {
-        var playersBot = player.GetComponent<BotVehicle>();
-        playersBot.isFollowing = true;
-        playersBot.followMode = BotVehicle.FollowMode.Single;
-        playersBot.destinationPoint = botDestination.position;
-        playersBot.followMaxSpeed = 100;
-        playersBot.destinationArriveMaxSpeed = 200;
-
-        playersBot.onArrived += () => OnPlayerEndEntering?.Invoke();
-        fadeTransition.OnFadeOutEnded -= AfterFadeOut;
+        player.physics.bodyRigidbody.linearVelocity = player.transform.forward * (initialSpeedInKmH / 2); //I do not know why linear velocity takes km/h and multiply it on 2, but it works
     }
 }

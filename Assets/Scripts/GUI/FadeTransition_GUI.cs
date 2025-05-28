@@ -7,6 +7,7 @@ public class FadeTransition_GUI : MonoBehaviour
 {
     public event Action OnFadeInEnded;
     public event Action OnFadeOutEnded;
+    public event Action OnFadeOutStarted;
     private Image _image;
     private Animation _anim;
 
@@ -64,7 +65,7 @@ public class FadeTransition_GUI : MonoBehaviour
     private IEnumerator StartFadeOutCo()
     {
         _anim.Play("FadeOut");
-        
+        OnFadeOutStarted?.Invoke();
         yield return new WaitForSeconds(_anim["FadeOut"].length);
         gameObject.SetActive(false);
         _isBusy = false;
