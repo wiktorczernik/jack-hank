@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LevelManagement;
 
@@ -15,7 +16,7 @@ namespace AccountManagement
 
         public PlayerAccount(string accountName)
         {
-            _playerAccountData = new PlayerAccountData { AccountName = accountName };
+            _playerAccountData = new PlayerAccountData { AccountName = accountName, openedLevels = Array.Empty<LevelStatistics>()};
         }
 
         public LevelStatistics GetLevelStatistics(int levelID)

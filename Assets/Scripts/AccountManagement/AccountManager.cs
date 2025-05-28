@@ -8,8 +8,23 @@ using UnityEngine;
 
 public static class AccountManager
 {
+    private static PlayerAccount _loggedInPlayerAccount;
+    
     private static readonly string SaveFolderPath = Application.persistentDataPath + "/saves";
-    public static PlayerAccount LoggedInPlayerAccount { get; private set; }
+    public static PlayerAccount LoggedInPlayerAccount
+    {
+        get
+        {
+            if (_loggedInPlayerAccount != null) return _loggedInPlayerAccount;
+            
+            LogInDebugAccount();
+
+            return _loggedInPlayerAccount;
+        }
+        private set => _loggedInPlayerAccount = value;
+    }
+
+    public static bool IsDebugAccount { get; private set; }
 
     public static List<string> GetSavedAccountsNames()
     {
@@ -43,7 +58,22 @@ public static class AccountManager
 
         LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
 
-        LoggedInPlayerAccount = new PlayerAccount(accountData);
+        _loggedInPlayerAccount = new PlayerAccount(accountData);
+    }
+
+    private static void LogInDebugAccount()
+    {
+        var accountData = new PlayerAccountData
+        {
+            AccountName = "Debug",
+            openedLevels = Array.Empty<LevelStatistics>()
+        };
+        
+        IsDebugAccount = true;
+
+        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
+
+        _loggedInPlayerAccount = new PlayerAccount(accountData);
     }
 
     public static void LogOutCurrentAccount()
@@ -58,6 +88,8 @@ public static class AccountManager
 
     public static void SaveCurrentAccount()
     {
+        if (IsDebugAccount) return;
+        
         ProcessSaveDirectory();
 
         File.WriteAllText(
