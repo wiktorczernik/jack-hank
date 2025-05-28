@@ -90,7 +90,10 @@ namespace JackHank.Cinematics
                 instance.transform.SetParent(parent);
 
             Animation animation = instance.GetComponent<Animation>();
-            animation.Play();
+            if (animation)
+            {
+                animation.Play();
+            }
 
             Transform cameraAnchor = instance.transform.GetChild(0);
 
@@ -126,6 +129,11 @@ namespace JackHank.Cinematics
             onEndPlay?.Invoke();
 
             Destroy(instance);
+        }
+
+        private void Start()
+        {
+            Application.targetFrameRate = 60;
         }
     }
 }

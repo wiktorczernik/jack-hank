@@ -49,6 +49,8 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public string BossTitle => bossTitle;
     public GameEntity Self => this;
 
+    private PlayerJumpAbility _playerJumpAbility;
+
     public Missle CreateMissile(MissleCrosshair crosshair)
     {
         Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
@@ -186,11 +188,15 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
     private void OnEnable()
     {
-        GameManager.PlayerVehicle.GetComponent<PlayerJumpAbility>().onWorkBegin.AddListener(DetachCrosshairs);
+        _playerJumpAbility = GameManager.PlayerVehicle.GetComponentInChildren<PlayerJumpAbility>();
+        _playerJumpAbility.onWorkBegin.AddListener(DetachCrosshairs);
+        _playerJumpAbility.onWorkTick.AddListener(DetachCrosshairs);
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
-        GameManager.PlayerVehicle.GetComponent<PlayerJumpAbility>().onWorkBegin.RemoveListener(DetachCrosshairs);
+        _playerJumpAbility.onWorkBegin.AddListener(DetachCrosshairs);
+        _playerJumpAbility.onWorkTick.RemoveListener(DetachCrosshairs);
+        _playerJumpAbility = null;
     }
     void DetachCrosshairs()
     {

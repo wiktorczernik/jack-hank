@@ -45,8 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5818242edca989343875caecfa40604c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missle: {fileID: 0}
-  isFollowing: 0
+  isVisible: 0
+  Detached: 0
 --- !u!1 &2980033464036441717
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,5 +101,5 @@ MonoBehaviour:
   m_DecalLayerMask: 4
   m_ScaleMode: 0
   m_Offset: {x: 0, y: 0, z: 64}
-  m_Size: {x: 8, y: 8, z: 128}
+  m_Size: {x: 11, y: 11, z: 128}
   m_FadeFactor: 1

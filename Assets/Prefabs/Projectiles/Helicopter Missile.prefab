@@ -116,6 +116,10 @@ PrefabInstance:
       propertyPath: minDampeningVelocityAngle
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 8408371746896047754, guid: 8b444bdc58a227f488fcf50d74361148, type: 3}
+      propertyPath: selfExplosionProps.epicenterRadius
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
