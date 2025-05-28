@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: destruction
+  m_text: Flying
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6589428304126151668
 RectTransform:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343602847886597089}
-  m_LocalRotation: {x: -0, y: -0, z: -0.08715581, w: -0.9961947}
+  m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -169,7 +169,7 @@ RectTransform:
   - {fileID: 2464480715235003502}
   - {fileID: 5815135279301747526}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 423.64584, y: -16.34509}
@@ -195,8 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db8cb4407ec4de195745e940ceffe72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bonusName: DESTRUCTION
-  bonusType: 2
+  bonusName: air time
+  bonusType: 0
   timeToShowWithoutUpdatesInSeconds: 1.5
   offsetBetweenTextAndBonus: 20
   bonusValueText: {fileID: 1404572244257825918}
