@@ -18,7 +18,10 @@ public class PlayerVehicle : Vehicle
     public UnityEvent<TriggerEventEmitter, PickupablePassenger> onPickupPassenger;
     public UnityEvent<ExplosionProperties> onExplosionNearby;
     public UnityEvent<TriggerEventEmitter, PickupableAmmo> onPickupAmmo;
+    public UnityEvent<PickupZone> onPickupZoneEnter;
+    public UnityEvent<PickupZone> onPickupZoneExit;
 
+    public PickupZone pickupZone;
     public PlayerTurret playerTurret;
     private Rigidbody _rigidbody;
     public PlayerVehicleSeatController seatsController;
@@ -51,6 +54,20 @@ public class PlayerVehicle : Vehicle
     }
 
 
+    public void NotifyPickupZoneEnter(PickupZone zone)
+    {
+        if (pickupZone == zone) return;
+        pickupZone = zone;
+        onPickupZoneEnter?.Invoke(zone);
+        Debug.Log("Pickup zone enter");
+    }
+    public void NotifyPickupZoneExit()
+    {
+        if (pickupZone == null) return;
+        onPickupZoneExit?.Invoke(pickupZone);
+        pickupZone = null;
+        Debug.Log("Pickup zone exit");
+    }
     public void NotifyExplosionNearby(ExplosionProperties properties)
     {
         onExplosionNearby?.Invoke(properties);
@@ -81,6 +98,12 @@ public class PlayerVehicle : Vehicle
         PickupablePassenger passenger;
         if (!col.TryGetComponent(out passenger)) return;
         if (!passenger.isAlive || passenger.wasPickedUp) return;
+        if (pickupZone)
+        {
+            var zone = pickupZone;
+            NotifyPickupZoneExit();
+            zone.NotifyObsolete();
+        }
         OnPickupPassengerEvent(trigger, passenger);
         onPickupPassenger?.Invoke(trigger, passenger);
         var seat = seatsController.Occupy(passenger);
@@ -130,6 +153,12 @@ public class PlayerVehicle : Vehicle
         if (col.tag != "Ammo") return;
         if (!col.TryGetComponent(out PickupableAmmo ammo)) return;
         if (!ammo.isAlive || ammo.wasPickedUp) return;
+        if (pickupZone)
+        {
+            var zone = pickupZone;
+            NotifyPickupZoneExit();
+            zone.NotifyObsolete();
+        }
         playerTurret.LoadAmmo(ammo.ammoInside);
         OnPickupAmmoEvent(trigger, ammo);
         onPickupAmmo?.Invoke(trigger, ammo);
