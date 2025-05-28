@@ -11,7 +11,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public bool isBurstCooldowned = false;
     public int missilesLeft = -1;
     public MissleCrosshair[] activeCrosshairs;
-    public Missle[] shotMissiles;
+    public ArcadeMissile[] shotMissiles;
 
     [Header("Heli Events")]
     public UnityEvent onBurstStart;
@@ -20,7 +20,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
     [Header("Boss Properties")]
     public PlayerVehicle target;
-    public Missle missilePrefab;
+    public ArcadeMissile missilePrefab;
     public MissleCrosshair crosshairPrefab;
     public GameObject ground;
     public Transform missileShootAnchor;
@@ -51,15 +51,13 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
     private PlayerJumpAbility _playerJumpAbility;
 
-    public Missle CreateMissile(MissleCrosshair crosshair)
+    public ArcadeMissile CreateMissile(MissleCrosshair crosshair)
     {
-        Missle instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
+        ArcadeMissile instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
         crosshair.Show();
 
-        instance.enabled = false;
-        instance.homingTarget = crosshair.transform;
-        instance.transform.LookAt(crosshair.transform);
+        instance.target = crosshair.transform;
 
         return instance;
     }
@@ -105,8 +103,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
             }
 
             missile.onSelfExplode += ExplosionEventHandler;
-            missile.enabled = true;
-            missile.Shoot();
             shotMissiles[i] = missile;
 
             onFire?.Invoke();
@@ -167,7 +163,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
         ground.transform.position = newPos;
     }
-    private void OnMissileExplode(Missle missile, MissleCrosshair crosshair)
+    private void OnMissileExplode(ArcadeMissile missile, MissleCrosshair crosshair)
     {
         crosshair.Hide();
         missilesLeft--;
@@ -177,7 +173,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     {
         base.Awake();
 
-        shotMissiles = new Missle[burstMaxFirings];
+        shotMissiles = new ArcadeMissile[burstMaxFirings];
         activeCrosshairs = new MissleCrosshair[burstMaxFirings];
 
         currentHeight = transform.position.y;
