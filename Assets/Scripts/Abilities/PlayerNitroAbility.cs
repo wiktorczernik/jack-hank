@@ -19,7 +19,6 @@ public class PlayerNitroAbility : PlayerVehicleAbility
         float sp = Vector3.Dot(rigidbody.linearVelocity, nitroForce.normalized) * 3.6f;
         if (sp > maxSpeed)
         {
-            Debug.Log("Capped nitro");
             return;
         }
 

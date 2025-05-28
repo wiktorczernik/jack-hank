@@ -116,8 +116,6 @@ public class GameManager : MonoBehaviour
 
     public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType)
     {
-        if (bonusType == PlayerBonusTypes.LargeDestruction) Debug.Log("Large Destruction");
-
         if (CinematicPlayer.isPlaying) return;
         RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
         Local.bonusGUI.ShowBonus(bonusValue, bonusType);
