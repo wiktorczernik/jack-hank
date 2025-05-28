@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 117.02, y: 189.14, z: 491.88}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5178983316663037740}
   - {fileID: 1212498876386718559}
@@ -49,12 +49,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5068c2bbc91e364fa56a0e9e372fb80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canReceiveDamage: 1
-  canBeHealed: 1
+  canReceiveDamage: 0
+  canBeHealed: 0
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 1
+  canBeExploded: 0
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
@@ -72,7 +72,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
-  hittable: 1
+  bumpable: 1
+  hittable: 0
   bountyPointsReward: 0
   destroyTime: 10
   model: {fileID: 1955310022431129301}
@@ -91,6 +92,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 0}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
   wasPickedUp: 0
   onPickedUp:
     m_PersistentCalls:
