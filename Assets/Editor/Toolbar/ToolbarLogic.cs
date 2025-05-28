@@ -19,6 +19,7 @@ public static class ToolbarLogic
     {
         requestedPlayhere = true;
         SetFirstBehaviourEnabled<SceneEnter>(false);
+        SetFirstBehaviourEnabled<IntroCutscenePlayer>(false);
         EditorApplication.isPlaying = true;
     }
     public static void RequestDomainReload()
