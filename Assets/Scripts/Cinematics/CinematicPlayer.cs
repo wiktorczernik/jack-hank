@@ -61,10 +61,13 @@ namespace JackHank.Cinematics
         [SerializeField] bool _isPlaying;
         [SerializeField] CinematicSequence _playedSequence;
 
+        private AudioSource _audioSource;
+
 
         private void Awake()
         {
             _instance = this;
+            _audioSource = GetComponent<AudioSource>();
         }
 
         /// <summary>
@@ -133,6 +136,14 @@ namespace JackHank.Cinematics
             isPlaying = true;
             playedSequence = sequence;
             onBeginPlay?.Invoke();
+
+            var audioSource = _instance._audioSource;
+            if (audioSource)
+            {
+                audioSource.Stop();
+                audioSource.clip = sequence.audio;
+                audioSource.Play();
+            }
 
             if (!autoSkip)
             {
