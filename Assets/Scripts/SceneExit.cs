@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using JackHank.Cinematics;
+using LevelManagement;
 
 public class SceneExit : MonoBehaviour
 {
@@ -19,9 +21,11 @@ public class SceneExit : MonoBehaviour
     [Header("GUI")]
     [SerializeField] private FinishText_GUI finishText;
     [SerializeField] private FadeTransition_GUI fadeTransition;
+    [Tooltip("Delay AFTER finish text animation")]
+    [Range(3, 60)][SerializeField] private float exitDelayInSeconds = 5f;
 
     public event Action OnExit;
-    public bool finishing = false;
+    private bool _finishing;
 
     private void Awake()
     {
@@ -53,8 +57,8 @@ public class SceneExit : MonoBehaviour
     private void OnPlayerEnterExitZone(Collider other)
     {
         if (!other.gameObject.CompareTag("Vehicle")) return;
-        if (finishing) return;
-        finishing = true;
+        if (_finishing) return;
+        _finishing = true;
 
         fadeTransition.StartFadeIn();
 
@@ -77,8 +81,25 @@ public class SceneExit : MonoBehaviour
 
     private void LateExit()
     {
+        var levelInfo = LevelManager.GetLevelByName(nextSceneName);
+
+        if (levelInfo == null)
+        {
+            Debug.LogError($"SceneExit: no levelInfo with scene name {nextSceneName}");
+            return;
+        }
+        
+        GameSceneManager.LoadLevel(levelInfo);
+        
+        StartCoroutine(LateExitCo());
+    }
+
+    private IEnumerator LateExitCo()
+    {
+        yield return new WaitForSeconds(exitDelayInSeconds);
         OnExit?.Invoke();
         GameSceneManager.LoadMenu();
+        finishText.OnEndAnimation -= LateExit;
     }
 
     private enum OutSceneNextSceneInputType

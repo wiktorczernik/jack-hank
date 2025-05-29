@@ -11,17 +11,16 @@ public class FinishText_GUI : MonoBehaviour
     
     private TMP_Text _text;
     private FinishBonusTicket_GUI[] _finishBonusTickets;
-    private Animator _animator;
+    private Animation _anim;
 
     private void Awake()
     {
         if (!TryGetComponent(out _text)) Debug.LogError("FinishText_GUI: No TextMeshPro text found!");
-        if (!TryGetComponent(out _animator)) Debug.LogError("FinishText_GUI: No Animation component found!");
+        if (!TryGetComponent(out _anim)) Debug.LogError("FinishText_GUI: No Animation component found!");
 
         _finishBonusTickets = GetComponentsInChildren <FinishBonusTicket_GUI>();
         
         _text.alpha = 0;
-        _animator.enabled = false;
     }
     
     public void ShowFinishMark(LevelCompletenessMark mark, Dictionary<PlayerBonusTypes, int> pointsByBonusType)
@@ -47,8 +46,8 @@ public class FinishText_GUI : MonoBehaviour
 
     private IEnumerator ShowFinishMarkCo()
     {
-        _animator.enabled = true;
-        yield return new WaitForSeconds(_animator.runtimeAnimatorController.animationClips[0].length);
+        _anim.Play();
+        yield return new WaitForSeconds(_anim.clip.length);
         OnEndAnimation?.Invoke();
     }
 }

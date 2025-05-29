@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AccountManagement;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace LevelManagement
@@ -97,6 +98,12 @@ namespace LevelManagement
                 
                 if (isAvailable && isNextLevel) level.Status = LevelStatus.Available;
             }
+        }
+
+        [CanBeNull]
+        public static LevelInfo GetLevelByName(string levelName)
+        {
+            return _levels.Find(info => info.LevelSceneName == levelName);
         }
 
         private static LevelDefinition[] GetLevelTreeLeafs()
