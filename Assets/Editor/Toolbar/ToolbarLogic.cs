@@ -57,6 +57,7 @@ public static class ToolbarLogic
     {
         requestedPlayhere = false;
         SetFirstBehaviourEnabled<SceneEnter>(true);
+        SetFirstBehaviourEnabled<IntroCutscenePlayer>(true);
     }
 
     #region Editor Camera shortcuts
