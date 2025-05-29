@@ -125,25 +125,19 @@ namespace JackHank.Cinematics
             if (parent)
                 instance.transform.SetParent(parent);
 
-            Animation animation = instance.GetComponent<Animation>();
-            if (animation)
-            {
-                animation.Play();
-            }
-
-            Transform cameraAnchor = instance.transform.GetChild(0);
-
             isPlaying = true;
             playedSequence = sequence;
             onBeginPlay?.Invoke();
 
             var audioSource = _instance._audioSource;
-            if (audioSource)
+            if (audioSource && sequence.audio)
             {
                 audioSource.Stop();
                 audioSource.clip = sequence.audio;
                 audioSource.Play();
             }
+
+            Transform cameraAnchor = instance.transform.GetChild(0);
 
             if (!autoSkip)
             {
