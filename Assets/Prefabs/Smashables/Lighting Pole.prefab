@@ -431,6 +431,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 150
   destroyTime: 10
@@ -451,6 +452,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 6743146657720467495}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &7249831694295527644
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,8 +504,8 @@ Light:
   m_InnerSpotAngle: 106.74302
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
+    m_Type: 1
+    m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
@@ -563,7 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Version: 3
   m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
+  m_AdditionalLightsShadowResolutionTier: -1
   m_LightLayerMask: 1
   m_RenderingLayers: 1
   m_CustomShadowLayers: 0
