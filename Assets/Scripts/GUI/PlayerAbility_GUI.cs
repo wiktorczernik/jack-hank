@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,17 +25,17 @@ public class PlayerAbility_GUI : MonoBehaviour
 
     [SerializeField] bool initialized = false;
 
-
-    private void OnEnable()
+    public void Initialize(PlayerVehicleAbility ability)
     {
         if (!ability)
         {
-            Debug.LogError("Can't initialize PlayerAbility GUI", ability);
+            Debug.LogError("Can't initialize PlayerAbility GUI", this);
             return;
         }
+        this.ability = ability;
         initialized = true;
     }
-    private void OnDisable()
+    public void Free()
     {
         initialized = false;
         ability = null;

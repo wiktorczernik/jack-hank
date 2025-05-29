@@ -3,7 +3,9 @@ using UnityEngine;
 public class BusPickupGuidance : MonoBehaviour
 {
     [SerializeField] PlayerVehicle player;
+    [SerializeField] float switchSideMinAngle = 5f;
     [SerializeField] float switchSideDelay = 0.5f;
+    [SerializeField] float mustShowMaxDistance = 20f;
     [SerializeField] float unreachableMinAngle = 130;
     [SerializeField] Animator leftAnimator;
     [SerializeField] Animator rightAnimator;
@@ -12,7 +14,7 @@ public class BusPickupGuidance : MonoBehaviour
     bool lastRight = false;
     bool canSwitchSide = true;
 
-    GameObject pickupable;
+    GameEntity pickupable;
     
 
     private void OnEnable()
@@ -62,15 +64,16 @@ public class BusPickupGuidance : MonoBehaviour
 
         float delta = Mathf.DeltaAngle(currentY, targetY);
         float deltaAbs = Mathf.Abs(delta);
+        float distance = Vector3.Distance(player.GetPosition(), pickupable.transform.position);
 
         bool isRight = delta > 0;
 
-        if (deltaAbs > unreachableMinAngle)
+        if (deltaAbs > unreachableMinAngle && distance > mustShowMaxDistance)
         {
             leftAnimator.SetBool("isVisible", false);
             rightAnimator.SetBool("isVisible", false);
         }
-        else if ((lastRight != isRight || justEntered) && canSwitchSide)
+        else if (((lastRight != isRight && deltaAbs > switchSideMinAngle) || justEntered) && canSwitchSide)
         {
             leftAnimator.SetBool("isVisible", !isRight);
             rightAnimator.SetBool("isVisible", isRight);
