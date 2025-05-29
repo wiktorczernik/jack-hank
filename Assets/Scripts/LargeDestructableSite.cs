@@ -70,6 +70,7 @@ public class LargeDestructableSite : GameEntity
 
     public void StartDestruction()
     {
+        if (isBeingDestroyed || wasDestroyed || wasChainDestroyed) return;
         isBeingDestroyed = true;
         onDestructionBegin?.Invoke(false);
 
@@ -79,6 +80,7 @@ public class LargeDestructableSite : GameEntity
 
     public void StartChainedDestruction()
     {
+        if (isBeingDestroyed || wasDestroyed || wasChainDestroyed) return;
         isBeingDestroyed = true;
         onDestructionBegin?.Invoke(true);
 
@@ -98,7 +100,7 @@ public class LargeDestructableSite : GameEntity
             {
                 yield return new WaitForSeconds(time);
                 if (chain.isBeingDestroyed) yield break;
-                if (chain.wasDestroyed) yield break;
+                if (chain.wasDestroyed || chain.wasChainDestroyed) yield break;
                 chain.StartChainedDestruction();
             }
 
@@ -171,7 +173,7 @@ public class LargeDestructableSite : GameEntity
             {
                 yield return new WaitForSeconds(time);
                 if (chain.isBeingDestroyed) yield break;
-                if (chain.wasDestroyed) yield break;
+                if (chain.wasDestroyed || chain.wasChainDestroyed) yield break;
                 chain.StartChainedDestruction();
             }
 
