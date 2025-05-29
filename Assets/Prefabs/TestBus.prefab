@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8749397645390807255}
   - component: {fileID: 6612962731386262014}
   - component: {fileID: 4174879054022182403}
+  - component: {fileID: 7377125799622911987}
   m_Layer: 0
   m_Name: Pickup Trigger Right
   m_TagString: Untagged
@@ -27,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 173463132560458149}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.81, y: 1.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 3.3446, y: 1.8018, z: 0.1063}
+  m_LocalScale: {x: 3.25505, y: 4.1212635, z: 5.7745347}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6347187237283905811}
@@ -52,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.7462246, y: 3, z: 4.5985084}
-  m_Center: {x: 0.6231124, y: 0, z: 0.79925436}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4174879054022182403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +76,14 @@ MonoBehaviour:
   OnExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!33 &7377125799622911987
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173463132560458149}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &232442204727140564
 GameObject:
   m_ObjectHideFlags: 0
@@ -31864,6 +31873,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5559613390477037970}
+  switchSideMinAngle: 5
+  switchSideDelay: 0.5
+  unreachableMinAngle: 130
   leftAnimator: {fileID: 6856157559845506431}
   rightAnimator: {fileID: 1697854495316890071}
 --- !u!1 &5062196696445270669
@@ -33344,6 +33356,7 @@ GameObject:
   - component: {fileID: 3331488259691073619}
   - component: {fileID: 1360345764412146516}
   - component: {fileID: 1991286314898252981}
+  - component: {fileID: 6691517024098662515}
   m_Layer: 0
   m_Name: Pickup Trigger Light
   m_TagString: Untagged
@@ -33360,8 +33373,8 @@ Transform:
   m_GameObject: {fileID: 7671199005406129430}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.836, y: 1.64, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.3485, y: 1.8018, z: 0.1063}
+  m_LocalScale: {x: 3.2543945, y: 4.121264, z: 5.774535}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6347187237283905811}
@@ -33385,8 +33398,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.7610164, y: 3, z: 4.6364202}
-  m_Center: {x: -0.6305084, y: 0, z: 0.8182108}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1991286314898252981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33408,6 +33421,14 @@ MonoBehaviour:
   OnExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!33 &6691517024098662515
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7671199005406129430}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &7764159470624840486
 GameObject:
   m_ObjectHideFlags: 0

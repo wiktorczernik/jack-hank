@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public class PickupZone : MonoBehaviour
 {
-    public GameObject pickupable;
+    public GameEntity pickupable;
+    public Action onObsolete;
 
     [SerializeField] TriggerEventEmitter eventEmitter;
 
@@ -19,6 +21,7 @@ public class PickupZone : MonoBehaviour
 
     public void NotifyObsolete()
     {
+        onObsolete?.Invoke();
         Destroy(gameObject);
     }
 

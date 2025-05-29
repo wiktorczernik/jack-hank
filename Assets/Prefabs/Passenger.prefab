@@ -72,6 +72,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 50000
   destroyTime: 10
@@ -103,6 +104,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 6866073177231581998}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
   bountyPointsPenalty: 50000
   isAlive: 1
   isLookingForPlayerVehicle: 0
