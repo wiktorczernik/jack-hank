@@ -98,7 +98,7 @@ MonoBehaviour:
   onPickedUp:
     m_PersistentCalls:
       m_Calls: []
-  ammoInside: 50
+  ammoInside: 60
 --- !u!54 &5271517522153453597
 Rigidbody:
   m_ObjectHideFlags: 0

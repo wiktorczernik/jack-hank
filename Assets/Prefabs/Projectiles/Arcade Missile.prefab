@@ -65,7 +65,7 @@ MonoBehaviour:
     epicenterRadius: 12
     shakeIntensity: 1000
     shakeMaxDistance: 100
-    damage: 60
+    damage: 25
     damageFalloff:
       serializedVersion: 2
       m_Curve:
@@ -127,9 +127,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   speedIncreaseDuration: 3
-  closeMaxDistance: 10
-  closeOvershootThreshold: 0.5
   bounceOffPlayer: 1
+  targetVerticalOffset: 0
   onSpawn:
     m_PersistentCalls:
       m_Calls:
@@ -151,9 +150,13 @@ MonoBehaviour:
   currentFlySpeed: 0
   distance: Infinity
   minDistance: Infinity
+  direction: {x: 0, y: 0, z: 0}
+  lastDirection: {x: 0, y: 0, z: 0}
+  lookRotation: {x: 0, y: 0, z: 0, w: 1}
+  lastLookRotation: {x: 0, y: 0, z: 0, w: 1}
   lastDistance: Infinity
   startFlyTime: 0
-  isClose: 0
+  timeSinceStart: 0
   rigidbody: {fileID: 7226317557669483591}
   collisionEvents: {fileID: 2221329765588397504}
 --- !u!114 &2221329765588397504
