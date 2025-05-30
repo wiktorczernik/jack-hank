@@ -31143,7 +31143,7 @@ MonoBehaviour:
   _displayName: Jo-Jump
   _prepareDuration: 0
   _workDuration: 0.5
-  _cooldownDuration: 0.5
+  _cooldownDuration: 0.05
   speedBeforeJump: 0
   pitchTilt: 2
   upwardSpeed: 30

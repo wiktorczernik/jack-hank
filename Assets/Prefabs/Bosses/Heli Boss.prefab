@@ -10268,8 +10268,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canReceiveDamage: 1
   canBeHealed: 1
-  _health: 10000
-  _maxHealth: 10000
+  _health: 7500
+  _maxHealth: 7500
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 0
@@ -10352,6 +10352,7 @@ MonoBehaviour:
   burstMinDistance: 20
   burstFireTiming: 2.5
   burstMaxFirings: 5
+  initialBurstCooldown: 15
   burstCooldown: 8
   sideCrosshairDistance: 10
   missMinStartTime: 0.2
