@@ -54,7 +54,7 @@ public class BonusTicket_GUI : MonoBehaviour
         bonusDescriptionText.rectTransform.anchoredPosition = new Vector2(bonusValueText.preferredWidth + offsetBetweenTextAndBonus, 0);
     }
 
-    private void Start()
+    private void Awake()
     {
         if (!Application.isPlaying) return;
         

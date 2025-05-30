@@ -67,7 +67,6 @@ public class FadeTransition_GUI : MonoBehaviour
         _anim.Play("FadeOut");
         OnFadeOutStarted?.Invoke();
         yield return new WaitForSeconds(_anim["FadeOut"].length);
-        gameObject.SetActive(false);
         _isBusy = false;
         OnFadeOutEnded?.Invoke();
     }
