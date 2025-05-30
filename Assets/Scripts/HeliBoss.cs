@@ -8,7 +8,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     [Header("Burst Fire State")]
     public bool isDuringBurst;
     public bool isBurstTimedOut = false;
-    public bool isBurstCooldowned = false;
+    public bool isBurstCooldowned = true;
     public int missilesLeft = -1;
     public MissleCrosshair[] activeCrosshairs;
     public ArcadeMissile[] shotMissiles;
@@ -31,6 +31,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public float burstMinDistance = 30f;
     public float burstFireTiming = 0.1f;
     public int burstMaxFirings = 5;
+    public float initialBurstCooldown = 10f;
     public float burstCooldown = 5f;
     public float sideCrosshairDistance = 10f;
     public float missMinStartTime = 0.2f;
@@ -121,7 +122,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
         isBurstTimedOut = false;
         onBurstEnd?.Invoke();
-        Invoke(nameof(ResetBurstCooldown), burstCooldown);
+        DelayedResetBurstCooldown(burstCooldown);
 
         missilesLeft = -1;
     }
@@ -129,7 +130,11 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     {
         isBurstTimedOut = true;
     }
-    private void ResetBurstCooldown()
+    public void DelayedResetBurstCooldown(float delay)
+    {
+        Invoke(nameof(ResetBurstCooldown), delay);
+    }
+    public void ResetBurstCooldown()
     {
         isBurstCooldowned = false;
     }
