@@ -10268,8 +10268,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canReceiveDamage: 1
   canBeHealed: 1
-  _health: 1000
-  _maxHealth: 1000
+  _health: 10000
+  _maxHealth: 10000
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 0
@@ -10348,12 +10348,14 @@ MonoBehaviour:
   ground: {fileID: 3099071437635419331}
   missileShootAnchor: {fileID: 443845243258357876}
   burstTimeOut: 5
-  timeBeforeBurst: 5
+  timeBeforeBurst: 2
   burstMinDistance: 20
-  burstFireTiming: 2
+  burstFireTiming: 2.5
   burstMaxFirings: 5
   burstCooldown: 8
   sideCrosshairDistance: 10
+  missMinStartTime: 0.2
+  playerTargetVerticalOffset: 3
   currentHeight: 0
   playerVerticalOffset: 10
   playerForwardDistance: 50

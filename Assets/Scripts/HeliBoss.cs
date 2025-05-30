@@ -33,6 +33,8 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public int burstMaxFirings = 5;
     public float burstCooldown = 5f;
     public float sideCrosshairDistance = 10f;
+    public float missMinStartTime = 0.2f;
+    public float playerTargetVerticalOffset = 3f;
 
     [Header("Heli Follow Options")]
     public float currentHeight = 0;
@@ -50,14 +52,15 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public GameEntity Self => this;
 
     private PlayerJumpAbility _playerJumpAbility;
+    private PlayerNitroAbility _playerNitroAbility;
 
-    public ArcadeMissile CreateMissile(MissleCrosshair crosshair)
+    public ArcadeMissile CreateMissile(MissleCrosshair crosshair, Transform target)
     {
         ArcadeMissile instance = Instantiate(missilePrefab, missileShootAnchor.position, Quaternion.identity);
 
         crosshair.Show();
 
-        instance.target = crosshair.transform;
+        instance.target = target;
 
         return instance;
     }
@@ -72,13 +75,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
             activeCrosshairs[i] = Instantiate(crosshairPrefab);
         }
     }
-    private void DestroyCrosshairs()
-    {
-        foreach (var crosshair in activeCrosshairs)
-        {
-            Destroy(crosshair);
-        }
-    }
     IEnumerator BurstFireCo()
     {
         CreateCrosshairs();
@@ -88,21 +84,30 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         onBurstStart?.Invoke();
 
         missilesLeft = 0;
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, target.GetPosition()) >= burstMinDistance);
         yield return new WaitForSeconds(timeBeforeBurst);
         for (int i = 0; i < burstMaxFirings; ++i)
         {
             missilesLeft++;
 
             var crosshair = activeCrosshairs[i];
-            var missile = CreateMissile(crosshair);
+            var missile = CreateMissile(crosshair, target.transform);
 
             void ExplosionEventHandler(ExplosionProperties p)
             {
                 OnMissileExplode(missile, crosshair);
                 missile.onSelfExplode -= ExplosionEventHandler;
+                missile.onBounceOff.RemoveListener(BounceEventHandler);
+            }
+            void BounceEventHandler()
+            {
+                missile.targetVerticalOffset = 0;
+                missile.target = this.transform;
             }
 
+            missile.targetVerticalOffset = playerTargetVerticalOffset;
             missile.onSelfExplode += ExplosionEventHandler;
+            missile.onBounceOff.AddListener(BounceEventHandler);
             shotMissiles[i] = missile;
 
             onFire?.Invoke();
@@ -117,7 +122,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         isBurstTimedOut = false;
         onBurstEnd?.Invoke();
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
-        DestroyCrosshairs();
 
         missilesLeft = -1;
     }
@@ -180,28 +184,44 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         ground.transform.SetParent(null);
         isBurstCooldowned = true;
         Invoke(nameof(ResetBurstCooldown), burstCooldown);
+
+        CreateCrosshairs();
     }
 
     private void OnEnable()
     {
         _playerJumpAbility = GameManager.PlayerVehicle.GetComponentInChildren<PlayerJumpAbility>();
-        _playerJumpAbility.onWorkBegin.AddListener(DetachCrosshairs);
-        _playerJumpAbility.onWorkTick.AddListener(DetachCrosshairs);
+        _playerNitroAbility = GameManager.PlayerVehicle.GetComponentInChildren<PlayerNitroAbility>();
     }
     private void OnDestroy()
     {
-        _playerJumpAbility.onWorkBegin.AddListener(DetachCrosshairs);
-        _playerJumpAbility.onWorkTick.RemoveListener(DetachCrosshairs);
         _playerJumpAbility = null;
     }
-    void DetachCrosshairs()
+    void DetachMissiles()
     {
+        if (!_playerNitroAbility.isWorking) return;
         foreach (MissleCrosshair cross in activeCrosshairs)
         {
             if (cross.isVisible)
             {
                 cross.Detach();
             }
+        }
+        foreach (var missile in shotMissiles)
+        {
+            if (!missile) continue;
+            if (missile.timeSinceStart < missMinStartTime) continue;
+
+            missile.target = null;
+        }
+    }
+    void UpdateMissileBounciness()
+    {
+        foreach (var missile in shotMissiles)
+        {
+            if (!missile) continue;
+            bool isJumping = _playerJumpAbility.isWorking;
+            missile.bounceOffPlayer = isJumping;
         }
     }
 
@@ -211,6 +231,14 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         AlignGround();
         SeekPlayerView();
         TryBurstFire();
+        if (_playerJumpAbility)
+        {
+            UpdateMissileBounciness();
+        }
+        if (_playerNitroAbility)
+        {
+            DetachMissiles();
+        }
     }
     protected void LateUpdate()
     {

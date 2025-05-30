@@ -5,15 +5,25 @@ public class ArcadeMissile : GameEntity
 {
     [Header("Behaviour")]
     public Transform target;
-    public float flySpeed = 10f;
-    public float closeMaxDistance = 10f;
-    public float closeOvershootThreshold = 0.5f;
+    public float startFlySpeed = 10f;
+    public float maxFlySpeed = 50f;
+    public AnimationCurve speedIncreaseGraph;
+    public float speedIncreaseDuration;
+    public bool bounceOffPlayer = false;
+    public float targetVerticalOffset = 0;
     public UnityEvent onSpawn;
+    public UnityEvent onBounceOff;
     [Header("State")]
+    public float currentFlySpeed;
     public float distance = Mathf.Infinity;
     public float minDistance = Mathf.Infinity;
+    public Vector3 direction = Vector3.zero;
+    public Vector3 lastDirection = Vector3.zero;
+    public Quaternion lookRotation = Quaternion.identity;
+    public Quaternion lastLookRotation = Quaternion.identity;
     public float lastDistance = Mathf.Infinity;
-    public bool isClose = false;
+    public float startFlyTime;
+    public float timeSinceStart;
     [Header("Components")]
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] CollisionEventEmitter collisionEvents;
@@ -22,28 +32,52 @@ public class ArcadeMissile : GameEntity
     {
         onSpawn?.Invoke();
         collisionEvents.OnEnter?.AddListener(OnCollision);
+        currentFlySpeed = startFlySpeed;
+        startFlyTime = Time.time;
     }
     private void FixedUpdate()
     {
-        distance = Vector3.Distance(transform.position, target.position);
-        minDistance = Mathf.Min(minDistance, lastDistance, distance);
-
-        if (!isClose && distance < closeMaxDistance)
+        if (target)
         {
-            isClose = true;
+            Vector3 targetPos = target.position + Vector3.up * targetVerticalOffset;
+
+            distance = Vector3.Distance(transform.position, targetPos);
+            minDistance = Mathf.Min(minDistance, lastDistance, distance);
+
+            direction = (targetPos - transform.position).normalized;
+            lookRotation = Quaternion.LookRotation(direction);
         }
 
-        Vector3 targetDirection = (target.position - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
-
         rigidbody.MoveRotation(lookRotation);
-        rigidbody.linearVelocity = targetDirection * flySpeed;
+        rigidbody.linearVelocity = direction * currentFlySpeed;
 
         lastDistance = distance;
+
+        timeSinceStart = Time.time - startFlyTime;
+        if (timeSinceStart < speedIncreaseDuration)
+        {
+            float speedIncrease = maxFlySpeed - startFlySpeed;
+            speedIncrease *= speedIncreaseGraph.Evaluate(timeSinceStart);
+            currentFlySpeed = startFlySpeed + speedIncrease;
+        }
+        else
+            currentFlySpeed = maxFlySpeed;
+
+        lastDirection = direction;
+        lastLookRotation = lookRotation;
     }
 
     private void OnCollision(Collision collision)
     {
+        if (bounceOffPlayer)
+        {
+            var player = collision.gameObject.GetComponentInParent<PlayerVehicle>();
+            if (player)
+            {
+                onBounceOff?.Invoke();
+                return;
+            }
+        }
         SelfExplode(1);
     }
     protected override void InternalSelfExplode()
@@ -52,4 +86,12 @@ public class ArcadeMissile : GameEntity
         Kill();
         Destroy(gameObject);
     }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (speedIncreaseGraph.keys.Length == 0) return;
+        speedIncreaseDuration = speedIncreaseGraph.keys[speedIncreaseGraph.length - 1].time;
+    }
+#endif
 }

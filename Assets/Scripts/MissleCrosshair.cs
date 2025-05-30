@@ -4,8 +4,10 @@ using UnityEngine.Rendering.Universal;
 public class MissleCrosshair : MonoBehaviour
 {
     public bool isVisible = false;
+    public Vector2 uvScale = Vector2.zero;
 
-    DecalProjector decal;
+    [SerializeField] Animator animator;
+    [SerializeField] DecalProjector decal;
 
     public bool Detached = false;
     public void Detach()
@@ -25,7 +27,6 @@ public class MissleCrosshair : MonoBehaviour
             Debug.LogError("Attemp of starting follow when its already following!", this);
         }
         isVisible = true;
-        decal.enabled = true;
     }
     public void Hide()
     {
@@ -34,14 +35,15 @@ public class MissleCrosshair : MonoBehaviour
             Debug.LogError("Tried freeing crosshair that isn't following atm!", this);
         }
         isVisible = false;
-        decal.enabled = false;
-        if (!gameObject) return;
-        Destroy(gameObject);
     }
-
-    private void Awake()
+    private void LateUpdate()
     {
-        decal = GetComponentInChildren<DecalProjector>();
-        decal.enabled = false;
+        animator.SetBool("isVisible", isVisible);
+
+        Vector3 newSize = decal.gameObject.transform.localScale;
+        newSize.x = uvScale.x;
+        newSize.y = uvScale.y;
+
+        decal.gameObject.transform.localScale = newSize;
     }
 }

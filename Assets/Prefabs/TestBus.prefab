@@ -31078,9 +31078,9 @@ MonoBehaviour:
   _cooldownTime: 0
   _state: 0
   _displayName: Rocket Ride
-  _prepareDuration: 1.25
-  _workDuration: 8
-  _cooldownDuration: 15
+  _prepareDuration: 0.6
+  _workDuration: 6
+  _cooldownDuration: 6
   maxSpeed: 220
   accelerationForce: 125
   particleVisuals:
@@ -31143,7 +31143,7 @@ MonoBehaviour:
   _displayName: Jo-Jump
   _prepareDuration: 0
   _workDuration: 0.5
-  _cooldownDuration: 0.25
+  _cooldownDuration: 0.5
   speedBeforeJump: 0
   pitchTilt: 2
   upwardSpeed: 30
@@ -31875,6 +31875,7 @@ MonoBehaviour:
   player: {fileID: 5559613390477037970}
   switchSideMinAngle: 5
   switchSideDelay: 0.5
+  mustShowMaxDistance: 20
   unreachableMinAngle: 130
   leftAnimator: {fileID: 6856157559845506431}
   rightAnimator: {fileID: 1697854495316890071}
