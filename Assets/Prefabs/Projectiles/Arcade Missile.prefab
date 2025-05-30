@@ -100,9 +100,36 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   target: {fileID: 0}
-  flySpeed: 10
+  startFlySpeed: 10
+  maxFlySpeed: 200
+  speedIncreaseGraph:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 3
+      value: 1
+      inSlope: 1.0364807
+      outSlope: 1.0364807
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03414893
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedIncreaseDuration: 3
   closeMaxDistance: 10
   closeOvershootThreshold: 0.5
+  bounceOffPlayer: 1
   onSpawn:
     m_PersistentCalls:
       m_Calls:
@@ -118,9 +145,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onBounceOff:
+    m_PersistentCalls:
+      m_Calls: []
+  currentFlySpeed: 0
   distance: Infinity
   minDistance: Infinity
   lastDistance: Infinity
+  startFlyTime: 0
   isClose: 0
   rigidbody: {fileID: 7226317557669483591}
   collisionEvents: {fileID: 2221329765588397504}
