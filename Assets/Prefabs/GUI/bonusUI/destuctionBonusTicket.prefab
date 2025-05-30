@@ -12,9 +12,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: destuctionBonusTicket
       objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7284951508663892846, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_text
       value: destruction
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7284951508663892846, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5815135279301747526, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 165.22
       objectReference: {fileID: 0}
     - target: {fileID: 6296128412897218469, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: bonusName
