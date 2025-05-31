@@ -101,7 +101,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   target: {fileID: 0}
   startFlySpeed: 10
-  maxFlySpeed: 200
+  maxFlySpeed: 150
   speedIncreaseGraph:
     serializedVersion: 2
     m_Curve:
