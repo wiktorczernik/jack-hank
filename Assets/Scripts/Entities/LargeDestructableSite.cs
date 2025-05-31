@@ -4,70 +4,107 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = Unity.Mathematics.Random;
 
+/// <summary>
+/// Jest to podstawowa klasa dla wszystkich zniszczalnych budynków. Zarz¹dza procesem niszczenia, 
+/// przechowuje stan i kondycje do wywo³ania znisczenia. Mo¿e spowodowaæ znisczenia innych budynków, 
+/// wywo³aæ cinematic i teleportowaæ gracza po nim.
+/// </summary>
 public class LargeDestructableSite : GameEntity
 {
     [Header("State")]
     /// <summary>
-    /// Tells is this site being destroyed
+    /// Czy budynek zosta³ zniszczony?
     /// </summary>
     public bool wasDestroyed;
-
-    public bool wasChainDestroyed;
-    public bool isBeingDestroyed;
-
     /// <summary>
-    ///     Tells how many supports already have been destroyed
+    /// Czy budynek zosta³ zniszczony poprzez znisczenie innego budynku?
+    /// </summary>
+    public bool wasChainDestroyed;
+    /// <summary>
+    /// Czy aktualnie jest w trakcie nisczenia?
+    /// </summary>
+    public bool isBeingDestroyed;
+    /// <summary>
+    /// Iloœæ smashable wspieraj¹cych ten budynek od zawalenia siê
     /// </summary>
     public int hitSupportsCount;
-
-    [Header("Destruction")] public float debrisDelay = 1f;
-
-    public float chainMinDelay = 1;
-    public float chainMaxDelay = 3;
-    public LargeDestructableSite[] chainedDestructables;
-
     /// <summary>
-    ///     List of rigidbodies that will act as debris
+    /// Po jakim czasie od znisczenia budynku pojawi siê jego debris
     /// </summary>
+    [Header("Destruction")] public float debrisDelay = 1f;
+    /// <summary>
+    /// Minimalny czas do wywo³ania znisczenia zale¿nego budynku
+    /// </summary>
+    public float chainMinDelay = 1;
+    /// <summary>
+    /// Maksymalny czas do wywo³ania znisczenia zale¿nego budynku
+    /// </summary>
+    public float chainMaxDelay = 3;
+    /// <summary>
+    /// Budynki zale¿ne od tego, które te¿ zostan¹ zniszczone bo zniszczeniu tego budynku
+    /// </summary>
+    public LargeDestructableSite[] chainedDestructables;
+    // Lista rigidbody która bêdzie debris
     public Rigidbody[] debrisRigidbodies;
 
-    [Header("Support")]
     /// <summary>
-    /// How many supports should player destroy to begin total destruction
+    /// Maksymalna liczba supportów która mo¿e byæ zniszczona bez wywo³ania znisczenia budynku
     /// </summary>
+    [Header("Support")]
     public int maxSupportsDestroyed = 1;
 
     /// <summary>
-    ///     Tells if all supports will be smashed when site starts crumbling
+    /// Czy wszystkie smashable zostan¹ potr¹cone po znisczoniu
     /// </summary>
     public bool smashSupportsOnDestroy = true;
 
     /// <summary>
-    ///     List of supporting entities
+    /// Lista wspieraj¹cych smashable
     /// </summary>
     public SmashableEntity[] supports;
 
-    [Header("Cinematics")] public CinematicSequence cinematicSequence;
-
+    /// <summary>
+    /// Cinematic który zostanie odtworzony po zniszczeniu
+    /// </summary>
+    [Header("Cinematics")] 
+    public CinematicSequence cinematicSequence;
+    /// <summary>
+    /// Transform bêd¹cy rodzicem instancji cinematica
+    /// </summary>
     public Transform cinematicParent;
+    /// <summary>
+    /// Gdzie ma teleportowaæ siê gracz po cinematicu
+    /// </summary>
     public Transform cinematicEndWarp;
+    /// <summary>
+    /// Decyduje, czy powinna zostaæ nadana nowa prêdkoœæ autobusowi po cutscenie
+    /// </summary>
     public bool cinematicOverrideVelocity;
+    /// <summary>
+    /// Prêdkoœæ autobusu po cutscenie
+    /// </summary>
     public Vector3 cinematicEndVelocity;
 
-    [Header("Events")]
     /// <summary>
-    /// True - if destruction is chained
+    /// True - jeœli zosta³o wywo³ane przez inny budynek
     /// </summary>
+    [Header("Events")]
     public UnityEvent<bool> onDestructionBegin;
 
     /// <summary>
-    ///     True - if destruction is chained
+    /// True - jeœli zosta³o wywo³ane przez inny budynek
     /// </summary>
     public UnityEvent<bool> onDestructionEnd;
 
+    /// <summary>
+    /// Ile punktów zdobêdzie gracz za zniszczenie tego budynku
+    /// </summary>
     [Header("Bonus")] public int bountyPointsReward;
 
 
+    /// <summary>
+    /// Rozpocznie proces destrukcji tego budynku
+    /// </summary>
     public void StartDestruction()
     {
         if (isBeingDestroyed || wasDestroyed || wasChainDestroyed) return;
@@ -77,7 +114,9 @@ public class LargeDestructableSite : GameEntity
         StartCoroutine(CreateDebris());
         StartCoroutine(FinishDestruction());
     }
-
+    /// <summary>
+    /// Rozpocznie proces destrukcji tego budynku poprzez zale¿noœæ od innego budynku
+    /// </summary>
     public void StartChainedDestruction()
     {
         if (isBeingDestroyed || wasDestroyed || wasChainDestroyed) return;
@@ -119,7 +158,10 @@ public class LargeDestructableSite : GameEntity
     #endregion
 
     #region Helpers
-
+    /// <summary>
+    /// Tworzy debris dla tego budynku
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator CreateDebris()
     {
         yield return new WaitForSeconds(debrisDelay);
@@ -137,8 +179,7 @@ public class LargeDestructableSite : GameEntity
                 if (entity == null) continue;
                 if (!entity.wasHit)
                 {
-                    // TODO: Do force hit!
-                    // entity.ForceHit();
+                    entity.ForceHit();
                 }
             }
     }

@@ -206,12 +206,12 @@ public class GameEntity : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Forcefully reduces entity's health, no matter if it can receive damage or not.
-    /// Invokes OnHurt if entity didn't die after being hurt, and OnDeath if it died.
-    /// Always invokes OnHealthChange if health changed
+    /// Wymusza obra¿enia niezale¿nie od odpornoœci.
+    /// Wywo³uje OnHurt, jeœli prze¿y³o, i OnDeath, jeœli zginê³o.
+    /// Zawsze wywo³uje OnHealthChange przy zmianie zdrowia.
     /// </summary>
-    /// <param name="amount">How many damage will entity take</param>
-    /// <returns>True if health changed, otherwise false</returns>
+    /// <param name="amount">Iloœæ zadanych obra¿eñ</param>
+    /// <returns>Prawda, jeœli zdrowie siê zmieni³o, w przeciwnym razie fa³sz</returns>
     public bool ForceHurt(float amount)
     {
         if (!isAlive)
@@ -242,12 +242,12 @@ public class GameEntity : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Forcefully heals entity, no matter if it can be healed or not.
-    /// Invokes OnHeal and OnHealthChange events if health changes.
-    /// Additionally invokes OnFullHealth if it was healed to the maximum health.
+    /// Wymusza leczenie niezale¿nie od stanu.
+    /// Wywo³uje OnHeal i OnHealthChange, jeœli zdrowie siê zmieni.
+    /// Dodatkowo wywo³uje OnFullHealth przy leczeniu do maksimum.
     /// </summary>
-    /// <param name="amount">How many HP will entity receive</param>
-    /// <returns>True if health changed, otherwise false</returns>
+    /// <param name="amount">Iloœæ HP do przyznania</param>
+    /// <returns>Prawda, jeœli zdrowie siê zmieni³o, w przeciwnym razie fa³sz</returns>
     public bool ForceHeal(float amount)
     {
         if (!isAlive)
@@ -277,8 +277,7 @@ public class GameEntity : MonoBehaviour
     }
 
     /// <summary>
-    /// Heals entity to its maximum health. Invokes OnHeal, OnFullHealth if healed to max
-    /// and OnHealthChange events
+    /// Leczy entity na maxa. Wywo³a OnHeal, OnFullHealth i OnHealthChange jeœli wyleczy na maxa
     /// </summary>
     public bool HealMax()
     {
@@ -297,7 +296,7 @@ public class GameEntity : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Kills entity if it's alive. Invokes OnDeath and OnHealthChange events if killed
+    /// Zabije entity jeœl ijest ¿ywe. Wywo³a OnDeath oraz OnHealthChange jeœli zostanie zabite
     /// </summary>
     public bool Kill()
     {
@@ -314,9 +313,9 @@ public class GameEntity : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Revives entity if it's dead. Invokes OnRevive and OnHealthChange events if revived
+    /// Wskrzesza entity jeœli jest martwe. Wywo³a zdarzenia OnRevive oraz OnHealthChange jeœli wskrzeszono
     /// </summary>
-    /// <param name="startHealth">How many HP will entity have after revival</param>
+    /// <param name="startHealth">Ile HP entity bêdzie mia³o po odrodzeniu</param>
     public bool Revive(float startHealth = -1)
     {
         if (!isAlive)
@@ -335,34 +334,38 @@ public class GameEntity : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Called after entity's health was changed.
+    /// Wywo³uje siê gdy HP entity zmienia siê
     /// </summary>
-    /// <param name="oldHealth">HP before change</param>
-    /// <param name="newHealth">HP after change</param>
+    /// <param name="oldHealth">HP przed zmian¹</param>
+    /// <param name="newHealth">HP po zmianie</param>
     protected virtual void OnHealthChangeInternal(float oldHealth, float newHealth) { }
     /// <summary>
-    /// Called after entity was healed.
+    /// Wywo³ane gdy entity zosta³o zhealowane
     /// </summary>
-    /// <param name="amount">Amount of HP entity received</param>
+    /// <param name="amount">Iloœæ HP które entity uzyska³o</param>
     protected virtual void OnHealInternal(float amount) { }
     /// <summary>
-    /// Called after entity was hurt, but haven't died.
+    /// Wywo³uje siê wtedy, gdy entity otrzyma³o obra¿enia, ale nie zmar³o
     /// </summary>
-    /// <param name="amount">Amount of HP that was taken</param>
+    /// <param name="amount">Iloœæ HP która zosta³a odjêta</param>
     protected virtual void OnHurtInternal(float amount) { }
     /// <summary>
-    /// Called when entity achieves maximum health.
+    /// Wywo³uje siê kiedy entity uzyska maksymalne HP
     /// </summary>
     protected virtual void OnFullHealthInternal() { }
     /// <summary>
-    /// Called when entity was revived.
+    /// Wywo³uje siê gdy entity odrodzi siê
     /// </summary>
     protected virtual void OnReviveInternal() { }
     /// <summary>
-    /// Called after entity died.
+    /// Wywo³uje siê po œmierci entity
     /// </summary>
     protected virtual void OnDeathInternal() { }
 
+    /// <summary>
+    /// Wywo³uje wybuch z opóŸnieniem
+    /// </summary>
+    /// <param name="delay">OpóŸnienie w sekundach</param>
     public void SelfExplodeDelayed(float delay)
     {
         IEnumerator Coroutinee()
@@ -373,7 +376,7 @@ public class GameEntity : MonoBehaviour
         StartCoroutine(Coroutinee());
     }
     /// <summary>
-    /// Produces explosion
+    /// Wywo³uje wybuch, którego inicjatorem bêdzie to entity
     /// </summary>
     public void SelfExplode(int explosionId = 0)
     {
@@ -384,9 +387,9 @@ public class GameEntity : MonoBehaviour
         onSelfExplode?.Invoke(selfExplosionProps);
     }
     /// <summary>
-    /// Tells entity that it is being exploded by other entity
+    /// Informuje entity o tym, ¿e zosta³o wysadzone przez inne entity
     /// </summary>
-    /// <param name="explosionProps">Explosion properties</param>
+    /// <param name="explosionProps">W³aœciwoœci eksplozji</param>
     public void Explode(ExplosionProperties explosionProps)
     {
         if (explosionProps.initiator == this) return;
@@ -397,12 +400,12 @@ public class GameEntity : MonoBehaviour
     }
 
     /// <summary>
-    /// Called after entity produced explosion
+    /// Wywo³ywane po wybuchu spowodowanym tym entity
     /// </summary>
     protected virtual void InternalSelfExplode() { }
     /// <summary>
-    /// Called after entity was exploded by other entity
+    /// Wywo³ywane po wysadzeniu entity przez inn¹
     /// </summary>
-    /// <param name="explosionProps">Explosion properties</param>
+    /// <param name="explosionProps">W³aœciwoœci eksplozji</param>
     protected virtual void InternalExplode(ExplosionProperties explosionProps) { }
 }
