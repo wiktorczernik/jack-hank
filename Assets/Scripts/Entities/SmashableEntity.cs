@@ -60,7 +60,7 @@ public class SmashableEntity : GameEntity
     /// <summary>
     /// Lista colliderÛw wykorzystywanych przez to smashable
     /// </summary>
-    [SerializeField] protected Collider[] usedColliders = new Collider[0];
+    public Collider[] usedColliders = new Collider[0];
     [SerializeField] protected CollisionEventEmitter collisionEvents;
 
     [Header("Physics On Hit")]
@@ -86,7 +86,7 @@ public class SmashableEntity : GameEntity
     /// <summary>
     /// èrÛd≥o düwiÍku
     /// </summary>
-    [SerializeField] protected AudioSource audioSource;
+    public AudioSource audioSource;
     /// <summary>
     /// Minimalny pitch düwiÍku zderzenia
     /// </summary>

@@ -10,7 +10,7 @@ namespace JackHank.EditorUtils.Toolbar
         const float buttonWidth = 100f;
         const float largeButtonWidth = 200f;
 
-        [MenuItem("Window/JackHank/Toolbar")]
+        [MenuItem("JackHank/Toolbar")]
         public static void ShowWindow()
         {
             var instance = (ToolbarWindow) GetWindow(typeof(ToolbarWindow));
