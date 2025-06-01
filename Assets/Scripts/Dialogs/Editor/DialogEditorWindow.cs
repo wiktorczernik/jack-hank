@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 using JackHank.Dialogs;
 using System.Collections.Generic;
@@ -114,3 +115,4 @@ public class DialogEditorWindow : EditorWindow
 
     }
 }
+#endif
