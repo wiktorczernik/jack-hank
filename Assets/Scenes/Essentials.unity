@@ -327,7 +327,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    unfadedSizeMultiplier: 7
+    unfadedSizeMultiplier: 1.25
 --- !u!1 &628115608
 GameObject:
   m_ObjectHideFlags: 0
