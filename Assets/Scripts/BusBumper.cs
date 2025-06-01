@@ -22,7 +22,7 @@ public class BusBumper : MonoBehaviour
     {
         SmashableEntity smashable = collider.GetComponentInParent<SmashableEntity>();
 
-        if (smashable && smashable.bumpable)
+        if (smashable && smashable.bumpable && !smashable.wasHit)
         {
             smashable.ForceHit();
 
@@ -33,8 +33,7 @@ public class BusBumper : MonoBehaviour
             transform.localEulerAngles = newAngles;
 
             float multiplier = Mathf.Clamp01(vehicle.speedKmhForward / bumpMaxDesiredSpeed);
-
-            var rigidbody = smashable.usedRigidbody;
+            
             smashable.usedRigidbody.AddForce(transform.forward * bumpSpeed * multiplier, ForceMode.VelocityChange);
 
             transform.localEulerAngles = originalAngles;

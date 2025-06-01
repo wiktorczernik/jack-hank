@@ -208,7 +208,7 @@ MonoBehaviour:
   debrisPrefab: {fileID: 5160819772471821074, guid: 0d33a5fd79cc40041b89f146e2817068, type: 3}
   usedRigidbody: {fileID: 3102884076773864842}
   usedColliders:
-  - {fileID: 0}
+  - {fileID: 7342880323057712875}
   collisionEvents: {fileID: 4128081004211834171}
   OnHit:
     m_PersistentCalls:
