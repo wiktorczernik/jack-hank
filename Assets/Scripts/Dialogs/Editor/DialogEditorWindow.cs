@@ -33,8 +33,31 @@ public class DialogEditorWindow : EditorWindow
         {
             OnDialogSelectGUI();
         }
+        else
+        {
+            OnDialogEdit();
+        }
+    }
+    private void OpenDialog(string path)
+    {
+        OpenDialog(AssetDatabase.LoadAssetAtPath<Dialog>(path));
+    }
+    private void FocusProjectOnDialog()
+    {
+        if (!currentDialog) return;
+        Selection.activeObject = currentDialog;
+    }
+    private void OpenDialog(Dialog dialog)
+    {
+        EditorUtility.FocusProjectWindow();
+        currentDialog = dialog;
+        FocusProjectOnDialog();
     }
 
+    private void OnDialogEdit()
+    {
+        FocusProjectOnDialog();
+    }
     private void OnDialogSelectGUI()
     {
         scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
@@ -51,7 +74,7 @@ public class DialogEditorWindow : EditorWindow
             AssetDatabase.CreateAsset(newDialog, assetPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            currentDialog = newDialog;
+            OpenDialog(newDialog);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -72,7 +95,7 @@ public class DialogEditorWindow : EditorWindow
                     EditorGUILayout.BeginHorizontal();
                     if (GUILayout.Button(buttonLabel))
                     {
-                        currentDialog = AssetDatabase.LoadAssetAtPath<Dialog>(Path.Combine(groupsRoot, group.Key, buttonLabel, $"{buttonLabel}.asset"));
+                        OpenDialog(Path.Combine(groupsRoot, group.Key, buttonLabel, $"{buttonLabel}.asset"));
                     }
                     GUI.backgroundColor = Color.red;
                     if (GUILayout.Button("X", GUILayout.Width(40)))
