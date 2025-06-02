@@ -20,7 +20,6 @@ public class SceneExit : MonoBehaviour
     [SerializeField] private bool showStatisticsOnExit;
     [Header("GUI")]
     [SerializeField] private FinishText_GUI finishText;
-    [SerializeField] private FadeTransition_GUI fadeTransition;
     [Tooltip("Delay AFTER finish text animation")]
     [Range(3, 60)][SerializeField] private float exitDelayInSeconds = 5f;
 
@@ -60,13 +59,14 @@ public class SceneExit : MonoBehaviour
         if (_finishing) return;
         _finishing = true;
 
-        fadeTransition.StartFadeIn();
+        ScreenFade.In(1.5f, ScreenFadeType.Default);
 
-        fadeTransition.OnFadeInEnded += AfterFadeIn;
+        ScreenFade.onAfterIn += AfterFadeIn;
     }
 
     private void AfterFadeIn()
     {
+        ScreenFade.onAfterIn -= AfterFadeIn;
         if (showStatisticsOnExit)
         {
             finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());

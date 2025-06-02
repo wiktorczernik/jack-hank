@@ -33,6 +33,11 @@ public class ScreenFade : MonoBehaviour
     public static bool isBusy { get; private set; } = false;
     public static bool isFaded { get; private set; } = true;
 
+    public static event Action onBeforeIn;
+    public static event Action onAfterIn;
+    public static event Action onBeforeOut;
+    public static event Action onAfterOut;
+
     static ScreenFade instance;
 
     [SerializeField] RectTransform _holeCanvas;
@@ -42,7 +47,10 @@ public class ScreenFade : MonoBehaviour
 
     public static void In(float duration = 1f, ScreenFadeType type = ScreenFadeType.Default)
     {
-        if (duration < float.Epsilon) return;
+        if (isFaded) return;
+        if (isBusy) return;
+
+        if (duration < float.Epsilon) duration = 0.01f;
 
         foreach (var config in instance.shapeConfigs)
             config.shapeRect.sizeDelta = Vector3.zero;
@@ -52,9 +60,9 @@ public class ScreenFade : MonoBehaviour
             var image = instance.defaultConfig.image;
             var defaultCurve = instance.defaultConfig.inCurve;
             Color startColor = image.color;
-            startColor.a = 1;
+            startColor.a = 0;
             Color finishColor = startColor;
-            finishColor.a = 0;
+            finishColor.a = 1;
             instance.StartCoroutine(instance.PerformDefaultTransition(duration, image, startColor, finishColor, defaultCurve, true));
             return;
         }
@@ -77,7 +85,10 @@ public class ScreenFade : MonoBehaviour
     }
     public static void Out(float duration = 1f, ScreenFadeType type = ScreenFadeType.Default)
     {
-        if (duration < float.Epsilon) return;
+        if (!isFaded) return;
+        if (isBusy) return;
+
+        if (duration < float.Epsilon) duration = 0.01f;
 
         foreach (var config in instance.shapeConfigs)
             config.shapeRect.sizeDelta = Vector3.zero;
@@ -87,10 +98,10 @@ public class ScreenFade : MonoBehaviour
             var image = instance.defaultConfig.image;
             var defaultCurve = instance.defaultConfig.outCurve;
             Color startColor = image.color;
-            startColor.a = 0;
+            startColor.a = 1;
             Color finishColor = startColor;
-            finishColor.a = 1;
-            instance.StartCoroutine(instance.PerformDefaultTransition(duration, image, startColor, finishColor, defaultCurve, true));
+            finishColor.a = 0;
+            instance.StartCoroutine(instance.PerformDefaultTransition(duration, image, startColor, finishColor, defaultCurve, false));
             return;
         }
 
@@ -111,8 +122,14 @@ public class ScreenFade : MonoBehaviour
         instance.StartCoroutine(instance.PerformShapeTransition(duration, shape, startSize, finishSize, curve, false));
     }
 
-    private IEnumerator PerformShapeTransition(float duration, RectTransform shape, Vector3 startSize, Vector3 finishSize, AnimationCurve curve, bool fadedValue)
+    private IEnumerator PerformShapeTransition(float duration, RectTransform shape, Vector3 startSize, 
+                                               Vector3 finishSize, AnimationCurve curve, bool fadedValue)
     {
+        if (fadedValue)
+            onBeforeIn?.Invoke();
+        else
+            onBeforeOut?.Invoke();
+
         shape.sizeDelta = startSize;
         isBusy = true;
 
@@ -128,11 +145,22 @@ public class ScreenFade : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
         shape.sizeDelta = finishSize;
+
         isBusy = false;
         isFaded = fadedValue;
+
+        if (fadedValue)
+            onAfterIn?.Invoke();
+        else
+            onAfterOut?.Invoke();
     }
-    private IEnumerator PerformDefaultTransition(float duration, Image image, Color startColor, Color finishColor, AnimationCurve curve, bool fadedValue)
+    private IEnumerator PerformDefaultTransition(float duration, Image image, Color startColor, Color finishColor, 
+                                                 AnimationCurve curve, bool fadedValue)
     {
+        if (fadedValue)
+            onBeforeIn?.Invoke();
+        else
+            onBeforeOut?.Invoke();
         isBusy = true;
 
         image.color = startColor;
@@ -150,6 +178,10 @@ public class ScreenFade : MonoBehaviour
         image.color = finishColor;
         isBusy = false;
         isFaded = fadedValue;
+        if (fadedValue)
+            onAfterIn?.Invoke();
+        else
+            onAfterOut?.Invoke();
     }
 
     private void Awake()
@@ -157,24 +189,8 @@ public class ScreenFade : MonoBehaviour
         instance = this;
         isBusy = false;
         isFaded = true;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            In(1.5f, ScreenFadeType.Skull);
-        }
-        else if (Input.GetKeyDown(KeyCode.U))
-        {
-            Out(1.5f, ScreenFadeType.Circle);
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            Out(1.5f, ScreenFadeType.Default);
-        }
-        else if (Input.GetKeyDown(KeyCode.T))
-        {
-            In(1.5f, ScreenFadeType.Default);
-        }
+        Color c = defaultConfig.image.color;
+        c.a = 1;
+        defaultConfig.image.color = c;
     }
 }
