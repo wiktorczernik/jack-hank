@@ -30912,7 +30912,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   allowAirRoll: 1
   airRollForce: 7.5
-  airRollMinTime: 1.25
+  airRollMinTime: 0
+  airRollMaxPitchSpeed: 0.5
+  airRollMaxYawSpeed: 1
   turnForce: 5000
   turnAginForce: 7500
   turnStabilization: 8
