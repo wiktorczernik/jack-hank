@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     private static bool _isInitialized;
     [SerializeField] private Bonus_GUI bonusGUI;
     [SerializeField] private LevelDefinition debugLevelDefinition;
-    [SerializeField] private FadeTransition_GUI fadeTransition;
     public BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
     [SerializeField] private SceneExit sceneExit;
@@ -148,14 +147,13 @@ public class GameManager : MonoBehaviour
 
         OnDeath?.Invoke();
 
-        Local.fadeTransition.StartFadeIn();
-        Local.fadeTransition.OnFadeInEnded += AfterFadeIn;
-
-        return;
+        ScreenFade.onAfterIn += AfterFadeIn;
+        ScreenFade.In(2, ScreenFadeType.Skull);
 
         void AfterFadeIn()
         {
-            Local.fadeTransition.OnFadeInEnded -= AfterFadeIn;
+            Debug.Log("AfterFadeIn");
+            ScreenFade.onAfterIn -= AfterFadeIn;
             if (Local.bossFightManager.duringFight)
             {
                 RestartBossFight();

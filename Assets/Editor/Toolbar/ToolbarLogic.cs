@@ -50,6 +50,7 @@ public static class ToolbarLogic
                     playerPos += Vector3.up;
                 }
                 player.Teleport(playerPos, playerRot);
+                ScreenFade.Out(0, ScreenFadeType.Default);
             }
         }
     }

@@ -6,8 +6,9 @@ public class SceneEnter : MonoBehaviour
     [SerializeField] private PlayerVehicle player;
     [SerializeField] private Transform startingPosition;
     [SerializeField] private Transform botDestination;
-    [SerializeField] private FadeTransition_GUI fadeTransition;
     [SerializeField] private bool useEnter = true;
+    [SerializeField] private ScreenFadeType fadeOutType = ScreenFadeType.Default;
+    [SerializeField] private float fadeOutDuration = 1.2f;
     [Range(0, 200)][SerializeField] private float initialSpeedInKmH = 35f;
     private bool _isDisabled;
 
@@ -32,13 +33,14 @@ public class SceneEnter : MonoBehaviour
     public void TeleportPlayerAtEnter()
     {
         player.Teleport(startingPosition.position, startingPosition.rotation);
-        fadeTransition.OnFadeOutStarted += AfterFadeOut;
-        fadeTransition.PrepareFadeOut();
-        fadeTransition.StartFadeOut();
+        ScreenFade.onBeforeOut += AfterFadeOut;
+        ScreenFade.Out(fadeOutDuration, fadeOutType);
     }
 
     private void AfterFadeOut()
     {
-        player.physics.bodyRigidbody.linearVelocity = player.transform.forward * (initialSpeedInKmH / 2); //I do not know why linear velocity takes km/h and multiply it on 2, but it works
+        ScreenFade.onBeforeOut -= AfterFadeOut;
+        player.physics.bodyRigidbody.linearVelocity = player.transform.forward * (initialSpeedInKmH / 2); 
+        //I do not know why linear velocity takes km/h and multiply it on 2, but it works
     }
 }
