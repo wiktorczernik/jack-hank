@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -55,6 +55,7 @@ public class VehiclePhysics : MonoBehaviour
     public float airRollMinTime = 1.25f;
     public float airRollMaxPitchSpeed = 0.5f;
     public float airRollMaxYawSpeed = 0.5f;
+    public bool airRollRotateTrajectory = true;
     #endregion
 
     #region Turning
@@ -220,31 +221,33 @@ public class VehiclePhysics : MonoBehaviour
         if (isGrounded || !allowAirRoll) return;
         if (airTimeState.timePassed < airRollMinTime) return;
 
-        Vector3 yawForce = transform.up;
-        yawForce *= airRollForce;
-        yawForce *= input.x;
-        yawForce *= Time.fixedDeltaTime;
-        
-        Vector3 pitchForce = transform.right;
-        pitchForce *= airRollForce;
-        pitchForce *= input.y;
-        pitchForce *= Time.fixedDeltaTime;
+        Vector3 pitchTorque = transform.right * airRollForce * input.y * Time.fixedDeltaTime;
+
+        Vector3 yawAxis = Vector3.up;
+        Vector3 yawTorque = yawAxis * airRollForce * input.x * Time.fixedDeltaTime;
 
         Vector3 currentAngular = bodyRigidbody.angularVelocity;
-
         bool cancelYaw = false;
-        bool cancelPitch = false || !allowPitchAirRoll;
-
-        if (currentAngular.y >= airRollMaxYawSpeed && yawForce.y > 0)
-            cancelYaw = true;
-        else if (currentAngular.y <= -airRollMaxYawSpeed && yawForce.y < 0)
-            cancelYaw = true;
+        if (currentAngular.y >= airRollMaxYawSpeed && input.x > 0) cancelYaw = true;
+        if (currentAngular.y <= -airRollMaxYawSpeed && input.x < 0) cancelYaw = true;
 
         if (!cancelYaw)
-            bodyRigidbody.AddTorque(yawForce, ForceMode.VelocityChange);
-        if (!cancelPitch)
-            bodyRigidbody.AddTorque(pitchForce, ForceMode.VelocityChange);
+        {
+            bodyRigidbody.AddTorque(yawTorque, ForceMode.VelocityChange);
+        }
+        if (allowPitchAirRoll)
+        {
+            bodyRigidbody.AddTorque(pitchTorque, ForceMode.VelocityChange);
+        }
+        if (airRollRotateTrajectory)
+        {
+            float angularY = bodyRigidbody.angularVelocity.y;
+            float angleDegrees = angularY * Mathf.Rad2Deg * Time.fixedDeltaTime;
+            Quaternion deltaRot = Quaternion.AngleAxis(angleDegrees, Vector3.up);
+            bodyRigidbody.linearVelocity = deltaRot * bodyRigidbody.linearVelocity;
+        }
     }
+
     [Obsolete]
     public bool IsGrounded() => isGrounded;
     void CheckGrounded()
