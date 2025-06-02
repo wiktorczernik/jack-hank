@@ -50,8 +50,11 @@ public class VehiclePhysics : MonoBehaviour
     #region Air roll
     [Header("Air roll")]
     public bool allowAirRoll = false;
+    public bool allowPitchAirRoll = false; 
     public float airRollForce = 1f;
     public float airRollMinTime = 1.25f;
+    public float airRollMaxPitchSpeed = 0.5f;
+    public float airRollMaxYawSpeed = 0.5f;
     #endregion
 
     #region Turning
@@ -217,18 +220,30 @@ public class VehiclePhysics : MonoBehaviour
         if (isGrounded || !allowAirRoll) return;
         if (airTimeState.timePassed < airRollMinTime) return;
 
-        Vector3 sideForce = transform.up;
-        sideForce *= airRollForce;
-        sideForce *= input.x;
-        sideForce *= Time.fixedDeltaTime;
+        Vector3 yawForce = transform.up;
+        yawForce *= airRollForce;
+        yawForce *= input.x;
+        yawForce *= Time.fixedDeltaTime;
         
-        Vector3 forwardForce = transform.right;
-        forwardForce *= airRollForce;
-        forwardForce *= input.y;
-        forwardForce *= Time.fixedDeltaTime;
+        Vector3 pitchForce = transform.right;
+        pitchForce *= airRollForce;
+        pitchForce *= input.y;
+        pitchForce *= Time.fixedDeltaTime;
 
-        bodyRigidbody.AddTorque(sideForce, ForceMode.VelocityChange);
-        bodyRigidbody.AddTorque(forwardForce, ForceMode.VelocityChange);
+        Vector3 currentAngular = bodyRigidbody.angularVelocity;
+
+        bool cancelYaw = false;
+        bool cancelPitch = false || !allowPitchAirRoll;
+
+        if (currentAngular.y >= airRollMaxYawSpeed && yawForce.y > 0)
+            cancelYaw = true;
+        else if (currentAngular.y <= -airRollMaxYawSpeed && yawForce.y < 0)
+            cancelYaw = true;
+
+        if (!cancelYaw)
+            bodyRigidbody.AddTorque(yawForce, ForceMode.VelocityChange);
+        if (!cancelPitch)
+            bodyRigidbody.AddTorque(pitchForce, ForceMode.VelocityChange);
     }
     [Obsolete]
     public bool IsGrounded() => isGrounded;
@@ -461,10 +476,7 @@ public class VehiclePhysics : MonoBehaviour
             av.y = 0;
             bodyRigidbody.angularVelocity = Vector3.Lerp(bodyRigidbody.angularVelocity, av, turnStabilization * Time.fixedDeltaTime);
         }
-        if (!isGrounded && allowAirRoll)
-        {
-            DoAirRoll(input);
-        }
+        DoAirRoll(input);
         speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
         speedKmhForward = Mathf.Abs(speedKmh);
         lastVelocity = bodyRigidbody.linearVelocity;
