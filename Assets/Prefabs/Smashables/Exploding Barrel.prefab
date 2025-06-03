@@ -43,8 +43,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706663770647387043}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.0000006854534, y: 0.5121429, z: 0.000000059604645}
-  m_Size: 1.0242858
+  m_LocalReferencePoint: {x: 0.0000019073486, y: 1.4050194, z: 0.00000023841858}
+  m_Size: 2.8100388
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
@@ -264,13 +264,13 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 0
-  canSelfExplode: 0
+  canBeExploded: 1
+  canSelfExplode: 1
   selfExplosionProps:
-    _epicenterParentTransform: {fileID: 0}
+    _epicenterParentTransform: {fileID: 7896198427691659033}
     _epicenterPosition: {x: 0, y: 0, z: 0}
-    initiator: {fileID: 0}
-    force: 500
+    initiator: {fileID: 5655159044789525844}
+    force: 1500
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
@@ -296,7 +296,19 @@ MonoBehaviour:
   collisionEvents: {fileID: 1451961628616496013}
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5655159044789525844}
+        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
+        m_MethodName: SelfExplodeDelayed
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0

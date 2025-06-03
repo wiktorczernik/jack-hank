@@ -816,6 +816,7 @@ GameObject:
   - component: {fileID: 935722129247620270}
   - component: {fileID: 5976864364217395921}
   - component: {fileID: 2134292983248913544}
+  - component: {fileID: 5823974533020726644}
   m_Layer: 0
   m_Name: Model
   m_TagString: Smashable
@@ -906,6 +907,27 @@ MonoBehaviour:
   OnExit:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &5823974533020726644
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4731049135272070003}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.3700371, y: 2.8729293, z: 4.5876484}
+  m_Center: {x: 0.030275663, y: 1.3828485, z: 0.3318046}
 --- !u!1 &5253286776803254381
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,7 +1139,7 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 0
+  canBeExploded: 1
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
@@ -1144,7 +1166,8 @@ MonoBehaviour:
   shouldBecomeDebris: 0
   debrisPrefab: {fileID: 0}
   usedRigidbody: {fileID: 5976864364217395921}
-  usedColliders: []
+  usedColliders:
+  - {fileID: 0}
   collisionEvents: {fileID: 2134292983248913544}
   OnHit:
     m_PersistentCalls:
