@@ -180,7 +180,7 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 0
+  canBeExploded: 1
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
@@ -198,6 +198,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 100
   destroyTime: 10
@@ -217,6 +218,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 5162174892694591371}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &7226188767526281267
 GameObject:
   m_ObjectHideFlags: 0

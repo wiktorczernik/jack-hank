@@ -51,7 +51,7 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 0
+  canBeExploded: 1
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
@@ -92,6 +92,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ad8e9a30a7101d24caf8d07d96df7578, type: 3}
   - {fileID: 8300000, guid: 666c7d1ff3bb030448641cf8aae7c75d, type: 3}
   audioSource: {fileID: 9055117501618649955}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &5450098198667076270
 GameObject:
   m_ObjectHideFlags: 0

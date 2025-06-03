@@ -51,7 +51,7 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   exploded: 0
-  canBeExploded: 0
+  canBeExploded: 1
   canSelfExplode: 0
   selfExplosionProps:
     _epicenterParentTransform: {fileID: 0}
@@ -136,8 +136,8 @@ LODGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1838598201666655836}
   serializedVersion: 2
-  m_LocalReferencePoint: {x: -51.20377, y: 0.6233421, z: 3.9543157}
-  m_Size: 2.4089918
+  m_LocalReferencePoint: {x: -0.7068174, y: 1.701359, z: -0.6295619}
+  m_Size: 6.051273
   m_FadeMode: 0
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
