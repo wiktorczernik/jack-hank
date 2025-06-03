@@ -31149,10 +31149,54 @@ MonoBehaviour:
   _workDuration: 0.5
   _cooldownDuration: 0.05
   speedBeforeJump: 0
-  pitchTilt: 2
+  startPitch: 0
+  pitchCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0012817383
+      value: 0
+      inSlope: -520.69617
+      outSlope: -520.69617
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.15363452
+    - serializedVersion: 3
+      time: 0.03746021
+      value: -9.704565
+      inSlope: -2.846769
+      outSlope: -2.846769
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.20740671
+    - serializedVersion: 3
+      time: 0.47033715
+      value: -5.982934
+      inSlope: 27.051174
+      outSlope: 27.051174
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.1736246
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.5
+      value: 30
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   upwardSpeed: 30
   minForwardSpeed: 30
-  stabilizationForce: 50
+  almostGroundedTorqueForce: 2
+  pitchTorqueForce: 1.5
+  rollStabilizationForce: 1
 --- !u!114 &3356494008966536327
 MonoBehaviour:
   m_ObjectHideFlags: 0

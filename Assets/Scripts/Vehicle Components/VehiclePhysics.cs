@@ -473,7 +473,7 @@ public class VehiclePhysics : MonoBehaviour
             DoDrift(input.x);
         }
         ApplyFriction();
-        if (!isDrifting && input.x == 0)
+        if (!isDrifting && input.x == 0 && isGrounded)
         {
             Vector3 av = bodyRigidbody.angularVelocity;
             av.y = 0;
