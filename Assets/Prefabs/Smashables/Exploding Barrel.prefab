@@ -272,7 +272,7 @@ MonoBehaviour:
     initiator: {fileID: 5655159044789525844}
     force: 1500
     epicenterRadius: 10
-    shakeIntensity: 0.5
+    shakeIntensity: 0.1
     shakeMaxDistance: 100
     damage: 0
     damageFalloff:
