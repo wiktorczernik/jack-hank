@@ -2,27 +2,27 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// Jest to podstawowa klasa dla wszystkich zniszczalnych drobnych obiektów. Zarz¹dza procesem niszczenia, 
-/// przechowuje stan, informacje czy mo¿e aktualnie zostaæ zniszczone (hittable) lub popchniête (bumpable), 
-/// odtwarza dŸwiêk po zderzeniu i manipuluje stanami colliderów i rigidbody. Opcjonalnie utworzy tak zwane 
-/// debris (cz¹stki), czyli  wersje tego smashable podzielonego na mniejsze obiekty aby zsymulowaæ rozsypanie 
-/// siê. SmashableEntity oraz jego debris musz¹ byæ przechowywane w oddzielnych prefabach.
+/// Jest to podstawowa klasa dla wszystkich zniszczalnych drobnych obiektï¿½w. Zarzï¿½dza procesem niszczenia, 
+/// przechowuje stan, informacje czy moï¿½e aktualnie zostaï¿½ zniszczone (hittable) lub popchniï¿½te (bumpable), 
+/// odtwarza dï¿½wiï¿½k po zderzeniu i manipuluje stanami colliderï¿½w i rigidbody. Opcjonalnie utworzy tak zwane 
+/// debris (czï¿½stki), czyli  wersje tego smashable podzielonego na mniejsze obiekty aby zsymulowaï¿½ rozsypanie 
+/// siï¿½. SmashableEntity oraz jego debris muszï¿½ byï¿½ przechowywane w oddzielnych prefabach.
 /// </summary>
 public class SmashableEntity : GameEntity
 {
     /// <summary>
-    /// Czy zosta³o potr¹cone?
+    /// Czy zostaï¿½o potrï¿½cone?
     /// </summary>
     [Header("State")]
     public bool wasHit = false;
 
     /// <summary>
-    /// Czy jest w stanie zostaæ potr¹cone i popchniête poprzez bumper?
+    /// Czy jest w stanie zostaï¿½ potrï¿½cone i popchniï¿½te poprzez bumper?
     /// </summary>
     [Header("Main")]
     public bool bumpable = true;
     /// <summary>
-    /// Czy jest w stanie zostaæ potr¹cone?
+    /// Czy jest w stanie zostaï¿½ potrï¿½cone?
     /// </summary>
     public bool hittable = true;
     /// <summary>
@@ -30,7 +30,7 @@ public class SmashableEntity : GameEntity
     /// </summary>
     public int bountyPointsReward;
     /// <summary>
-    /// Czas po którym obiekt zostanie zniszczony (destroy) jeœli zosta³ potr¹cony
+    /// Czas po ktï¿½rym obiekt zostanie zniszczony (destroy) jeï¿½li zostaï¿½ potrï¿½cony
     /// </summary>
     public float destroyTime = 10f;
     /// <summary>
@@ -44,21 +44,21 @@ public class SmashableEntity : GameEntity
 
     [Header("Debris")]
     /// <summary>
-    /// Czy to smashable powinno rozbiæ siê na ma³e kawa³ki po potr¹ceniu
+    /// Czy to smashable powinno rozbiï¿½ siï¿½ na maï¿½e kawaï¿½ki po potrï¿½ceniu
     /// </summary>
     public bool shouldBecomeDebris = false;
     /// <summary>
-    /// Prefab kawa³ków
+    /// Prefab kawaï¿½kï¿½w
     /// </summary>
     public GameObject debrisPrefab;
 
     /// <summary>
-    /// G³ówne rigidbody wykorzystywane przez to smashable
+    /// Gï¿½ï¿½wne rigidbody wykorzystywane przez to smashable
     /// </summary>
     [Header("Physics")]
     public Rigidbody usedRigidbody;
     /// <summary>
-    /// Lista colliderów wykorzystywanych przez to smashable
+    /// Lista colliderï¿½w wykorzystywanych przez to smashable
     /// </summary>
     public Collider[] usedColliders = new Collider[0];
     [SerializeField] protected CollisionEventEmitter collisionEvents;
@@ -66,7 +66,7 @@ public class SmashableEntity : GameEntity
     [Header("Physics On Hit")]
     public UnityEvent<SmashableEntity> OnHit;
     /// <summary>
-    /// Czy rotacja powinna byæ zamro¿ona po zderzeniu
+    /// Czy rotacja powinna byï¿½ zamroï¿½ona po zderzeniu
     /// </summary>
     public bool hitFreezeRotation = false;
     /// <summary>
@@ -74,25 +74,25 @@ public class SmashableEntity : GameEntity
     /// </summary>
     public RigidbodyConstraints hitConstrains = RigidbodyConstraints.None;
     /// <summary>
-    /// Czy rigidbody powinno byæ kinematic po zderzeniu
+    /// Czy rigidbody powinno byï¿½ kinematic po zderzeniu
     /// </summary>
     public bool hitIsKinematic = false;
 
     /// <summary>
-    /// Zestaw dŸwiêków które mog¹ byæ zagrane po zderzeniu
+    /// Zestaw dï¿½wiï¿½kï¿½w ktï¿½re mogï¿½ byï¿½ zagrane po zderzeniu
     /// </summary>
     [Header("Audio")]
     [SerializeField] protected AudioClip[] impactAudios = new AudioClip[0];
     /// <summary>
-    /// ród³o dŸwiêku
+    /// ï¿½rï¿½dï¿½o dï¿½wiï¿½ku
     /// </summary>
     public AudioSource audioSource;
     /// <summary>
-    /// Minimalny pitch dŸwiêku zderzenia
+    /// Minimalny pitch dï¿½wiï¿½ku zderzenia
     /// </summary>
     [SerializeField] protected float impactMinPitch = 0.75f;
     /// <summary>
-    /// Maksymalny pitch dŸwiêku zderzenia
+    /// Maksymalny pitch dï¿½wiï¿½ku zderzenia
     /// </summary>
     [SerializeField] protected float impactMaxPitch = 1.25f;
     /// <summary>
@@ -121,7 +121,7 @@ public class SmashableEntity : GameEntity
         ForceHit();
     }
     /// <summary>
-    /// Powoduje znieszczenie smashable na si³ê
+    /// Powoduje znieszczenie smashable na siï¿½ï¿½
     /// </summary>
     public void ForceHit()
     {
@@ -156,9 +156,11 @@ public class SmashableEntity : GameEntity
     /// <summary>
     /// Reackja na wybuch poprzez znisczenie
     /// </summary>
-    /// <param name="explosionProps">W³aœciwoœci wybuchu</param>
+    /// <param name="explosionProps">Wï¿½aï¿½ciwoï¿½ci wybuchu</param>
     protected override void InternalExplode(ExplosionProperties explosionProps)
     {
+        if (wasHit) return;
+        
         usedRigidbody.freezeRotation = hitFreezeRotation;
         usedRigidbody.constraints = hitConstrains;
         usedRigidbody.isKinematic = hitIsKinematic;
@@ -200,7 +202,7 @@ public class SmashableEntity : GameEntity
         }
     }
     /// <summary>
-    /// Zagra losowy dŸwiêk po zderzeniu
+    /// Zagra losowy dï¿½wiï¿½k po zderzeniu
     /// </summary>
     public void PlayImpactAudio()
     {
