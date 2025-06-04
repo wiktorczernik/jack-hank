@@ -30676,6 +30676,7 @@ GameObject:
   - component: {fileID: 3356494008966536327}
   - component: {fileID: 8409974713711607995}
   - component: {fileID: 1318795595491404067}
+  - component: {fileID: 351531459514417218}
   m_Layer: 0
   m_Name: TestBus
   m_TagString: Player
@@ -31297,6 +31298,47 @@ MonoBehaviour:
   hardTurnMaxSpeed: 10
   speedDamageThreshold: 40
   dmgReceivedPerSpeedUnit: 3
+--- !u!114 &351531459514417218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e22549f0a6c04149bc0e721033a5b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  penaltyState: 0
+  maxPenaltyVelocity: 40
+  eventTimer: 0
+  excusingDuration: 7
+  warningDuration: 10
+  onWarningBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onWarningTick:
+    m_PersistentCalls:
+      m_Calls: []
+  onWarningEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onPenaltyReceived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5559613390477037970}
+        m_TargetAssemblyTypeName: GameEntity, Assembly-CSharp
+        m_MethodName: set_health
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4541372557963350123
 GameObject:
   m_ObjectHideFlags: 0
