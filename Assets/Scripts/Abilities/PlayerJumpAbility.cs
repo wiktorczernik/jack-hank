@@ -13,14 +13,16 @@ public class PlayerJumpAbility : PlayerVehicleAbility
 
     [Header("Torque settings")]
     [SerializeField] float almostGroundedTorqueForce = 10f;
-    [SerializeField] float pitchTorqueForce = 10f;
-    [SerializeField] float rollStabilizationForce = 50f;
-
+    [SerializeField] float pitchTorqueForce = 12f;
+    [SerializeField] float rollStabilizationForce = 40f;
+    [SerializeField] float pitchDampingFactor = 1f;
+    [SerializeField] float rollDampingFactor = 1f;
 
     public override bool ContinueWorkWhile()
     {
         return !physics.isGrounded;
     }
+
     protected override void OnWorkBegin()
     {
         physics.onLand += OnLand;
@@ -28,52 +30,57 @@ public class PlayerJumpAbility : PlayerVehicleAbility
         Rigidbody useRigidbody = physics.bodyRigidbody;
         Vector3 horizontalVelocity = Vector3.ProjectOnPlane(useRigidbody.linearVelocity, physics.transform.up);
         speedBeforeJump = Mathf.Max(minForwardSpeed, horizontalVelocity.magnitude);
-        Vector3 jumpVelocity = Vector3.zero;
-        jumpVelocity += vehicle.transform.forward * speedBeforeJump;
-        jumpVelocity += vehicle.transform.up * upwardSpeed;
-        Vector3 angular = physics.bodyRigidbody.angularVelocity;
-        angular.x = 0;
-        angular.z = 0;
-        physics.bodyRigidbody.angularVelocity = angular;
 
+        Vector3 jumpVelocity = vehicle.transform.forward * speedBeforeJump
+                              + vehicle.transform.up * upwardSpeed;
+        // Сброс угловой скорости по X и Z
+        Vector3 angular = useRigidbody.angularVelocity;
+        angular.x = 0f;
+        angular.z = 0f;
+        useRigidbody.angularVelocity = angular;
+
+        // Фиксация начального тангажа для кривой
         Vector3 currentEuler = vehicle.transform.eulerAngles;
-        startPitch = currentEuler.x;
-        pitchCurve.keys[0].value = startPitch;
+        startPitch = NormalizeAngle(currentEuler.x);
+        // Обновляем первый ключ кривой (необязательно, но можно подстроить)
+        Keyframe firstKey = pitchCurve.keys[0];
+        firstKey.value = startPitch;
+        pitchCurve.MoveKey(0, firstKey);
 
         useRigidbody.linearVelocity = jumpVelocity;
     }
+
     protected override void OnWorkTick()
     {
         if (physics.isGrounded) return;
 
-        Rigidbody rb = physics.bodyRigidbody;
-
         float desiredPitch = pitchCurve.Evaluate(workTime);
 
-        Vector3 currentEuler = vehicle.transform.eulerAngles;
-        float rawPitch = currentEuler.x;
-        float rawRoll = currentEuler.z;
+        // Текущие мировые углы в локальных осях
+        Vector3 euler = vehicle.transform.eulerAngles;
+        float currentPitch = NormalizeAngle(euler.x);
+        float currentRoll = NormalizeAngle(euler.z);
 
-        float currentPitch = (rawPitch > 180f) ? rawPitch - 360f : rawPitch;
-        float currentRoll = (rawRoll > 180f) ? rawRoll - 360f : rawRoll;
-
+        // Ошибки (целевой крен = 0)
         float pitchError = desiredPitch - currentPitch;
-        float rollError = -currentRoll;
+        float rollError = 0f - currentRoll;
 
-        Vector3 angularVelLocal = vehicle.transform.InverseTransformDirection(rb.angularVelocity);
-        float pitchVelocity = angularVelLocal.x;
-        float rollVelocity = angularVelLocal.z;
+        // Локальная угловая скорость
+        Vector3 localAngVel = vehicle.transform.InverseTransformDirection(
+            physics.bodyRigidbody.angularVelocity
+        );
 
-        float pitchDamping = -pitchVelocity;
-        float rollDamping = -rollVelocity;
+        // Формируем локальный момент: по X — для тангажа, по Z — для крена
+        float torquePitch = pitchError * pitchTorqueForce
+                            - localAngVel.x * pitchDampingFactor;
+        float torqueRoll = rollError * rollStabilizationForce
+                            - localAngVel.z * rollDampingFactor;
 
-        float pitchControl = pitchError * pitchTorqueForce + pitchDamping * pitchTorqueForce * 0.5f;
-        float rollControl = rollError * rollStabilizationForce + rollDamping * rollStabilizationForce * 0.5f;
-
-        Vector3 torqueWorld = vehicle.transform.right * pitchControl
-                            + vehicle.transform.forward * rollControl;
-
-        rb.AddTorque(torqueWorld * Time.fixedDeltaTime, ForceMode.VelocityChange);
+        Vector3 localTorque = new Vector3(torquePitch, 0f, torqueRoll);
+        // Переводим в мировой и применяем с учетом фиксированного шага
+        Vector3 worldTorque = vehicle.transform.TransformDirection(localTorque)
+                              * Time.fixedDeltaTime;
+        physics.bodyRigidbody.AddTorque(worldTorque, ForceMode.VelocityChange);
     }
 
     public override bool UsageConditionsSatisfied()
@@ -83,13 +90,19 @@ public class PlayerJumpAbility : PlayerVehicleAbility
 
     private void OnLand(VehiclePhysics.AirTimeState airTime)
     {
-        Debug.Log("LANDED");
-        physics.bodyRigidbody.linearVelocity = vehicle.transform.forward * speedBeforeJump;
-        physics.bodyRigidbody.angularVelocity = Vector3.zero;
-        Vector3 angular = physics.bodyRigidbody.angularVelocity;
-        angular.x = 0;
-        angular.z = 0;
-        physics.bodyRigidbody.angularVelocity = angular;
+        if (workTime < workDuration) return;
+
+        Rigidbody rb = physics.bodyRigidbody;
+        rb.linearVelocity = vehicle.transform.forward * speedBeforeJump;
+        rb.angularVelocity = Vector3.zero;
+
         physics.onLand -= OnLand;
+    }
+
+    // Приводит угол из [0,360) к диапазону [–180, +180]
+    private float NormalizeAngle(float angle)
+    {
+        if (angle > 180f) angle -= 360f;
+        return angle;
     }
 }

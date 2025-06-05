@@ -282,7 +282,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!153 &1754507601643921490
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -491,7 +491,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!153 &6582577405405240925
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -30868,6 +30868,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  isWheelGrounded: 0
+  isBodyGrounded: 0
   isGrounded: 0
   groundNormal: {x: 0, y: 1, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
@@ -30985,6 +30987,13 @@ MonoBehaviour:
   collisionEvents: {fileID: 3356494008966536327}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
+  hullSize: {x: 3.5, y: 2.7, z: 8.9}
+  bodyGroundedUpOffset: 1.8
+  bodyGroundedMaxDistance: 0.1
+  rollStabilization: 50
+  pitchStabilization: 250
+  rollDamping: 4
+  pitchDamping: 25
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
@@ -31157,29 +31166,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: -0.0012817383
       value: 0
-      inSlope: -520.69617
-      outSlope: -520.69617
+      inSlope: -94.68361
+      outSlope: -94.68361
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.15363452
-    - serializedVersion: 3
-      time: 0.03746021
-      value: -9.704565
-      inSlope: -2.846769
-      outSlope: -2.846769
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 1
-      outWeight: 0.20740671
+      outWeight: 0.14083132
     - serializedVersion: 3
       time: 0.47033715
       value: -5.982934
-      inSlope: 27.051174
-      outSlope: 27.051174
+      inSlope: 47.743366
+      outSlope: 47.743366
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.1736246
+      inWeight: 0.10115839
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1.5
@@ -31196,8 +31196,10 @@ MonoBehaviour:
   upwardSpeed: 30
   minForwardSpeed: 30
   almostGroundedTorqueForce: 2
-  pitchTorqueForce: 1.5
+  pitchTorqueForce: 5
   rollStabilizationForce: 1
+  pitchDampingFactor: 15
+  rollDampingFactor: 1
 --- !u!114 &3356494008966536327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32523,7 +32525,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!153 &321183809788251971
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -33981,7 +33983,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.5
-  m_Center: {x: 0.00000005960466, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!153 &663347084425971500
 ConfigurableJoint:
   m_ObjectHideFlags: 0

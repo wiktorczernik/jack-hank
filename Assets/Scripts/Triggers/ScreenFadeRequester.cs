@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class ScreenFadeRequester : MonoBehaviour
 {
+    [Header("Auto Start")]
+    public bool startIn = false;
+    public bool startOut = false;
     [Header("In")]
     public float inDuration = 1;
     public ScreenFadeType inType = ScreenFadeType.Default;
@@ -16,5 +19,13 @@ public class ScreenFadeRequester : MonoBehaviour
     public void Out()
     {
         ScreenFade.Out(outDuration, outType);
+    }
+
+    private void Start()
+    {
+        if (startIn)
+            In();
+        else if (startOut)
+            Out();
     }
 }
