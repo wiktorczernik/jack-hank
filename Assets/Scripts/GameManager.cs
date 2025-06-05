@@ -205,9 +205,8 @@ public class GameManager : MonoBehaviour
         RunInfo.Time += Time.deltaTime;
     }
 
-    private void OnLevelEnds()
+    public void OnLevelEnds()
     {
-        AccountManager.LoggedInPlayerAccount.SetLevelAsCompleted(_definition, RunInfo.GetPointsByBonusTypes());
         LevelManager.SetLevelAsCompleted(_definition);
     }
 }

@@ -1,28 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AccountManagement;
+using JetBrains.Annotations;
 
 namespace LevelManagement
 {
     public class LevelInfo
     {
         private readonly LevelDefinition _definition;
-        private readonly LevelStatistics _statistics;
-        private LevelStatus _status;
-    
-        public readonly int LevelID;
+        [CanBeNull] private LevelStatistics _statistics;
+        
+        
+        public bool IsIncrementedWithStatistics => _statistics != null;
+        public int LevelID => _definition.LevelID;
         public string LevelSceneName => _definition.SceneName;
 
-        public LevelStatus Status
-        {
-            get => _status;
-            set
-            {
-                _statistics.IsPassed = value == LevelStatus.Passed;
-
-                _status = value;
-            }
-        }
+        public LevelStatus Status { get; private set; } = LevelStatus.None;
+        
+        
+        public Dictionary<PlayerBonusTypes, int> BountyPointsPerBonusType => 
+            _statistics == null ? new Dictionary<PlayerBonusTypes, int>() : _statistics.Bonuses;
+        
+        public int TotalBountyPoints => _statistics == null ? 0 : _statistics.Bonuses.Sum(pair => pair.Value);
 
         public int[] LastLevelsIDs {
             get
@@ -32,20 +32,45 @@ namespace LevelManagement
             
         }
 
-        public LevelInfo(LevelStatus status, LevelDefinition definition, LevelStatistics statistics = null)
+        public LevelInfo(LevelDefinition definition)
         {
-            if (definition == null) throw new Exception("Level definition is null");
-            if (statistics is not null && statistics.LevelID != definition.LevelID) throw new Exception("LevelID doesn't match");
-
-            _statistics = statistics != null ? statistics.Clone() as LevelStatistics : new LevelStatistics();
-            LevelID = definition.LevelID;
-            Status = status;
+            if (definition == null) throw new Exception("LevelInfo: definition is null.");
+            
             _definition = definition;
         }
 
+        [CanBeNull]
         public LevelStatistics GetLevelStatistics()
         {
-            return _statistics.Clone() as LevelStatistics;
+            return _statistics?.Clone() as LevelStatistics;
+        }
+
+        public void IncrementLevelStatistics(LevelStatistics levelStatistics)
+        {
+            _statistics = levelStatistics ?? throw new Exception("LevelInfo: levelStatistics is null.");
+        }
+        
+        public void DecrementLevelStatistics()
+        {
+            _statistics = null;
+            Status = LevelStatus.None;
+        }
+
+        public void SetStatus(LevelStatus status)
+        {
+            if (_statistics == null) 
+                throw new Exception("LevelInfo: levelInfo has not incremented with level statistics.");
+            
+            Status = status;
+            _statistics.IsPassed = status == LevelStatus.Passed;
+        }
+
+        public void SetBountyPoints(Dictionary<PlayerBonusTypes, int> bountyPoints)
+        {
+            if (_statistics == null) 
+                throw new Exception("LevelInfo: levelInfo has not incremented with level statistics.");
+            
+            _statistics.Bonuses = bountyPoints.ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }

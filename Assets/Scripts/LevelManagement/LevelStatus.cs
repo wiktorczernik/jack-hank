@@ -2,6 +2,6 @@
 {
     public enum LevelStatus
     {
-        Passed, Available, Unavailable
+        None, Passed, Available, Unavailable
     }
 }

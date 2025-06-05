@@ -6,25 +6,15 @@ using AccountManagement;
 using LevelManagement;
 using UnityEngine;
 
-public static class AccountManager
+public class AccountManager : MonoBehaviour
 {
-    private static PlayerAccount _loggedInPlayerAccount;
-    
-    private static readonly string SaveFolderPath = Application.persistentDataPath + "/saves";
-    public static PlayerAccount LoggedInPlayerAccount
-    {
-        get
-        {
-            if (_loggedInPlayerAccount != null) return _loggedInPlayerAccount;
-            
-            LogInDebugAccount();
-
-            return _loggedInPlayerAccount;
-        }
-        private set => _loggedInPlayerAccount = value;
-    }
+    private static string SaveFolderPath => Application.persistentDataPath + "/saves";
+    public static PlayerAccount LoggedInPlayerAccount { get; private set; }
 
     public static bool IsDebugAccount { get; private set; }
+    
+    public static event Action<PlayerAccountData> OnLoggedIn;
+    public static event Action<PlayerAccountData> OnLoggedOut;
 
     public static List<string> GetSavedAccountsNames()
     {
@@ -47,38 +37,27 @@ public static class AccountManager
 
         var savePath = GetAccountSavePath(accountName);
 
-        if (!File.Exists(savePath)) throw new Exception("Account not found");
+        if (!File.Exists(savePath)) throw new Exception($"AccountManager: Account with name '{accountName}' not found.");
 
-        var accountData = new PlayerAccountData
-        {
-            AccountName = accountName
-        };
+        var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
+        accountData.AccountName = accountName;
 
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), accountData);
-
-        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
-
-        _loggedInPlayerAccount = new PlayerAccount(accountData);
+        LoggedInPlayerAccount = new PlayerAccount(accountData);
+        
+        OnLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
     }
 
-    private static void LogInDebugAccount()
+    public static void LogInDebugAccount()
     {
-        var accountData = new PlayerAccountData
-        {
-            AccountName = "Debug",
-            openedLevels = Array.Empty<LevelStatistics>()
-        };
-        
+        LoggedInPlayerAccount = new PlayerAccount("Debug");
         IsDebugAccount = true;
-
-        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
-
-        _loggedInPlayerAccount = new PlayerAccount(accountData);
+        OnLoggedIn?.Invoke(LoggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
     }
 
     public static void LogOutCurrentAccount()
     {
         LoggedInPlayerAccount = null;
+        OnLoggedOut?.Invoke(GetUpdatedAccountData());
     }
 
     public static bool IsLoggedIn()
@@ -94,13 +73,13 @@ public static class AccountManager
 
         File.WriteAllText(
             GetAccountSavePath(LoggedInPlayerAccount.GetAccountName()),
-            JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
+            JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
     public static void LogInNewAccount(string accountName)
     {
-        if (ExistsSavedAccount(accountName)) throw new Exception("Account already exists");
-        if (LoggedInPlayerAccount != null) throw new Exception("There is logged in another account");
+        if (ExistsSavedAccount(accountName)) throw new Exception($"AccountManager: account with name '{accountName}' already exists.");
+        if (LoggedInPlayerAccount != null) throw new Exception("AccountManager: there is logged in another account.");
 
         ProcessSaveDirectory();
         LoggedInPlayerAccount = new PlayerAccount(accountName);
@@ -119,5 +98,16 @@ public static class AccountManager
         if (Directory.Exists(SaveFolderPath)) return;
 
         Directory.CreateDirectory(SaveFolderPath);
+    }
+
+    private static PlayerAccountData GetUpdatedAccountData()
+    {
+        var dataToSave = LoggedInPlayerAccount.GetData();
+
+        dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
+
+        dataToSave.bouncy = dataToSave.openedLevels.Sum(level => level.Bonuses.Sum(pair => pair.Value));
+
+        return dataToSave;
     }
 }
