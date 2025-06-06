@@ -85,7 +85,7 @@ public class SceneExit : MonoBehaviour
         if (level == null) Debug.LogError($"SceneExit: no level with id {_nextLevelId}");
         
         yield return new WaitForSeconds(delayBeforeNewScene);
-        
+        OnExit?.Invoke();
         GameSceneManager.LoadLevel(level);
     }
 
