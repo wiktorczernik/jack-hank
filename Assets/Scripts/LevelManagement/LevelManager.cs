@@ -11,7 +11,8 @@ namespace LevelManagement
     {
         public static bool IsIncrementedWithAccountData { private set; get; }
         private static List<LevelInfo> _levels;
-
+        
+        private static bool _isInitialized;
         private void Awake()
         {
             Debug.Log("LevelManager: initialization");
@@ -19,20 +20,24 @@ namespace LevelManagement
             LoadLevelDefinitions();
             AccountManager.OnLoggedIn += (accountData) => IncrementAccountData(accountData.openedLevels.ToList());
             AccountManager.OnLoggedOut += (accountData) => DecrementAccountData();
+            _isInitialized = true;
         }
 
         public static List<LevelInfo> GetLevelsList()
         {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
             return _levels.ToList();
         }
 
         public static List<LevelInfo> GetAvailableLevels()
         {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
             return _levels.Where(level => level.Status == LevelStatus.Available).ToList();
         }
 
         public static void SetLevelAsCompleted(LevelDefinition definition)
         {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
             if (_levels.FindIndex(level => level.LevelID == definition.LevelID) == -1) return;
             
             _levels.Find(value => value.LevelID == definition.LevelID).SetStatus(LevelStatus.Passed);
@@ -62,11 +67,13 @@ namespace LevelManagement
         [CanBeNull]
         public static LevelInfo GetLevelByName(string levelName)
         {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
             return _levels.Find(info => info.LevelSceneName == levelName);
         }
 
         public static LevelStatistics[] GetLevelsStatistics()
         {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
             return _levels.Where(level => level.Status == LevelStatus.Passed && level.Status == LevelStatus.Available)
                 .Select(level => level.GetLevelStatistics())
                 .ToArray();

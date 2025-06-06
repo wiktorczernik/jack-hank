@@ -57,6 +57,7 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInDebugAccount()
     {
+        if (_instance == null) throw new Exception("AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
         if (LoggedInPlayerAccount != null) return;
         LoggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
         UseDebugAccount = true;
