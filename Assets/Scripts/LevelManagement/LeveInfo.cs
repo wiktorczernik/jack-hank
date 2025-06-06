@@ -13,19 +13,19 @@ namespace LevelManagement
         [CanBeNull] private LevelStatistics _statistics;
         
         
-        public bool IsIncrementedWithStatistics => _statistics != null;
-        public int LevelID => _definition.LevelID;
-        public string LevelSceneName => _definition.SceneName;
+        public bool isIncrementedWithStatistics => _statistics != null;
+        public int levelID => _definition.LevelID;
+        public string levelSceneName => _definition.SceneName;
 
-        public LevelStatus Status { get; private set; } = LevelStatus.None;
+        public LevelStatus status { get; private set; } = LevelStatus.None;
         
         
-        public Dictionary<PlayerBonusTypes, int> BountyPointsPerBonusType => 
-            _statistics == null ? new Dictionary<PlayerBonusTypes, int>() : _statistics.Bonuses;
+        public Dictionary<PlayerBonusTypes, int> bountyPointsPerBonusType => 
+            _statistics == null ? new Dictionary<PlayerBonusTypes, int>() : _statistics.bonuses;
         
-        public int TotalBountyPoints => _statistics == null ? 0 : _statistics.Bonuses.Sum(pair => pair.Value);
+        public int totalBountyPoints => _statistics == null ? 0 : _statistics.bonuses.Sum(pair => pair.Value);
 
-        public int[] LastLevelsIDs {
+        public int[] lastLevelsIDs {
             get
             {
                 return _definition.LastLevels.Select(def => def.LevelID).ToArray();
@@ -64,7 +64,7 @@ namespace LevelManagement
         public void DecrementLevelStatistics()
         {
             _statistics = null;
-            Status = LevelStatus.None;
+            status = LevelStatus.None;
         }
 
         public void SetStatus(LevelStatus status)
@@ -75,8 +75,8 @@ namespace LevelManagement
                 return;
             }
             
-            Status = status;
-            _statistics.IsPassed = status == LevelStatus.Passed;
+            this.status = status;
+            _statistics.isPassed = status == LevelStatus.Passed;
         }
 
         public void SetBountyPoints(Dictionary<PlayerBonusTypes, int> bountyPoints)
@@ -87,7 +87,7 @@ namespace LevelManagement
                 return;
             }
             
-            _statistics.Bonuses = bountyPoints.ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
+            _statistics.bonuses = bountyPoints.ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
