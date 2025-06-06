@@ -30990,8 +30990,8 @@ MonoBehaviour:
   hullSize: {x: 3.5, y: 2.7, z: 8.9}
   bodyGroundedUpOffset: 1.8
   bodyGroundedMaxDistance: 0.1
-  rollStabilization: 50
-  pitchStabilization: 250
+  rollStabilization: 1
+  pitchStabilization: 10
   rollDamping: 4
   pitchDamping: 25
   skidmarkSourceLeft: {fileID: 8059905075052972374}
