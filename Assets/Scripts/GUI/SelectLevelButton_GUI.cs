@@ -11,7 +11,7 @@ public class SelectLevelButton_GUI : MonoBehaviour
     public void Initialize(int index, LevelInfo levelInfo)
     {
         _levelInfo = levelInfo;
-        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = $"{levelInfo.LevelSceneName}; Status: {levelInfo.Status}";
+        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = $"{levelInfo.levelSceneName}; Status: {levelInfo.status}";
         gameObject.GetComponent<Button>().onClick.AddListener(OnClick);
         var rectTransform = GetComponent<RectTransform>();
         const int offset = 30;
@@ -21,9 +21,9 @@ public class SelectLevelButton_GUI : MonoBehaviour
 
     private void OnClick()
     {
-        if (_levelInfo.Status == LevelStatus.Unavailable) return;
+        if (_levelInfo.status == LevelStatus.Unavailable) return;
 
-        Debug.Log($"Hard opening of level called {_levelInfo.LevelSceneName}");
+        Debug.Log($"Hard opening of level called {_levelInfo.levelSceneName}");
         GameSceneManager.LoadLevel(_levelInfo);
     }
 }

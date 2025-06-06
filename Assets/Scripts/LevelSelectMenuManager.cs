@@ -20,7 +20,7 @@ public class LevelSelectMenuManager : MonoBehaviour
     {
         if (State == LevelSelectMenuState.LevelSelected) return;
 
-        _instance._sceneExit.SetNextLevel(selectedLevel.LevelID);
+        _instance._sceneExit.SetNextLevel(selectedLevel.levelID);
         
         _instance._levelScroller.StopScrolling();
         _instance._botVehicle.isFollowing = true;

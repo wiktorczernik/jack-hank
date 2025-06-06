@@ -9,11 +9,11 @@ using UnityEngine;
 public class AccountManager : MonoBehaviour
 {
     [SerializeField] private PlayerAccountData debugAccountSettings;
-    private static string SaveFolderPath => Application.persistentDataPath + "/saves";
-    public static PlayerAccount LoggedInPlayerAccount { get; private set; }
-
-    public static bool UseDebugAccount { get; set; }
+    private static string _saveFolderPath => Application.persistentDataPath + "/saves";
     private static AccountManager _instance;
+    
+    public static PlayerAccount loggedInPlayerAccount { get; private set; }
+    public static bool useDebugAccount { get; set; }
     
     public static event Action<PlayerAccountData> OnLoggedIn;
     public static event Action<PlayerAccountData> OnLoggedOut;
@@ -27,7 +27,7 @@ public class AccountManager : MonoBehaviour
     {
         ProcessSaveDirectory();
 
-        return new DirectoryInfo(SaveFolderPath)
+        return new DirectoryInfo(_saveFolderPath)
             .GetFiles("*.json")
             .ToList()
             .ConvertAll(save => save.Name.Replace(".json", ""));
@@ -56,9 +56,9 @@ public class AccountManager : MonoBehaviour
         }
 
         var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
-        accountData.AccountName = accountName;
+        accountData.accountName = accountName;
 
-        LoggedInPlayerAccount = new PlayerAccount(accountData);
+        loggedInPlayerAccount = new PlayerAccount(accountData);
         
         OnLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
     }
@@ -71,31 +71,31 @@ public class AccountManager : MonoBehaviour
                 "AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
             return;
         }
-        if (LoggedInPlayerAccount != null) return;
-        LoggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
-        UseDebugAccount = true;
-        OnLoggedIn?.Invoke(LoggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
+        if (loggedInPlayerAccount != null) return;
+        loggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
+        useDebugAccount = true;
+        OnLoggedIn?.Invoke(loggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
     }
 
     public static void LogOutCurrentAccount()
     {
-        LoggedInPlayerAccount = null;
+        loggedInPlayerAccount = null;
         OnLoggedOut?.Invoke(GetUpdatedAccountData());
     }
 
     public static bool IsLoggedIn()
     {
-        return LoggedInPlayerAccount != null;
+        return loggedInPlayerAccount != null;
     }
 
     public static void SaveCurrentAccount()
     {
-        if (UseDebugAccount) return;
+        if (useDebugAccount) return;
         
         ProcessSaveDirectory();
 
         File.WriteAllText(
-            GetAccountSavePath(LoggedInPlayerAccount.GetAccountName()),
+            GetAccountSavePath(loggedInPlayerAccount.GetAccountName()),
             JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
@@ -113,31 +113,31 @@ public class AccountManager : MonoBehaviour
         }
 
         ProcessSaveDirectory();
-        LoggedInPlayerAccount = new PlayerAccount(accountName);
-        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
+        loggedInPlayerAccount = new PlayerAccount(accountName);
+        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(loggedInPlayerAccount.GetData()));
 
         LogInAccount(accountName);
     }
 
     private static string GetAccountSavePath(string accountName)
     {
-        return $"{SaveFolderPath}/{accountName}.json";
+        return $"{_saveFolderPath}/{accountName}.json";
     }
 
     private static void ProcessSaveDirectory()
     {
-        if (Directory.Exists(SaveFolderPath)) return;
+        if (Directory.Exists(_saveFolderPath)) return;
 
-        Directory.CreateDirectory(SaveFolderPath);
+        Directory.CreateDirectory(_saveFolderPath);
     }
 
     private static PlayerAccountData GetUpdatedAccountData()
     {
-        var dataToSave = LoggedInPlayerAccount.GetData();
+        var dataToSave = loggedInPlayerAccount.GetData();
 
         dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
 
-        dataToSave.bouncy = dataToSave.openedLevels.Sum(level => level.Bonuses.Sum(pair => pair.Value));
+        dataToSave.bouncy = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
 
         return dataToSave;
     }

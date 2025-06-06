@@ -16,12 +16,12 @@ namespace AccountManagement
 
         public PlayerAccount(string accountName)
         {
-            _playerAccountData = new PlayerAccountData { AccountName = accountName, openedLevels = Array.Empty<LevelStatistics>()};
+            _playerAccountData = new PlayerAccountData { accountName = accountName, openedLevels = Array.Empty<LevelStatistics>()};
         }
 
         public LevelStatistics GetLevelStatistics(int levelID)
         {
-            return _playerAccountData.openedLevels.First(level => level.LevelID == levelID).Clone() as LevelStatistics;
+            return _playerAccountData.openedLevels.First(level => level.levelID == levelID).Clone() as LevelStatistics;
         }
 
         public bool HasWatchedIntoCutscene()
@@ -41,7 +41,7 @@ namespace AccountManagement
 
         public string GetAccountName()
         {
-            return _playerAccountData.AccountName;
+            return _playerAccountData.accountName;
         }
     }
 }

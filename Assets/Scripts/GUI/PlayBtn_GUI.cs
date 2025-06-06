@@ -10,7 +10,7 @@ public class PlayBtn_GUI : MonoBehaviour
         {
             activated = true;
 
-            if (AccountManager.UseDebugAccount) GameSceneManager.LoadFirstLevelAsync();
+            if (AccountManager.useDebugAccount) GameSceneManager.LoadFirstLevelAsync();
             else GameSceneManager.LoadLogin();
         }
     }
