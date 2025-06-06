@@ -40,12 +40,20 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInAccount(string accountName)
     {
-        if (IsLoggedIn()) throw new Exception("AccountManager: There's already logged in account.");
+        if (IsLoggedIn())
+        {
+            Debug.LogError("AccountManager: There's already logged in account.");
+            return;
+        }
         ProcessSaveDirectory();
 
         var savePath = GetAccountSavePath(accountName);
 
-        if (!File.Exists(savePath)) throw new Exception($"AccountManager: Account with name '{accountName}' not found.");
+        if (!File.Exists(savePath))
+        {
+            Debug.LogError($"AccountManager: Account with name '{accountName}' not found.");
+            return;
+        }
 
         var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
         accountData.AccountName = accountName;
@@ -57,7 +65,12 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInDebugAccount()
     {
-        if (_instance == null) throw new Exception("AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
+        if (_instance == null)
+        {
+            Debug.LogError(
+                "AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
+            return;
+        }
         if (LoggedInPlayerAccount != null) return;
         LoggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
         UseDebugAccount = true;
@@ -88,8 +101,16 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInNewAccount(string accountName)
     {
-        if (ExistsSavedAccount(accountName)) throw new Exception($"AccountManager: account with name '{accountName}' already exists.");
-        if (IsLoggedIn()) throw new Exception("AccountManager: There's already logged in account.");
+        if (ExistsSavedAccount(accountName))
+        {
+            Debug.LogError($"AccountManager: account with name '{accountName}' already exists.");
+            return;
+        }
+        if (IsLoggedIn())
+        {
+            Debug.LogError("AccountManager: There's already logged in account.");
+            return;
+        }
 
         ProcessSaveDirectory();
         LoggedInPlayerAccount = new PlayerAccount(accountName);
