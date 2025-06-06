@@ -555,6 +555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49360bf302d277d40ad4079133c85f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugAccountSettings:
+    bouncy: 0
+    hasWatchedIntroCutscene: 0
+    openedLevels: []
 --- !u!4 &972193617
 Transform:
   m_ObjectHideFlags: 0
