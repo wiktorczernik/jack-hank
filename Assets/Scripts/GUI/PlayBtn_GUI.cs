@@ -9,7 +9,9 @@ public class PlayBtn_GUI : MonoBehaviour
         if (Input.anyKeyDown && !activated)
         {
             activated = true;
-            GameSceneManager.LoadLogin();
+
+            if (AccountManager.UseDebugAccount) GameSceneManager.LoadFirstLevelAsync();
+            else GameSceneManager.LoadLogin();
         }
     }
 }

@@ -8,13 +8,20 @@ using UnityEngine;
 
 public class AccountManager : MonoBehaviour
 {
+    [SerializeField] private PlayerAccountData debugAccountSettings;
     private static string SaveFolderPath => Application.persistentDataPath + "/saves";
     public static PlayerAccount LoggedInPlayerAccount { get; private set; }
 
-    public static bool IsDebugAccount { get; private set; }
+    public static bool UseDebugAccount { get; set; }
+    private static AccountManager _instance;
     
     public static event Action<PlayerAccountData> OnLoggedIn;
     public static event Action<PlayerAccountData> OnLoggedOut;
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     public static List<string> GetSavedAccountsNames()
     {
@@ -33,6 +40,7 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInAccount(string accountName)
     {
+        if (IsLoggedIn()) throw new Exception("AccountManager: There's already logged in account.");
         ProcessSaveDirectory();
 
         var savePath = GetAccountSavePath(accountName);
@@ -49,8 +57,9 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInDebugAccount()
     {
-        LoggedInPlayerAccount = new PlayerAccount("Debug");
-        IsDebugAccount = true;
+        if (LoggedInPlayerAccount != null) return;
+        LoggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
+        UseDebugAccount = true;
         OnLoggedIn?.Invoke(LoggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
     }
 
@@ -67,7 +76,7 @@ public class AccountManager : MonoBehaviour
 
     public static void SaveCurrentAccount()
     {
-        if (IsDebugAccount) return;
+        if (UseDebugAccount) return;
         
         ProcessSaveDirectory();
 
@@ -79,7 +88,7 @@ public class AccountManager : MonoBehaviour
     public static void LogInNewAccount(string accountName)
     {
         if (ExistsSavedAccount(accountName)) throw new Exception($"AccountManager: account with name '{accountName}' already exists.");
-        if (LoggedInPlayerAccount != null) throw new Exception("AccountManager: there is logged in another account.");
+        if (IsLoggedIn()) throw new Exception("AccountManager: There's already logged in account.");
 
         ProcessSaveDirectory();
         LoggedInPlayerAccount = new PlayerAccount(accountName);

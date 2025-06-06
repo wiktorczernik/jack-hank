@@ -7,7 +7,7 @@ namespace JackHank.EditorUtils.Toolbar
     {
         const float windowPadding = 10f;
         const float elementPadding = 5f;
-        const float buttonWidth = 100f;
+        const float buttonWidth = 200f;
         const float largeButtonWidth = 200f;
 
         [MenuItem("JackHank/Toolbar")]
@@ -30,9 +30,12 @@ namespace JackHank.EditorUtils.Toolbar
                 size: new Vector2(buttonWidth, position.height - 2 * windowPadding)
             );
             Rect cinemaSkipRect = new Rect(
-                position: new Vector2(windowPadding + buttonWidth + elementPadding + buttonWidth + elementPadding, windowPadding),
+                position: new Vector2(windowPadding + 2 * buttonWidth + 2 * elementPadding, windowPadding),
                 size: new Vector2(largeButtonWidth, position.height - 2 * windowPadding)
             );
+            Rect toggleStartingWithDebugAccount = new Rect(
+                    position: new Vector2(windowPadding + 3 * buttonWidth + 3 * elementPadding, windowPadding), 
+                    size: new Vector2(largeButtonWidth, position.height - 2 * windowPadding));
 
             GUI.enabled = !EditorApplication.isCompiling && !EditorApplication.isPlaying;
             if (GUI.Button(playHereRect, "Play Here"))
@@ -50,6 +53,14 @@ namespace JackHank.EditorUtils.Toolbar
             if (GUI.Button(cinemaSkipRect, ToolbarLogic.autoSkipCinematics ? "Disable Cinema Skip" : "Enable Cinema Skip"))
             {
                 ToolbarLogic.ToggleCinematicAutoskip();
+            }
+            
+            GUI.enabled = !EditorApplication.isPlaying;
+            if (GUI.Button(toggleStartingWithDebugAccount,
+                    ToolbarLogic.useDebugAccount ? "(on) Start with Debug Account" : "(off)Start without Debug Account"))
+            {
+                Debug.Log("Click");
+                ToolbarLogic.ToggleUseDebugAccount();
             }
         }
     }
