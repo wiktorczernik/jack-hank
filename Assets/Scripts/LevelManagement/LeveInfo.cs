@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AccountManagement;
 using JetBrains.Annotations;
+using UnityEngine;
 
 namespace LevelManagement
 {
@@ -34,7 +35,11 @@ namespace LevelManagement
 
         public LevelInfo(LevelDefinition definition)
         {
-            if (definition == null) throw new Exception("LevelInfo: definition is null.");
+            if (definition == null)
+            {
+                Debug.LogError(("LevelInfo: definition is null."));
+                return;
+            }
             
             _definition = definition;
         }
@@ -47,7 +52,13 @@ namespace LevelManagement
 
         public void IncrementLevelStatistics(LevelStatistics levelStatistics)
         {
-            _statistics = levelStatistics ?? throw new Exception("LevelInfo: levelStatistics is null.");
+            if (levelStatistics == null)
+            {
+                Debug.LogError("LevelInfo: levelStatistics is null.");
+                return;
+            }
+            
+            _statistics = levelStatistics;
         }
         
         public void DecrementLevelStatistics()
@@ -58,8 +69,11 @@ namespace LevelManagement
 
         public void SetStatus(LevelStatus status)
         {
-            if (_statistics == null) 
-                throw new Exception("LevelInfo: levelInfo has not incremented with level statistics.");
+            if (_statistics == null)
+            {
+                Debug.LogError("LevelInfo: levelInfo has not incremented with level statistics.");
+                return;
+            }
             
             Status = status;
             _statistics.IsPassed = status == LevelStatus.Passed;
@@ -67,8 +81,11 @@ namespace LevelManagement
 
         public void SetBountyPoints(Dictionary<PlayerBonusTypes, int> bountyPoints)
         {
-            if (_statistics == null) 
-                throw new Exception("LevelInfo: levelInfo has not incremented with level statistics.");
+            if (_statistics == null)
+            {
+                Debug.LogError("LevelInfo: levelInfo has not incremented with level statistics.");
+                return;
+            }
             
             _statistics.Bonuses = bountyPoints.ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
         }
