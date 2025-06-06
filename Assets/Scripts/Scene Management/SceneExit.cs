@@ -51,12 +51,12 @@ public class SceneExit : MonoBehaviour
 
     private void OnPlayerEnterExitTrigger(Collider other)
     {
-        Debug.Log("Player entered exit");
+
         if (!other.gameObject.CompareTag("Player")) return;
-        Debug.Log($"IS FINISHING: {_finishing}");
+
         if (_finishing) return;
         _finishing = true;
-        Debug.Log("Start finishing");
+
         ScreenFade.In(1.5f, ScreenFadeType.Default);
 
         ScreenFade.onAfterIn += AfterFadeIn;
