@@ -39,6 +39,7 @@ namespace LevelManagement
         {
             if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
             if (_levels.FindIndex(level => level.LevelID == definition.LevelID) == -1) return;
+            if (!IsIncrementedWithAccountData) throw new Exception("LevelManager: level manager is not incremented with account data. Probably you forgot to use debug account");
             
             _levels.Find(value => value.LevelID == definition.LevelID).SetStatus(LevelStatus.Passed);
 
@@ -69,6 +70,13 @@ namespace LevelManagement
         {
             if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
             return _levels.Find(info => info.LevelSceneName == levelName);
+        }
+
+        [CanBeNull]
+        public static LevelInfo GetLevelByID(int id)
+        {
+            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+            return _levels.Find(level => level.LevelID == id);
         }
 
         public static LevelStatistics[] GetLevelsStatistics()
@@ -152,6 +160,8 @@ namespace LevelManagement
             {
                 levelInfo.DecrementLevelStatistics();
             }
+
+            IsIncrementedWithAccountData = false;
         }
         
         private static List<LevelInfo> GetLevelTreeLeafs()
