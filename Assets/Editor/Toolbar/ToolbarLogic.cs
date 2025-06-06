@@ -15,7 +15,7 @@ public static class ToolbarLogic
         private set => CinematicPlayer.autoSkip = value;
     }
 
-    public static bool useDebugAccount { get; private set; }
+    public static bool useDebugAccount { get; private set; } = true;
 
     public static void RequestPlayHere()
     {
@@ -63,7 +63,6 @@ public static class ToolbarLogic
 
         if (useDebugAccount)
         {
-            Debug.Log("Logged in debug account");
             AccountManager.LogInDebugAccount();
         }
     }

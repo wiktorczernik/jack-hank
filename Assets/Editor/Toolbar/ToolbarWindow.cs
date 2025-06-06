@@ -59,7 +59,6 @@ namespace JackHank.EditorUtils.Toolbar
             if (GUI.Button(toggleStartingWithDebugAccount,
                     ToolbarLogic.useDebugAccount ? "(on) Start with Debug Account" : "(off)Start without Debug Account"))
             {
-                Debug.Log("Click");
                 ToolbarLogic.ToggleUseDebugAccount();
             }
         }

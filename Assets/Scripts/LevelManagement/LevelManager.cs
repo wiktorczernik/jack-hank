@@ -15,9 +15,8 @@ namespace LevelManagement
         private static bool _isInitialized;
         private void Awake()
         {
-            Debug.Log("LevelManager: initialization");
             _levels = new List<LevelInfo>();
-            LoadLevelDefinitions();
+            LoadLevelsDefinitions();
             AccountManager.OnLoggedIn += (accountData) => IncrementAccountData(accountData.openedLevels.ToList());
             AccountManager.OnLoggedOut += (accountData) => DecrementAccountData();
             _isInitialized = true;
@@ -25,69 +24,91 @@ namespace LevelManagement
 
         public static List<LevelInfo> GetLevelsList()
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+                return new List<LevelInfo>();
+            }
             return _levels.ToList();
         }
 
         public static List<LevelInfo> GetAvailableLevels()
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+                return new List<LevelInfo>();
+            }
             return _levels.Where(level => level.Status == LevelStatus.Available).ToList();
         }
 
         public static void SetLevelAsCompleted(LevelDefinition definition)
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+                return;
+            }
+            if (!IsIncrementedWithAccountData)
+            {
+                Debug.LogError(
+                    "LevelManager: level manager is not incremented with account data. Probably you forgot to use debug account");
+                return;
+            }
             if (_levels.FindIndex(level => level.LevelID == definition.LevelID) == -1) return;
-            if (!IsIncrementedWithAccountData) throw new Exception("LevelManager: level manager is not incremented with account data. Probably you forgot to use debug account");
             
             _levels.Find(value => value.LevelID == definition.LevelID).SetStatus(LevelStatus.Passed);
 
             foreach (var level in _levels)
             {
                 var isNextLevel = false;
-                var isAvailable = true;
+                var canBeAvailable = true;
 
-                foreach (var lastLevelId in level.LastLevelsIDs)
+                foreach (var lastLevel in GetLastLevels(level))
                 {
-                    var lastLevel = _levels.First(level => level.LevelID == lastLevelId);
                     isNextLevel = lastLevel.LevelID == definition.LevelID;
-                    if (lastLevel.Status != LevelStatus.Passed) isAvailable = false;
+                    if (lastLevel.Status != LevelStatus.Passed) canBeAvailable = false;
                 }
                 
-                if (isAvailable && isNextLevel) level.SetStatus(LevelStatus.Available);
-            }
-            
-            Debug.Log("Level set as completed log");
-            foreach (var level in _levels)
-            {
-                Debug.Log($"{level.LevelID}: {level.LevelSceneName}, {level.Status}: {level.IsIncrementedWithStatistics}");
+                if (canBeAvailable && isNextLevel) level.SetStatus(LevelStatus.Available);
             }
         }
 
         [CanBeNull]
         public static LevelInfo GetLevelByName(string levelName)
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+                return null;
+            }
             return _levels.Find(info => info.LevelSceneName == levelName);
         }
 
         [CanBeNull]
         public static LevelInfo GetLevelByID(int id)
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load 'Essentials' scene.");
+                return null;
+            }
             return _levels.Find(level => level.LevelID == id);
         }
 
         public static LevelStatistics[] GetLevelsStatistics()
         {
-            if (!_isInitialized) throw new Exception("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+                return Array.Empty<LevelStatistics>();
+            }
             return _levels.Where(level => level.Status == LevelStatus.Passed && level.Status == LevelStatus.Available)
                 .Select(level => level.GetLevelStatistics())
                 .ToArray();
         }
         
-        private static void LoadLevelDefinitions()
+        private static void LoadLevelsDefinitions()
         {
             var definitions = Resources.LoadAll<LevelDefinition>("Level Definitions/");
 
@@ -100,58 +121,54 @@ namespace LevelManagement
         private static void IncrementAccountData(List<LevelStatistics> levelsStatistics)
         {
             var leafs = GetLevelTreeLeafs();
-
-            Debug.Log("Statistic Log");
-            foreach (var statistic in levelsStatistics)
-            {
-                Debug.Log(statistic);
-            }
  
-            var nodes = new Stack<LevelInfo>();
+            var levelsWithoutSaveData = new Stack<LevelInfo>();
 
             foreach (var leaf in leafs)
-                nodes.Push(leaf);
+                levelsWithoutSaveData.Push(leaf);
 
-            while (nodes.Count > 0)
+            while (levelsWithoutSaveData.Count > 0)
             {
-                var node = nodes.Peek();
-                var notProcessedNodes = GetNotProcessedLevels(node.LastLevelsIDs);
+                var level = levelsWithoutSaveData.Peek();
+                var lastLevelsWithoutSaveData = GetNotProcessedLevels(level.LastLevelsIDs);
 
-                if (notProcessedNodes.Count > 0)
+                if (lastLevelsWithoutSaveData.Count > 0)
                 {
-                    foreach (var notProcessedNode in notProcessedNodes)
-                        nodes.Push(notProcessedNode);
+                    foreach (var notProcessedNode in lastLevelsWithoutSaveData)
+                        levelsWithoutSaveData.Push(notProcessedNode);
 
                     continue;
                 }
 
-                nodes.Pop();
+                levelsWithoutSaveData.Pop();
 
-                var levelSave = levelsStatistics.Find(level => level.LevelID == node.LevelID);
+                var levelSave = levelsStatistics.Find(save => save.LevelID == level.LevelID);
                 
-                var lastLevelsInfo = _levels.Where(level =>
-                    node.LastLevelsIDs.ToList().FindIndex(id => id == level.LevelID) != -1).ToList();
-                 
-                var areLastLevelsPassed = lastLevelsInfo.All(level => level.Status == LevelStatus.Passed);
+                var areLastLevelsPassed = GetLastLevels(level)
+                    .All(l => l.Status == LevelStatus.Passed);
 
-                var levelStatus = levelSave switch
+                LevelStatus levelStatus;
+
+                if (levelSave != null && levelSave.IsPassed && !areLastLevelsPassed)
                 {
-                    { IsPassed: true } when !areLastLevelsPassed => throw new Exception("Level validation failed!"),
-                    null => areLastLevelsPassed ? LevelStatus.Available : LevelStatus.Unavailable,
-                    _ => levelSave.IsPassed ? LevelStatus.Passed : LevelStatus.Available
-                };
+                    Debug.LogError("LevelManager: level save validation failed. There are passed levels with not passed last levels");
+                    return;
+                }
+
+                if (levelSave == null)
+                {
+                    levelSave = new LevelStatistics();
+                    levelStatus = areLastLevelsPassed ? LevelStatus.Available : LevelStatus.Unavailable;
+                }else
+                {
+                    levelStatus = levelSave.IsPassed ? LevelStatus.Passed : LevelStatus.Available;
+                }
                 
-                node.IncrementLevelStatistics(levelSave ?? new LevelStatistics());
-                node.SetStatus(levelStatus);
+                level.IncrementLevelStatistics(levelSave);
+                level.SetStatus(levelStatus);
             }
 
             IsIncrementedWithAccountData = true;
-            
-            Debug.Log("Level processed log");
-            foreach (var level in _levels)
-            {
-                Debug.Log($"{level.LevelID}: {level.LevelSceneName}, {level.Status}: {level.IsIncrementedWithStatistics}");
-            }
         }
         
         private static void DecrementAccountData()
@@ -192,6 +209,31 @@ namespace LevelManagement
                 var lastLevel = _levels.Find(level => level.LevelID == id);
                 
                 if (lastLevel != null && !lastLevel.IsIncrementedWithStatistics) result.Add(lastLevel);
+            }
+
+            return result;
+        }
+
+        private static List<LevelInfo> GetLastLevels(LevelInfo level)
+        {
+            if (level == null)
+            {
+                Debug.LogError("LevelManager: level is null");
+                return new List<LevelInfo>();
+            }
+            
+            var result = new List<LevelInfo>();
+
+            foreach (var id in level.LastLevelsIDs)
+            {
+                var lastLevel = _levels.Find(l => l.LevelID == id);
+
+                if (lastLevel == null)
+                {
+                    Debug.LogError($"LevelManager: level with name {level.LevelSceneName} has nonexistent last level with id {id} and name {level.LevelSceneName}");
+                }
+                
+                result.Add(lastLevel);
             }
 
             return result;
