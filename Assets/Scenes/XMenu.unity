@@ -660,7 +660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startIn: 0
   startOut: 1
-  inDuration: 1
+  inDuration: 1.5
   inType: 0
   outDuration: 1.5
   outType: 1
