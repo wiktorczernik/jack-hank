@@ -8,13 +8,13 @@ namespace AccountManagement
         public int bouncy;
         public bool hasWatchedIntroCutscene;
         public LevelStatistics[] openedLevels;
-        [NonSerialized] public string AccountName;
+        [NonSerialized] public string accountName;
 
         public object Clone()
         {
             var clone = new PlayerAccountData
             {
-                AccountName = AccountName,
+                accountName = accountName,
                 bouncy = bouncy,
                 openedLevels = new LevelStatistics[openedLevels?.Length ?? 0]
             };

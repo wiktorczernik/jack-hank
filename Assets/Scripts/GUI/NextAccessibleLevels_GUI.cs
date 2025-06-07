@@ -26,7 +26,7 @@ public class NextAccessibleLevels_GUI : MonoBehaviour
          const int rightOffset = 20;
          const int bottomOffset = 20;
          
-         button.GetComponentInChildren<TMP_Text>().text = level.LevelSceneName;
+         button.GetComponentInChildren<TMP_Text>().text = level.levelSceneName;
          var rect = button.GetComponent<RectTransform>();
          rect.anchorMin = new Vector2(1, 0);
          rect.anchorMax = new Vector2(1, 0);
