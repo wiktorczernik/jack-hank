@@ -6,31 +6,28 @@ using AccountManagement;
 using LevelManagement;
 using UnityEngine;
 
-public static class AccountManager
+public class AccountManager : MonoBehaviour
 {
-    private static PlayerAccount _loggedInPlayerAccount;
+    [SerializeField] private PlayerAccountData debugAccountSettings;
+    private static string _saveFolderPath => Application.persistentDataPath + "/saves";
+    private static AccountManager _instance;
     
-    private static readonly string SaveFolderPath = Application.persistentDataPath + "/saves";
-    public static PlayerAccount LoggedInPlayerAccount
+    public static PlayerAccount loggedInPlayerAccount { get; private set; }
+    public static bool useDebugAccount { get; set; }
+    
+    public static event Action<PlayerAccountData> OnLoggedIn;
+    public static event Action<PlayerAccountData> OnLoggedOut;
+
+    private void Awake()
     {
-        get
-        {
-            if (_loggedInPlayerAccount != null) return _loggedInPlayerAccount;
-            
-            LogInDebugAccount();
-
-            return _loggedInPlayerAccount;
-        }
-        private set => _loggedInPlayerAccount = value;
+        _instance = this;
     }
-
-    public static bool IsDebugAccount { get; private set; }
 
     public static List<string> GetSavedAccountsNames()
     {
         ProcessSaveDirectory();
 
-        return new DirectoryInfo(SaveFolderPath)
+        return new DirectoryInfo(_saveFolderPath)
             .GetFiles("*.json")
             .ToList()
             .ConvertAll(save => save.Name.Replace(".json", ""));
@@ -43,81 +40,105 @@ public static class AccountManager
 
     public static void LogInAccount(string accountName)
     {
+        if (IsLoggedIn())
+        {
+            Debug.LogError("AccountManager: There's already logged in account.");
+            return;
+        }
         ProcessSaveDirectory();
 
         var savePath = GetAccountSavePath(accountName);
 
-        if (!File.Exists(savePath)) throw new Exception("Account not found");
-
-        var accountData = new PlayerAccountData
+        if (!File.Exists(savePath))
         {
-            AccountName = accountName
-        };
+            Debug.LogError($"AccountManager: Account with name '{accountName}' not found.");
+            return;
+        }
 
-        JsonUtility.FromJsonOverwrite(File.ReadAllText(savePath), accountData);
+        var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
+        accountData.accountName = accountName;
 
-        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
-
-        _loggedInPlayerAccount = new PlayerAccount(accountData);
+        loggedInPlayerAccount = new PlayerAccount(accountData);
+        
+        OnLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
     }
 
-    private static void LogInDebugAccount()
+    public static void LogInDebugAccount()
     {
-        var accountData = new PlayerAccountData
+        if (_instance == null)
         {
-            AccountName = "Debug",
-            openedLevels = Array.Empty<LevelStatistics>()
-        };
-        
-        IsDebugAccount = true;
-
-        LevelManager.InitializeAndValidateLevelsTree(accountData.openedLevels.ToList());
-
-        _loggedInPlayerAccount = new PlayerAccount(accountData);
+            Debug.LogError(
+                "AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
+            return;
+        }
+        if (loggedInPlayerAccount != null) return;
+        loggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
+        useDebugAccount = true;
+        OnLoggedIn?.Invoke(loggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
     }
 
     public static void LogOutCurrentAccount()
     {
-        LoggedInPlayerAccount = null;
+        loggedInPlayerAccount = null;
+        OnLoggedOut?.Invoke(GetUpdatedAccountData());
     }
 
     public static bool IsLoggedIn()
     {
-        return LoggedInPlayerAccount != null;
+        return loggedInPlayerAccount != null;
     }
 
     public static void SaveCurrentAccount()
     {
-        if (IsDebugAccount) return;
+        if (useDebugAccount) return;
         
         ProcessSaveDirectory();
 
         File.WriteAllText(
-            GetAccountSavePath(LoggedInPlayerAccount.GetAccountName()),
-            JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
+            GetAccountSavePath(loggedInPlayerAccount.GetAccountName()),
+            JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
     public static void LogInNewAccount(string accountName)
     {
-        if (ExistsSavedAccount(accountName)) throw new Exception("Account already exists");
-        if (LoggedInPlayerAccount != null) throw new Exception("There is logged in another account");
+        if (ExistsSavedAccount(accountName))
+        {
+            Debug.LogError($"AccountManager: account with name '{accountName}' already exists.");
+            return;
+        }
+        if (IsLoggedIn())
+        {
+            Debug.LogError("AccountManager: There's already logged in account.");
+            return;
+        }
 
         ProcessSaveDirectory();
-        LoggedInPlayerAccount = new PlayerAccount(accountName);
-        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(LoggedInPlayerAccount.GetData()));
+        loggedInPlayerAccount = new PlayerAccount(accountName);
+        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(loggedInPlayerAccount.GetData()));
 
         LogInAccount(accountName);
     }
 
     private static string GetAccountSavePath(string accountName)
     {
-        return $"{SaveFolderPath}/{accountName}.json";
+        return $"{_saveFolderPath}/{accountName}.json";
     }
 
     private static void ProcessSaveDirectory()
     {
-        if (Directory.Exists(SaveFolderPath)) return;
+        if (Directory.Exists(_saveFolderPath)) return;
 
-        Directory.CreateDirectory(SaveFolderPath);
+        Directory.CreateDirectory(_saveFolderPath);
+    }
+
+    private static PlayerAccountData GetUpdatedAccountData()
+    {
+        var dataToSave = loggedInPlayerAccount.GetData();
+
+        dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
+
+        dataToSave.bouncy = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
+
+        return dataToSave;
     }
 }

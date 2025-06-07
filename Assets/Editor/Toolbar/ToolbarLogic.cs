@@ -15,6 +15,8 @@ public static class ToolbarLogic
         private set => CinematicPlayer.autoSkip = value;
     }
 
+    public static bool useDebugAccount { get; private set; } = true;
+
     public static void RequestPlayHere()
     {
         requestedPlayhere = true;
@@ -29,6 +31,11 @@ public static class ToolbarLogic
     public static void ToggleCinematicAutoskip()
     {
         autoSkipCinematics = !autoSkipCinematics;
+    }
+
+    public static void ToggleUseDebugAccount()
+    {
+        useDebugAccount = !useDebugAccount;
     }
 
     static void OnEnterPlayMode()
@@ -52,6 +59,11 @@ public static class ToolbarLogic
                 player.Teleport(playerPos, playerRot);
                 ScreenFade.Out(0, ScreenFadeType.Default);
             }
+        }
+
+        if (useDebugAccount)
+        {
+            AccountManager.LogInDebugAccount();
         }
     }
     static void OnEnterEditMode()

@@ -16,12 +16,12 @@ namespace AccountManagement
 
         public PlayerAccount(string accountName)
         {
-            _playerAccountData = new PlayerAccountData { AccountName = accountName, openedLevels = Array.Empty<LevelStatistics>()};
+            _playerAccountData = new PlayerAccountData { accountName = accountName, openedLevels = Array.Empty<LevelStatistics>()};
         }
 
         public LevelStatistics GetLevelStatistics(int levelID)
         {
-            return _playerAccountData.openedLevels.First(level => level.LevelID == levelID).Clone() as LevelStatistics;
+            return _playerAccountData.openedLevels.First(level => level.levelID == levelID).Clone() as LevelStatistics;
         }
 
         public bool HasWatchedIntoCutscene()
@@ -41,27 +41,7 @@ namespace AccountManagement
 
         public string GetAccountName()
         {
-            return _playerAccountData.AccountName;
-        }
-
-        public void SetLevelAsCompleted(LevelDefinition completedLevel, Dictionary<PlayerBonusTypes, int> bonuses)
-        {
-            if (_playerAccountData.openedLevels.FirstOrDefault(level => level.LevelID == completedLevel.LevelID) ==
-                null) return;
-
-            var playerLevelStats = _playerAccountData.openedLevels;
-            
-            var newLevelStats = new LevelStatistics[playerLevelStats.Length + 1].Concat(playerLevelStats).ToArray();
-            var completedLevelStats = new LevelStatistics
-            {
-                LevelID = completedLevel.LevelID,
-                IsPassed = true,
-                Bonuses = bonuses
-            };
-
-            _playerAccountData.bouncy += bonuses.Sum(pair => pair.Value);
-            newLevelStats[playerLevelStats.Length] = completedLevelStats;
-            _playerAccountData.openedLevels = newLevelStats;
+            return _playerAccountData.accountName;
         }
     }
 }

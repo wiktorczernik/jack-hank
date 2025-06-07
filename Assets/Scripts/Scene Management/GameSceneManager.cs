@@ -46,7 +46,7 @@ public class GameSceneManager : MonoBehaviour
     {
         onLevelLoadBegin?.Invoke(level);
         yield return LoadActiveSceneAsync(
-            level.LevelSceneName,
+            level.levelSceneName,
             () => { onLevelLoadBegin?.Invoke(level); },
             () => { onLevelLoadEnd?.Invoke(level); });
         onLevelLoadEnd?.Invoke(level);

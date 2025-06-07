@@ -19,7 +19,8 @@ public class PlayBtn_GUI : MonoBehaviour
         {
             activated = true;
             ScreenFade.In(0.5f, ScreenFadeType.Circle);
-            GameSceneManager.LoadLogin();
+            if (AccountManager.useDebugAccount) GameSceneManager.LoadFirstLevelAsync();
+            else GameSceneManager.LoadLogin();
         }
     }
 }

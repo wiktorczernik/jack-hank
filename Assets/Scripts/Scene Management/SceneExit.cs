@@ -1,61 +1,59 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
-using JackHank.Cinematics;
 using LevelManagement;
 
 public class SceneExit : MonoBehaviour
 {
-    [SerializeField] private OutSceneNextSceneInputType howToTakeSceneName = OutSceneNextSceneInputType.FromInspector;
-    [Tooltip("The value of this field set via inspector is used only if field [howToTakeSceneName] is set to [FromInspector] otherwise it is ignored")]
-    [SerializeField] private string nextSceneName;
-    [SerializeField] private TriggerEventEmitter exitZone;
-    [SerializeField] private bool useBotWhenPlayerInTrigger = true;
-    [Header("Next options will be used only if [useBotWhenPlayerInTrigger] is set to true]")]
-    [SerializeField] private TriggerEventEmitter turnOnBotZone;
-    [SerializeField] private Transform pointToDesignateFroBot;
-    [SerializeField] private BotVehicle botVehicle;
-    [SerializeField] private bool showStatisticsOnExit;
-    [Header("GUI")]
-    [SerializeField] private FinishText_GUI finishText;
+    [SerializeField] private SceneExitMode mode = SceneExitMode.LevelMode;
     [Tooltip("Delay AFTER finish text animation")]
-    [Range(3, 60)][SerializeField] private float exitDelayInSeconds = 5f;
-
+    [Range(0, 60)][SerializeField] private float delayBeforeNewScene = 5f;
+    
+    [Header("Triggler settings")]
+    [SerializeField] private TriggerEventEmitter exitTrigger;
+    [SerializeField] private bool useAutoDrivingToExit = true;
+    [Header("Next options will be used only if [useAutoDrivingToExit] is set to true]")]
+    [SerializeField] private TriggerEventEmitter autoDrivingTrigger;
+    [SerializeField] private Transform autoDriveDestination; 
+    [SerializeField] private BotVehicle player;
+    
+    [Header("Finish text (is showing only in LevelMode)")]
+    [SerializeField] private FinishText_GUI finishText;
+    
     public event Action OnExit;
     private bool _finishing;
 
+    private int _nextLevelId;
+
     private void Awake()
     {
-        if (howToTakeSceneName == OutSceneNextSceneInputType.FromCode) nextSceneName = "";
-
-        turnOnBotZone.OnEnter.AddListener(OnPlayerEnterInBotZone);
-        exitZone.OnEnter.AddListener(OnPlayerEnterExitZone);
+        autoDrivingTrigger.OnEnter.AddListener(OnPlayerEnterAutoDrivingTrigger);
+        exitTrigger.OnEnter.AddListener(OnPlayerEnterExitTrigger);
     }
 
-    public void SetNextScene(string sceneName)
+    public void SetNextLevel(int levelId)
     {
-        if (howToTakeSceneName != OutSceneNextSceneInputType.FromCode) return;
+        if (mode != SceneExitMode.MenuMode) return;
         
-        nextSceneName = sceneName;
+        _nextLevelId = levelId;
     }
 
-    private void OnPlayerEnterInBotZone(Collider other)
+    private void OnPlayerEnterAutoDrivingTrigger(Collider other)
     {
-        if (!other.gameObject.CompareTag("Vehicle")) return;
+        if (!other.gameObject.CompareTag("Player")) return;
+        if (!useAutoDrivingToExit) return;
         
-        if (!useBotWhenPlayerInTrigger) return;
-        
-        botVehicle.isFollowing = true;
-        botVehicle.followMode = BotVehicle.FollowMode.Single; 
-        botVehicle.destinationPoint = pointToDesignateFroBot.position;
-        botVehicle.followMaxSpeed = 100;
+        player.isFollowing = true;
+        player.followMode = BotVehicle.FollowMode.Single; 
+        player.destinationPoint = autoDriveDestination.position;
+        player.followMaxSpeed = 100;
     }
 
-    private void OnPlayerEnterExitZone(Collider other)
+    private void OnPlayerEnterExitTrigger(Collider other)
     {
-        if (!other.gameObject.CompareTag("Vehicle")) return;
+
+        if (!other.gameObject.CompareTag("Player")) return;
+
         if (_finishing) return;
         _finishing = true;
 
@@ -67,45 +65,47 @@ public class SceneExit : MonoBehaviour
     private void AfterFadeIn()
     {
         ScreenFade.onAfterIn -= AfterFadeIn;
-        if (showStatisticsOnExit)
+        if (mode == SceneExitMode.LevelMode)
         {
             finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
-            finishText.OnEndAnimation += LateExit;
+            finishText.OnEndAnimation += ExitToMenu;
         }
         else
         {
             OnExit?.Invoke();
-            GameSceneManager.LoadActiveScene(nextSceneName, null, null);
+            GameSceneManager.LoadMenu();
+            StartCoroutine(ExitToLevel());
         }
     }
 
-    private void LateExit()
+    private IEnumerator ExitToLevel()
     {
-        var levelInfo = LevelManager.GetLevelByName(nextSceneName);
-
-        if (levelInfo == null)
-        {
-            Debug.LogError($"SceneExit: no levelInfo with scene name {nextSceneName}");
-            return;
-        }
+        var level = LevelManager.GetLevelByID(_nextLevelId);
         
-        GameSceneManager.LoadLevel(levelInfo);
+        if (level == null) Debug.LogError($"SceneExit: no level with id {_nextLevelId}");
         
-        StartCoroutine(LateExitCo());
+        yield return new WaitForSeconds(delayBeforeNewScene);
+        OnExit?.Invoke();
+        GameSceneManager.LoadLevel(level);
     }
 
-    private IEnumerator LateExitCo()
+    private void ExitToMenu()
     {
-        yield return new WaitForSeconds(exitDelayInSeconds);
+        finishText.OnEndAnimation -= ExitToMenu;
+        StartCoroutine(ExitToMenuCo());
+    }
+
+    private IEnumerator ExitToMenuCo()
+    {
+        yield return new WaitForSeconds(delayBeforeNewScene);
         OnExit?.Invoke();
         GameSceneManager.LoadMenu();
-        finishText.OnEndAnimation -= LateExit;
     }
 
-    private enum OutSceneNextSceneInputType
+    private enum SceneExitMode
     {
-        FromCode,
-        FromInspector,
+        LevelMode, // W trybie 'LevelMode' SceneExit przenosi gracza do menu 'korytaż'
+        MenuMode, // W trybie 'MenuMode' SceneExit prenosi gracza na poziom odzysakny prez metodę setNextLevel
     }
 }
 
