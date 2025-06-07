@@ -29,9 +29,17 @@ public class LoadAccountList_GUI : MonoBehaviour
     {
         if (_isAccountSelected) return;
 
-        AccountManager.LogInAccount(accountName);
-        _isAccountSelected = true;
-        GameSceneManager.LoadFirstLevel();
+        void LoadGame()
+        {
+            ScreenFade.onAfterIn -= LoadGame;
+            AccountManager.LogInAccount(accountName);
+            _isAccountSelected = true;
+            GameSceneManager.LoadFirstLevel();
+        }
+
+        ScreenFade.onAfterIn += LoadGame;
+
+        ScreenFade.In(2, ScreenFadeType.Circle);
     }
 
     private void OnAccountNotExist()

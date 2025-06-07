@@ -747,9 +747,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startIn: 0
   startOut: 1
-  inDuration: 2
+  inDuration: 1
   inType: 1
-  outDuration: 2
+  outDuration: 1
   outType: 1
 --- !u!1 &990540823
 GameObject:

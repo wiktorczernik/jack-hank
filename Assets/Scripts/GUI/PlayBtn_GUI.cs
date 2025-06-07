@@ -18,7 +18,7 @@ public class PlayBtn_GUI : MonoBehaviour
         if (Input.anyKeyDown && !activated && waiting)
         {
             activated = true;
-            ScreenFade.In(1.5f, ScreenFadeType.Circle);
+            ScreenFade.In(1f, ScreenFadeType.Circle);
             
             void LoadLogin()
             {
