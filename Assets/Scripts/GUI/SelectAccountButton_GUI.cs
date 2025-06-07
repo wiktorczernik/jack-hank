@@ -11,7 +11,7 @@ public class SelectAccountButton_GUI : MonoBehaviour
           var rectTransform = GetComponent<RectTransform>();
           const int offset = 30;
 
-          rectTransform.anchoredPosition = new Vector2(rectTransform.rect.width / 2, -(rectTransform.rect.height + offset) * index);
+          rectTransform.anchoredPosition = new Vector2(0, -(rectTransform.rect.height + offset) * index);
           
           gameObject.GetComponent<Button>().onClick.AddListener((() =>
           {
