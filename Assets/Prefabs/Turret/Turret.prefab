@@ -15413,8 +15413,8 @@ MonoBehaviour:
   Head: {fileID: 6144434918236721063}
   Nozzle: {fileID: 1199686842043375411}
   RaycastOrigin: {fileID: 6684326915665550971}
-  damage: 15
-  fireRate: 4
+  damage: 5
+  fireRate: 2
   fireTarget: {fileID: 0}
   targetInProximity: 0
   mask:
@@ -15427,6 +15427,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8da654900d8b16d4a9631f146784776c, type: 3}
   shotMinPitch: 0.7
   shotMaxPitch: 1.3
+  animator: {fileID: 0}
   particles:
   - {fileID: 7912522854581503113}
   - {fileID: 4871567153276527090}
