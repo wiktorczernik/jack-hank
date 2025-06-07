@@ -6,17 +6,19 @@ using AccountManagement;
 using LevelManagement;
 using UnityEngine;
 
+// Jest to statyczna klasa zarządzająca kontem gracza. Umożliwia wejście do specjalnego konta debugowego, które można
+// konfigurować za pomocą inspektora w scenie Essentials.
 public class AccountManager : MonoBehaviour
 {
     [SerializeField] private PlayerAccountData debugAccountSettings;
     private static string _saveFolderPath => Application.persistentDataPath + "/saves";
     private static AccountManager _instance;
     
-    public static PlayerAccount loggedInPlayerAccount { get; private set; }
+    public static PlayerAccount currentAccount { get; private set; }
     public static bool useDebugAccount { get; set; }
     
-    public static event Action<PlayerAccountData> OnLoggedIn;
-    public static event Action<PlayerAccountData> OnLoggedOut;
+    public static event Action<PlayerAccountData> onLoggedIn;
+    public static event Action<PlayerAccountData> onLoggedOut;
 
     private void Awake()
     {
@@ -25,7 +27,7 @@ public class AccountManager : MonoBehaviour
 
     public static List<string> GetSavedAccountsNames()
     {
-        ProcessSaveDirectory();
+        EnsureSaveDirectoryExists();
 
         return new DirectoryInfo(_saveFolderPath)
             .GetFiles("*.json")
@@ -40,12 +42,7 @@ public class AccountManager : MonoBehaviour
 
     public static void LogInAccount(string accountName)
     {
-        if (IsLoggedIn())
-        {
-            Debug.LogError("AccountManager: There's already logged in account.");
-            return;
-        }
-        ProcessSaveDirectory();
+        EnsureSaveDirectoryExists();
 
         var savePath = GetAccountSavePath(accountName);
 
@@ -58,9 +55,9 @@ public class AccountManager : MonoBehaviour
         var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
         accountData.accountName = accountName;
 
-        loggedInPlayerAccount = new PlayerAccount(accountData);
+        currentAccount = new PlayerAccount(accountData);
         
-        OnLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
+        onLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
     }
 
     public static void LogInDebugAccount()
@@ -71,31 +68,31 @@ public class AccountManager : MonoBehaviour
                 "AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
             return;
         }
-        if (loggedInPlayerAccount != null) return;
-        loggedInPlayerAccount = new PlayerAccount(_instance.debugAccountSettings);
+        if (currentAccount != null) return;
+        currentAccount = new PlayerAccount(_instance.debugAccountSettings);
         useDebugAccount = true;
-        OnLoggedIn?.Invoke(loggedInPlayerAccount.GetData().Clone() as PlayerAccountData);
+        onLoggedIn?.Invoke(currentAccount.GetData().Clone() as PlayerAccountData);
     }
 
     public static void LogOutCurrentAccount()
     {
-        loggedInPlayerAccount = null;
-        OnLoggedOut?.Invoke(GetUpdatedAccountData());
+        currentAccount = null;
+        onLoggedOut?.Invoke(GetUpdatedAccountData());
     }
 
     public static bool IsLoggedIn()
     {
-        return loggedInPlayerAccount != null;
+        return currentAccount != null;
     }
 
     public static void SaveCurrentAccount()
     {
         if (useDebugAccount) return;
         
-        ProcessSaveDirectory();
+        EnsureSaveDirectoryExists();
 
         File.WriteAllText(
-            GetAccountSavePath(loggedInPlayerAccount.GetAccountName()),
+            GetAccountSavePath(currentAccount.GetAccountName()),
             JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
@@ -106,15 +103,10 @@ public class AccountManager : MonoBehaviour
             Debug.LogError($"AccountManager: account with name '{accountName}' already exists.");
             return;
         }
-        if (IsLoggedIn())
-        {
-            Debug.LogError("AccountManager: There's already logged in account.");
-            return;
-        }
 
-        ProcessSaveDirectory();
-        loggedInPlayerAccount = new PlayerAccount(accountName);
-        File.WriteAllText(GetAccountSavePath(accountName), JsonUtility.ToJson(loggedInPlayerAccount.GetData()));
+        EnsureSaveDirectoryExists();
+        currentAccount = new PlayerAccount(accountName);
+        File.WriteAllText(GetAccountSavePath(accountName), currentAccount.ToJson());
 
         LogInAccount(accountName);
     }
@@ -124,7 +116,7 @@ public class AccountManager : MonoBehaviour
         return $"{_saveFolderPath}/{accountName}.json";
     }
 
-    private static void ProcessSaveDirectory()
+    private static void EnsureSaveDirectoryExists()
     {
         if (Directory.Exists(_saveFolderPath)) return;
 
@@ -133,11 +125,11 @@ public class AccountManager : MonoBehaviour
 
     private static PlayerAccountData GetUpdatedAccountData()
     {
-        var dataToSave = loggedInPlayerAccount.GetData();
+        var dataToSave = currentAccount.GetData();
 
         dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
 
-        dataToSave.bouncy = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
+        dataToSave.bountyPoints = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
 
         return dataToSave;
     }

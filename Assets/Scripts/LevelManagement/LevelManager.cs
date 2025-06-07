@@ -7,9 +7,11 @@ using UnityEngine;
 
 namespace LevelManagement
 {
+    // To statyczna klasa odpowiedzialna za zarządzanie poziomami – pozwala na odczyt i modyfikację danych związanych
+    // z poziomami.
     public class LevelManager : MonoBehaviour
     {
-        public static bool isIncrementedWithAccountData { private set; get; }
+        public static bool containPlayerProgressData { private set; get; }
         private static List<LevelInfo> _levels;
         
         private static bool _isInitialized;
@@ -17,8 +19,8 @@ namespace LevelManagement
         {
             _levels = new List<LevelInfo>();
             LoadLevelsDefinitions();
-            AccountManager.OnLoggedIn += (accountData) => IncrementAccountData(accountData.openedLevels.ToList());
-            AccountManager.OnLoggedOut += (accountData) => DecrementAccountData();
+            AccountManager.onLoggedIn += (accountData) => AddPlayerProgressData(accountData.openedLevels.ToList());
+            AccountManager.onLoggedOut += (accountData) => DecrementAccountData();
             _isInitialized = true;
         }
 
@@ -49,7 +51,7 @@ namespace LevelManagement
                 Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
                 return;
             }
-            if (!isIncrementedWithAccountData)
+            if (!containPlayerProgressData)
             {
                 Debug.LogError(
                     "LevelManager: level manager is not incremented with account data. Probably you forgot to use debug account");
@@ -118,7 +120,7 @@ namespace LevelManagement
             }
         }
 
-        private static void IncrementAccountData(List<LevelStatistics> levelsStatistics)
+        private static void AddPlayerProgressData(List<LevelStatistics> levelsStatistics)
         {
             var leafs = GetLevelTreeLeafs();
  
@@ -164,21 +166,21 @@ namespace LevelManagement
                     levelStatus = levelSave.isPassed ? LevelStatus.Passed : LevelStatus.Available;
                 }
                 
-                level.IncrementLevelStatistics(levelSave);
+                level.AddPlayerProgressData(levelSave);
                 level.SetStatus(levelStatus);
             }
 
-            isIncrementedWithAccountData = true;
+            containPlayerProgressData = true;
         }
         
         private static void DecrementAccountData()
         {
             foreach (var levelInfo in _levels)
             {
-                levelInfo.DecrementLevelStatistics();
+                levelInfo.RemovePlayerProgressData();
             }
 
-            isIncrementedWithAccountData = false;
+            containPlayerProgressData = false;
         }
         
         private static List<LevelInfo> GetLevelTreeLeafs()
@@ -208,7 +210,7 @@ namespace LevelManagement
             {
                 var lastLevel = _levels.Find(level => level.levelID == id);
                 
-                if (lastLevel != null && !lastLevel.isIncrementedWithStatistics) result.Add(lastLevel);
+                if (lastLevel != null && !lastLevel.containPlayerProgressData) result.Add(lastLevel);
             }
 
             return result;
