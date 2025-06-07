@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3501234180535910278}
   - component: {fileID: 5162174892694591371}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6246276668465621473}
   - component: {fileID: 8073307827127736089}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bench
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 2763140812835430095}
   - component: {fileID: 6537958800093256610}
   - component: {fileID: 6740223391218596853}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -411,6 +411,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0456710f30f9a5144b8d1e6f2f248461, type: 3}
       propertyPath: m_Name
       value: Bench_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0456710f30f9a5144b8d1e6f2f248461, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 0456710f30f9a5144b8d1e6f2f248461, type: 3}
       propertyPath: m_TagString

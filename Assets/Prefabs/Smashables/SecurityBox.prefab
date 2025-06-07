@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6121764960996586650}
   - component: {fileID: 8905945482781762974}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SecurityBox
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1062787678657770112}
   - component: {fileID: 5002466422536587014}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 3002099626869524032}
   - component: {fileID: 2093451112624602031}
   - component: {fileID: 6103259632027561152}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -363,6 +363,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7574287289921372608}
     m_Modifications:
+    - target: {fileID: 511781021905691102, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 902949443273338843, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 1315577033086866527, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -403,9 +411,61 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1848176289381071831, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2237866600643748306, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2998403364998439698, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3870442728511333787, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5649512168433409189, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 5865299891493540464, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
       propertyPath: m_Name
       value: SecurityBox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865299891493540464, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6689597540965580744, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6780381497898208754, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7369769697704338907, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8824983685014176310, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8875735875318109203, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936681062601685827, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8943878076643171076, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 506735471461106372, guid: a77e3935e956c314ebaa582c7dfe2ae3, type: 3}

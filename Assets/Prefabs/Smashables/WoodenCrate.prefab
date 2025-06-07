@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3187928971371595544}
   - component: {fileID: 9057411663801545154}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WoodenCrate
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5191706858824574819}
   - component: {fileID: 495020633391785590}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 3687455656687182678}
   - component: {fileID: 296547241556576807}
   - component: {fileID: 8083284258742065140}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Crate(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 6502776569870286549}
   - component: {fileID: 2923837071021128924}
   - component: {fileID: 126999983960316011}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
