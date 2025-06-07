@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 
 namespace LevelManagement
 {
+    // LevelDefinition to projektowa reprezentacja poziomu w grze.
     [CreateAssetMenu(menuName = "Level Definition", fileName = "New Definition")]
     public class LevelDefinition : ScriptableObject
     {
@@ -27,8 +28,10 @@ namespace LevelManagement
 
         public int LevelID => levelID;
        
+        // Nazwa sceny, na której znajduję sie poziom
         public string SceneName => sceneName;
         
+        // Lista pozimów poprzednich. Od tych poziomów zalerzy czy będzie dostępny ten poziom
         public LevelDefinition[] LastLevels => lastLevels.Clone() as LevelDefinition[];
 
         public LevelTaskDefinition[] LevelTasks => levelTasks.Clone() as LevelTaskDefinition[];

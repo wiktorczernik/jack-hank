@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AccountManagement;
 using JetBrains.Annotations;
@@ -7,18 +6,17 @@ using UnityEngine;
 
 namespace LevelManagement
 {
+    //LevelInfo to runtime'owa reprezentacja poziomu w grze.
     public class LevelInfo
     {
         private readonly LevelDefinition _definition;
         [CanBeNull] private LevelStatistics _statistics;
         
-        
-        public bool isIncrementedWithStatistics => _statistics != null;
+        public bool containPlayerProgressData => _statistics != null;
         public int levelID => _definition.LevelID;
         public string levelSceneName => _definition.SceneName;
 
         public LevelStatus status { get; private set; } = LevelStatus.None;
-        
         
         public Dictionary<PlayerBonusTypes, int> bountyPointsPerBonusType => 
             _statistics == null ? new Dictionary<PlayerBonusTypes, int>() : _statistics.bonuses;
@@ -50,18 +48,24 @@ namespace LevelManagement
             return _statistics?.Clone() as LevelStatistics;
         }
 
-        public void IncrementLevelStatistics(LevelStatistics levelStatistics)
+        public void AddPlayerProgressData(LevelStatistics levelStatistics)
         {
             if (levelStatistics == null)
             {
                 Debug.LogError("LevelInfo: levelStatistics is null.");
                 return;
             }
+
+            if (levelStatistics.levelID != _definition.LevelID)
+            {
+                Debug.LogError("LevelInfo: levelStatistics and levelDefinition has different levelID.");
+                return;
+            }
             
             _statistics = levelStatistics;
         }
         
-        public void DecrementLevelStatistics()
+        public void RemovePlayerProgressData()
         {
             _statistics = null;
             status = LevelStatus.None;
