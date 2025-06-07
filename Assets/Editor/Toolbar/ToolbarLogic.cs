@@ -63,7 +63,7 @@ public static class ToolbarLogic
 
         if (useDebugAccount)
         {
-            AccountManager.LogInDebugAccount();
+            AccountManager.LogInDebugAccountOnAwake();
         }
     }
     static void OnEnterEditMode()
