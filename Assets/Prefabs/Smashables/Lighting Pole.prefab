@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2523612962108005334}
   - component: {fileID: 1493718991675013928}
   - component: {fileID: 8915422288932772422}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   - component: {fileID: 6641355818062379304}
   - component: {fileID: 7007121505600850107}
   - component: {fileID: 5386121978509089498}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lamppost_LOD2
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 251196468894481638}
   - component: {fileID: 6743146657720467495}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7653366495283885171}
   - component: {fileID: 2525030982398964895}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lighting Pole
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -465,7 +465,7 @@ GameObject:
   - component: {fileID: 493569121864144030}
   - component: {fileID: 6075590148129293258}
   - component: {fileID: 1052527620500592034}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

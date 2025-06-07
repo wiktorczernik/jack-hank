@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415754852505040181}
   - component: {fileID: 185750833510946322}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Dupster
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 1648062427472540207}
   - component: {fileID: 9009327817342575469}
   - component: {fileID: 7588916904478216982}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5906127376726699383}
   - component: {fileID: 9055117501618649955}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -414,6 +414,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b8e1d1e03e9683c4f9220732c9d62285, type: 3}
       propertyPath: m_Name
       value: Dumpster
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8e1d1e03e9683c4f9220732c9d62285, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: b8e1d1e03e9683c4f9220732c9d62285, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
