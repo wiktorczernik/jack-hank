@@ -1,40 +1,79 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class LoadAccountList_GUI : MonoBehaviour
+public class AccountList_GUI : MonoBehaviour
 {
-    [FormerlySerializedAs("buttonLoadAccount")] [SerializeField]
-    private SelectAccountButton_GUI buttonLoadAccountButtonGUI;
+    [SerializeField] private AccountListItem_GUI listItemPrefab;
+    [SerializeField] private TextMeshProUGUI  noAccountTextPrefab;
+    [SerializeField] private ModalWindow_GUI modalWindow;
 
-    [SerializeField] private TextMeshProUGUI noAccountsText;
-    private bool _isAccountSelected;
+    private List<AccountListItem_GUI> _items;
+    private bool _wasAnyItemSelected;
 
     private void Start()
     {
+        _items = new List<AccountListItem_GUI>();
         var names = AccountManager.GetSavedAccountsNames();
 
         if (names.Count == 0)
         {
-            Instantiate(noAccountsText, gameObject.transform);
+            Instantiate(noAccountTextPrefab, gameObject.transform);
             return;
         }
 
         for (var i = 0; i < names.Count; i++)
-            Instantiate(buttonLoadAccountButtonGUI, transform)
-                .Initialize(i, names[i], OnAccountSelected, OnAccountNotExist);
+        {
+            var listItem = Instantiate(listItemPrefab, transform); 
+            listItem.Initialize(names[i], OnItemClick, OnItemDelete);
+            _items.Add(listItem);
+        }
+        
+        UpdateList();
     }
 
-    private void OnAccountSelected(string accountName)
+    private void UpdateList()
     {
-        if (_isAccountSelected) return;
-
-        AccountManager.LogInAccount(accountName);
-        _isAccountSelected = true;
-        GameSceneManager.LoadFirstLevel();
+        var offset = 10;
+        for (var i = 0; i < _items.Count; i++)
+        {
+            var item = _items[i];
+            item.SetPosition(new Vector2(0, -(item.rectTransform.rect.height + offset) * i));
+        }
     }
 
-    private void OnAccountNotExist()
+    private void DeleteItem(AccountListItem_GUI listItem)
     {
+        _items.Remove(listItem);
+        Destroy(listItem.gameObject);
+        AccountManager.RemoveAccount(listItem.accountName);
+        UpdateList();
+    }
+
+    private void OnItemClick(AccountListItem_GUI listItem)
+    {
+        if (_wasAnyItemSelected) return;
+
+        var status = AccountManager.LogInAccount(listItem.accountName);
+
+        if (status == AccountManager.LogInStatus.AccountNotFound)
+        {
+            modalWindow.Show("Something went wrong. Account not fount.");
+            DeleteItem(listItem);
+        }else if (status == AccountManager.LogInStatus.AccountSaveCorrupted)
+        {
+            modalWindow.Show("Something went wrong. Account save is corrupted.");
+            DeleteItem(listItem);
+        }else if (status == AccountManager.LogInStatus.Success)
+        {
+            _wasAnyItemSelected = true;
+            GameSceneManager.LoadFirstLevel();
+        }
+    }
+
+    private void OnItemDelete(AccountListItem_GUI listItem)
+    {
+        DeleteItem(listItem);
     }
 }

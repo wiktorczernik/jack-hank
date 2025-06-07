@@ -23,6 +23,12 @@ public class AccountManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        if (useDebugAccount) LogInDebugAccount();
+    }
+
+    public static void LogInDebugAccountOnAwake()
+    {
+        useDebugAccount = true;
     }
 
     public static List<string> GetSavedAccountsNames()
@@ -40,24 +46,37 @@ public class AccountManager : MonoBehaviour
         return File.Exists(GetAccountSavePath(accountName));
     }
 
-    public static void LogInAccount(string accountName)
+    public static LogInStatus LogInAccount(string accountName)
     {
         EnsureSaveDirectoryExists();
 
         var savePath = GetAccountSavePath(accountName);
-
+        
         if (!File.Exists(savePath))
         {
             Debug.LogError($"AccountManager: Account with name '{accountName}' not found.");
-            return;
+            return LogInStatus.AccountNotFound;
         }
 
-        var accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
+        PlayerAccountData accountData;
+        try
+        {
+            accountData = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(savePath));
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("AccountManager: something went wrong with serialization. Maybe save is corrupt or too much old.");
+            Debug.LogError(e);
+            return LogInStatus.AccountSaveCorrupted;
+        }
+         
         accountData.accountName = accountName;
-
+        
         currentAccount = new PlayerAccount(accountData);
         
         onLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
+        
+        return LogInStatus.Success;
     }
 
     public static void LogInDebugAccount()
@@ -96,19 +115,28 @@ public class AccountManager : MonoBehaviour
             JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
-    public static void LogInNewAccount(string accountName)
+    public static LogInStatus LogInNewAccount(string accountName)
     {
         if (ExistsSavedAccount(accountName))
         {
             Debug.LogError($"AccountManager: account with name '{accountName}' already exists.");
-            return;
+            return LogInStatus.AccountAlreadyExist;
         }
-
+        
         EnsureSaveDirectoryExists();
         currentAccount = new PlayerAccount(accountName);
         File.WriteAllText(GetAccountSavePath(accountName), currentAccount.ToJson());
 
-        LogInAccount(accountName);
+        return LogInAccount(accountName);
+    }
+
+    public static void RemoveAccount(string accountName)
+    {
+        EnsureSaveDirectoryExists();
+
+        if (!ExistsSavedAccount(accountName)) return;
+        
+        File.Delete(GetAccountSavePath(accountName));
     }
 
     private static string GetAccountSavePath(string accountName)
@@ -132,5 +160,13 @@ public class AccountManager : MonoBehaviour
         dataToSave.bountyPoints = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
 
         return dataToSave;
+    }
+
+    public enum LogInStatus
+    {
+        AccountNotFound,
+        AccountSaveCorrupted,
+        AccountAlreadyExist,
+        Success
     }
 }
