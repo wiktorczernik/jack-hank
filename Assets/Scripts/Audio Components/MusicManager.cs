@@ -39,6 +39,12 @@ public class MusicManager : MonoBehaviour
         GameManager.Local.bossFightManager.OnEnd -= StopMusic;
     }
 
+    private void Update()
+    {
+        audioSource.pitch = Time.timeScale;
+        audioSource.volume = Mathf.Clamp01(Time.timeScale);
+    }
+
     void OnBossBegin()
     {
         audioSource.clip = bossMusic;
