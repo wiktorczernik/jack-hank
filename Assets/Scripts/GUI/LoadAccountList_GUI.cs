@@ -71,7 +71,7 @@ public class AccountList_GUI : MonoBehaviour
             void LoadGame()
             {
                 ScreenFade.onAfterIn -= LoadGame;
-                AccountManager.LogInAccount(accountName);
+                AccountManager.LogInAccount(listItem.accountName);
                 GameSceneManager.LoadFirstLevel();
             }
 
