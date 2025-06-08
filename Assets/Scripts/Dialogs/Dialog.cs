@@ -19,6 +19,6 @@ namespace JackHank.Dialogs
         /// <summary>
         /// Voiceline'y któe zostan¹ odtworzone
         /// </summary>
-        public VoicelineTranscription transcriptions;
+        public VoicelineTranscription[] transcriptions;
     }
 }
