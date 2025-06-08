@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using System.Collections.Generic;
 
 namespace JackHank.Dialogs
@@ -10,20 +10,28 @@ namespace JackHank.Dialogs
     public class DialogPlaybackState
     {
         /// <summary>
-        /// Referencja do dialogu ktÛry jest odtwarzany
+        /// Referencja do dialogu kt—Éry jest odtwarzany
         /// </summary>
         public Dialog dialog;
         /// <summary>
-        /// Kiedy rozpoczπ≥ siÍ dialog
+        /// Kiedy rozpocz‚Ññ—ñ si–∫ dialog
         /// </summary>
         public float startTime;
         /// <summary>
-        /// Ile czasu ca≥kowitego dialogu juø zosta≥o odegrane
+        /// Ile czasu ca≈Çkowitego dialogu ju—ó zosta—ño odegrane
         /// </summary>
         public float playedTime;
         /// <summary>
-        /// Stan odtwarzania pojedyÒczych voiceline'Ûw
+        /// Aktualnie pokazana transkrypcja
         /// </summary>
-        public List<VoicelinePlaybackState> lineStates;
+        public VoicelineTranscription currentTranscription;
+        /// <summary>
+        /// Lista transkrypcji kt√≥re ju≈º zosta≈Çy pokazane
+        /// </summary>
+        public List<VoicelineTranscription> shownTranscriptions;
+        /// <summary>
+        /// Transkrypcje oczekujƒÖce odtworzenia
+        /// </summary>
+        public Queue<VoicelineTranscription> pendingTranscriptions;
     }
 }

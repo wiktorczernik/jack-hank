@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace JackHank.Dialogs
@@ -20,6 +19,6 @@ namespace JackHank.Dialogs
         /// <summary>
         /// Voiceline'y któe zostan¹ odtworzone
         /// </summary>
-        public List<VoicelinePlaybackConfig> linePlaybacks;
+        public VoicelineTranscription transcriptions;
     }
 }
