@@ -160,6 +160,7 @@ namespace LevelManagement
                 if (levelSave == null)
                 {
                     levelSave = new LevelStatistics();
+                    levelSave.levelID = level.levelID;
                     levelStatus = areLastLevelsPassed ? LevelStatus.Available : LevelStatus.Unavailable;
                 }else
                 {
