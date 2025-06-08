@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using LevelManagement;
+using UnityEngine;
 
 namespace AccountManagement
 {
+    // Jest to po prostu opakowanie enkapsulujące dla AccountData.
     public class PlayerAccount
     {
         private readonly PlayerAccountData _playerAccountData;
@@ -42,6 +44,11 @@ namespace AccountManagement
         public string GetAccountName()
         {
             return _playerAccountData.accountName;
+        }
+
+        public string ToJson()
+        {
+            return JsonUtility.ToJson(GetData());
         }
     }
 }
