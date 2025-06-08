@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8809778026977287945}
   - component: {fileID: 3760032070066224425}
   - component: {fileID: 1728789125110149307}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3812814003862239138}
   - component: {fileID: 3453029505781579829}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TrafficCone
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -185,7 +185,15 @@ MonoBehaviour:
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 25
   destroyTime: 10
@@ -205,6 +213,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 1610896277595513080}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &4859400356898077251
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8507508262484618758}
   - component: {fileID: 1610896277595513080}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -403,8 +413,16 @@ PrefabInstance:
       value: model
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 061559784b738c64ab16f38713d722d5, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 061559784b738c64ab16f38713d722d5, type: 3}
       propertyPath: m_TagString
       value: Smashable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 061559784b738c64ab16f38713d722d5, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

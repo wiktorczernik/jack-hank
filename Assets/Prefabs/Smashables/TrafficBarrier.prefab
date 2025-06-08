@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6301313224270030786}
   - component: {fileID: 2387553207454846285}
   - component: {fileID: 2091856870432475702}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   m_Component:
   - component: {fileID: 797534900210781917}
   - component: {fileID: 8317113931791884624}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7690884566807946061}
   - component: {fileID: 1183338771084436}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TrafficBarrier
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -322,6 +322,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 150
   destroyTime: 10
@@ -341,6 +342,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 8317113931791884624}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1001 &5570709706910957524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -394,8 +397,16 @@ PrefabInstance:
       value: TrafficBarrier_01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2e79b3d8e443cea409e71280d7ded0bc, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2e79b3d8e443cea409e71280d7ded0bc, type: 3}
       propertyPath: m_TagString
       value: Smashable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 2e79b3d8e443cea409e71280d7ded0bc, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 2e79b3d8e443cea409e71280d7ded0bc, type: 3}
       propertyPath: m_TagString

@@ -1,3 +1,4 @@
+using JackHank.Cinematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +27,7 @@ public class SlowRidePenalty : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (physics.speedKmh >= maxPenaltyVelocity)
+        if (physics.speedKmh >= maxPenaltyVelocity || CinematicPlayer.isPlaying)
         {
             penaltyState = PenaltyState.Waiting;
             eventTimer = 0f;

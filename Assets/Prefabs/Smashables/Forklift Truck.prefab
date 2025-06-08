@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4239945308949887029}
   - component: {fileID: 467947137397120952}
   - component: {fileID: 3647606882242607700}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Forklift Truck(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 62483333125172545}
   - component: {fileID: 2661253951839848115}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Forklift Truck
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 623605777263452412}
   - component: {fileID: 9152488305086899291}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 242469234224323330}
   - component: {fileID: 4360872317438244743}
   - component: {fileID: 7488128004539663755}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}

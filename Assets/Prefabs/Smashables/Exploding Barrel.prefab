@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4416958999076068999}
   - component: {fileID: 483790855517299952}
   - component: {fileID: 1451961628616496013}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 1863767171492294688}
   - component: {fileID: 8012315503857172100}
   - component: {fileID: 1846425529940096287}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ExplodingBarrel(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7896198427691659033}
   - component: {fileID: 5655159044789525844}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Exploding Barrel
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7462289941307904649}
   - component: {fileID: 3729753072352574181}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}

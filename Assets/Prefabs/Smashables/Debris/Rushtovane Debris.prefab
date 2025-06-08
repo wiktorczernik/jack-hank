@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5536395715616348584}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Rushtovane Debris
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -123,6 +123,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -270,6 +274,10 @@ PrefabInstance:
       value: Barrel LOD0 (5)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -409,6 +417,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -552,6 +564,10 @@ PrefabInstance:
       value: Barrel LOD0 (12)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -691,6 +707,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -834,6 +854,10 @@ PrefabInstance:
       value: Barrel LOD0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -975,6 +999,10 @@ PrefabInstance:
       value: Barrel LOD0 (11)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -1114,6 +1142,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -1261,6 +1293,10 @@ PrefabInstance:
       value: Barrel LOD0 (10)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -1400,6 +1436,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (23)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -1543,6 +1583,10 @@ PrefabInstance:
       value: Barrel LOD0 (15)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -1682,6 +1726,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (19)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -1825,6 +1873,10 @@ PrefabInstance:
       value: Barrel LOD0 (20)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -1964,6 +2016,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -2107,6 +2163,10 @@ PrefabInstance:
       value: Barrel LOD0 (24)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -2246,6 +2306,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -2389,6 +2453,10 @@ PrefabInstance:
       value: Barrel LOD0 (8)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -2528,6 +2596,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (17)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -2671,6 +2743,10 @@ PrefabInstance:
       value: Barrel LOD0 (22)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -2810,6 +2886,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -2957,6 +3037,10 @@ PrefabInstance:
       value: Barrel LOD0 (13)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -3096,6 +3180,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
@@ -3239,6 +3327,10 @@ PrefabInstance:
       value: Barrel LOD0 (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -3380,6 +3472,10 @@ PrefabInstance:
       value: Barrel LOD0 (7)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString
       value: Smashable
       objectReference: {fileID: 0}
@@ -3519,6 +3615,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_Name
       value: Barrel LOD0 (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b6245017d7314e44aad975bdce1bb6ac, type: 3}
       propertyPath: m_TagString

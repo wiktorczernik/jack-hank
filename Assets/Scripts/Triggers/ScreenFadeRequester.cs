@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ScreenFadeRequester : MonoBehaviour
@@ -21,8 +22,9 @@ public class ScreenFadeRequester : MonoBehaviour
         ScreenFade.Out(outDuration, outType);
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        if (startIn || startOut) yield return new WaitUntil(() => !ScreenFade.isBusy);
         if (startIn)
             In();
         else if (startOut)
