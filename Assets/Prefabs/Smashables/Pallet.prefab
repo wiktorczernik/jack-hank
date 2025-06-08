@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4355273315890037402}
   - component: {fileID: 539974060771407014}
   - component: {fileID: 1486561311846161023}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6935059714619310006}
   - component: {fileID: 4155183166242932098}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pallet
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 3560408456402291361}
   - component: {fileID: 4368018659043362557}
   - component: {fileID: 1872171780582734092}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pallet(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3440697470768685180}
   - component: {fileID: 1667844585424004724}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}

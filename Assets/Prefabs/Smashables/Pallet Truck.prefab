@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2473404424657270593}
   - component: {fileID: 3433586995187595735}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pallet Truck
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4747978159477504812}
   - component: {fileID: 8911472293943229246}
   - component: {fileID: 8798660825701640787}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1333692740256163060}
   - component: {fileID: 170479754790221818}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 7492111589810622460}
   - component: {fileID: 6024022849403275491}
   - component: {fileID: 4922057345895816777}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PalletTruck(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}

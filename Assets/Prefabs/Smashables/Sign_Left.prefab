@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9089167750716702482}
   - component: {fileID: 8190010141555811698}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 6546790183195613908}
   - component: {fileID: 1649616584473420424}
   - component: {fileID: 3829338967012142461}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -263,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6290888920138080406}
   - component: {fileID: 4888544493314578765}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sign_Left
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -322,6 +322,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 75
   destroyTime: 10
@@ -341,6 +342,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 8190010141555811698}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1001 &1767282504944292499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -408,6 +411,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 64631ad8394e3be4d908e1b075d691c1, type: 3}
       propertyPath: m_Name
       value: Sign_Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 64631ad8394e3be4d908e1b075d691c1, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 64631ad8394e3be4d908e1b075d691c1, type: 3}
       propertyPath: m_TagString

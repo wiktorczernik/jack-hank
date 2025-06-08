@@ -68,7 +68,15 @@ public class AccountList_GUI : MonoBehaviour
         }else if (status == AccountManager.LogInStatus.Success)
         {
             _wasAnyItemSelected = true;
-            GameSceneManager.LoadFirstLevel();
+            void LoadGame()
+            {
+                ScreenFade.onAfterIn -= LoadGame;
+                AccountManager.LogInAccount(accountName);
+                GameSceneManager.LoadFirstLevel();
+            }
+
+            ScreenFade.onAfterIn += LoadGame;
+            ScreenFade.In(2, ScreenFadeType.Circle);
         }
     }
 

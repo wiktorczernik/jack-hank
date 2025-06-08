@@ -43,17 +43,18 @@ public class VehicleSoundController : MonoBehaviour
         }
 
         float currentDriftVolume = Mathf.Lerp(driftSoundSource.volume, targetDriftVolume, driftVolumeLerp * Time.deltaTime);
-        currentDriftVolume *= driftRealVolume;
+        currentDriftVolume *= driftRealVolume * Mathf.Clamp01(Time.timeScale);
         
         float currentDriftPitch = driftMinPitch; 
-        currentDriftPitch += driftFactor * driftGainPitch;
+        currentDriftPitch += Time.timeScale * driftFactor * driftGainPitch;
 
-        float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f;
+        float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f * Time.timeScale;
         
         driftSoundSource.volume = currentDriftVolume;
         driftSoundSource.pitch = currentDriftPitch;
         
         engineSoundSource.pitch = engineFactor;
+        engineSoundSource.volume = Mathf.Clamp01(Time.timeScale);
     }
 
     private void OnEnable()

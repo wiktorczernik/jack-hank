@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5633700921236580438}
   - component: {fileID: 3618029860323320543}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442776319219709748}
   - component: {fileID: 4866159998299547927}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TrafficLight
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -190,7 +190,15 @@ MonoBehaviour:
     epicenterRadius: 10
     shakeIntensity: 0.5
     shakeMaxDistance: 100
+    damage: 0
+    damageFalloff:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
   wasHit: 0
+  bumpable: 1
   hittable: 1
   bountyPointsReward: 150
   destroyTime: 10
@@ -211,6 +219,8 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactAudios: []
   audioSource: {fileID: 3618029860323320543}
+  impactMinPitch: 0.75
+  impactMaxPitch: 1.25
 --- !u!1 &9174319432709657354
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +235,7 @@ GameObject:
   - component: {fileID: 4100713751883156710}
   - component: {fileID: 6725862864991050743}
   - component: {fileID: 5434515523310262751}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -426,8 +436,16 @@ PrefabInstance:
       value: StopLight_1370
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9888469f06629f94292872adaeb139bf, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9888469f06629f94292872adaeb139bf, type: 3}
       propertyPath: m_TagString
       value: Smashable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 9888469f06629f94292872adaeb139bf, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 9888469f06629f94292872adaeb139bf, type: 3}
       propertyPath: m_TagString
