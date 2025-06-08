@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace JackHank.Dialogs
 {
@@ -9,6 +10,21 @@ namespace JackHank.Dialogs
     [Serializable]
     public class DialogPlaybackState
     {
+        public DialogPlaybackState(Dialog dialog) 
+        {
+            this.dialog = dialog;
+            startTime = Time.time;
+            playedTime = 0;
+        }
+
+        /// <summary>
+        /// Podpowiada czy odtworzono audio całkowicie
+        /// </summary>
+        public bool playedAudio = false;
+        /// <summary>
+        /// Podpowiada czy transkrypcje audio całkowicie
+        /// </summary>
+        public bool playedTranscriptions = false;
         /// <summary>
         /// Referencja do dialogu ktуry jest odtwarzany
         /// </summary>
@@ -21,6 +37,10 @@ namespace JackHank.Dialogs
         /// Ile czasu całkowitego dialogu juї zostaіo odegrane
         /// </summary>
         public float playedTime;
+        /// <summary>
+        /// Całkowita długość dialogu
+        /// </summary>
+        public float duration => dialog.duration;
         /// <summary>
         /// Aktualnie pokazana transkrypcja
         /// </summary>
