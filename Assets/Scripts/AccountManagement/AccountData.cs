@@ -1,11 +1,15 @@
 ﻿using System;
+using UnityEngine.Serialization;
 
 namespace AccountManagement
 {
+    // Jest to po prostu kontener zawierający wszystkie dane konta gracza. Służy do zapisywania i odczytywania danych
+    // z pliku JSON. Po załadowaniu konta zawierają jedynie nieaktualne dane poziomów — aktualne dane można uzyskać
+    // z obiektów LevelInfo.
     [Serializable]
     public class PlayerAccountData : ICloneable
     {
-        public int bouncy;
+        public int bountyPoints;
         public bool hasWatchedIntroCutscene;
         public LevelStatistics[] openedLevels;
         [NonSerialized] public string accountName;
@@ -15,7 +19,7 @@ namespace AccountManagement
             var clone = new PlayerAccountData
             {
                 accountName = accountName,
-                bouncy = bouncy,
+                bountyPoints = bountyPoints,
                 openedLevels = new LevelStatistics[openedLevels?.Length ?? 0]
             };
 

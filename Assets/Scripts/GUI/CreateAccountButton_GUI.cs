@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class CreateAccountButton_GUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nicknameText;
+    [SerializeField] private TMP_InputField nicknameInput;
+    [SerializeField] private InputTip_GUI inputTip;
 
     private void Awake()
     {
@@ -13,7 +14,21 @@ public class CreateAccountButton_GUI : MonoBehaviour
 
     private void OnButtonClick()
     {
-        AccountManager.LogInNewAccount(nicknameText.text);
-        GameSceneManager.LoadFirstLevel();
+        if (nicknameInput.text.Trim().Length == 0)
+        {
+            inputTip.ShowText("Nickname is required");
+            return;
+        }
+        
+        var status = AccountManager.LogInNewAccount(nicknameInput.text);
+
+        if (status == AccountManager.LogInStatus.AccountAlreadyExist)
+        {
+            inputTip.ShowText("Account already exist");
+        }
+        else
+        {
+            GameSceneManager.LoadFirstLevel();
+        }
     }
 }

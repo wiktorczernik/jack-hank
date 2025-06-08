@@ -5,6 +5,8 @@ using UnityEngine.Serialization;
 
 namespace AccountManagement
 {
+    // LevelStatistics przechowuje dane gracza dotyczące danego poziomu. Klasa jest Serializable dla tego żeby zapisywać
+    // dane do plika JSON z kontem gracz
     [Serializable]
     public class LevelStatistics : ICloneable
     {
