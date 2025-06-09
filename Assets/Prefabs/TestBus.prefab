@@ -30677,6 +30677,7 @@ GameObject:
   - component: {fileID: 8409974713711607995}
   - component: {fileID: 1318795595491404067}
   - component: {fileID: 351531459514417218}
+  - component: {fileID: 6767605599685885758}
   m_Layer: 0
   m_Name: TestBus
   m_TagString: Player
@@ -31341,6 +31342,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6767605599685885758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15a54292b3f8b5a42ab2c7a28335111e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current: {fileID: 0}
+  eventScore: 0
+  passiveDrain: 5
+  penaltyScore: 50
 --- !u!1 &4541372557963350123
 GameObject:
   m_ObjectHideFlags: 0
