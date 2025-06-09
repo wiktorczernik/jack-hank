@@ -1,56 +1,72 @@
+using System;
 using JackHank.Cinematics;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 // Checks if the player bus moves too slow. If so, the player receives a warning, then a penalty.
 public class SlowRidePenalty : MonoBehaviour
 {
-    [Tooltip("Current script state")] public PenaltyState penaltyState;
+    [Tooltip("Current script state")]
+    public static PenaltyState state;
+
     [Tooltip("The threshold velocity when the script gets triggered. In km/h")] public float maxPenaltyVelocity;
-    public float eventTimer;
+    public static float eventTimer;
+    [Tooltip("How long will the excusing period last")]
+    public float excusingDuration = 3;
+    [Tooltip("How long will the warning period last")]
+    public float warningDuration = 5;
 
-    [Tooltip("How long will the excusing period last")] public float excusingDuration;
-    [Tooltip("How long will the warning period last")] public float warningDuration;
+    public static event Action onWarningBegin;
+    public static event Action onWarningTick;
+    public static event Action onWarningEnd;
+    public static event Action onPenaltyReceived;
 
-    VehiclePhysics physics;
+    PlayerVehicle player;
 
-    public UnityEvent onWarningBegin;
-    public UnityEvent onWarningTick;
-    public UnityEvent onWarningEnd;
-    public UnityEvent onPenaltyReceived;
 
     private void Awake()
     {
-        physics = GetComponent<PlayerVehicle>().physics;
+        player = GetComponent<PlayerVehicle>();
+    }
+    private void OnEnable()
+    {
+        state = PenaltyState.Waiting;
+        eventTimer = 0;
+    }
+    private void OnDisable()
+    {
+        state = PenaltyState.Waiting;
+        eventTimer = 0;
     }
 
     private void FixedUpdate()
     {
-        if (physics.speedKmh >= maxPenaltyVelocity || CinematicPlayer.isPlaying)
+        if (state == PenaltyState.Penalty) return;
+        if (player.physics.speedKmh >= maxPenaltyVelocity || CinematicPlayer.isPlaying)
         {
-            penaltyState = PenaltyState.Waiting;
+            state = PenaltyState.Waiting;
             eventTimer = 0f;
             return;
         }
 
         eventTimer += Time.fixedDeltaTime;
-        if (penaltyState == PenaltyState.Waiting) penaltyState = PenaltyState.Excusing;
-        if (penaltyState == PenaltyState.Excusing && eventTimer >= excusingDuration)
+        if (state == PenaltyState.Waiting) state = PenaltyState.Excusing;
+        if (state == PenaltyState.Excusing && eventTimer >= excusingDuration)
         {
-            penaltyState = PenaltyState.Warning;
+            state = PenaltyState.Warning;
             eventTimer = 0f;
             onWarningBegin?.Invoke();
             return;
         }
-        if (penaltyState == PenaltyState.Warning)
+        if (state == PenaltyState.Warning)
         {
             onWarningTick?.Invoke();
             if (eventTimer >= warningDuration)
             {
                 onWarningEnd?.Invoke();
-                penaltyState = PenaltyState.Penalty;
+                state = PenaltyState.Penalty;
                 eventTimer = 0f;
+                player.Kill();
                 onPenaltyReceived?.Invoke();
                 return;
             }
