@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace JackHank.Dialogs
@@ -9,9 +10,14 @@ namespace JackHank.Dialogs
     public class Dialog : ScriptableObject
     {
         /// <summary>
+        /// Nagranie in the flesh
+        /// </summary>
+        public AudioClip audioClip;
+        /// <summary>
         /// D³ugoœæ dialogu w sekundach
         /// </summary>
-        public float duration;
+        public float audioDuration;
+        public float transcriptionDuration;
         /// <summary>
         /// Priorytet odtwarzania dialogu
         /// </summary>
@@ -20,5 +26,15 @@ namespace JackHank.Dialogs
         /// Voiceline'y któe zostan¹ odtworzone
         /// </summary>
         public VoicelineTranscription[] transcriptions;
+
+        private void OnValidate()
+        {
+            if (audioClip)
+                audioDuration = audioClip.length;
+            if (transcriptions != null)
+            {
+                transcriptionDuration = transcriptions.Sum(x => x.duration + x.startDelay);
+            }
+        }
     }
 }

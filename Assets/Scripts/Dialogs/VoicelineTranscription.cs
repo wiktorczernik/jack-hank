@@ -1,23 +1,27 @@
-using System;
+Ôªøusing System;
 
 namespace JackHank.Dialogs
 {
     /// <summary>
-    /// Transkrypcja voiceline'u. Nie musi byÊ dla ca≥ego nagrania, moøe byÊ czÍúciπ
+    /// Transkrypcja voiceline'u. Nie musi by–∂ dla ca—ñego nagrania, mo—óe by–∂ cz–∫—öci‚Ññ
     /// </summary>
     [Serializable]
     public class VoicelineTranscription
     {
         /// <summary>
-        /// ZawartoúÊ transkrypcji
+        /// Postaƒá kt√≥ra m√≥wi ten wers
+        /// </summary>
+        public Character character;
+        /// <summary>
+        /// Zawarto—ö–∂ transkrypcji
         /// </summary>
         public string text;
         /// <summary>
-        /// D≥ugoúÊ transkrypcji w sekundach
+        /// D—ñugo—ö–∂ transkrypcji w sekundach
         /// </summary>
         public float duration;
         /// <summary>
-        /// OpÛünienie poczπtku transkrypcji (na potrzeby voiceline'u)
+        /// Op—É—ünienie pocz‚Ññtku transkrypcji (na potrzeby voiceline'u)
         /// </summary>
         public float startDelay;
     }

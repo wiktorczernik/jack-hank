@@ -15,6 +15,10 @@ namespace JackHank.Dialogs
             this.dialog = dialog;
             startTime = Time.time;
             playedTime = 0;
+            pendingTranscriptions = new();
+            foreach (var transcription in dialog.transcriptions)
+                pendingTranscriptions.Enqueue(transcription);
+            shownTranscriptions = new();
         }
 
         /// <summary>
@@ -37,10 +41,6 @@ namespace JackHank.Dialogs
         /// Ile czasu całkowitego dialogu juї zostaіo odegrane
         /// </summary>
         public float playedTime;
-        /// <summary>
-        /// Całkowita długość dialogu
-        /// </summary>
-        public float duration => dialog.duration;
         /// <summary>
         /// Aktualnie pokazana transkrypcja
         /// </summary>

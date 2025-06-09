@@ -26,6 +26,9 @@ namespace JackHank.Dialogs
         public static event Action<VoicelineTranscription> onTranscriptionEnd;
 
         private static DialogPlayer _instance;
+        [Header("State")]
+        [SerializeField] bool _isPlaying;
+        [Header("Components")]
         [SerializeField] AudioSource _audioSource;
 
 
@@ -47,15 +50,18 @@ namespace JackHank.Dialogs
 
         private void FixedUpdate()
         {
+            _isPlaying = playbackState != null;
             var s = playbackState;
+            _audioSource.pitch = Time.timeScale;
+            _audioSource.volume = Mathf.Clamp01(Time.timeScale);
             
             if (s == null) return;
             if (s.playedAudio) return;
 
             s.playedTime += Time.fixedDeltaTime;
-            if (s.playedTime >= s.duration)
+            if (s.playedTime >= s.dialog.audioDuration)
             {
-                s.playedTime = s.duration;
+                s.playedTime = s.dialog.audioDuration;
                 s.playedAudio = true;
                 _audioSource.Stop();
             }
@@ -67,7 +73,7 @@ namespace JackHank.Dialogs
             var state = playbackState;
 
             audioSource.Stop();
-            audioSource.clip = _audioSource.clip;
+            audioSource.clip = playbackState.dialog.audioClip;
             audioSource.Play();
 
             onDialogBegin?.Invoke(state);
@@ -97,6 +103,7 @@ namespace JackHank.Dialogs
             yield return new WaitUntil(() => state.playedTranscriptions && state.playedAudio);
 
             onDialogEnd?.Invoke(state);
+            playbackState = null;
         }
     }
 }
