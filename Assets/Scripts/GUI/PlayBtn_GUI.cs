@@ -23,7 +23,8 @@ public class PlayBtn_GUI : MonoBehaviour
             void LoadLogin()
             {
                 ScreenFade.onAfterIn -= LoadLogin;
-                GameSceneManager.LoadLogin();
+                if (AccountManager.useDebugAccount) GameSceneManager.LoadFirstLevel();
+                else GameSceneManager.LoadLogin();
             }
 
             ScreenFade.onAfterIn += LoadLogin;

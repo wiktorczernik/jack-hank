@@ -7,7 +7,7 @@ public class IntroCutscenePlayer : MonoBehaviour
 {
     [SerializeField] private CinematicSequence introCutscene;
     [SerializeField] private Transform cutsceneTransform;
-    [SerializeField] private bool showOnDebug;
+    public bool showOnDebug;
 
     private bool _afterInspectorFieldChecks;
 
@@ -32,12 +32,10 @@ public class IntroCutscenePlayer : MonoBehaviour
             Debug.LogError(
                 $"component [{GetType().Name}]; game object [{name}]: cant play intro cutscene, there is another playing cinematic");
 
-
+        CinematicPlayer.onEndPlay += AfterIntroCutscene;
         CinematicPlayer.PlaySequence(introCutscene, cutsceneTransform.position, cutsceneTransform.rotation,
             transform.localScale);
-
-        CinematicPlayer.onEndPlay += AfterIntroCutscene;
-
+        
         return;
 
         void AfterIntroCutscene()
@@ -46,7 +44,6 @@ public class IntroCutscenePlayer : MonoBehaviour
 
             OnceOnSceneFinished.Invoke();
             foreach (var @delegate in OnceOnSceneFinished.GetInvocationList()) OnceOnSceneFinished -= (Action)@delegate;
-
             AccountManager.currentAccount.SetPlayerWatchedIntroCutscene();
 
             CinematicPlayer.onEndPlay -= AfterIntroCutscene;
