@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1591409257585059591}
   - component: {fileID: 6064904779129140425}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PowerBox
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 6816713782150813900}
   - component: {fileID: 6999099437305161528}
   - component: {fileID: 7788013425721306116}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PowerBox(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 6145336069822199333}
   - component: {fileID: 2856362387973761769}
   - component: {fileID: 6763141864447643825}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5090061562402417561}
   - component: {fileID: 3083672458787398988}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}

@@ -1,7 +1,9 @@
 {
     "name": "JackHank.Cinematics",
     "rootNamespace": "JackHank.Cinematics",
-    "references": [],
+    "references": [
+        "GUID:b577c79cf94d9214081d79dbd2ea12ac"
+    ],
     "includePlatforms": [
         "Editor",
         "LinuxStandalone64",

@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
+  m_Name: Hanks Plan
+  m_EditorClassIdentifier: 
+  audioClip: {fileID: 8300000, guid: 903d6d3dfa7bda3438b9f53ddbe76e3a, type: 3}
+  audioDuration: 20.88
+  transcriptionDuration: 20.88
+  priority: 0
+  transcriptions:
+  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
+    text: Hmm, right..
+    duration: 1.5
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Look kid, that's not the end of the world,
+    duration: 2.5
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Uncle hank always has some plan!
+    duration: 2
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: First - we grab people to help us. Second - we begin the uprising by creating
+      chaos,
+    duration: 4
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: and finally - we show those damn cows where they belong.
+    duration: 3
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: What do you think?
+    duration: 1.5
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
+    text: That.. Is.. Fantastic idea Hank, I'm in.
+    duration: 4.5
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Of course you're in, kid!
+    duration: 1.88
+    startDelay: 0

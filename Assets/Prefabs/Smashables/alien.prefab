@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 758903068374093416}
   - component: {fileID: 3848596799078198259}
   - component: {fileID: 3446256026826281732}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3000331497803073786}
   - component: {fileID: 6913785662586921574}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -240,7 +240,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6799479985583406201}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Alien(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 180957647114184552}
   - component: {fileID: 5702440062281589626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: alien
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 3647511943915839616}
   - component: {fileID: 8744896512420813442}
   - component: {fileID: 7690968520729624552}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Alien_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

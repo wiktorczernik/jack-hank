@@ -29,6 +29,7 @@ public class PlayerVehicleAbilities : MonoBehaviour
 
     private bool TryUseAbility(PlayerVehicleAbility ability)
     {
+        if (TutorialMaster.isActive) return false;
         if (!ability) return false;
         if (ability.requiredMana > availableMana) return false;
         
