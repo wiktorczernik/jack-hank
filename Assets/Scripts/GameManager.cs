@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         if (IsDuringRun) GameRunFrameTick();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         if (Debug.isDebugBuild && !_isInitialized)
             Initialize(debugLevelDefinition);
@@ -47,20 +47,12 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey("StartFromBossFight"))
         {
             sceneEnter.Disable();
-            
+            ClearPlayerPrefs();
             Local.bossFightManager.Begin();
-            foreach (var bonusType in RunInfo.GetBonusTypes())
-            {
-                var key = bonusType.ToString();
-                RunInfo.ChangeBonusBountyBy(PlayerPrefs.GetInt(key), bonusType);
-
-                PlayerPrefs.DeleteKey(key);
-            }
-
-            PlayerPrefs.DeleteKey("StartFromBossFight");
-            PlayerPrefs.Save();
+            introCutscenePlayer.showOnDebug = false;
+            BeginRun();
         }
-        else if (introCutscenePlayer != null && introCutscenePlayer.WillPlay())
+        else if (introCutscenePlayer != null && introCutscenePlayer.WillPlay() && introCutscenePlayer.enabled)
         {
             sceneEnter.Disable();
             introCutscenePlayer.OnceOnSceneFinished += () =>
@@ -88,6 +80,7 @@ public class GameManager : MonoBehaviour
     {
         if (_isInitialized) return;
         sceneExit.OnExit += OnLevelEnds;
+        Application.quitting += ClearPlayerPrefs;
 
         if (definition == null)
         {
@@ -203,6 +196,20 @@ public class GameManager : MonoBehaviour
         if (CinematicPlayer.isPlaying) return;
 
         RunInfo.Time += Time.deltaTime;
+    }
+
+    private void ClearPlayerPrefs()
+    {
+        foreach (var bonusType in RunInfo.GetBonusTypes())
+        {
+            var key = bonusType.ToString();
+            RunInfo.ChangeBonusBountyBy(PlayerPrefs.GetInt(key), bonusType);
+
+            PlayerPrefs.DeleteKey(key);
+        }
+
+        PlayerPrefs.DeleteKey("StartFromBossFight");
+        PlayerPrefs.Save();
     }
 
     public void OnLevelEnds()
