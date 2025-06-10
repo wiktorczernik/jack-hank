@@ -31183,7 +31183,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1.5
-      value: 30
+      value: 25
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -31194,7 +31194,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   upwardSpeed: 30
-  minForwardSpeed: 30
+  minForwardSpeed: 40
   almostGroundedTorqueForce: 2
   pitchTorqueForce: 5
   rollStabilizationForce: 1
@@ -31312,9 +31312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e22549f0a6c04149bc0e721033a5b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
   maxPenaltyVelocity: 50
-  eventTimer: 0
   excusingDuration: 5
   warningDuration: 5
 --- !u!1 &4541372557963350123
