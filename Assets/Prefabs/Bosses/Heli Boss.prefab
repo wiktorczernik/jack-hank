@@ -10304,11 +10304,7 @@ MonoBehaviour:
   speedDamageThreshold: 40
   dmgReceivedPerSpeedUnit: 1.667
   isDuringBurst: 0
-  isBurstTimedOut: 0
   isBurstCooldowned: 0
-  missilesLeft: -1
-  activeCrosshairs: []
-  shotMissiles: []
   onBurstStart:
     m_PersistentCalls:
       m_Calls:
@@ -10344,19 +10340,14 @@ MonoBehaviour:
         m_CallState: 2
   target: {fileID: 0}
   missilePrefab: {fileID: 209675717119317151, guid: 989eb3b1882938143945108fd62cae27, type: 3}
-  crosshairPrefab: {fileID: 402068446918780979, guid: a6f5980df9e577146ba6b1423615a664, type: 3}
   ground: {fileID: 3099071437635419331}
   missileShootAnchor: {fileID: 443845243258357876}
-  burstTimeOut: 5
+  burstPredictionTime: 0.55
   timeBeforeBurst: 2
   burstMinDistance: 20
-  burstFireTiming: 4
-  burstMaxFirings: 4
-  initialBurstCooldown: 15
+  burstFireTiming: 1.5
+  burstMaxFirings: 5
   burstCooldown: 10
-  sideCrosshairDistance: 10
-  missMinStartTime: 0.2
-  playerTargetVerticalOffset: 3
   currentHeight: 0
   playerVerticalOffset: 10
   playerForwardDistance: 50
@@ -10379,6 +10370,8 @@ MonoBehaviour:
   onEnvironmentBump:
     m_PersistentCalls:
       m_Calls: []
+  isWheelGrounded: 0
+  isBodyGrounded: 0
   isGrounded: 0
   groundNormal: {x: 0, y: 1, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
@@ -10423,8 +10416,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   allowAirRoll: 0
+  allowPitchAirRoll: 0
   airRollForce: 1
   airRollMinTime: 1.25
+  airRollMaxPitchSpeed: 0.5
+  airRollMaxYawSpeed: 0.5
+  airRollRotateTrajectory: 1
   turnForce: 6000
   turnAginForce: 6000
   turnStabilization: 8
@@ -10492,6 +10489,13 @@ MonoBehaviour:
   collisionEvents: {fileID: 7915724856385818524}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
+  hullSize: {x: 3.5, y: 2.7, z: 8.9}
+  bodyGroundedUpOffset: 1.8
+  bodyGroundedMaxDistance: 0.5
+  rollStabilization: 10
+  pitchStabilization: 8
+  rollDamping: 4
+  pitchDamping: 3
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
