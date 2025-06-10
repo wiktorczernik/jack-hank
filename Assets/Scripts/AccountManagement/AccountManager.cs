@@ -13,8 +13,20 @@ public class AccountManager : MonoBehaviour
     [SerializeField] private PlayerAccountData debugAccountSettings;
     private static string _saveFolderPath => Application.persistentDataPath + "/saves";
     private static AccountManager _instance;
+
+    private static PlayerAccount _currentAccount;
     
-    public static PlayerAccount currentAccount { get; private set; }
+    public static PlayerAccount currentAccount
+    {
+        get
+        {
+            if (_currentAccount != null) return _currentAccount;
+            LogInDebugAccount();
+
+            return _currentAccount;
+        }
+    }
+
     public static bool useDebugAccount { get; set; }
     
     public static event Action<PlayerAccountData> onLoggedIn;
@@ -72,7 +84,7 @@ public class AccountManager : MonoBehaviour
          
         accountData.accountName = accountName;
         
-        currentAccount = new PlayerAccount(accountData);
+        _currentAccount = new PlayerAccount(accountData);
         
         onLoggedIn?.Invoke(accountData.Clone() as PlayerAccountData);
         
@@ -87,21 +99,21 @@ public class AccountManager : MonoBehaviour
                 "AccountManager: No instance of AccountManager. Probably you forgot to load 'Essentials' scene");
             return;
         }
-        if (currentAccount != null) return;
-        currentAccount = new PlayerAccount(_instance.debugAccountSettings);
+        if (_currentAccount != null) return;
+        _currentAccount = new PlayerAccount(_instance.debugAccountSettings);
         useDebugAccount = true;
-        onLoggedIn?.Invoke(currentAccount.GetData().Clone() as PlayerAccountData);
+        onLoggedIn?.Invoke(_currentAccount.GetData().Clone() as PlayerAccountData);
     }
 
     public static void LogOutCurrentAccount()
     {
-        currentAccount = null;
+        _currentAccount = null;
         onLoggedOut?.Invoke(GetUpdatedAccountData());
     }
 
     public static bool IsLoggedIn()
     {
-        return currentAccount != null;
+        return _currentAccount != null;
     }
 
     public static void SaveCurrentAccount()
@@ -111,7 +123,7 @@ public class AccountManager : MonoBehaviour
         EnsureSaveDirectoryExists();
 
         File.WriteAllText(
-            GetAccountSavePath(currentAccount.GetAccountName()),
+            GetAccountSavePath(_currentAccount.GetAccountName()),
             JsonUtility.ToJson(GetUpdatedAccountData()));
     }
 
@@ -124,8 +136,8 @@ public class AccountManager : MonoBehaviour
         }
         
         EnsureSaveDirectoryExists();
-        currentAccount = new PlayerAccount(accountName);
-        File.WriteAllText(GetAccountSavePath(accountName), currentAccount.ToJson());
+        _currentAccount = new PlayerAccount(accountName);
+        File.WriteAllText(GetAccountSavePath(accountName), _currentAccount.ToJson());
 
         return LogInAccount(accountName);
     }
@@ -153,7 +165,7 @@ public class AccountManager : MonoBehaviour
 
     private static PlayerAccountData GetUpdatedAccountData()
     {
-        var dataToSave = currentAccount.GetData();
+        var dataToSave = _currentAccount.GetData();
 
         dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
 

@@ -161,8 +161,7 @@ namespace JackHank.Cinematics
                 lastState.rotation = cameraAnchor.rotation;
                 onFrameUpdate?.Invoke(lastState);
             }
-
-
+            
             isPlaying = false;
             playedSequence = null;
             onEndPlay?.Invoke();

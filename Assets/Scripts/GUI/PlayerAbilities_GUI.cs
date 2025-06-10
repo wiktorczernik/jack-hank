@@ -11,7 +11,6 @@ public class PlayerAbilities_GUI : MonoBehaviour
     
     private void OnEnable()
     {
-        Debug.Log("On End Cinematic");
         nitro.Initialize(abilities.nitro);
         jump.Initialize(abilities.jump);
         nitro.gameObject.SetActive(true);
