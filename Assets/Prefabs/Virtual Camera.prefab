@@ -159,7 +159,7 @@ MonoBehaviour:
   m_SmoothingTime: 1
   m_Damping: 1.5
   m_DampingWhenOccluded: 1.5
-  m_OptimalTargetDistance: 0
+  m_OptimalTargetDistance: 5
 --- !u!1 &4031949734593939074
 GameObject:
   m_ObjectHideFlags: 3

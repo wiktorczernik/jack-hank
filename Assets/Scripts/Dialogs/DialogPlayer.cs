@@ -48,22 +48,30 @@ namespace JackHank.Dialogs
             _instance = this;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             _isPlaying = playbackState != null;
+
+            if (_audioSource.clip == null) return;
+
             var s = playbackState;
             _audioSource.pitch = Time.timeScale;
             _audioSource.volume = Mathf.Clamp01(Time.timeScale);
-            
+            if (Time.timeScale < 0.1f)
+                _audioSource.Pause();
+            else
+                _audioSource.UnPause();
+
             if (s == null) return;
             if (s.playedAudio) return;
 
-            s.playedTime += Time.fixedDeltaTime;
+            s.playedTime += Time.deltaTime;
             if (s.playedTime >= s.dialog.audioDuration)
             {
                 s.playedTime = s.dialog.audioDuration;
                 s.playedAudio = true;
                 _audioSource.Stop();
+                _audioSource.clip = null;
             }
         }
 
@@ -103,6 +111,8 @@ namespace JackHank.Dialogs
             yield return new WaitUntil(() => state.playedTranscriptions && state.playedAudio);
 
             onDialogEnd?.Invoke(state);
+
+            audioSource.clip = null;
             playbackState = null;
         }
     }

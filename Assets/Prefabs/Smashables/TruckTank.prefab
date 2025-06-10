@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6284677283227593228}
   - component: {fileID: 7120453914681944712}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TruckTank
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2498407813651814416}
   - component: {fileID: 1746764132211706250}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 1209926977529752873}
   - component: {fileID: 8116869079929623}
   - component: {fileID: 2165551490814494870}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TruckTank(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   - component: {fileID: 5683333182478130333}
   - component: {fileID: 5089400665462605245}
   - component: {fileID: 8424502999817947811}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -384,7 +384,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.1
+  - screenRelativeHeight: 0.072306655
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8116869079929623}

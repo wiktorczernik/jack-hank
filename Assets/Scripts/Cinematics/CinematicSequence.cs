@@ -1,3 +1,4 @@
+using JackHank.Dialogs;
 using UnityEngine;
 
 
@@ -9,6 +10,7 @@ namespace JackHank.Cinematics
         public float duration = -1f;
         public GameObject prefab;
         public AudioClip audio;
+        public Dialog dialog;
 
 #if UNITY_EDITOR
         private void OnValidate()

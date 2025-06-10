@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace JackHank.Dialogs
 {
@@ -17,6 +18,10 @@ namespace JackHank.Dialogs
             _saveKey = dialog.GetInstanceID().ToString();
             if (playOnce)
                 requested = PlayerPrefs.HasKey(_saveKey);
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!other) return;
         }
         public void Request()
         {

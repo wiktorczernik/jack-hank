@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5137772344016302459}
   - component: {fileID: 4333352142059917367}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tractor
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8964579551027936270}
   - component: {fileID: 4792099901496205148}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Audio Source
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 7722457262795353855}
   - component: {fileID: 5259131460815324734}
   - component: {fileID: 2488473279464947067}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Model
   m_TagString: Smashable
   m_Icon: {fileID: 0}
@@ -265,11 +265,11 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 2.562015, z: -0.37213326}
   m_Size: 9.295194
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
+  m_FadeMode: 2
+  m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.1
+  - screenRelativeHeight: 0.046221245
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7710604173669033475}
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 8232640108518427051}
   - component: {fileID: 7710604173669033475}
   - component: {fileID: 4911256928588087704}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tractor_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -440,7 +440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5951130698312331802}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tractor(1)(Clone)
   m_TagString: Smashable
   m_Icon: {fileID: 0}

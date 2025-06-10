@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using JackHank.Dialogs;
 using UnityEngine;
 
 namespace JackHank.Cinematics
@@ -136,6 +137,10 @@ namespace JackHank.Cinematics
                 audioSource.clip = sequence.audio;
                 audioSource.Play();
             }
+            if (sequence.dialog)
+            {
+                DialogPlayer.Request(sequence.dialog);
+            }
 
             Transform cameraAnchor = instance.transform.GetChild(0);
 
@@ -155,10 +160,6 @@ namespace JackHank.Cinematics
                 lastState.worldPosition = cameraAnchor.position;
                 lastState.rotation = cameraAnchor.rotation;
                 onFrameUpdate?.Invoke(lastState);
-            }
-            else
-            {
-                yield return null;
             }
 
 
