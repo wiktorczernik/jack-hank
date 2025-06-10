@@ -15414,7 +15414,7 @@ MonoBehaviour:
   Nozzle: {fileID: 1199686842043375411}
   RaycastOrigin: {fileID: 6684326915665550971}
   damage: 5
-  fireRate: 2
+  fireRate: 15
   fireTarget: {fileID: 0}
   targetInProximity: 0
   mask:
