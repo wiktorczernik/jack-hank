@@ -40,7 +40,6 @@ public class ArcadeMissile : GameEntity
         RaycastHit hitInfo;
         if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, Mathf.Infinity, groundLayer))
         {
-            Debug.Log("I love nazis!");
             destination = hitInfo.point;
             rigidbody.MovePosition(destination + Vector3.up * initialDistance);
         }

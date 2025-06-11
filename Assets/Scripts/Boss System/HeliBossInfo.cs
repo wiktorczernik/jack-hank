@@ -18,6 +18,7 @@ public class HeliBossInfo : Boss
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
         instance.physics.enabled = true;
+        instance.StartTotalFlyingDestruction();
         
         BossHPManager.DisplayBoss(instance);
     }
