@@ -31312,7 +31312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e22549f0a6c04149bc0e721033a5b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPenaltyVelocity: 50
+  maxPenaltyVelocity: 25
   excusingDuration: 5
   warningDuration: 5
 --- !u!1 &4541372557963350123

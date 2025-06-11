@@ -31,7 +31,7 @@ public class BossHPManager : MonoBehaviour
     public static void DisplayBoss(IBossBarApplicable boss)
     {
         EndDisplay();
-        //Instance.RearMirror.SetActive(false);
+        Instance.RearMirror.SetActive(false);
         Instance.onDisplay = boss;
         boss.Self.onDeath += EndDisplay;
 
@@ -46,7 +46,7 @@ public class BossHPManager : MonoBehaviour
 
     public static void EndDisplay()
     {
-        //Instance.RearMirror.SetActive(true);
+        Instance.RearMirror.SetActive(true);
         Instance.Activation.SetActive(false);
 
         if (Instance.onDisplay == null) return;
