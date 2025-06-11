@@ -1,27 +1,51 @@
+using System;
 using System.Collections;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
+public struct HeliBossWaveConfig
+{
+    [Header("General")]
+    public float cooldownTime;
+    /// <summary>
+    /// How long does it shows that rockets will fire soon
+    /// </summary>
+    public float prepareDuration;
+    /// <summary>
+    /// How much predictive rockets will be fired.
+    /// </summary>
+    [Header("Predictive Rockets")]
+    public int predictiveRocketsCount;
+    /// <summary>
+    /// How much time will helicopter wait after attack start, before it starts shooting predictive rockets
+    /// </summary>
+    public float predictiveBurstDelay;
+    /// <summary>
+    /// How much time will helicopter wait before shooting next rocket
+    /// </summary>
+    public float predictiveFirePause;
+}
 public class HeliBoss : BotVehicle, IBossBarApplicable
 {
-    [Header("Burst Fire State")]
-    public bool isDuringBurst;
-    public bool isBurstCooldowned = true;
-
-    [Header("Heli Events")]
-    public UnityEvent onBurstStart;
-    public UnityEvent onBurstEnd;
-    public UnityEvent onFire;
-
-    [Header("Boss Properties")]
+    [Header("Boss State")]
     public PlayerVehicle target;
+    public int currentWave = -1;
+    public bool isAttacking = false;
+    public bool isCooldowned = true;
+
+    [Header("Boss Events")]
+    public UnityEvent onAttackPrepare;
+    public UnityEvent onAttackBegin;
+    public UnityEvent onAttackEnd;
+
+    [Header("Boss Config")]
+    public HeliBossWaveConfig[] waves;
     public ArcadeMissile missilePrefab;
     public GameObject ground;
-    public Transform missileShootAnchor;
 
     [Header("Heli Burst Fire")]
-    public float burstPredictionTime = 1.5f;
+    public float predictionTime = 1.5f;
     public float timeBeforeBurst = 3f;
     public float burstMinDistance = 30f;
     public float burstFireTiming = 0.1f;
@@ -33,6 +57,9 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public float playerVerticalOffset = 20f;
     public float playerForwardDistance = 30f;
     public float verticalAlignSpeed = 1f;
+
+    [Header("Visuals")]
+    public ParticleSystem[] prepareParticles;
 
     [Header("Bossbar")]
     public Color primaryColor;
@@ -51,37 +78,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         Vector3 finalPos = startPos + deltaPos;
         return finalPos;
     }
-    public void BurstFire()
-    {
-        StartCoroutine(BurstFireCo());
-    }
-    IEnumerator BurstFireCo()
-    {
-        isBurstCooldowned = true;
-        isDuringBurst = true;
-
-        onBurstStart?.Invoke();
-        yield return new WaitForSeconds(timeBeforeBurst);
-        for (int i = 0; i < burstMaxFirings; ++i)
-        {
-            Vector3 spawnPos = PredictPlayerPosition(burstPredictionTime) + Vector3.up * 50;
-            Instantiate(missilePrefab, spawnPos, Quaternion.identity);
-            onFire?.Invoke();
-
-            yield return new WaitForSeconds(burstFireTiming);
-        }
-
-        onBurstEnd?.Invoke();
-        DelayedResetBurstCooldown(burstCooldown);
-    }
-    public void DelayedResetBurstCooldown(float delay)
-    {
-        Invoke(nameof(ResetBurstCooldown), delay);
-    }
-    public void ResetBurstCooldown()
-    {
-        isBurstCooldowned = false;
-    }
     private void SeekPlayerView()
     {
         arrived = false;
@@ -96,19 +92,61 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         destinationOffset += velocityOffset;
         destinationPoint += destinationOffset;
     }
-    private void TryBurstFire()
+    public void StartTotalFlyingDestruction()
     {
-        if (isBurstCooldowned) return;
-        float targetDistance = Vector3.Distance(transform.position, target.GetPosition());
-        if (targetDistance > burstMinDistance)
+        StartCoroutine(WaveCoroutine());
+    }
+    IEnumerator WaveCoroutine()
+    {
+        currentWave = 0;
+        
+        while (isAlive)
         {
-            BurstFire();
+            HeliBossWaveConfig wave = waves[currentWave];
+
+            isAttacking = false;
+            isCooldowned = true;
+            yield return new WaitForSeconds(wave.cooldownTime);
+            yield return new WaitUntil(() => Vector3.Distance(transform.position, target.GetPosition()) > burstMinDistance);
+
+            isAttacking = true;
+            isCooldowned = false;
+            foreach(ParticleSystem particle in prepareParticles)
+            {
+                particle.Stop();
+                var main = particle.main;
+                main.duration = wave.prepareDuration;
+                particle.Play();
+            }
+            onAttackPrepare?.Invoke();
+            yield return new WaitForSeconds(wave.prepareDuration);
+
+            onAttackBegin?.Invoke();
+            StartCoroutine(PredictiveRocketsCoroutine(wave));
+
+            float attackDuration = wave.predictiveBurstDelay + wave.predictiveFirePause * wave.predictiveRocketsCount;
+            yield return new WaitForSeconds(attackDuration);
+            onAttackEnd?.Invoke();
+
+            currentWave = Mathf.Clamp(currentWave + 1, 0, waves.Length - 1);
+
+        }
+    }
+    private IEnumerator PredictiveRocketsCoroutine(HeliBossWaveConfig wave)
+    {
+        yield return new WaitForSeconds(wave.predictiveBurstDelay);
+        for (int i = 0; i < wave.predictiveRocketsCount; i++)
+        {
+            Vector3 spawnPos = PredictPlayerPosition(predictionTime) + Vector3.up * 50;
+            Instantiate(missilePrefab, spawnPos, Quaternion.identity);
+            yield return new WaitForSeconds(wave.predictiveFirePause);
         }
     }
     private void AlignGround()
     {
         float targetHeight = target.transform.position.y + playerVerticalOffset;
 
+        float oldHeight = currentHeight;
         currentHeight = Mathf.Lerp(currentHeight, targetHeight, verticalAlignSpeed * Time.fixedDeltaTime);
 
         Vector3 newPos = transform.position;
@@ -123,8 +161,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
         currentHeight = transform.position.y;
         ground.transform.SetParent(null);
-        isBurstCooldowned = true;
-        Invoke(nameof(ResetBurstCooldown), burstCooldown);
     }
 
     protected override void FixedUpdate()
@@ -132,6 +168,5 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         base.FixedUpdate();
         AlignGround();
         SeekPlayerView();
-        TryBurstFire();
     }
 }
