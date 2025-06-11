@@ -41,7 +41,8 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
 
     [Header("Boss Config")]
     public HeliBossWaveConfig[] waves;
-    public ArcadeMissile missilePrefab;
+    public ArcadeMissile staticMissilePrefab;
+    public ArcadeMissile predictiveMissilePrefab;
     public GameObject ground;
 
     [Header("Heli Burst Fire")]
@@ -138,7 +139,7 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         for (int i = 0; i < wave.predictiveRocketsCount; i++)
         {
             Vector3 spawnPos = PredictPlayerPosition(predictionTime) + Vector3.up * 50;
-            Instantiate(missilePrefab, spawnPos, Quaternion.identity);
+            Instantiate(predictiveMissilePrefab, spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(wave.predictiveFirePause);
         }
     }

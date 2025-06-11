@@ -15175,7 +15175,8 @@ MonoBehaviour:
     predictiveRocketsCount: 5
     predictiveBurstDelay: 1.5
     predictiveFirePause: 1.5
-  missilePrefab: {fileID: 209675717119317151, guid: 989eb3b1882938143945108fd62cae27, type: 3}
+  staticMissilePrefab: {fileID: 209675717119317151, guid: 989eb3b1882938143945108fd62cae27, type: 3}
+  predictiveMissilePrefab: {fileID: 5606164053725797410, guid: f7c3a38bd16c8934e968e82daca469b6, type: 3}
   ground: {fileID: 3099071437635419331}
   predictionTime: 1.5
   timeBeforeBurst: 2
