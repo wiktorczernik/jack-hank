@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class PickupablePointerWindow_GUI : MonoBehaviour
 {
     [SerializeField] private RectTransform pointerRect;
+    [SerializeField] private Image pointerImage;
     [SerializeField] private Transform pickupableTransform;
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite edgeSprite;
     [SerializeField] private Vector2 onScreenOffset = new Vector2(0f, 20f);
 
     private RectTransform parentRect;
-    private Image pointerImage;
     private PlayerVehicle player;
 
     private IEnumerator Start()
@@ -70,7 +70,6 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
             return;
         }
 
-        pointerImage = pointerRect.GetComponent<Image>();
         if (pointerImage == null)
         {
             Debug.LogError("На указателе должен быть компонент Image.");
@@ -93,22 +92,18 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         if (cam == null) return;
         pointerRect.gameObject.SetActive(true);
 
-        // Получаем рендерер, чтобы вычислить дополнительное смещение по высоте
         Renderer pickRenderer = pickupableTransform.GetComponentInChildren<Renderer>();
         Vector3 centerWorld = pickupableTransform.position;
         Vector3 topWorld = centerWorld;
 
         if (pickRenderer != null)
         {
-            // Верхняя точка Bound'а
             topWorld = pickRenderer.bounds.center + Vector3.up * pickRenderer.bounds.extents.y;
         }
 
-        // Экранные точки для центра и для верха
         Vector3 screenPoint = cam.WorldToScreenPoint(centerWorld);
         Vector3 topScreenPoint = cam.WorldToScreenPoint(topWorld);
 
-        // Проверяем, на экране ли центр объекта
         bool isOnScreen = screenPoint.z >= 0f
                           && screenPoint.x >= 0f && screenPoint.x <= Screen.width
                           && screenPoint.y >= 0f && screenPoint.y <= Screen.height;
@@ -124,7 +119,6 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
 
         if (isOnScreen)
         {
-            // Если в кадре, используем верхнюю точку для размещения указателя
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     parentRect,
                     topScreenPoint,
@@ -140,7 +134,6 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         }
         else
         {
-            // Offscreen-логика остается без изменений — кладем в экранные границы
             Vector2 displayScreen = new Vector2(screenPoint.x, screenPoint.y);
             if (screenPoint.z < 0f)
             {

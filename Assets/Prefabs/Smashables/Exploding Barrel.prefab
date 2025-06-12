@@ -267,7 +267,7 @@ MonoBehaviour:
   canBeExploded: 1
   canSelfExplode: 1
   selfExplosionProps:
-    _epicenterParentTransform: {fileID: 7896198427691659033}
+    _epicenterParentTransform: {fileID: 6152559365231778431}
     _epicenterPosition: {x: 0, y: 0, z: 0}
     initiator: {fileID: 5655159044789525844}
     force: 2000
