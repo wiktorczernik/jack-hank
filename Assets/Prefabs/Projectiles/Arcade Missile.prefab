@@ -64,8 +64,8 @@ MonoBehaviour:
     initiator: {fileID: 209675717119317151}
     force: 2000
     epicenterRadius: 12
-    shakeIntensity: 0.1
-    shakeMaxDistance: 100
+    shakeIntensity: 0.4
+    shakeMaxDistance: 30
     damage: 25
     damageFalloff:
       serializedVersion: 2
