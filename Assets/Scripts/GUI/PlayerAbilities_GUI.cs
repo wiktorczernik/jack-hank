@@ -23,4 +23,9 @@ public class PlayerAbilities_GUI : MonoBehaviour
         nitro.gameObject.SetActive(false);
         jump.gameObject.SetActive(false);
     }
+    private void Update()
+    {
+        nitro.gameObject.SetActive(nitro.ability.state != PlayerVehicleAbility.AbilityState.TurnOff);
+        jump.gameObject.SetActive(jump.ability.state != PlayerVehicleAbility.AbilityState.TurnOff);
+    }
 }
