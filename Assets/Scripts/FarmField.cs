@@ -12,6 +12,7 @@ public class FarmField : MonoBehaviour
     [SerializeField] Transform Model;
     [SerializeField] ParticleSystem Major;
     [SerializeField] ParticleSystem Minor;
+    [SerializeField] TriggerEventEmitter emitter;
 
     [Tooltip("In km/h")] public float majorDestructionSpeed = 30f;
     public float majorDestructionSpeedDist = 1.5f;
@@ -47,6 +48,19 @@ public class FarmField : MonoBehaviour
         tickTimer = 0f;
     }
 
+    private void OnEnable()
+    {
+        emitter.OnEnter.AddListener(OnEnter);
+        emitter.OnStay.AddListener(OnStay);
+        emitter.OnExit.AddListener(OnLeave);
+    }
+    private void OnDisable()
+    {
+        emitter.OnEnter.RemoveListener(OnEnter);
+        emitter.OnStay.RemoveListener(OnStay);
+        emitter.OnExit.RemoveListener(OnLeave);
+    }
+
 
     public void Hit(Vehicle vehicle)
     {
@@ -69,11 +83,13 @@ public class FarmField : MonoBehaviour
         if (destructionLevel >= (int)DestructionEnum.MajorHarm)
         {
             Model.localScale = new Vector3(0.8f, 0.05f, 0.8f);
+            Major.transform.localPosition = transform.localPosition;
             Major.Play();
         }
         else if (destructionLevel >= (int)DestructionEnum.MinorHarm)
         {
             Model.localScale = new Vector3(0.9f, Model.localScale.y * 0.6f, 0.9f);
+            Minor.transform.localPosition = transform.localPosition;
             Minor.Play();
         }
     }
