@@ -30677,6 +30677,7 @@ GameObject:
   - component: {fileID: 8409974713711607995}
   - component: {fileID: 1318795595491404067}
   - component: {fileID: 351531459514417218}
+  - component: {fileID: 9170904330043421232}
   m_Layer: 0
   m_Name: TestBus
   m_TagString: Player
@@ -31315,6 +31316,21 @@ MonoBehaviour:
   maxPenaltyVelocity: 25
   excusingDuration: 5
   warningDuration: 5
+--- !u!114 &9170904330043421232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b44ae3ca9307b5149800d7cfd8790e18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventTimer: 0
+  maxOffroadTime: 5
+  state: 0
 --- !u!1 &4541372557963350123
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,16 +31,17 @@ public class KillTrigger : MonoBehaviour
 
     private void Awake()
     {
-        emitter.OnEnter.AddListener(TryKillCollider);
+        emitter.OnEnter.AddListener(TryOffroadPlayer);
+        emitter.OnStay.AddListener(TryOffroadPlayer);
 
-        void TryKillCollider(Collider c)
+        void TryOffroadPlayer(Collider c)
         {
             if (c.isTrigger) return;
 
             PlayerVehicle v = c.GetComponentInParent<PlayerVehicle>();
             if (!v) return;
 
-            v.Kill();
+            v.GetComponent<OffroadPenalty>().RegisterInside();
         }
 
 #if UNITY_EDITOR
