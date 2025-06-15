@@ -74,3 +74,28 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# MacOS shit
+.DS_Store
+.bak
+.BAK
+
+# DLL 
+!/[Aa]ssets/Plugins/FMOD/**/*.dll
+
+# Fmod important
+!/[Aa}ssets/Gizmos/FMOD/*
+!/[Aa}ssets/Editor Default Resources/FMOD/*
+
+# Fmod cache
+fmod/Jack-Hank/.cache/
+fmod/Jack-Hank/.user/
+fmod/Jack-Hank/.unsaved/
+/[Aa]ssets/**/FMODStudioCache.asset
+/[Aa]ssets/**/FMODStudioCache.asset.meta
+/[Aa]ssets/Plugins/FMOD/Cache.meta
+/[Aa]ssets/Plugins/FMOD/Cache/Editor.meta
+fmod.log
+fmod_editor.log
+/Assets/FMODAssets/*
+/Assets/FMODStudioCache.meta
