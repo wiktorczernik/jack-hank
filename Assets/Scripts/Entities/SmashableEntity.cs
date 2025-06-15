@@ -97,7 +97,8 @@ public class SmashableEntity : GameEntity
     #region Event subscribing
     private void Awake()
     {
-        impactEventInstance = RuntimeManager.CreateInstance(impactEventPath.Guid);
+        if (!impactEventPath.IsNull)
+            impactEventInstance = RuntimeManager.CreateInstance(impactEventPath.Guid);
     }
     private void OnEnable()
     {
@@ -106,6 +107,11 @@ public class SmashableEntity : GameEntity
     private void OnDisable()
     {
         collisionEvents.OnEnter?.RemoveListener(OnColliderHit);
+    }
+    private void OnDestroy()
+    {
+        if (impactEventInstance.isValid())
+            impactEventInstance.release();
     }
     #endregion
 
@@ -202,6 +208,7 @@ public class SmashableEntity : GameEntity
     /// </summary>
     public void PlayImpactAudio()
     {
+        if (!impactEventInstance.isValid()) return;
         impactEventInstance.start();
     }
     
