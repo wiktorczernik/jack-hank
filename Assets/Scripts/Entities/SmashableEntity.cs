@@ -86,7 +86,6 @@ public class SmashableEntity : GameEntity
     [Header("Audio")]
     [SerializeField]
     protected EventReference impactEventPath;
-    protected EventInstance impactEventInstance;
     /// <summary>
     /// Typ smashable
     /// </summary>
@@ -95,23 +94,9 @@ public class SmashableEntity : GameEntity
 
 
     #region Event subscribing
-    private void Awake()
-    {
-        if (!impactEventPath.IsNull)
-            impactEventInstance = RuntimeManager.CreateInstance(impactEventPath.Guid);
-    }
-    private void OnEnable()
-    {
-        collisionEvents.OnEnter?.AddListener(OnColliderHit);
-    }
     private void OnDisable()
     {
         collisionEvents.OnEnter?.RemoveListener(OnColliderHit);
-    }
-    private void OnDestroy()
-    {
-        if (impactEventInstance.isValid())
-            impactEventInstance.release();
     }
     #endregion
 
@@ -208,8 +193,7 @@ public class SmashableEntity : GameEntity
     /// </summary>
     public void PlayImpactAudio()
     {
-        if (!impactEventInstance.isValid()) return;
-        impactEventInstance.start();
+        RuntimeManager.PlayOneShot(impactEventPath, model.transform.position);
     }
     
     private void SelfDestroy()
