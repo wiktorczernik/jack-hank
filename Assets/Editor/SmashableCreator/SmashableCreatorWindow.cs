@@ -72,19 +72,8 @@ public class SmashableCreatorWindow : EditorWindow
                 MeshRenderer[] meshRenderers = modelInstance.GetComponentsInChildren<MeshRenderer>();
                 MeshFilter[] meshFilters = modelInstance.GetComponentsInChildren<MeshFilter>();
 
-                GameObject audioParent = new GameObject();
-                audioParent.name = "Audio Source";
-                audioParent.tag = "Smashable";
-                audioParent.transform.SetParent(smashableGameObject.transform);
-                audioParent.transform.position = Vector3.zero;
-                audioParent.transform.eulerAngles = Vector3.zero;
-                audioParent.transform.localScale = Vector3.one;
-
-                var audioSource = audioParent.AddComponent<AudioSource>();
-
                 smashable.usedRigidbody = rigidbody;
                 smashable.model = modelParent;
-                smashable.audioSource = audioSource;
 
                 List<Collider> colliders = new();
                 foreach(MeshFilter mf in meshFilters)
