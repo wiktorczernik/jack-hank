@@ -342,10 +342,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -658542259
-      Data2: 1186399810
-      Data3: -1480952956
-      Data4: 1384959254
+      Data1: -1134360509
+      Data2: 1224373221
+      Data3: 1511298476
+      Data4: 1563651205
     Path: event:/SFX/Smashable/SFX_Smash_Cart_01
 --- !u!1001 &7390738334575321555
 PrefabInstance:

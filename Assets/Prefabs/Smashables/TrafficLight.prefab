@@ -219,10 +219,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -1212406387
-      Data2: 1280659335
-      Data3: 1684646529
-      Data4: -1022628718
+      Data1: -1765875067
+      Data2: 1079152082
+      Data3: -1485091944
+      Data4: -747380568
     Path: event:/SFX/Smashable/SFX_Smash_LightingPole_01
 --- !u!1 &9174319432709657354
 GameObject:

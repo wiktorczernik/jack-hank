@@ -89,10 +89,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 1901374033
-      Data2: 1085112971
-      Data3: -2090475631
-      Data4: -1458312756
+      Data1: 984171509
+      Data2: 1259187346
+      Data3: 1812553622
+      Data4: 531861525
     Path: event:/SFX/Smashable/SFX_Smash_PalletTruck_01
 --- !u!1 &1838598201666655836
 GameObject:

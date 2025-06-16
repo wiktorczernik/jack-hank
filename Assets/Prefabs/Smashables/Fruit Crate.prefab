@@ -253,10 +253,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 880725625
-      Data2: 1140075204
-      Data3: -507893328
-      Data4: 1618586892
+      Data1: 1663818356
+      Data2: 1335458448
+      Data3: 1763601839
+      Data4: -774982444
     Path: event:/SFX/Smashable/SFX_Smash_FruitBox_01
 --- !u!65 &7108776159647298546
 BoxCollider:

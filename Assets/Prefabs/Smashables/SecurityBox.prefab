@@ -89,10 +89,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 12641613
-      Data2: 1156898071
-      Data3: 25473195
-      Data4: 2132116171
+      Data1: 784656100
+      Data2: 1230499863
+      Data3: 1134330813
+      Data4: 1311475819
     Path: event:/SFX/Smashable/SFX_Smash_SecurityBox_01
 --- !u!1 &7529158994043083300
 GameObject:

@@ -213,10 +213,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 499217271
-      Data2: 1111918648
-      Data3: 1738280870
-      Data4: 1814001384
+      Data1: -945766048
+      Data2: 1245075481
+      Data3: 265137821
+      Data4: 302397174
     Path: event:/SFX/Smashable/SFX_Smash_TrafficCone_01
 --- !u!1 &4859400356898077251
 GameObject:

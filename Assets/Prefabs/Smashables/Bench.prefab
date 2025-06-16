@@ -218,10 +218,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -386220230
-      Data2: 1169478874
-      Data3: 1081091515
-      Data4: -1613318055
+      Data1: -2111153873
+      Data2: 1197379380
+      Data3: -229932881
+      Data4: -527449531
     Path: event:/SFX/Smashable/SFX_Smash_Bench_01
 --- !u!1 &7226188767526281267
 GameObject:

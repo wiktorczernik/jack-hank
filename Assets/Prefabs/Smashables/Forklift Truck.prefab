@@ -201,10 +201,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 258195428
-      Data2: 1319384690
-      Data3: 1899352211
-      Data4: -1140258159
+      Data1: 1157088468
+      Data2: 1251429659
+      Data3: 705195905
+      Data4: 1511626088
     Path: event:/SFX/Smashable/SFX_Smash_Forklift_01
 --- !u!1 &5010090607050569547
 GameObject:
