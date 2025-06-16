@@ -31,10 +31,10 @@ public class BonusTicket_GUI : MonoBehaviour
     
     public void ChangeBonusValueOn(int value, int comboValue)
     {
-        if (bonusType != PlayerBonusTypes.DestructionCombo)
+        if (bonusType != PlayerBonusTypes.DestructionCombo && bonusType != PlayerBonusTypes.VehicleDestruction)
         {
             Debug.LogError(
-                "This overload of ChangeBonusValueOn should be used only for PlayerBonusTypes.DestructionCombo!");
+                "This overload of ChangeBonusValueOn should be used only for PlayerBonusTypes.DestructionCombo and PlayerBonusTypes.VehicleDestruction!");
             return;
         }
         

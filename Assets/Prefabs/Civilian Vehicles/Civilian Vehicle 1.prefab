@@ -10271,6 +10271,7 @@ GameObject:
   - component: {fileID: 920412616002126312}
   - component: {fileID: 8049625386355856952}
   - component: {fileID: 7915724856385818524}
+  - component: {fileID: -201032957931795087}
   m_Layer: 0
   m_Name: Civilian Vehicle 1
   m_TagString: Vehicle
@@ -10367,6 +10368,7 @@ MonoBehaviour:
   loopQueue: 1
   followMode: 1
   followMaxSpeed: 50
+  startFollowDelay: 0
   _destinationQueueSpline: {fileID: 0}
   destinationArriveMaxDistance: 10
   destinationArriveMaxSpeed: 20
@@ -10386,6 +10388,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7b6cf9c54d3da640967afdce37c48e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onEnvironmentBump:
+    m_PersistentCalls:
+      m_Calls: []
+  isWheelGrounded: 0
+  isBodyGrounded: 0
   isGrounded: 0
   groundNormal: {x: 0, y: 1, z: 0}
   lastVelocity: {x: 0, y: 0, z: 0}
@@ -10430,8 +10437,12 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   allowAirRoll: 0
+  allowPitchAirRoll: 0
   airRollForce: 1
   airRollMinTime: 1.25
+  airRollMaxPitchSpeed: 0.5
+  airRollMaxYawSpeed: 0.5
+  airRollRotateTrajectory: 1
   turnForce: 5000
   turnAginForce: 5000
   turnStabilization: 8
@@ -10499,6 +10510,13 @@ MonoBehaviour:
   collisionEvents: {fileID: 7915724856385818524}
   centerOfMass: {fileID: 6347187237283905811}
   frictionForce: 750
+  hullSize: {x: 3.5, y: 2.7, z: 8.9}
+  bodyGroundedUpOffset: 1.8
+  bodyGroundedMaxDistance: 0.5
+  rollStabilization: 10
+  pitchStabilization: 8
+  rollDamping: 4
+  pitchDamping: 3
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}
@@ -10534,6 +10552,22 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-201032957931795087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409508978620240855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 005b9bb27bd34b09a16c493792cd979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bountyPointsReward: 1000
+  onHit:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &4854346634697848216

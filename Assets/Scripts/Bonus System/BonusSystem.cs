@@ -8,15 +8,14 @@ using UnityEngine.Events;
 public class BonusSystem : MonoBehaviour
 {
     [SerializeField] private BonusSettingsPreset settings;
+    [SerializeField] private VehiclePhysics _playerVehicleController;
 
     private int _destructionCombo = 1;
     private float _lastHitTime;
     private int _hitBonusPool;
 
     private Dictionary<PlayerBonusTypes, InUpdateBonus> _inUpdateBonuses;
-
-    [SerializeField]
-    private VehiclePhysics _playerVehicleController;
+    private Dictionary<PlayerBonusTypes, ComboBonus> _comboBonuses;
 
     private void InitializeInUpdateBonuses()
     {
@@ -26,6 +25,11 @@ public class BonusSystem : MonoBehaviour
                 CheckIsDrifting)},
             { PlayerBonusTypes.Flying, new InUpdateBonus(settings.FlyingIntervalInSeconds, settings.FlyingBonus,
                 CheckIsFlying)},
+        };
+        _comboBonuses = new Dictionary<PlayerBonusTypes, ComboBonus>()
+        {
+            { PlayerBonusTypes.DestructionCombo, new ComboBonus(1) },
+            { PlayerBonusTypes.VehicleDestruction, new ComboBonus(1) }
         };
     }
     
@@ -41,19 +45,23 @@ public class BonusSystem : MonoBehaviour
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))
         {
             UnityAction<SmashableEntity> onHit;
-            
-            switch (smashable)
+
+            if (smashable as PickupablePassenger != null)
             {
-                case PickupablePassenger passenger:
-                    passenger.StartLookingForPlayerVehicle(GameManager.PlayerVehicle);
-                    onHit = OnPassengerHit;
-                    break;
-                default:
-                    onHit = OnHitSmashable;
-                    break;
+                (smashable as PickupablePassenger).StartLookingForPlayerVehicle(GameManager.PlayerVehicle);
+                onHit = OnPassengerHit;
+            }
+            else
+            {
+                onHit = (smashable) => OnComboBonus(smashable, PlayerBonusTypes.DestructionCombo);
             }
             
             smashable.OnHit.AddListener(onHit);
+        }
+
+        foreach (var vehicle in FindObjectsByType<SmashableEntityAnalogForVehicle>(FindObjectsSortMode.None))
+        {
+            vehicle.onHit.AddListener((smashable) => OnComboBonus(smashable, PlayerBonusTypes.VehicleDestruction));
         }
     }
 
@@ -63,16 +71,16 @@ public class BonusSystem : MonoBehaviour
 
         foreach (var (bonusType, bonusState) in _inUpdateBonuses)
         {
-            var isAfterBonus = Time.time - bonusState.LastBonusTime >= bonusState.TimeIntervalInSeconds;
-            var isBonusTaking = bonusState.CheckBonus(bonusState);
+            var isAfterBonus = Time.time - bonusState.LastBonusTime >= bonusState.timeIntervalInSeconds;
+            var isBonusTaking = bonusState.checkBonus(bonusState);
 
             switch (isAfterBonus)
             {
                 case true when isBonusTaking:
                     bonusState.LastBonusTime = Time.time;
-                    bonusState.BonusPool += bonusState.Bonus;
+                    bonusState.BonusPool += bonusState.bonus;
                     
-                    GameManager.UpdateBonus(bonusState.Bonus, bonusType, bonusState.BonusPool);
+                    GameManager.UpdateBonus(bonusState.bonus, bonusType, bonusState.BonusPool);
                     break;
                 case true:
                     bonusState.BonusPool = 0;
@@ -81,28 +89,44 @@ public class BonusSystem : MonoBehaviour
         }
     }
 
-    private void OnPassengerHit(SmashableEntity smashable)
+    private void OnPassengerHit(SmashableEntity passenger)
     {
-        GameManager.UpdateBonus(-((PickupablePassenger)smashable).bountyPointsPenalty, PlayerBonusTypes.Passenger);
-        Debug.Log("Passenger was hit! Oh no!");
+        GameManager.UpdateBonus(-((PickupablePassenger)passenger).bountyPointsPenalty, PlayerBonusTypes.Passenger);
     }
     
     private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
     {
         GameManager.UpdateBonus(passenger.bountyPointsReward, PlayerBonusTypes.Passenger);
     }
-    
-    private void OnHitSmashable(SmashableEntity smashable)
+
+    public void OnComboBonus(SmashableEntity smashable, PlayerBonusTypes bonusType)
     {
-        if (Time.time - _lastHitTime <= settings.ComboMaxIntervalInSeconds) _destructionCombo++;
-        else _destructionCombo = 1;
+        var comboBonusState = _comboBonuses[bonusType];
 
-        var bonus = smashable.bountyPointsReward * _destructionCombo;
-        _hitBonusPool += bonus;
+        if (Time.time - comboBonusState.LastBonusTime <= comboBonusState.timeIntervalInSeconds) comboBonusState.combo++;
+        else comboBonusState.combo = 1;
+
+        var bonus = smashable.bountyPointsReward * comboBonusState.combo;
+        comboBonusState.BonusPool += bonus;
         
-        GameManager.UpdateDestructionCombo(bonus, _destructionCombo, _hitBonusPool);
+        GameManager.UpdateCombo(bonusType, bonus, comboBonusState.combo, comboBonusState.BonusPool);
+        
+        comboBonusState.LastBonusTime = Time.time;
+    }
+    
+    public void OnComboBonus(SmashableEntityAnalogForVehicle smashableEntityAnalogFor, PlayerBonusTypes bonusType)
+    {
+        var comboBonusState = _comboBonuses[bonusType];
 
-        _lastHitTime = Time.time;
+        if (Time.time - comboBonusState.LastBonusTime <= comboBonusState.timeIntervalInSeconds) comboBonusState.combo++;
+        else comboBonusState.combo = 1;
+
+        var bonus = smashableEntityAnalogFor.bountyPointsReward * comboBonusState.combo;
+        comboBonusState.BonusPool += bonus;
+        
+        GameManager.UpdateCombo(bonusType, bonus, comboBonusState.combo, comboBonusState.BonusPool);
+        
+        comboBonusState.LastBonusTime = Time.time;
     }
     
     private bool CheckIsDrifting(InUpdateBonus bonusState) => _playerVehicleController.isDrifting || _playerVehicleController.isDriftingRight;
@@ -110,18 +134,32 @@ public class BonusSystem : MonoBehaviour
 
     private class InUpdateBonus
     {
-        public readonly float TimeIntervalInSeconds;
-        public readonly Func<InUpdateBonus, bool> CheckBonus;
-        public readonly int Bonus;
+        public readonly float timeIntervalInSeconds;
+        public readonly Func<InUpdateBonus, bool> checkBonus;
+        public readonly int bonus;
         
         public float LastBonusTime;
         public int BonusPool;
 
         public InUpdateBonus(float timeIntervalInSeconds, int bonus, Func<InUpdateBonus, bool> checkBonus)
         {
-            TimeIntervalInSeconds = timeIntervalInSeconds;
-            CheckBonus = checkBonus;
-            Bonus = bonus;
+            this.timeIntervalInSeconds = timeIntervalInSeconds;
+            this.checkBonus = checkBonus;
+            this.bonus = bonus;
+        }
+    }
+
+    private class ComboBonus
+    {
+        public readonly float timeIntervalInSeconds;
+        
+        public int combo;
+        public float LastBonusTime;
+        public int BonusPool;
+
+        public ComboBonus(float timeIntervalInSeconds)
+        {
+            this.timeIntervalInSeconds = timeIntervalInSeconds;
         }
     }
 }
