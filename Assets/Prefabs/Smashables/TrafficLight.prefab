@@ -217,10 +217,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 3618029860323320543}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -1212406387
+      Data2: 1280659335
+      Data3: 1684646529
+      Data4: -1022628718
+    Path: event:/SFX/Smashable/SFX_Smash_LightingPole_01
 --- !u!1 &9174319432709657354
 GameObject:
   m_ObjectHideFlags: 0

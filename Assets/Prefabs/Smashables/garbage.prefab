@@ -87,10 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 7642457792488457998}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1561279518
+      Data2: 1168102924
+      Data3: 1436570791
+      Data4: -1924870794
+    Path: event:/SFX/Smashable/SFX_Smash_Garbage_01
 --- !u!1 &4679168382305188455
 GameObject:
   m_ObjectHideFlags: 0

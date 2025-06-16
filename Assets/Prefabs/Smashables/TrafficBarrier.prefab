@@ -340,10 +340,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 8317113931791884624}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1794853269
+      Data2: 1321334172
+      Data3: 770749588
+      Data4: 1501975117
+    Path: event:/SFX/Smashable/SFX_Smash_TrafficBarrier_01
 --- !u!1001 &5570709706910957524
 PrefabInstance:
   m_ObjectHideFlags: 0
