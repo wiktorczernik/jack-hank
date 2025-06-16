@@ -90,13 +90,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: 2e9c2238875eda6499f2840b5a37c849, type: 3}
-  - {fileID: 8300000, guid: 453c051ae474ed54f81d2d9a96d79cd1, type: 3}
-  - {fileID: 8300000, guid: 730a1a65f6c1010498e4459010ce6fa6, type: 3}
-  audioSource: {fileID: 2862910153502387970}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1157088468
+      Data2: 1251429659
+      Data3: 705195905
+      Data4: 1511626088
+    Path: event:/SFX/Smashable/SFX_Smash_CardboardBox_01
 --- !u!54 &348823765511800447
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@
 			<value>SFX_Smash_CardboardBox_01</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{2501f4db-e0b5-4476-b4ca-722aa9845803}</destination>
@@ -115,6 +115,7 @@
 	<object class="MixerBusEffectChain" id="{9f50258e-b125-46c5-8ea9-d8ef0eb0d886}">
 		<relationship name="effects">
 			<destination>{c0a28069-ef67-4d67-b92d-d38c393b9c40}</destination>
+			<destination>{f4552f71-a390-4c05-be80-70f1b4c439c3}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{44e6d564-655d-4dbf-9be7-8c467f7fd27a}" />
@@ -141,5 +142,22 @@
 	</object>
 	<object class="MixerBusPanner" id="{0939ce14-845b-42f4-a707-8150fcefbe3e}" />
 	<object class="MixerBusFader" id="{c0a28069-ef67-4d67-b92d-d38c393b9c40}" />
+	<object class="SpatialiserEffect" id="{f4552f71-a390-4c05-be80-70f1b4c439c3}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="minimumDistance">
+			<value>0</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+		<property name="panBlend">
+			<value>0.694999993</value>
+		</property>
+		<property name="userStereoSeparation">
+			<value>38</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{c05e7742-4fd3-43b5-a31e-4a638b219259}" />
 </objects>

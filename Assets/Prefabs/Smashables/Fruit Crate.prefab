@@ -251,13 +251,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: ca0d5ab535182ea46b0a0eae062816fd, type: 3}
-  - {fileID: 8300000, guid: cdfa85fc2516ebe4681157ecf7201671, type: 3}
-  - {fileID: 8300000, guid: e90f4d8ee1d8dc745bc58ee3ec707027, type: 3}
-  audioSource: {fileID: 5402337300790694731}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 880725625
+      Data2: 1140075204
+      Data3: -507893328
+      Data4: 1618586892
+    Path: event:/SFX/Smashable/SFX_Smash_FruitBox_01
 --- !u!65 &7108776159647298546
 BoxCollider:
   m_ObjectHideFlags: 0
