@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8962384338500919174
+--- !u!1001 &6569415483591214484
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,25 +8,73 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 908107721066590676, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1343602847886597089, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_Name
-      value: driftBonusTicket
+      value: vehicleDestructionBonus
       objectReference: {fileID: 0}
     - target: {fileID: 1343602847886597089, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7284951508663892846, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_text
-      value: drift
+      value: vechicle    destruction
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7284951508663892846, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
+    - target: {fileID: 1456345593525317130, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5815135279301747526, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 165.22
       objectReference: {fileID: 0}
     - target: {fileID: 6296128412897218469, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: bonusName
-      value: drift
+      value: Vehicle       destruction
       objectReference: {fileID: 0}
     - target: {fileID: 6296128412897218469, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: bonusType
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6589428304126151668, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_Pivot.x

@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: destuctionBonusTicket
       objectReference: {fileID: 0}
+    - target: {fileID: 1343602847886597089, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1404572244257825918, guid: 109cf297bc94d014ab3f1e617053bd0d, type: 3}
       propertyPath: m_fontSize
       value: 30

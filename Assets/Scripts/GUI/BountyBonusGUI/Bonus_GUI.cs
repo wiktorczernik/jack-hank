@@ -18,7 +18,7 @@ public class Bonus_GUI : MonoBehaviour
     private readonly PlayerBonusTypes[] _bigBonuses = { PlayerBonusTypes.Passenger, PlayerBonusTypes.LargeDestruction };
 
     private readonly PlayerBonusTypes[] _miniBonuses =
-        { PlayerBonusTypes.Drift, PlayerBonusTypes.Flying, PlayerBonusTypes.DestructionCombo };
+        { PlayerBonusTypes.Drift, PlayerBonusTypes.Flying, PlayerBonusTypes.DestructionCombo, PlayerBonusTypes.VehicleDestruction };
 
     private BigBonusBoard_GUI _bigBonusBoard;
     private LinkedList<Tuple<int, string>> _bigBonusesList;
@@ -72,9 +72,15 @@ public class Bonus_GUI : MonoBehaviour
         else ShowMiniBonus(bonus, bonusType);
     }
 
-    public void ShowDestructionComboBonus(int bonus, int combo)
+    public void ShowComboBonus(PlayerBonusTypes bonusType, int bonus, int combo)
     {
-        _bonusTickets.First(t => t.BonusType == PlayerBonusTypes.DestructionCombo)
+        if (bonusType != PlayerBonusTypes.DestructionCombo && bonusType != PlayerBonusTypes.VehicleDestruction)
+        {
+            Debug.LogError($"Bonus '{bonusType}' is not combo bonus");
+            return;
+        }
+        
+        _bonusTickets.First(t => t.BonusType == bonusType)
             .ChangeBonusValueOn(bonus, combo);
     }
 
