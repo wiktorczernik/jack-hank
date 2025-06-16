@@ -342,10 +342,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -1216723005
-      Data2: 1326151122
-      Data3: -1252843130
-      Data4: -718576804
+      Data1: -1920836208
+      Data2: 1107881644
+      Data3: 1813580416
+      Data4: 1224677816
     Path: event:/SFX/Smashable/SFX_Smash_OutdoorTable_01
 --- !u!1001 &1780432719516706991
 PrefabInstance:

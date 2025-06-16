@@ -342,10 +342,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 1794853269
-      Data2: 1321334172
-      Data3: 770749588
-      Data4: 1501975117
+      Data1: -1212406387
+      Data2: 1280659335
+      Data3: 1684646529
+      Data4: -1022628718
     Path: event:/SFX/Smashable/SFX_Smash_TrafficBarrier_01
 --- !u!1001 &5570709706910957524
 PrefabInstance:

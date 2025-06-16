@@ -87,10 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 4792099901496205148}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1157088468
+      Data2: 1251429659
+      Data3: 705195905
+      Data4: 1511626088
+    Path: event:/SFX/Smashable/SFX_Smash_Forklift_01
 --- !u!1 &3657035221457932685
 GameObject:
   m_ObjectHideFlags: 0

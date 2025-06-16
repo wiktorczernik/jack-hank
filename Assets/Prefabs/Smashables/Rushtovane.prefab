@@ -218,10 +218,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -2111153873
-      Data2: 1197379380
-      Data3: -229932881
-      Data4: -527449531
+      Data1: 1561279518
+      Data2: 1168102924
+      Data3: 1436570791
+      Data4: -1924870794
     Path: event:/SFX/Smashable/SFX_Smash_Rushtovane_01
 --- !u!1 &8550994595747453548
 GameObject:

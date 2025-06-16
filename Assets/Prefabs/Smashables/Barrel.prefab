@@ -218,10 +218,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 984171509
-      Data2: 1259187346
-      Data3: 1812553622
-      Data4: 531861525
+      Data1: 258195428
+      Data2: 1319384690
+      Data3: 1899352211
+      Data4: -1140258159
     Path: event:/SFX/Smashable/SFX_Smash_Barrelbang_01
 --- !u!1 &8550994595747453548
 GameObject:

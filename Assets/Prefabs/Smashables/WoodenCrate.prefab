@@ -89,10 +89,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: -1694113145
-      Data2: 1199682546
-      Data3: 155057
-      Data4: 425208958
+      Data1: 1244574850
+      Data2: 1177337739
+      Data3: -1494430846
+      Data4: 1278331598
     Path: event:/SFX/Smashable/SFX_Smash_WoodenCrate_01
 --- !u!1 &2650112122901265250
 GameObject:

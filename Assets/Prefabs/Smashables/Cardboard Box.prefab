@@ -92,10 +92,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 1157088468
-      Data2: 1251429659
-      Data3: 705195905
-      Data4: 1511626088
+      Data1: -1216723005
+      Data2: 1326151122
+      Data3: -1252843130
+      Data4: -718576804
     Path: event:/SFX/Smashable/SFX_Smash_CardboardBox_01
 --- !u!54 &348823765511800447
 Rigidbody:

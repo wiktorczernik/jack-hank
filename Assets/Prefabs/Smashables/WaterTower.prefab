@@ -27097,10 +27097,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 784656100
-      Data2: 1230499863
-      Data3: 1134330813
-      Data4: 1311475819
+      Data1: 1629734877
+      Data2: 1318101674
+      Data3: -1225706101
+      Data4: 1300339763
     Path: event:/SFX/Smashable/SFX_Smash_WaterTower_01
 --- !u!1 &7551124185302419240
 GameObject:

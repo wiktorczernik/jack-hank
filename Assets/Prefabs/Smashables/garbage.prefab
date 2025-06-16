@@ -89,10 +89,10 @@ MonoBehaviour:
   hitIsKinematic: 0
   impactEventPath:
     Guid:
-      Data1: 1561279518
-      Data2: 1168102924
-      Data3: 1436570791
-      Data4: -1924870794
+      Data1: 1516153366
+      Data2: 1308975082
+      Data3: -604931930
+      Data4: 1055055361
     Path: event:/SFX/Smashable/SFX_Smash_Garbage_01
 --- !u!1 &4679168382305188455
 GameObject:
