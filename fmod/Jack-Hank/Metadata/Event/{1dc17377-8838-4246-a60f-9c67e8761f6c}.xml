@@ -59,7 +59,7 @@
 			<destination>{5a003b9a-3866-4b99-a1e4-bedb0316528d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{b4a65f76-f2bd-4290-8527-87869368f188}</destination>
+			<destination>{f0ef6fed-1d3c-4016-b202-f90249e79c91}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{1bd603d3-83bb-48ba-b7b9-f86961bdf349}" />
@@ -155,6 +155,7 @@
 	<object class="MixerBusEffectChain" id="{c672a351-9493-4060-bd91-71ec92542394}">
 		<relationship name="effects">
 			<destination>{b638aafd-2c49-4e55-938c-41685b52ac54}</destination>
+			<destination>{91b19790-3214-4693-a114-7dbeef8f8c9e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{267fd15b-0783-4f83-9e19-3e6b12f09107}" />
@@ -168,6 +169,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{da82688f-d2f4-4187-9bee-1f6d71c27271}" />
 	<object class="MixerBusFader" id="{b638aafd-2c49-4e55-938c-41685b52ac54}" />
+	<object class="CompressorEffect" id="{91b19790-3214-4693-a114-7dbeef8f8c9e}">
+		<property name="threshold">
+			<value>-12</value>
+		</property>
+		<property name="ratio">
+			<value>2</value>
+		</property>
+		<property name="attackTime">
+			<value>0.100000001</value>
+		</property>
+		<property name="releaseTime">
+			<value>10</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{42288e30-033c-4077-a14f-73dfb82e1171}" />
 	<object class="PitchShifterEffect" id="{44503f4d-79d9-4c51-ba49-a8b6db3ed896}">
 		<relationship name="automators">
@@ -210,6 +225,7 @@
 		</relationship>
 		<relationship name="automationPoints">
 			<destination>{76578a81-6365-4a87-bfa6-892ae27f40d1}</destination>
+			<destination>{569ae525-afea-4b86-a8ec-7e77ffcc14e8}</destination>
 		</relationship>
 	</object>
 	<object class="AutomationPoint" id="{664f5e6f-52c7-4efc-a862-20541c8b3527}">
@@ -234,6 +250,14 @@
 		</property>
 		<property name="value">
 			<value>5</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{569ae525-afea-4b86-a8ec-7e77ffcc14e8}">
+		<property name="position">
+			<value>0.0010857763300760044</value>
+		</property>
+		<property name="value">
+			<value>-2</value>
 		</property>
 	</object>
 </objects>
