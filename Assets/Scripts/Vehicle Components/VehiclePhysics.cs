@@ -9,6 +9,8 @@ public class VehiclePhysics : MonoBehaviour
     public event Action<AirTimeState> onTakeOff;
     public event Action<AirTimeState> onAir;
     public event Action<AirTimeState> onLand;
+    public event Action onDriftBegin;
+    public event Action onDriftEnd;
     public UnityEvent<Collision> onEnvironmentBump;
 
     #region State
@@ -382,6 +384,8 @@ public class VehiclePhysics : MonoBehaviour
         float angY = bodyRigidbody.angularVelocity.y;
         float absAngY = Mathf.Abs(angY);
 
+        bool oldIsDrifting = isDrifting;
+
         if (!isGrounded)
         {
             isDrifting = false;
@@ -412,6 +416,14 @@ public class VehiclePhysics : MonoBehaviour
             isDriftingRight = angY > 0;
             driftAngular = angY;
             driftEndBuildup = 0f;
+        }
+
+        if (oldIsDrifting != isDrifting)
+        {
+            if (isDrifting)
+                onDriftBegin?.Invoke();
+            else
+                onDriftEnd?.Invoke();
         }
     }
 
