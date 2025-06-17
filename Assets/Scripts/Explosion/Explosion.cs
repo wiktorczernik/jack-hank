@@ -5,8 +5,6 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public ExplosionVisuals visuals;
-    [Header("Audio")]
-    public EventReference audioEventRef;
 
     public ExplosionProperties properties = new ExplosionProperties() { 
         force = 500f,
@@ -14,6 +12,8 @@ public class Explosion : MonoBehaviour
         shakeMaxDistance = 100f,
         shakeIntensity = 0.5f
     };
+    [Header("Audio")]
+    public EventReference audioEventRef;
 
     public void Init()
     {
