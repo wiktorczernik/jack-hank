@@ -2,7 +2,8 @@
     "name": "JackHank.Cinematics",
     "rootNamespace": "JackHank.Cinematics",
     "references": [
-        "GUID:b577c79cf94d9214081d79dbd2ea12ac"
+        "GUID:b577c79cf94d9214081d79dbd2ea12ac",
+        "GUID:0c752da273b17c547ae705acf0f2adf2"
     ],
     "includePlatforms": [
         "Editor",
