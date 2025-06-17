@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4610177810314701323}
+  - component: {fileID: 653233470705109189}
   - component: {fileID: 4122380729514068364}
   - component: {fileID: 5271517522153453597}
   - component: {fileID: 2526188742103496898}
@@ -38,6 +39,53 @@ Transform:
   - {fileID: 1212498876386718559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &653233470705109189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719438248672454860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55aa5cb683b35fa468d2bb663060d0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickedUp: 0
+  smashed: 0
+  expired: 0
+  isSmashable: 0
+  canExpire: 0
+  onPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  onSmash:
+    m_PersistentCalls:
+      m_Calls: []
+  onExpire:
+    m_PersistentCalls:
+      m_Calls: []
+  pickupAudioRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  smashAudioRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  expireAudioRef:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!114 &4122380729514068364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,11 +139,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: 25f1ae86ce1b4874cb4a3411390d4d67, type: 3}
-  audioSource: {fileID: 1790221889589798000}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   wasPickedUp: 0
   onPickedUp:
     m_PersistentCalls:
