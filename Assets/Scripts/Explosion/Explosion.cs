@@ -1,13 +1,12 @@
 using System.Collections.Generic;
+using FMODUnity;
 using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
     public ExplosionVisuals visuals;
-    public AudioSource audioSource;
-    public float audioPitchMin = 0.9f;
-    public float audioPitchMax = 1.1f;
-    public AudioClip[] sounds;
+    [Header("Audio")]
+    public EventReference audioEventRef;
 
     public ExplosionProperties properties = new ExplosionProperties() { 
         force = 500f,
@@ -23,9 +22,7 @@ public class Explosion : MonoBehaviour
         List<Vehicle> affectedVehicles = new List<Vehicle>();
         foreach(var collider in colliders)
         {
-            audioSource.clip = sounds[UnityEngine.Random.Range(0, sounds.Length)];
-            audioSource.pitch = UnityEngine.Random.Range(audioPitchMin, audioPitchMax);
-            audioSource.Play();
+            RuntimeManager.PlayOneShot(audioEventRef);
 
             Vector3 cPosition = collider.transform.position;
             float distance = Vector3.Distance(cPosition, transform.position);
