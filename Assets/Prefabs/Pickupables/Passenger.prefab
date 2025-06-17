@@ -66,25 +66,25 @@ MonoBehaviour:
       m_Calls: []
   pickupAudioRef:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 749029813
+      Data2: 1153463526
+      Data3: 227915939
+      Data4: -1601295064
+    Path: event:/VO/Passengers/VO_Passenger_CatchedMale_01
   smashAudioRef:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -434412956
+      Data2: 1190585214
+      Data3: 399805361
+      Data4: 710287156
+    Path: event:/VO/Passengers/VO_Passenger_HitMale_01
   expireAudioRef:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -2023191157
+      Data2: 1292654053
+      Data3: 144724625
+      Data4: -547780268
+    Path: event:/VO/Passengers/VO_Passenger_MissedMale_01
 --- !u!114 &4838025276435632193
 MonoBehaviour:
   m_ObjectHideFlags: 0
