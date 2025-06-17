@@ -1,22 +1,24 @@
 using System;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    [Header("Run Music")]
-    public AudioClip runMusicMax;
-    public AudioClip runMusicMin;
+    [Header("Music Events")]
+    [SerializeField]
+    protected EventReference runMusic;
+    [SerializeField]
+    protected EventReference bossMusic;
 
-    [Header("Boss Music")]
-    public AudioClip bossMusic;
-
-    [Header("Components")]
-    public AudioSource audioSource;
+    EventInstance runEventInstance;
+    EventInstance bossEventInstance;
 
 
     void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        runEventInstance = RuntimeManager.CreateInstance(runMusic);
+        bossEventInstance = RuntimeManager.CreateInstance(bossMusic);
         GameManager.OnRunBegin += OnRunBegin;
         GameManager.OnRunFinish += OnRunEnd;
     }
@@ -38,35 +40,31 @@ public class MusicManager : MonoBehaviour
         GameManager.Local.bossFightManager.OnPrepareBegin -= StopMusic;
         GameManager.OnDeath -= StopMusic;
         GameManager.Local.bossFightManager.OnEnd -= StopMusic;
-    }
-
-    private void Update()
-    {
-        audioSource.pitch = Time.timeScale;
-        audioSource.volume = Mathf.Clamp01(Time.timeScale);
+        runEventInstance.release();
+        bossEventInstance.release();
     }
 
     void OnBossBegin()
     {
-        audioSource.clip = bossMusic;
-        audioSource.Play();
+        runEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        bossEventInstance.start();
     }
     void OnRunBegin(GameRunInfo runInfo)
     {
-        audioSource.clip = runMusicMax;
-        audioSource.Play();
+        runEventInstance.start();
     }
     void OnRunEnd(GameRunInfo runInfo)
     {
-        StopMusic();
+        runEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
     void OnBossEnd()
     {
-        StopMusic();
+        bossEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
     void StopMusic()
     {
-        audioSource.Stop();
+        runEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        bossEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }
