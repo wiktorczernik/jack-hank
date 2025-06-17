@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{316c7e8c-4d55-48eb-83a9-ef799506c94d}">
 		<property name="name">
-			<value>SFX_Bus_Drift</value>
+			<value>SFX_Bus_Drift_01</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -229,7 +229,7 @@
 			<destination>{dc8f1e45-716c-421d-95bd-0e96d01a048f}</destination>
 		</relationship>
 		<relationship name="triggerConditions">
-			<destination>{738f6843-08dd-4feb-b0b4-bd9f13b8a145}</destination>
+			<destination>{a0b422e9-f488-400d-a6ce-755e56ff5b21}</destination>
 		</relationship>
 	</object>
 	<object class="NamedMarker" id="{dc8f1e45-716c-421d-95bd-0e96d01a048f}">
@@ -333,11 +333,7 @@
 			<destination>{c7016696-a90f-4fc7-a706-209773772d3f}</destination>
 		</relationship>
 	</object>
-	<object class="EventCondition" id="{738f6843-08dd-4feb-b0b4-bd9f13b8a145}">
-		<property name="eventState">
-			<value>1</value>
-		</property>
-	</object>
+	<object class="EventCondition" id="{a0b422e9-f488-400d-a6ce-755e56ff5b21}" />
 	<object class="MixerBusFader" id="{db777cfd-7e3e-4eef-a344-08cd34adeafb}" />
 	<object class="AutomationPoint" id="{bae985d8-ded8-487f-bdbd-61f9707bf294}">
 		<property name="position">
