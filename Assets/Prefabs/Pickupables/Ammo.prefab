@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4610177810314701323}
   - component: {fileID: 653233470705109189}
-  - component: {fileID: 4122380729514068364}
+  - component: {fileID: 957587759799931432}
   - component: {fileID: 5271517522153453597}
   - component: {fileID: 2526188742103496898}
   - component: {fileID: 6377653078663091826}
@@ -54,6 +54,9 @@ MonoBehaviour:
   pickedUp: 0
   smashed: 0
   expired: 0
+  parentEntity: {fileID: 957587759799931432}
+  quantity: 150
+  type: 2
   isSmashable: 0
   canExpire: 0
   onPickup:
@@ -67,11 +70,11 @@ MonoBehaviour:
       m_Calls: []
   pickupAudioRef:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 749029813
+      Data2: 1153463526
+      Data3: 227915939
+      Data4: -1601295064
+    Path: event:/VO/Passengers/VO_Passenger_CatchedMale_01
   smashAudioRef:
     Guid:
       Data1: 0
@@ -86,7 +89,7 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
---- !u!114 &4122380729514068364
+--- !u!114 &957587759799931432
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -95,7 +98,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 719438248672454860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5068c2bbc91e364fa56a0e9e372fb80, type: 3}
+  m_Script: {fileID: 11500000, guid: 704c36e6f45411c45a82acde20e76ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canReceiveDamage: 0
@@ -120,37 +123,6 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  wasHit: 0
-  bumpable: 1
-  hittable: 0
-  bountyPointsReward: 0
-  destroyTime: 10
-  model: {fileID: 1955310022431129301}
-  smashableType: 8
-  shouldBecomeDebris: 0
-  debrisPrefab: {fileID: 0}
-  usedRigidbody: {fileID: 5271517522153453597}
-  usedColliders:
-  - {fileID: 6377653078663091826}
-  collisionEvents: {fileID: 2526188742103496898}
-  OnHit:
-    m_PersistentCalls:
-      m_Calls: []
-  hitFreezeRotation: 0
-  hitConstrains: 0
-  hitIsKinematic: 0
-  impactEventPath:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  wasPickedUp: 0
-  onPickedUp:
-    m_PersistentCalls:
-      m_Calls: []
-  ammoInside: 150
 --- !u!54 &5271517522153453597
 Rigidbody:
   m_ObjectHideFlags: 0

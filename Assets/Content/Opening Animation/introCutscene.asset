@@ -14,4 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 27.9
   prefab: {fileID: 6358601637671769738, guid: cee3a40ecb80e3c44928b52b093c3214, type: 3}
-  audio: {fileID: 8300000, guid: 9783f506e954246408c1c1c1e27e3f8b, type: 3}
+  audioEventRef:
+    Guid:
+      Data1: -24739068
+      Data2: 1075322083
+      Data3: -693300574
+      Data4: 1466654909
+    Path: event:/Enviro/Env_Opening_01
+  dialog: {fileID: 0}

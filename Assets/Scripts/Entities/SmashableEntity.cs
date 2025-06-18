@@ -94,18 +94,38 @@ public class SmashableEntity : GameEntity
 
 
     #region Event subscribing
+    private void OnEnable()
+    {
+        collisionEvents.OnEnter?.AddListener(TryCommitDestruction);
+        collisionEvents.OnStay?.AddListener(TryCommitDestruction);
+    }
     private void OnDisable()
     {
-        collisionEvents.OnEnter?.RemoveListener(OnColliderHit);
+        collisionEvents.OnEnter?.RemoveListener(TryCommitDestruction);
+        collisionEvents.OnStay?.RemoveListener(TryCommitDestruction);
     }
     #endregion
 
     #region Events
-    private void OnColliderHit(Collision collision)
+    void TryCommitDestruction(Collision collision)
     {
-        if (collision.collider == null) return;
-        if (collision.relativeVelocity.magnitude < 5f) return;
-        ForceHit();
+        if (collision == null) return;
+        if (collision.gameObject == null) return;
+        string tag = collision.gameObject.tag;
+
+        if (!wasHit)
+        {
+            if (tag == "Vehicle" || tag == "Player")
+                ForceHit();
+            else if (tag == "Smashable")
+            {
+                SmashableEntity smashable;
+                if (collision.gameObject.TryGetComponent(out smashable) && smashable.wasHit)
+                {
+                    ForceHit();
+                }
+            }
+        }
     }
     /// <summary>
     /// Powoduje znieszczenie smashable na si��
