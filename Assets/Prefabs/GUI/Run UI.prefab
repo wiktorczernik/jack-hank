@@ -5978,6 +5978,7 @@ MonoBehaviour:
   passengerPickedUpMassage: Yahoo! new passenger
   largeSiteDestroyedMassage: "MORE DESTRUCTION   \\ ( \xB0\u25A1\xB0 ) /"
   maxOffsetFromCenterInPercents: 0.2
+  rect: {fileID: 3865392967445564400}
   bonusUIx: 0
   showCircle: 0
 --- !u!1001 &220024390887622331
