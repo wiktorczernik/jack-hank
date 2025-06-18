@@ -16,6 +16,7 @@ public class Bonus_GUI : MonoBehaviour
     [TextArea] [SerializeField] private string passengerPickedUpMassage;
     [TextArea] [SerializeField] private string largeSiteDestroyedMassage;
     [Range(0, 1)][SerializeField] private float maxOffsetFromCenterInPercents = 0.2f;
+    [SerializeField] private RectTransform rect;
     
     [Header("Debug")]
     [SerializeField] private float bonusUIx;
@@ -31,11 +32,11 @@ public class Bonus_GUI : MonoBehaviour
     private LinkedList<Tuple<int, string>> _bigBonusesList;
     private BonusTicket_GUI[] _bonusTickets;
     private RectTransform[] _bonusTicketsRect;
-    private RectTransform _rect;
+    
 
     private void Start()
     {
-        _rect = GetComponent<RectTransform>();
+        if (rect == null) rect = GetComponent<RectTransform>();
         _bonusTickets = new BonusTicket_GUI[_miniBonuses.Length];
         _bonusTicketsRect = new RectTransform[_miniBonuses.Length];
         _bigBonusBoard = GetComponentInChildren<BigBonusBoard_GUI>();
@@ -43,7 +44,7 @@ public class Bonus_GUI : MonoBehaviour
         _bigBonusesList = new LinkedList<Tuple<int, string>>();
 
         if (_bigBonusBoard == null) throw new Exception("There is no bonus board");
-        if (_rect == null) throw new Exception("There is no rect");
+        if (rect == null) throw new Exception("There is no rect");
 
         for (var i = 0; i < _miniBonuses.Length; i++)
         {
@@ -96,7 +97,7 @@ public class Bonus_GUI : MonoBehaviour
     {
         var playerXOnCanvas = GetPlayerXOnCanvas();
         
-        _rect.anchoredPosition = new Vector2(playerXOnCanvas, _rect.anchoredPosition.y);
+        rect.anchoredPosition = new Vector2(playerXOnCanvas, rect.anchoredPosition.y);
         
         for (var i = 0; i < _bonusTicketsRect.Length; i++)
         {
