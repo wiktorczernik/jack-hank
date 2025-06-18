@@ -216,10 +216,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 5162174892694591371}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -2111153873
+      Data2: 1197379380
+      Data3: -229932881
+      Data4: -527449531
+    Path: event:/SFX/Smashable/SFX_Smash_Bench_01
 --- !u!1 &7226188767526281267
 GameObject:
   m_ObjectHideFlags: 0

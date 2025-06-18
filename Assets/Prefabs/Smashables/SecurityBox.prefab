@@ -87,11 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: 2e9c2238875eda6499f2840b5a37c849, type: 3}
-  audioSource: {fileID: 5002466422536587014}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 784656100
+      Data2: 1230499863
+      Data3: 1134330813
+      Data4: 1311475819
+    Path: event:/SFX/Smashable/SFX_Smash_SecurityBox_01
 --- !u!1 &7529158994043083300
 GameObject:
   m_ObjectHideFlags: 0
