@@ -10,11 +10,13 @@ public class BonusTicket_GUI : MonoBehaviour
     [SerializeField] private float offsetBetweenTextAndBonus;
     [SerializeField] private TMP_Text bonusValueText;
     [SerializeField] private TMP_Text bonusDescriptionText;
+    [SerializeField] private RectTransform rect;
     
     public PlayerBonusTypes BonusType => bonusType;
     
     private float _lastUpdateInSeconds;
     private Animation _anim;
+    private bool _hasUsualDirection = true;
 
     public void ChangeBonusValueOn(int value)
     {
@@ -26,7 +28,7 @@ public class BonusTicket_GUI : MonoBehaviour
 
         bonusValueText.text = $"+{value}";
         bonusDescriptionText.text = bonusName;
-        UpdateTextPosition();
+        UpdateOffset();
     }
     
     public void ChangeBonusValueOn(int value, int comboValue)
@@ -46,12 +48,48 @@ public class BonusTicket_GUI : MonoBehaviour
         
         bonusValueText.text = $"X{comboValue} +{value}";
         bonusDescriptionText.text = bonusName;
-        UpdateTextPosition();
+        UpdateOffset();
     }
 
-    private void UpdateTextPosition()
+    public void SetReverseDirection()
     {
-        bonusDescriptionText.rectTransform.anchoredPosition = new Vector2(bonusValueText.preferredWidth + offsetBetweenTextAndBonus, 0);
+        if (!_hasUsualDirection) return;
+        
+        bonusDescriptionText.rectTransform.pivot = new Vector2(1, 1);
+        bonusDescriptionText.rectTransform.anchorMax = new Vector2(0, 1);
+        bonusDescriptionText.rectTransform.anchorMin = new Vector2(0, 1);
+        
+        bonusDescriptionText.rectTransform.sizeDelta = 
+            new Vector2(bonusDescriptionText.preferredWidth, bonusDescriptionText.preferredHeight);
+
+        _hasUsualDirection = false;
+        
+        UpdateOffset();
+    }
+    
+    public void SetUsualDirection()
+    {
+        if (_hasUsualDirection) return;
+
+        bonusDescriptionText.rectTransform.pivot = new Vector2(0, 1);
+        bonusDescriptionText.rectTransform.anchorMax = new Vector2(1, 1);
+        bonusDescriptionText.rectTransform.anchorMin = new Vector2(1, 1);
+        
+        bonusDescriptionText.rectTransform.sizeDelta = 
+            new Vector2(bonusDescriptionText.preferredWidth, bonusDescriptionText.preferredHeight);
+        
+        _hasUsualDirection = true;
+        
+        UpdateOffset();
+    }
+
+    private void UpdateOffset()
+    {
+        rect.sizeDelta = 
+            new Vector2(bonusValueText.preferredWidth, bonusValueText.preferredHeight);
+        
+        bonusDescriptionText.rectTransform.anchoredPosition = 
+            new Vector2(_hasUsualDirection ? offsetBetweenTextAndBonus : -offsetBetweenTextAndBonus, 0);
     }
 
     private void Awake()
@@ -59,8 +97,11 @@ public class BonusTicket_GUI : MonoBehaviour
         if (!Application.isPlaying) return;
         
         gameObject.SetActive(false);
-        enabled = false;
+        enabled = true;
         _anim = GetComponentInChildren<Animation>();
+        
+        bonusDescriptionText.rectTransform.sizeDelta = 
+            new Vector2(bonusDescriptionText.preferredWidth, bonusDescriptionText.preferredHeight);
     }
 
     private void Update()
@@ -72,6 +113,6 @@ public class BonusTicket_GUI : MonoBehaviour
             gameObject.SetActive(false);
             enabled = false;
         }
-        UpdateTextPosition();
+        UpdateOffset();
     }
 }
