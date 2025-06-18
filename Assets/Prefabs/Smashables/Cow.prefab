@@ -87,14 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: 4d054ec8944f5f14a9787a6d0199368e, type: 3}
-  - {fileID: 8300000, guid: 1256ef89af6b9604f90c303c4686224c, type: 3}
-  - {fileID: 8300000, guid: 3595219272936bf448004cb8f7d9d183, type: 3}
-  - {fileID: 8300000, guid: 44ffb32840a0fa04f8cf47b75a761e18, type: 3}
-  audioSource: {fileID: 83108585916150259}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 880725625
+      Data2: 1140075204
+      Data3: -507893328
+      Data4: 1618586892
+    Path: event:/SFX/Smashable/SFX_Smash_Cow_01
 --- !u!1 &4082936245034834293
 GameObject:
   m_ObjectHideFlags: 0

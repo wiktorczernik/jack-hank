@@ -48,8 +48,6 @@ public class GameRunInfo
             throw new NotImplementedException(
                 "Bonus type has not implemented in GameRunInfo!!! Please add a BonusType!");
 
-        if (bonusType == PlayerBonusTypes.Passenger) AddPassenger();
-
         _pointsByBonusTypes[bonusType] += value;
     }
 

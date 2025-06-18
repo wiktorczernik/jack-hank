@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMODUnity;
 using JackHank.Dialogs;
 using UnityEngine;
 
@@ -62,13 +63,10 @@ namespace JackHank.Cinematics
         [SerializeField] bool _isPlaying;
         [SerializeField] CinematicSequence _playedSequence;
 
-        private AudioSource _audioSource;
-
 
         private void Awake()
         {
             _instance = this;
-            _audioSource = GetComponent<AudioSource>();
         }
 
         /// <summary>
@@ -130,13 +128,9 @@ namespace JackHank.Cinematics
             playedSequence = sequence;
             onBeginPlay?.Invoke();
 
-            var audioSource = _instance._audioSource;
-            if (audioSource && sequence.audio)
-            {
-                audioSource.Stop();
-                audioSource.clip = sequence.audio;
-                audioSource.Play();
-            }
+            var audioEventInstance = RuntimeManager.CreateInstance(sequence.audioEventRef);
+            audioEventInstance.start();
+
             if (sequence.dialog)
             {
                 DialogPlayer.Request(sequence.dialog);
@@ -165,6 +159,9 @@ namespace JackHank.Cinematics
             isPlaying = false;
             playedSequence = null;
             onEndPlay?.Invoke();
+
+            audioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            audioEventInstance.release();
 
             Destroy(instance);
         }

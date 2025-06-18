@@ -87,10 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 6541163476597807572}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -1920836208
+      Data2: 1107881644
+      Data3: 1813580416
+      Data4: 1224677816
+    Path: event:/SFX/Smashable/SFX_Smash_OutdoorTable_01
 --- !u!1 &6377292971837442068
 GameObject:
   m_ObjectHideFlags: 0
