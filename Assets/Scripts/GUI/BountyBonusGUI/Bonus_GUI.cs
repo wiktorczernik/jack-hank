@@ -65,8 +65,6 @@ public class Bonus_GUI : MonoBehaviour
 
     private void Update()
     {
-        if (Application.isPlaying) return;
-
         UpdateTicketsPosition();
     }
 
