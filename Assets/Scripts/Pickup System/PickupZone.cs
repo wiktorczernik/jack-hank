@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PickupZone : MonoBehaviour
 {
-    public GameEntity pickupable;
-    public Action onObsolete;
+    public Pickupable target;
 
     [SerializeField] TriggerEventEmitter eventEmitter;
+
 
     private void OnEnable()
     {
@@ -17,12 +17,6 @@ public class PickupZone : MonoBehaviour
     {
         eventEmitter.OnEnter.RemoveListener(OnEnter);
         eventEmitter.OnExit.RemoveListener(OnExit);
-    }
-
-    public void NotifyObsolete()
-    {
-        onObsolete?.Invoke();
-        Destroy(gameObject);
     }
 
     public void OnEnter(Collider collider)
