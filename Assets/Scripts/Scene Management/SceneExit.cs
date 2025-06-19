@@ -71,8 +71,8 @@ public class SceneExit : MonoBehaviour
         ScreenFade.onAfterIn -= AfterFadeIn;
         if (mode == SceneExitMode.LevelMode)
         {
-            finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
-            finishText.OnEndAnimation += ExitToMenu;
+            // finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
+            // finishText.OnEndAnimation += ExitToMenu;
         }
         else
         {
@@ -95,7 +95,7 @@ public class SceneExit : MonoBehaviour
 
     private void ExitToMenu()
     {
-        finishText.OnEndAnimation -= ExitToMenu;
+        // finishText.OnEndAnimation -= ExitToMenu;
         StartCoroutine(ExitToMenuCo());
     }
 
