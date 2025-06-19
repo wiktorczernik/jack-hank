@@ -111,7 +111,6 @@ public class Bonus_GUI : MonoBehaviour
 
     private void ShowMiniBonus(int bonus, PlayerBonusTypes bonusType)
     {
-        Debug.Log($"Bonus_GUI: {_bonusTickets == null}");
         var ticket = _bonusTickets.First(ticket => ticket.BonusType == bonusType);
 
         ticket.ChangeBonusValueOn(bonus);
