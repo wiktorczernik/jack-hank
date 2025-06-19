@@ -35,7 +35,8 @@ public class AccountManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        if (useDebugAccount) LogInDebugAccount();
+
+        LogInDebugAccount();
     }
 
     public static void LogInDebugAccountOnAwake()

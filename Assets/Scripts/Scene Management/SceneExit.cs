@@ -27,6 +27,8 @@ public class SceneExit : MonoBehaviour
 
     private void Awake()
     {
+        if (!useAutoDrivingToExit) return;
+        
         autoDrivingTrigger.OnEnter.AddListener(OnPlayerEnterAutoDrivingTrigger);
         exitTrigger.OnEnter.AddListener(OnPlayerEnterExitTrigger);
     }
@@ -51,11 +53,13 @@ public class SceneExit : MonoBehaviour
 
     private void OnPlayerEnterExitTrigger(Collider other)
     {
-
         if (!other.gameObject.CompareTag("Player")) return;
 
         if (_finishing) return;
         _finishing = true;
+
+        var slowRidePenalty = player.GetComponent<SlowRidePenalty>();
+        if (slowRidePenalty != null) slowRidePenalty.enabled = false;
 
         ScreenFade.In(1.5f, ScreenFadeType.Default);
 
