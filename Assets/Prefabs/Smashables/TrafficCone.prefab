@@ -211,10 +211,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 1610896277595513080}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -945766048
+      Data2: 1245075481
+      Data3: 265137821
+      Data4: 302397174
+    Path: event:/SFX/Smashable/SFX_Smash_TrafficCone_01
 --- !u!1 &4859400356898077251
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class PlayerVehicleSeatController
         }
     }
 
-    public PlayerVehicleSeat Occupy(PickupablePassenger passenger)
+    public PlayerVehicleSeat Occupy(Pickupable passenger)
     {
         if (availableSeats == 0)
         {
@@ -38,7 +38,7 @@ public class PlayerVehicleSeatController
 public class PlayerVehicleSeat
 {
     public Transform point;
-    public PickupablePassenger passenger { get; private set; } = null;
+    public Pickupable passenger { get; private set; } = null;
     public bool isOccupied { get; private set; } = false;
 
     public PlayerVehicleSeat(Transform point)
@@ -46,7 +46,7 @@ public class PlayerVehicleSeat
         this.point = point;
     }
 
-    public void Occupy(PickupablePassenger passenger)
+    public void Occupy(Pickupable passenger)
     {
         this.passenger = passenger;
         isOccupied = true;

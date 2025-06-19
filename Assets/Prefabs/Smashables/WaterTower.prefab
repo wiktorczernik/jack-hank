@@ -27095,11 +27095,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: 0c876287f29c02149b4da5ff3eb2db65, type: 3}
-  audioSource: {fileID: 3918294746370648316}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1629734877
+      Data2: 1318101674
+      Data3: -1225706101
+      Data4: 1300339763
+    Path: event:/SFX/Smashable/SFX_Smash_WaterTower_01
 --- !u!1 &7551124185302419240
 GameObject:
   m_ObjectHideFlags: 0

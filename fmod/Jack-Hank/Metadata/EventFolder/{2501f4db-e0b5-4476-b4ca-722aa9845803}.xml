@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{2501f4db-e0b5-4476-b4ca-722aa9845803}">
+		<property name="name">
+			<value>Smashable</value>
+		</property>
+		<relationship name="folder">
+			<destination>{d5188e70-03f8-4c41-95c4-40b933def39e}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -82,19 +84,8 @@ public class SmashableEntity : GameEntity
     /// Zestaw d�wi�k�w kt�re mog� by� zagrane po zderzeniu
     /// </summary>
     [Header("Audio")]
-    [SerializeField] protected AudioClip[] impactAudios = new AudioClip[0];
-    /// <summary>
-    /// �r�d�o d�wi�ku
-    /// </summary>
-    public AudioSource audioSource;
-    /// <summary>
-    /// Minimalny pitch d�wi�ku zderzenia
-    /// </summary>
-    [SerializeField] protected float impactMinPitch = 0.75f;
-    /// <summary>
-    /// Maksymalny pitch d�wi�ku zderzenia
-    /// </summary>
-    [SerializeField] protected float impactMaxPitch = 1.25f;
+    [SerializeField]
+    protected EventReference impactEventPath;
     /// <summary>
     /// Typ smashable
     /// </summary>
@@ -105,20 +96,36 @@ public class SmashableEntity : GameEntity
     #region Event subscribing
     private void OnEnable()
     {
-        collisionEvents.OnEnter?.AddListener(OnColliderHit);
+        collisionEvents.OnEnter?.AddListener(TryCommitDestruction);
+        collisionEvents.OnStay?.AddListener(TryCommitDestruction);
     }
     private void OnDisable()
     {
-        collisionEvents.OnEnter?.RemoveListener(OnColliderHit);
+        collisionEvents.OnEnter?.RemoveListener(TryCommitDestruction);
+        collisionEvents.OnStay?.RemoveListener(TryCommitDestruction);
     }
     #endregion
 
     #region Events
-    private void OnColliderHit(Collision collision)
+    void TryCommitDestruction(Collision collision)
     {
-        if (collision.collider == null) return;
-        if (collision.relativeVelocity.magnitude < 5f) return;
-        ForceHit();
+        if (collision == null) return;
+        if (collision.gameObject == null) return;
+        string tag = collision.gameObject.tag;
+
+        if (!wasHit)
+        {
+            if (tag == "Vehicle" || tag == "Player")
+                ForceHit();
+            else if (tag == "Smashable")
+            {
+                SmashableEntity smashable;
+                if (collision.gameObject.TryGetComponent(out smashable) && smashable.wasHit)
+                {
+                    ForceHit();
+                }
+            }
+        }
     }
     /// <summary>
     /// Powoduje znieszczenie smashable na si��
@@ -206,20 +213,7 @@ public class SmashableEntity : GameEntity
     /// </summary>
     public void PlayImpactAudio()
     {
-        if (impactAudios.Length == 0) return;
-
-        int clipIndex = Random.Range(0, impactAudios.Length);
-        var clip = impactAudios[clipIndex];
-
-        if (!clip)
-        {
-            Debug.LogError("Smashable entity has null audio clip!", this);
-            return;
-        }
-
-        audioSource.pitch = Random.Range(impactMinPitch, impactMaxPitch);
-        audioSource.clip = clip;
-        audioSource.Play();
+        RuntimeManager.PlayOneShot(impactEventPath, model.transform.position);
     }
     
     private void SelfDestroy()
@@ -243,14 +237,6 @@ public class SmashableEntity : GameEntity
             if (!usedRigidbody)
             {
                 Debug.LogError("Smashable entity doesn't have attached rigidbody to it!", this);
-            }
-        }
-        if (!audioSource)
-        {
-            audioSource = GetComponentInChildren<AudioSource>();
-            if (!audioSource)
-            {
-                Debug.LogError("Smashable entity doesn't have attached audio source to it!", this);
             }
         }
         if (usedColliders.Length == 0)
