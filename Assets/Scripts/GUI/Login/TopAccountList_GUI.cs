@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AccountManagement;
 using TMPro;
 using UnityEngine;
 
 public class TopAccountList_GUI : MonoBehaviour
 {
-    [SerializeField] private RectTransform listItemPrefab;
+    [SerializeField] private LeaderListItem listItemPrefab;
     [SerializeField] private TextMeshProUGUI  noAccountTextPrefab;
     [SerializeField] private int amountOfTopAccountsToDisplay = 5;
     [SerializeField] private float gapBetweenListItems = 5;
     
-    private List<RectTransform> _listItems;
+    private List<LeaderListItem> _listItems;
     private TextMeshProUGUI _noAccountTextInstance;
     
     private void Start()
@@ -30,18 +28,27 @@ public class TopAccountList_GUI : MonoBehaviour
         var accounts = AccountManager
             .GetSavedAccounts()
             .OrderByDescending(data => data.bountyPoints)
+            .ThenByDescending(data => data.savedPassengers)
+            .ThenBy(data => data.playTimeTimestamp)
             .Take(amountOfTopAccountsToDisplay)
             .ToList();
         
         for (var i = 0; i < amountOfTopAccountsToDisplay; i++)
         {
-            var textComponent = _listItems[i].gameObject.GetComponent<TextMeshProUGUI>();
-
-            textComponent.text = "";
+            var item = _listItems[i];
+            
+            item.SetName("");
+            item.SetBounty(0);
+            item.SetPassengers(0);
+            item.SetPlayTime(0);
 
             if (i >= accounts.Count) continue;
+            var acc = accounts[i];
             
-            textComponent.text = $"{i + 1}. {accounts[i].accountName}";
+            item.SetName($"{i + 1}. {acc.accountName}");
+            item.SetBounty(acc.bountyPoints);
+            item.SetPassengers(acc.savedPassengers);
+            item.SetPlayTime(acc.playTimeTimestamp);
         }
         
         if (accounts.Count == 0)
@@ -55,12 +62,14 @@ public class TopAccountList_GUI : MonoBehaviour
 
     private void InitializeItemList()
     {
-        _listItems = new List<RectTransform>();
+        _listItems = new List<LeaderListItem>();
 
         for (var i = 0; i < amountOfTopAccountsToDisplay; i++)
         {
             var item = Instantiate(listItemPrefab, transform);
-            item.anchoredPosition = new Vector2(0, -(i * item.rect.height + i * gapBetweenListItems));
+
+            item.rectTransform.anchoredPosition = 
+                new Vector2(0, -(i * item.rectTransform.rect.height + i * gapBetweenListItems));
             _listItems.Add(item);
         }
     }
