@@ -1,11 +1,14 @@
-﻿using LevelManagement;
+﻿using System.Collections;
+using JackHank.Dialogs;
+using LevelManagement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class LevelSelectMenuManager : MonoBehaviour
 {
     [SerializeField] private Transform botDestination;
     [SerializeField] private SceneExit _sceneExit;
+    [SerializeField] private Dialog dialog;
+    [SerializeField] private LevelComplete_GUI levelCompleteGUI;
     
     private LevelSelectMenuScroller _levelScroller;
     private BotVehicle _botVehicle;
@@ -41,14 +44,43 @@ public class LevelSelectMenuManager : MonoBehaviour
 
         _instance._sceneExit = FindFirstObjectByType<SceneExit>();
         _instance._sceneExit.OnExit += ResetState;
-        
+
         _instance._levelScroller = FindFirstObjectByType<LevelSelectMenuScroller>();
         _instance._levelScroller.StartScrolling();
-        
+
         _instance._botVehicle = FindFirstObjectByType<BotVehicle>();
         _instance._botVehicle.isFollowing = false;
-        
+
+        var slowRidePenalty = _instance._botVehicle.GetComponent<SlowRidePenalty>();
+        if (slowRidePenalty != null) slowRidePenalty.enabled = false;
+
         _initialized = true;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Play());
+    }
+
+    private IEnumerator Play()
+    {
+        ScreenFade.Out(1f);
+
+        yield return new WaitWhile(() => ScreenFade.isBusy);
+        
+        DialogPlayer.Request(_instance.dialog);
+
+        yield return new WaitUntil(() => DialogPlayer.playbackState == null);
+        
+        _instance.levelCompleteGUI.Appear();
+
+        yield return new WaitWhile(() => _instance.levelCompleteGUI.isBusy);
+        
+        ScreenFade.In(1f);
+        
+        yield return new WaitWhile(() => ScreenFade.isBusy);
+        
+        GameSceneManager.LoadLogin();
     }
 
     private static void ResetState()
