@@ -130,6 +130,17 @@ public class GameManager : MonoBehaviour
 
         return LevelCompletenessMark.S;
     }
+    
+    public static string GetStringMarkByBounty()
+    {
+        if (RunInfo.AllBountyPoints <= _definition.E) return "e";
+        if (RunInfo.AllBountyPoints <= _definition.D) return "d";
+        if (RunInfo.AllBountyPoints <= _definition.C) return "c";
+        if (RunInfo.AllBountyPoints <= _definition.B) return "b";
+        if (RunInfo.AllBountyPoints <= _definition.A) return "a";
+
+        return "s";
+    }
 
     public static void PlayerDeathRestart()
     {
