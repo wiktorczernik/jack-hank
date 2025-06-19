@@ -1410,7 +1410,7 @@ RectTransform:
   m_Father: {fileID: 697740991}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.38}
+  m_AnchorMax: {x: 1, y: 0.46889424}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -1644,8 +1644,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1864,7 +1864,7 @@ RectTransform:
   m_Father: {fileID: 1387900438}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.75}
+  m_AnchorMax: {x: 1, y: 0.85079104}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -1880,10 +1880,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55574c8d996f4e82ad348078bddcf55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listItemPrefab: {fileID: 1083177003368113722, guid: 120cb1a72eb3bc14991b8a27c138e89f, type: 3}
+  listItemPrefab: {fileID: 3363963720326850505, guid: 120cb1a72eb3bc14991b8a27c138e89f, type: 3}
   noAccountTextPrefab: {fileID: 7833513311540577532, guid: 2362ab69b0d332544a9618279f936654, type: 3}
   amountOfTopAccountsToDisplay: 5
-  gapBetweenListItems: 3
+  gapBetweenListItems: 23
 --- !u!1 &1823515773
 GameObject:
   m_ObjectHideFlags: 0
