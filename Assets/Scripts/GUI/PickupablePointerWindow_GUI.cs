@@ -43,9 +43,9 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
     void OnZoneEnter(PickupZone zone)
     {
         if (!zone) return;
-        if (!zone.pickupable) return;
+        if (!zone.target) return;
         Debug.Log(zone.gameObject.name, zone);
-        pickupableTransform = zone.pickupable.transform;
+        pickupableTransform = zone.target.transform;
     }
 
     void OnZoneExit(PickupZone zone)

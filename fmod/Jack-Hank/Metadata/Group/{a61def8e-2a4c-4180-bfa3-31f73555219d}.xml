@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="MixerGroup" id="{a61def8e-2a4c-4180-bfa3-31f73555219d}">
+		<property name="name">
+			<value>Smash</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{e057d53c-8d57-48c4-bd44-c85a2be409b8}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{d7536d8f-f1d3-4864-9d1d-7e99b4ad9007}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{b4a65f76-f2bd-4290-8527-87869368f188}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{e057d53c-8d57-48c4-bd44-c85a2be409b8}">
+		<relationship name="effects">
+			<destination>{77ef61be-bde4-4bb3-82d9-09b1ed5d8747}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{d7536d8f-f1d3-4864-9d1d-7e99b4ad9007}" />
+	<object class="MixerBusFader" id="{77ef61be-bde4-4bb3-82d9-09b1ed5d8747}" />
+</objects>

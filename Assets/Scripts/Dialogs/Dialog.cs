@@ -1,4 +1,5 @@
 using System.Linq;
+using FMODUnity;
 using UnityEngine;
 
 namespace JackHank.Dialogs
@@ -12,7 +13,7 @@ namespace JackHank.Dialogs
         /// <summary>
         /// Nagranie in the flesh
         /// </summary>
-        public AudioClip audioClip;
+        public EventReference audioEvent;
         /// <summary>
         /// D³ugoœæ dialogu w sekundach
         /// </summary>
@@ -29,8 +30,6 @@ namespace JackHank.Dialogs
 
         private void OnValidate()
         {
-            if (audioClip)
-                audioDuration = audioClip.length;
             if (transcriptions != null)
             {
                 transcriptionDuration = transcriptions.Sum(x => x.duration + x.startDelay);

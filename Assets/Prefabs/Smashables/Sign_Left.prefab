@@ -340,10 +340,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 8190010141555811698}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -658542259
+      Data2: 1186399810
+      Data3: -1480952956
+      Data4: 1384959254
+    Path: event:/SFX/Smashable/SFX_Smash_SignLeft_01
 --- !u!1001 &1767282504944292499
 PrefabInstance:
   m_ObjectHideFlags: 0

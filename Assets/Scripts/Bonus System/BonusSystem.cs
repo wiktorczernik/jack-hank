@@ -40,7 +40,6 @@ public class BonusSystem : MonoBehaviour
         yield return new WaitUntil(() => GameManager.PlayerVehicle != null);
 
         _playerVehicleController = GameManager.PlayerVehicle.GetComponentInChildren<VehiclePhysics>();
-        GameManager.PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
         
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))
         {

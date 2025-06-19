@@ -189,12 +189,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: d63376f3245891240b1fd4d6bd74a88c, type: 3}
-  - {fileID: 8300000, guid: 25f1ae86ce1b4874cb4a3411390d4d67, type: 3}
-  audioSource: {fileID: 1667844585424004724}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -386220230
+      Data2: 1169478874
+      Data3: 1081091515
+      Data4: -1613318055
+    Path: event:/SFX/Smashable/SFX_Smash_Pallet_01
 --- !u!1 &7213189771957939328
 GameObject:
   m_ObjectHideFlags: 0
