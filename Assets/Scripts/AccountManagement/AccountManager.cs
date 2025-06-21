@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using AccountManagement;
+using JetBrains.Annotations;
 using LevelManagement;
 using UnityEngine;
 
@@ -32,6 +33,10 @@ public class AccountManager : MonoBehaviour
     public static event Action<PlayerAccountData> onLoggedIn;
     public static event Action<PlayerAccountData> onLoggedOut;
 
+    public static event Action<PlayerAccountData> onDeleteAccount;
+
+    public static event Action<PlayerAccountData> onCreateAccount;
+
     private void Awake()
     {
         _instance = this;
@@ -51,6 +56,19 @@ public class AccountManager : MonoBehaviour
             .GetFiles("*.json")
             .ToList()
             .ConvertAll(save => save.Name.Replace(".json", ""));
+    }
+
+    public static List<PlayerAccountData> GetSavedAccounts()
+    {
+        EnsureSaveDirectoryExists();
+        return new DirectoryInfo(_saveFolderPath).GetFiles("*.json")
+            .ToList()
+            .ConvertAll(save =>
+            {
+                var account =  JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(save.FullName));
+                account.accountName = save.Name.Replace(".json", "");
+                return account;
+            });
     }
 
     public static bool ExistsSavedAccount(string accountName)
@@ -138,7 +156,8 @@ public class AccountManager : MonoBehaviour
         EnsureSaveDirectoryExists();
         _currentAccount = new PlayerAccount(accountName);
         File.WriteAllText(GetAccountSavePath(accountName), _currentAccount.ToJson());
-
+        onCreateAccount?.Invoke(_currentAccount.GetData());
+        
         return LogInAccount(accountName);
     }
 
@@ -146,9 +165,11 @@ public class AccountManager : MonoBehaviour
     {
         EnsureSaveDirectoryExists();
 
-        if (!ExistsSavedAccount(accountName)) return;
+        var accountData = GetLocalAccountData(accountName);
+        if (accountData == null) return;
         
         File.Delete(GetAccountSavePath(accountName));
+        onDeleteAccount?.Invoke(accountData);
     }
 
     private static string GetAccountSavePath(string accountName)
@@ -172,6 +193,16 @@ public class AccountManager : MonoBehaviour
         dataToSave.bountyPoints = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
 
         return dataToSave;
+    }
+
+    [CanBeNull]
+    private static PlayerAccountData GetLocalAccountData(string accountName)
+    {
+        if (!ExistsSavedAccount(accountName)) return null;
+
+        var data = JsonUtility.FromJson<PlayerAccountData>(File.ReadAllText(GetAccountSavePath(accountName)));
+        data.accountName = accountName;
+        return data;
     }
 
     public enum LogInStatus

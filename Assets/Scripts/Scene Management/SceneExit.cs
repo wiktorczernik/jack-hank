@@ -51,15 +51,13 @@ public class SceneExit : MonoBehaviour
 
     private void OnPlayerEnterExitTrigger(Collider other)
     {
-
         if (!other.gameObject.CompareTag("Player")) return;
 
         if (_finishing) return;
         _finishing = true;
-
-        ScreenFade.In(1.5f, ScreenFadeType.Default);
-
+        
         ScreenFade.onAfterIn += AfterFadeIn;
+        ScreenFade.In(1.5f, ScreenFadeType.Default);
     }
 
     private void AfterFadeIn()
@@ -69,6 +67,7 @@ public class SceneExit : MonoBehaviour
         {
             finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
             finishText.OnEndAnimation += ExitToMenu;
+            OnExit?.Invoke();
         }
         else
         {

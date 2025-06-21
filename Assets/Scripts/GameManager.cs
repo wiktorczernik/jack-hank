@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public static GameRunInfo RunInfo { get; private set; }
     public static bool IsDuringRun { get; private set; }
     public static PlayerVehicle PlayerVehicle { get; private set; }
+    
+    public bool isLevelEnded { get; private set; }
 
     private void Update()
     {
@@ -81,6 +83,7 @@ public class GameManager : MonoBehaviour
         if (_isInitialized) return;
         sceneExit.OnExit += OnLevelEnds;
         Application.quitting += ClearPlayerPrefs;
+        isLevelEnded = false;
 
         if (definition == null)
         {
@@ -214,6 +217,12 @@ public class GameManager : MonoBehaviour
 
     public void OnLevelEnds()
     {
-        LevelManager.SetLevelAsCompleted(_definition);
+        if (isLevelEnded) return;
+        isLevelEnded = true;
+        
+        LevelManager.SetLevelAsCompleted(_definition, RunInfo.GetPointsByBonusTypes());
+        AccountManager.currentAccount.IncrementPassengersAmount(RunInfo.PassengersOnBoard);
+        AccountManager.currentAccount.IncrementPlayTime((int)(RunInfo.Time * 1000));
+        AccountManager.SaveCurrentAccount();
     }
 }
