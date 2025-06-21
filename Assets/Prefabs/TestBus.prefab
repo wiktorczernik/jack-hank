@@ -30897,7 +30897,7 @@ MonoBehaviour:
   speedKmh: 0
   speedKmhForward: 0
   maxForwardSpeed: 250
-  maxBackwardSpeed: 15
+  maxBackwardSpeed: 60
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
   hitAlignTorque: 500000
@@ -31324,7 +31324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e22549f0a6c04149bc0e721033a5b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPenaltyVelocity: 25
+  maxPenaltyVelocity: 15
   excusingDuration: 5
   warningDuration: 5
 --- !u!114 &9170904330043421232

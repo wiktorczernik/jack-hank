@@ -70,9 +70,17 @@ public class PlayerVehicle : Vehicle
         onExplosionNearby?.Invoke(properties);
     }
 
-    public void OnMove(InputValue value)
+    public void OnThrottle(InputValue value)
     {
-        physics.input = value.Get<Vector2>();
+        physics.input.y = value.Get<float>();
+    }
+    public void OnBrake(InputValue value)
+    {
+        physics.input.y = -value.Get<float>();
+    }
+    public void OnSteer(InputValue value)
+    {
+        physics.input.x = value.Get<float>();
     }
 
     void OnTryPickup(TriggerEventEmitter triggerEmitter, Collider collider)
