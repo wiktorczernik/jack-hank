@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{b9a79d87-3cbb-4398-8a27-8e5b01a667c3}">
+		<property name="assetPath">
+			<value>VO/Dialogs/VO_ObstaclesJump_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.3183333333333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6315ab99-567a-401b-97a6-f6af2496e32f}</destination>
+		</relationship>
+	</object>
+</objects>
