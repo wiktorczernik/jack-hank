@@ -36,24 +36,13 @@ public class BonusSystem : MonoBehaviour
         yield return new WaitUntil(() => GameManager.PlayerVehicle != null);
 
         _playerVehicleController = GameManager.PlayerVehicle.GetComponentInChildren<VehiclePhysics>();
-        GameManager.PlayerVehicle.onPickupPassenger.AddListener(OnPassengerPickup);
         
         foreach (var smashable in FindObjectsByType<SmashableEntity>(FindObjectsSortMode.None))
         {
-            UnityAction<SmashableEntity> onHit;
+            if (smashable.TryGetComponent<Pickupable>(out var pickup))
+                continue;
             
-            switch (smashable)
-            {
-                case PickupablePassenger passenger:
-                    passenger.StartLookingForPlayerVehicle(GameManager.PlayerVehicle);
-                    onHit = OnPassengerHit;
-                    break;
-                default:
-                    onHit = OnHitSmashable;
-                    break;
-            }
-            
-            smashable.OnHit.AddListener(onHit);
+            smashable.OnHit.AddListener(OnHitSmashable);
         }
     }
 
@@ -80,17 +69,7 @@ public class BonusSystem : MonoBehaviour
             }
         }
     }
-
-    private void OnPassengerHit(SmashableEntity smashable)
-    {
-        GameManager.UpdateBonus(-((PickupablePassenger)smashable).bountyPointsPenalty, PlayerBonusTypes.Passenger);
-        Debug.Log("Passenger was hit! Oh no!");
-    }
     
-    private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
-    {
-        GameManager.UpdateBonus(passenger.bountyPointsReward, PlayerBonusTypes.Passenger);
-    }
     
     private void OnHitSmashable(SmashableEntity smashable)
     {
