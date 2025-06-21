@@ -2,6 +2,12 @@ using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum PickupableType
+{
+    None,
+    Passenger,
+    Ammo
+}
 public class Pickupable : MonoBehaviour
 {
     [Header("State")]
@@ -10,6 +16,9 @@ public class Pickupable : MonoBehaviour
     public bool expired = false;
 
     [Header("Options")]
+    public GameEntity parentEntity;
+    public int quantity = 1;
+    public PickupableType type = PickupableType.None;
     public bool isSmashable = false;
     public bool canExpire = false;
 
@@ -23,6 +32,10 @@ public class Pickupable : MonoBehaviour
     public EventReference smashAudioRef;
     public EventReference expireAudioRef;
 
+    public bool IsPickupable()
+    {
+        return !(smashed || expired);
+    }
     public void Pickup()
     {
         if (pickedUp || smashed || expired) return;

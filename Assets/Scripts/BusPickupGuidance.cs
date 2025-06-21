@@ -14,7 +14,7 @@ public class BusPickupGuidance : MonoBehaviour
     bool lastRight = false;
     bool canSwitchSide = true;
 
-    GameEntity pickupable;
+    Pickupable pickupable;
     
 
     private void OnEnable()
@@ -35,7 +35,7 @@ public class BusPickupGuidance : MonoBehaviour
     void OnZoneEnter(PickupZone zone)
     {
         justEntered = true;
-        pickupable = zone.pickupable;
+        pickupable = zone.target;
     }
     void OnZoneExit(PickupZone zone)
     {
