@@ -30839,9 +30839,20 @@ MonoBehaviour:
   driftGainPitch: 0.3
   bumpMinPitch: 0.5
   bumpMaxPitch: 1.5
-  driftSoundSource: {fileID: 0}
-  engineSoundSource: {fileID: 0}
-  bumpSoundSource: {fileID: 2649367148469278820}
+  engineEventRef:
+    Guid:
+      Data1: 499217271
+      Data2: 1111918648
+      Data3: 1738280870
+      Data4: 1814001384
+    Path: event:/SFX/Bus/SFX_Bus_Engine_01
+  driftEventRef:
+    Guid:
+      Data1: 829193868
+      Data2: 1223380309
+      Data3: 2045749635
+      Data4: 1305020053
+    Path: event:/SFX/Bus/SFX_Bus_Drift_01
 --- !u!114 &8049625386355856952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30886,7 +30897,7 @@ MonoBehaviour:
   speedKmh: 0
   speedKmhForward: 0
   maxForwardSpeed: 250
-  maxBackwardSpeed: 15
+  maxBackwardSpeed: 60
   forwardAcceleration: 2300
   forwardBrakeForce: 4500
   hitAlignTorque: 500000
@@ -31313,7 +31324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e22549f0a6c04149bc0e721033a5b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPenaltyVelocity: 25
+  maxPenaltyVelocity: 15
   excusingDuration: 5
   warningDuration: 5
 --- !u!114 &9170904330043421232

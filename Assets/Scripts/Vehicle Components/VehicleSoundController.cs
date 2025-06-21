@@ -1,6 +1,9 @@
 using UnityEngine;
 
 using JackHank.Cinematics;
+using FMOD.Studio;
+using FMODUnity;
+using System;
 
 
 public class VehicleSoundController : MonoBehaviour
@@ -16,66 +19,81 @@ public class VehicleSoundController : MonoBehaviour
     public float bumpMinPitch = 0.5f;
     public float bumpMaxPitch = 1.5f;
 
-    public AudioSource driftSoundSource;
-    public AudioSource engineSoundSource;
-    public AudioSource bumpSoundSource;
+    [Header("Audio")]
+    [SerializeField]
+    EventReference engineEventRef;
+    [SerializeField]
+    EventReference driftEventRef;
+
+    EventInstance engineEventInstance;
+    EventInstance driftEventInstance;
+
 
     public void PlayEnvironmentBump()
     {
+        /*
         if (bumpSoundSource.isPlaying) return;
         bumpSoundSource.pitch = Random.Range(bumpMinPitch, bumpMaxPitch);
         bumpSoundSource.Play();
+        */
     }
 
     private void Update()
     {
-        float driftFactor = Mathf.Clamp01(Mathf.Abs(vehicleController.driftAngular / vehicleController.driftMaxAngular));
+        if (CinematicPlayer.isPlaying) return;
 
-        float targetDriftVolume;
-        if (!vehicleController.isDrifting)
-        {
-            targetDriftVolume = 0;
-        }
-        else
-        {
-            targetDriftVolume = driftMinNormalVolume;
-            targetDriftVolume += driftFactor * (1 - driftMinNormalVolume);
-        }
+        float driftFactor = vehicleController.driftAngular / vehicleController.driftMaxAngular;
+        driftFactor = Mathf.Abs(driftFactor);
+        driftFactor = Mathf.Clamp01(driftFactor);
 
-        float currentDriftVolume = Mathf.Lerp(driftSoundSource.volume, targetDriftVolume, driftVolumeLerp * Time.deltaTime);
-        currentDriftVolume *= driftRealVolume * Mathf.Clamp01(Time.timeScale);
-        
-        float currentDriftPitch = driftMinPitch; 
-        currentDriftPitch += Time.timeScale * driftFactor * driftGainPitch;
+        float speedFactor = vehicleController.speedKmhForward / vehicleController.maxForwardSpeed;
+        speedFactor = Mathf.Clamp01(speedFactor);
 
-        float engineFactor = 1 + Mathf.Clamp01(vehicleController.speedKmhForward / 150f) * 2.5f * Time.timeScale;
-        
-        driftSoundSource.volume = currentDriftVolume;
-        driftSoundSource.pitch = currentDriftPitch;
-        
-        engineSoundSource.pitch = engineFactor;
-        engineSoundSource.volume = Mathf.Clamp01(Time.timeScale);
+        engineEventInstance.setParameterByName("Velocity", speedFactor);
     }
 
+    private void Awake()
+    {
+        engineEventInstance = RuntimeManager.CreateInstance(engineEventRef);
+        driftEventInstance = RuntimeManager.CreateInstance(driftEventRef);
+    }
     private void OnEnable()
     {
+        engineEventInstance.start();
+
         CinematicPlayer.onBeginPlay += OnCinematicBegin;
         CinematicPlayer.onEndPlay += OnCinematicEnd;
+        vehicleController.onDriftBegin += OnDriftBegin;
+        vehicleController.onDriftEnd += OnDriftEnd;
     }
     private void OnDisable()
     {
         CinematicPlayer.onBeginPlay -= OnCinematicBegin;
         CinematicPlayer.onEndPlay -= OnCinematicEnd;
+        vehicleController.onDriftBegin -= OnDriftBegin;
+        vehicleController.onDriftEnd -= OnDriftEnd;
+    }
+    private void OnDestroy()
+    {
+        driftEventInstance.release();
+        engineEventInstance.release();
     }
 
+    private void OnDriftBegin()
+    {
+        driftEventInstance.start();
+    }
+    private void OnDriftEnd()
+    {
+        driftEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
     private void OnCinematicBegin()
     {
-        engineSoundSource.enabled = false;
-        driftSoundSource.enabled = false;
+        driftEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        engineEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
     private void OnCinematicEnd()
     {
-        engineSoundSource.enabled = true;
-        driftSoundSource.enabled = true;
+        engineEventInstance.start();
     }
 }

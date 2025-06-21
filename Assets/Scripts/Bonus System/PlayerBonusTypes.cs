@@ -4,5 +4,6 @@
     Drift,
     DestructionCombo,
     LargeDestruction,
-    Passenger
+    Passenger,
+    VehicleDestruction
 }

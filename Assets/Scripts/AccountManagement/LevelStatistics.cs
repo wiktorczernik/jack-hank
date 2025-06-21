@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.Serialization;
 
 namespace AccountManagement
 {
@@ -13,15 +12,19 @@ namespace AccountManagement
         public int levelID;
         public bool isPassed;
         public Dictionary<PlayerBonusTypes, int> bonuses;
-        
+
         public object Clone()
         {
-            return new LevelStatistics()
-            {
-                levelID = levelID, 
-                isPassed = isPassed, 
-                bonuses = bonuses.ToDictionary(x => x.Key, x => x.Value)
-            };
+            var clone = new LevelStatistics();
+
+            clone.levelID = levelID;
+            clone.isPassed = isPassed;
+            
+            clone.bonuses = bonuses == null ? 
+                new Dictionary<PlayerBonusTypes, int>() : 
+                bonuses.ToDictionary(x => x.Key, x => x.Value);
+
+            return clone;
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 namespace JackHank.Dialogs
@@ -28,8 +30,8 @@ namespace JackHank.Dialogs
         private static DialogPlayer _instance;
         [Header("State")]
         [SerializeField] bool _isPlaying;
-        [Header("Components")]
-        [SerializeField] AudioSource _audioSource;
+
+        EventInstance audioEventInstance;
 
 
         /// <summary>
@@ -47,43 +49,28 @@ namespace JackHank.Dialogs
         {
             _instance = this;
         }
-
         private void Update()
         {
             _isPlaying = playbackState != null;
 
-            if (_audioSource.clip == null) return;
-
             var s = playbackState;
-            _audioSource.pitch = Time.timeScale;
-            _audioSource.volume = Mathf.Clamp01(Time.timeScale);
-            if (Time.timeScale < 0.1f)
-                _audioSource.Pause();
-            else
-                _audioSource.UnPause();
 
             if (s == null) return;
             if (s.playedAudio) return;
 
             s.playedTime += Time.deltaTime;
-            if (s.playedTime >= s.dialog.audioDuration)
-            {
-                s.playedTime = s.dialog.audioDuration;
-                s.playedAudio = true;
-                _audioSource.Stop();
-                _audioSource.clip = null;
-            }
+
+            PLAYBACK_STATE audioPlaybackState;
+            audioEventInstance.getPlaybackState(out audioPlaybackState);
+            s.playedAudio = audioPlaybackState == PLAYBACK_STATE.STOPPED;
         }
 
         IEnumerator DialogPlaybackSequence()
         {
-            var audioSource = _instance._audioSource;
             var state = playbackState;
 
-            audioSource.Stop();
-            audioSource.clip = playbackState.dialog.audioClip;
-            audioSource.Play();
-
+            audioEventInstance = RuntimeManager.CreateInstance(state.dialog.audioEvent);
+            audioEventInstance.start();
             onDialogBegin?.Invoke(state);
 
             VoicelineTranscription transcription;
@@ -112,7 +99,7 @@ namespace JackHank.Dialogs
 
             onDialogEnd?.Invoke(state);
 
-            audioSource.clip = null;
+            audioEventInstance.release();
             playbackState = null;
         }
     }

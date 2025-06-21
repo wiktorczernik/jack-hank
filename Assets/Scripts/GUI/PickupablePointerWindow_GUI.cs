@@ -1,16 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PickupablePointerWindow_GUI : MonoBehaviour
 {
+    [Serializable]
+    public class PointerSpriteConfig
+    {
+        public PickupableType pickupableType;
+        public Sprite onScreenSprite;
+        public Sprite offScreenSprite;
+    }
+
+    [SerializeField] private PointerSpriteConfig[] spriteConfigs;
     [SerializeField] private RectTransform pointerRect;
     [SerializeField] private Image pointerImage;
-    [SerializeField] private Transform pickupableTransform;
-    [SerializeField] private Sprite normalSprite;
-    [SerializeField] private Sprite edgeSprite;
     [SerializeField] private Vector2 onScreenOffset = new Vector2(0f, 20f);
+    [SerializeField] private TMP_Text distanceText;
+    [SerializeField] private GameObject distanceObject;
 
+    private Dictionary<PickupableType, PointerSpriteConfig> spriteConfigsDict = new Dictionary<PickupableType, PointerSpriteConfig>();
+    private PointerSpriteConfig activeConfig;
+    private Pickupable target;
     private RectTransform parentRect;
     private PlayerVehicle player;
 
@@ -21,6 +35,8 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         if (!player) yield break;
         player.onPickupZoneEnter.AddListener(OnZoneEnter);
         player.onPickupZoneExit.AddListener(OnZoneExit);
+        foreach (var config in spriteConfigs)
+            spriteConfigsDict.Add(config.pickupableType, config);
     }
 
     private void OnEnable()
@@ -43,25 +59,21 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
     void OnZoneEnter(PickupZone zone)
     {
         if (!zone) return;
-        if (!zone.pickupable) return;
+        if (!zone.target) return;
         Debug.Log(zone.gameObject.name, zone);
-        pickupableTransform = zone.pickupable.transform;
+        target = zone.target;
+        activeConfig = spriteConfigsDict[zone.target.type];
+        Debug.Log(activeConfig);
     }
 
     void OnZoneExit(PickupZone zone)
     {
-        pickupableTransform = null;
+        target = null;
+        activeConfig = null;
     }
 
     private void Awake()
     {
-        if (pointerRect == null || normalSprite == null || edgeSprite == null)
-        {
-            Debug.LogError("Pointer, Passenger или спрайты не назначены.");
-            enabled = false;
-            return;
-        }
-
         parentRect = pointerRect.parent as RectTransform;
         if (parentRect == null)
         {
@@ -82,7 +94,7 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (pickupableTransform == null)
+        if (target == null || target.smashed || target.expired)
         {
             pointerRect.gameObject.SetActive(false);
             return;
@@ -92,8 +104,8 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         if (cam == null) return;
         pointerRect.gameObject.SetActive(true);
 
-        Renderer pickRenderer = pickupableTransform.GetComponentInChildren<Renderer>();
-        Vector3 centerWorld = pickupableTransform.position;
+        Renderer pickRenderer = target.GetComponentInChildren<Renderer>();
+        Vector3 centerWorld = target.transform.position;
         Vector3 topWorld = centerWorld;
 
         if (pickRenderer != null)
@@ -117,6 +129,8 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         float minY = parentBounds.yMin + size.y * pivot.y;
         float maxY = parentBounds.yMax - size.y * (1f - pivot.y);
 
+        distanceObject.SetActive(!isOnScreen);
+
         if (isOnScreen)
         {
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -129,11 +143,13 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
                 float clampedX = Mathf.Clamp(desiredPos.x, minX, maxX);
                 float clampedY = Mathf.Clamp(desiredPos.y, minY, maxY);
                 pointerRect.anchoredPosition = new Vector2(clampedX, clampedY);
-                pointerImage.sprite = normalSprite;
+                pointerImage.sprite = activeConfig.onScreenSprite;
             }
         }
         else
         {
+            int distance = (int)Vector3.Distance(cam.transform.position, target.transform.position);
+            distanceText.text = $"<mspace=0.85em>{distance} m</mspace>";
             Vector2 displayScreen = new Vector2(screenPoint.x, screenPoint.y);
             if (screenPoint.z < 0f)
             {
@@ -150,10 +166,12 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
                     null,
                     out Vector2 localClampedPos))
             {
-                float clampedX = Mathf.Clamp(localClampedPos.x, minX, maxX);
-                float clampedY = Mathf.Clamp(localClampedPos.y, minY, maxY);
+                // apply the same onScreenOffset even when off-screen
+                Vector2 desiredPos = localClampedPos + onScreenOffset;
+                float clampedX = Mathf.Clamp(desiredPos.x, minX, maxX);
+                float clampedY = Mathf.Clamp(desiredPos.y, minY, maxY);
                 pointerRect.anchoredPosition = new Vector2(clampedX, clampedY);
-                pointerImage.sprite = edgeSprite;
+                pointerImage.sprite = activeConfig.offScreenSprite;
             }
         }
     }

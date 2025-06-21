@@ -216,13 +216,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: d63376f3245891240b1fd4d6bd74a88c, type: 3}
-  - {fileID: 8300000, guid: 25f1ae86ce1b4874cb4a3411390d4d67, type: 3}
-  - {fileID: 8300000, guid: f6a7cad9d8452f645a19edbe52a96832, type: 3}
-  audioSource: {fileID: 699914185708580387}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1561279518
+      Data2: 1168102924
+      Data3: 1436570791
+      Data4: -1924870794
+    Path: event:/SFX/Smashable/SFX_Smash_Rushtovane_01
 --- !u!1 &8550994595747453548
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,7 +297,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.017184699
+  - screenRelativeHeight: 0.0028875372
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 112168143102285524}

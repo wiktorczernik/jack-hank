@@ -408,4 +408,5 @@ public class GameEntity : MonoBehaviour
     /// </summary>
     /// <param name="explosionProps">W³aœciwoœci eksplozji</param>
     protected virtual void InternalExplode(ExplosionProperties explosionProps) { }
+
 }

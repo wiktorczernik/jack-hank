@@ -21,6 +21,7 @@ public class KillTrigger : MonoBehaviour
     List<Mesh> gizmosMeshes = new List<Mesh>();
     [SerializeField] public KillTrigger[] ChildNodes;
     [NonSerialized] private List<KillTrigger> oldNodes;
+    [SerializeField] private KillTriggerEnum behaviour = KillTriggerEnum.Kill;
 
     public GameObject prefab;
     [NonSerialized] public Action forceUpdate;
@@ -28,6 +29,12 @@ public class KillTrigger : MonoBehaviour
     [Header("Connections")]
     public bool makeClone;
 
+
+    public enum KillTriggerEnum
+    {
+        Kill,
+        Alarm
+    }
 
     private void Awake()
     {
@@ -41,7 +48,14 @@ public class KillTrigger : MonoBehaviour
             PlayerVehicle v = c.GetComponentInParent<PlayerVehicle>();
             if (!v) return;
 
-            v.GetComponent<OffroadPenalty>().RegisterInside();
+            if (behaviour == KillTriggerEnum.Alarm)
+            {
+                v.GetComponent<OffroadPenalty>().RegisterInside();
+            }
+            else
+            {
+                v.Kill();
+            }
         }
 
 #if UNITY_EDITOR

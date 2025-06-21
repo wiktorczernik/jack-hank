@@ -44,7 +44,7 @@ namespace LevelManagement
             return _levels.Where(level => level.status == LevelStatus.Available).ToList();
         }
 
-        public static void SetLevelAsCompleted(LevelDefinition definition)
+        public static void SetLevelAsCompleted(LevelDefinition definition, Dictionary<PlayerBonusTypes, int> bonuses)
         {
             if (!_isInitialized)
             {
@@ -59,7 +59,9 @@ namespace LevelManagement
             }
             if (_levels.FindIndex(level => level.levelID == definition.LevelID) == -1) return;
             
-            _levels.Find(value => value.levelID == definition.LevelID).SetStatus(LevelStatus.Passed);
+            var levelToPass = _levels.Find(value => value.levelID == definition.LevelID);
+            levelToPass.SetStatus(LevelStatus.Passed);
+            levelToPass.SetBountyPoints(bonuses);
 
             foreach (var level in _levels)
             {
@@ -105,7 +107,7 @@ namespace LevelManagement
                 Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
                 return Array.Empty<LevelStatistics>();
             }
-            return _levels.Where(level => level.status == LevelStatus.Passed && level.status == LevelStatus.Available)
+            return _levels.Where(level => level.status == LevelStatus.Passed || level.status == LevelStatus.Available)
                 .Select(level => level.GetLevelStatistics())
                 .ToArray();
         }

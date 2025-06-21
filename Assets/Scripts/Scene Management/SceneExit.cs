@@ -60,10 +60,8 @@ public class SceneExit : MonoBehaviour
 
         var slowRidePenalty = player.GetComponent<SlowRidePenalty>();
         if (slowRidePenalty != null) slowRidePenalty.enabled = false;
-
-        ScreenFade.In(1.5f, ScreenFadeType.Default);
-
         ScreenFade.onAfterIn += AfterFadeIn;
+        ScreenFade.In(1.5f, ScreenFadeType.Default);
     }
 
     private void AfterFadeIn()
@@ -73,6 +71,7 @@ public class SceneExit : MonoBehaviour
         {
             // finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
             // finishText.OnEndAnimation += ExitToMenu;
+            OnExit?.Invoke();
         }
         else
         {

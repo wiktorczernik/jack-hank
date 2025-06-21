@@ -87,10 +87,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 4792099901496205148}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1157088468
+      Data2: 1251429659
+      Data3: 705195905
+      Data4: 1511626088
+    Path: event:/SFX/Smashable/SFX_Smash_Forklift_01
 --- !u!1 &3657035221457932685
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +272,7 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.046221245
+  - screenRelativeHeight: 0.035805088
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7710604173669033475}
@@ -298,7 +301,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &2488473279464947067
