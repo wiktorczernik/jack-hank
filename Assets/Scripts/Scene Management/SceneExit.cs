@@ -27,6 +27,8 @@ public class SceneExit : MonoBehaviour
 
     private void Awake()
     {
+        if (!useAutoDrivingToExit) return;
+        
         autoDrivingTrigger.OnEnter.AddListener(OnPlayerEnterAutoDrivingTrigger);
         exitTrigger.OnEnter.AddListener(OnPlayerEnterExitTrigger);
     }
@@ -55,7 +57,9 @@ public class SceneExit : MonoBehaviour
 
         if (_finishing) return;
         _finishing = true;
-        
+
+        var slowRidePenalty = player.GetComponent<SlowRidePenalty>();
+        if (slowRidePenalty != null) slowRidePenalty.enabled = false;
         ScreenFade.onAfterIn += AfterFadeIn;
         ScreenFade.In(1.5f, ScreenFadeType.Default);
     }
@@ -65,8 +69,8 @@ public class SceneExit : MonoBehaviour
         ScreenFade.onAfterIn -= AfterFadeIn;
         if (mode == SceneExitMode.LevelMode)
         {
-            finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
-            finishText.OnEndAnimation += ExitToMenu;
+            // finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
+            // finishText.OnEndAnimation += ExitToMenu;
             OnExit?.Invoke();
         }
         else
@@ -90,7 +94,7 @@ public class SceneExit : MonoBehaviour
 
     private void ExitToMenu()
     {
-        finishText.OnEndAnimation -= ExitToMenu;
+        // finishText.OnEndAnimation -= ExitToMenu;
         StartCoroutine(ExitToMenuCo());
     }
 
