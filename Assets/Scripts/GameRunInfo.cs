@@ -10,6 +10,7 @@ public class GameRunInfo
     private readonly Dictionary<PlayerBonusTypes, int> _pointsByBonusTypes = new()
     {
         { PlayerBonusTypes.DestructionCombo, 0 },
+        { PlayerBonusTypes.VehicleDestruction, 0},
         { PlayerBonusTypes.Drift, 0 },
         { PlayerBonusTypes.Flying, 0 },
         { PlayerBonusTypes.Passenger, 0 },

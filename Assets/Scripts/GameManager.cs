@@ -116,11 +116,11 @@ public class GameManager : MonoBehaviour
         Local.bonusGUI.ShowBonus(bonusValue, bonusType);
     }
 
-    public static void UpdateDestructionCombo(int bonusValue, int combo, int bonusPool)
+    public static void UpdateCombo(PlayerBonusTypes bonusType, int bonusValue, int combo, int bonusPool)
     {
         if (CinematicPlayer.isPlaying) return;
-        RunInfo.ChangeBonusBountyBy(bonusValue, PlayerBonusTypes.DestructionCombo);
-        Local.bonusGUI.ShowDestructionComboBonus(bonusPool, combo);
+        RunInfo.ChangeBonusBountyBy(bonusValue, bonusType);
+        Local.bonusGUI.ShowComboBonus(bonusType, bonusPool, combo);
     }
 
     public static LevelCompletenessMark GetMarkByBounty()
