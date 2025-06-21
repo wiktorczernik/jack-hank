@@ -17,6 +17,8 @@ public class Bonus_GUI : MonoBehaviour
     [TextArea] [SerializeField] private string largeSiteDestroyedMassage;
     [Range(0, 1)][SerializeField] private float maxOffsetFromCenterInPercents = 0.2f;
     [SerializeField] private RectTransform rect;
+    [SerializeField] float generalPositionlerp = 20f;
+    [SerializeField] float ticketPositionLerp = 10f;
     
     [Header("Debug")]
     [SerializeField] private float bonusUIx;
@@ -97,7 +99,7 @@ public class Bonus_GUI : MonoBehaviour
     {
         var playerXOnCanvas = GetPlayerXOnCanvas();
         
-        rect.anchoredPosition = new Vector2(playerXOnCanvas, rect.anchoredPosition.y);
+        rect.anchoredPosition = Vector2.Lerp(rect.anchoredPosition, new Vector2(playerXOnCanvas, rect.anchoredPosition.y), generalPositionlerp * Time.unscaledDeltaTime);
         
         for (var i = 0; i < _bonusTicketsRect.Length; i++)
         {
@@ -110,7 +112,7 @@ public class Bonus_GUI : MonoBehaviour
                 var x = (float)(Math.Cos(angleOnCircle) * circleRadius + offsetFromCenterToRight.x - circleRadius);
                 var y = (float)(Math.Sin(angleOnCircle) * circleRadius + offsetFromCenterToRight.y);
 
-                ticketRect.anchoredPosition = new Vector2(x, y);
+                ticketRect.anchoredPosition = Vector2.Lerp(ticketRect.anchoredPosition, new Vector2(x, y), ticketPositionLerp * Time.unscaledDeltaTime);
                 ticketRect.rotation = Quaternion.AngleAxis(angleOnCircle * Mathf.Rad2Deg, Vector3.forward);
                 _bonusTickets[i].SetUsualDirection();
             }
@@ -120,8 +122,8 @@ public class Bonus_GUI : MonoBehaviour
                 
                 var x = (float)(Math.Cos(angleOnCircle) * circleRadius - offsetFromCenterToRight.x + circleRadius);
                 var y = (float)(Math.Sin(angleOnCircle) * circleRadius + offsetFromCenterToRight.y);
-                
-                ticketRect.anchoredPosition = new Vector2(x, y);
+
+                ticketRect.anchoredPosition = Vector2.Lerp(ticketRect.anchoredPosition, new Vector2(x, y), ticketPositionLerp * Time.unscaledDeltaTime);
 
                 var flippedRotation = -(curveBeginningInCelsius + ticketsOffsetInCelsius * i);
                 
@@ -159,7 +161,7 @@ public class Bonus_GUI : MonoBehaviour
             (float)((cosBetweenCenterAndPlayerPos * vectorFromCenterToPlayer.magnitude) * (Screen.width / frustumWidthOnPlayerPos));
         
         // Ogranicza maksymalny dystans od środka ekranu
-        var rangedX = Math.Sign(playerXOnScreen) * Math.Min(maxOffsetFromCenterInPercents * Screen.width, Math.Abs(playerXOnScreen));
+        var rangedX = Math.Sign(playerXOnScreen) * Math.Min(maxOffsetFromCenterInPercents * Screen.width, Math.Abs(playerXOnScreen / 10));
 
         return rangedX;
     }
