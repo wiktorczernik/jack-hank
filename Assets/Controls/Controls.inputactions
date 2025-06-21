@@ -33,15 +33,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Drift",
-                    "type": "Button",
-                    "id": "12d17641-b76c-4099-b9e7-906e76264a74",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Nitro",
                     "type": "Button",
                     "id": "08aef45d-7bbf-4219-a51a-0d3bb25de956",
@@ -63,17 +54,6 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "f30febec-93df-4bcd-9e26-90fb29492e67",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Drift",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3fd23886-9c4e-4e35-9fa6-1193ca185e8d",
                     "path": "<Keyboard>/leftShift",
                     "interactions": "",
@@ -86,7 +66,7 @@
                 {
                     "name": "",
                     "id": "d167c37c-05b8-40ab-8ee4-7e7aedb3cf3d",
-                    "path": "",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -98,6 +78,17 @@
                     "name": "",
                     "id": "23fcbef1-b77b-4c82-966c-47758ffc5b09",
                     "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77adc4ee-3e80-432e-8d66-bb822a2997bf",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
