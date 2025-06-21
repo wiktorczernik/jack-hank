@@ -45,16 +45,11 @@ public class BonusSystem : MonoBehaviour
         {
             UnityAction<SmashableEntity> onHit;
 
-            if (smashable as PickupablePassenger != null)
-            {
-                (smashable as PickupablePassenger).StartLookingForPlayerVehicle(GameManager.PlayerVehicle);
-                onHit = OnPassengerHit;
-            }
-            else
-            {
-                onHit = (smashable) => OnComboBonus(smashable, PlayerBonusTypes.DestructionCombo);
-            }
-            
+            if (smashable.TryGetComponent<Pickupable>(out Pickupable pickupable))
+                continue;
+
+            onHit = (smashable) => OnComboBonus(smashable, PlayerBonusTypes.DestructionCombo);
+
             smashable.OnHit.AddListener(onHit);
         }
 
@@ -86,16 +81,6 @@ public class BonusSystem : MonoBehaviour
                     break;
             }
         }
-    }
-
-    private void OnPassengerHit(SmashableEntity passenger)
-    {
-        GameManager.UpdateBonus(-((PickupablePassenger)passenger).bountyPointsPenalty, PlayerBonusTypes.Passenger);
-    }
-    
-    private void OnPassengerPickup(TriggerEventEmitter trigger, PickupablePassenger passenger)
-    {
-        GameManager.UpdateBonus(passenger.bountyPointsReward, PlayerBonusTypes.Passenger);
     }
 
     public void OnComboBonus(SmashableEntity smashable, PlayerBonusTypes bonusType)
