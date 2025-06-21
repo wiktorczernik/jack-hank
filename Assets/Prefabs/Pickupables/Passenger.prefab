@@ -54,6 +54,7 @@ MonoBehaviour:
   smashed: 0
   expired: 0
   parentEntity: {fileID: 4838025276435632193}
+  quantity: 1
   type: 1
   isSmashable: 1
   canExpire: 1
@@ -183,7 +184,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &4722935629629059078
