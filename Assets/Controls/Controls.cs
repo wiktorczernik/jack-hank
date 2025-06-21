@@ -55,15 +55,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Drift"",
-                    ""type"": ""Button"",
-                    ""id"": ""12d17641-b76c-4099-b9e7-906e76264a74"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Nitro"",
                     ""type"": ""Button"",
                     ""id"": ""08aef45d-7bbf-4219-a51a-0d3bb25de956"",
@@ -85,17 +76,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""f30febec-93df-4bcd-9e26-90fb29492e67"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Drift"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""3fd23886-9c4e-4e35-9fa6-1193ca185e8d"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -108,7 +88,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d167c37c-05b8-40ab-8ee4-7e7aedb3cf3d"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -120,6 +100,17 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""23fcbef1-b77b-4c82-966c-47758ffc5b09"",
                     ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77adc4ee-3e80-432e-8d66-bb822a2997bf"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -813,7 +804,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Player_Steer = m_Player.FindAction("Steer", throwIfNotFound: true);
         m_Player_Throttle = m_Player.FindAction("Throttle", throwIfNotFound: true);
         m_Player_Brake = m_Player.FindAction("Brake", throwIfNotFound: true);
-        m_Player_Drift = m_Player.FindAction("Drift", throwIfNotFound: true);
         m_Player_Nitro = m_Player.FindAction("Nitro", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // UI
@@ -898,7 +888,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Steer;
     private readonly InputAction m_Player_Throttle;
     private readonly InputAction m_Player_Brake;
-    private readonly InputAction m_Player_Drift;
     private readonly InputAction m_Player_Nitro;
     private readonly InputAction m_Player_Jump;
     public struct PlayerActions
@@ -908,7 +897,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Steer => m_Wrapper.m_Player_Steer;
         public InputAction @Throttle => m_Wrapper.m_Player_Throttle;
         public InputAction @Brake => m_Wrapper.m_Player_Brake;
-        public InputAction @Drift => m_Wrapper.m_Player_Drift;
         public InputAction @Nitro => m_Wrapper.m_Player_Nitro;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -929,9 +917,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Brake.started += instance.OnBrake;
             @Brake.performed += instance.OnBrake;
             @Brake.canceled += instance.OnBrake;
-            @Drift.started += instance.OnDrift;
-            @Drift.performed += instance.OnDrift;
-            @Drift.canceled += instance.OnDrift;
             @Nitro.started += instance.OnNitro;
             @Nitro.performed += instance.OnNitro;
             @Nitro.canceled += instance.OnNitro;
@@ -951,9 +936,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Brake.started -= instance.OnBrake;
             @Brake.performed -= instance.OnBrake;
             @Brake.canceled -= instance.OnBrake;
-            @Drift.started -= instance.OnDrift;
-            @Drift.performed -= instance.OnDrift;
-            @Drift.canceled -= instance.OnDrift;
             @Nitro.started -= instance.OnNitro;
             @Nitro.performed -= instance.OnNitro;
             @Nitro.canceled -= instance.OnNitro;
@@ -1145,7 +1127,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnSteer(InputAction.CallbackContext context);
         void OnThrottle(InputAction.CallbackContext context);
         void OnBrake(InputAction.CallbackContext context);
-        void OnDrift(InputAction.CallbackContext context);
         void OnNitro(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
     }

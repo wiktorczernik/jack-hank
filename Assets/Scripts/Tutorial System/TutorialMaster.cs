@@ -66,7 +66,7 @@ public class TutorialMaster : MonoBehaviour
         yield return new WaitForSecondsRealtime(readtime);
 
 
-        while (!Input.GetKeyDown(KeyCode.Space)) yield return null;
+        while (!Input.anyKeyDown) yield return null;
 
         windowAnimator.SetBool("visible", false);
 
