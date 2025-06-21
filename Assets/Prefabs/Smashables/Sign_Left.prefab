@@ -179,7 +179,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.01589366
+  - screenRelativeHeight: 0.014550149
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1100905477645340183}
@@ -208,7 +208,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1649616584473420424
@@ -340,10 +340,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 8190010141555811698}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -658542259
+      Data2: 1186399810
+      Data3: -1480952956
+      Data4: 1384959254
+    Path: event:/SFX/Smashable/SFX_Smash_SignLeft_01
 --- !u!1001 &1767282504944292499
 PrefabInstance:
   m_ObjectHideFlags: 0

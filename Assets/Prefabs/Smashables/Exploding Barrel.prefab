@@ -49,7 +49,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.1
+  - screenRelativeHeight: 0.027178897
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8012315503857172100}
@@ -78,7 +78,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1451961628616496013
@@ -312,13 +312,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios:
-  - {fileID: 8300000, guid: d63376f3245891240b1fd4d6bd74a88c, type: 3}
-  - {fileID: 8300000, guid: 25f1ae86ce1b4874cb4a3411390d4d67, type: 3}
-  - {fileID: 8300000, guid: f6a7cad9d8452f645a19edbe52a96832, type: 3}
-  audioSource: {fileID: 3729753072352574181}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!1 &8983743265818172712
 GameObject:
   m_ObjectHideFlags: 0

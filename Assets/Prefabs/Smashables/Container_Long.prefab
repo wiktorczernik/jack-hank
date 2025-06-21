@@ -5092,7 +5092,7 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 3240096218712427130}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!54 &6723016667104552772
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10230,10 +10230,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 5008053274586796793}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: 1106896130
+      Data2: 1219085716
+      Data3: -1975264603
+      Data4: -344367361
+    Path: event:/SFX/Smashable/SFX_Smash_Container_01
 --- !u!65 &6354445493168995297
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{48bdf06e-9ed5-4d2c-bb01-ef95f06311af}">
+		<property name="assetPath">
+			<value>SFX/Smash/SFX_Smash_Rushtovane_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.3653333333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6315ab99-567a-401b-97a6-f6af2496e32f}</destination>
+		</relationship>
+	</object>
+</objects>

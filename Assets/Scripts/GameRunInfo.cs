@@ -10,6 +10,7 @@ public class GameRunInfo
     private readonly Dictionary<PlayerBonusTypes, int> _pointsByBonusTypes = new()
     {
         { PlayerBonusTypes.DestructionCombo, 0 },
+        { PlayerBonusTypes.VehicleDestruction, 0},
         { PlayerBonusTypes.Drift, 0 },
         { PlayerBonusTypes.Flying, 0 },
         { PlayerBonusTypes.Passenger, 0 },
@@ -47,8 +48,6 @@ public class GameRunInfo
         if (!_pointsByBonusTypes.ContainsKey(bonusType))
             throw new NotImplementedException(
                 "Bonus type has not implemented in GameRunInfo!!! Please add a BonusType!");
-
-        if (bonusType == PlayerBonusTypes.Passenger) AddPassenger();
 
         _pointsByBonusTypes[bonusType] += value;
     }

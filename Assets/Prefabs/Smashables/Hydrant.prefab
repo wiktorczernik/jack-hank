@@ -50,7 +50,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.010849324
+  - screenRelativeHeight: 0.011703507
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2002053191213928786}
@@ -5218,10 +5218,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 1082829116590495387}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -1694113145
+      Data2: 1199682546
+      Data3: 155057
+      Data4: 425208958
+    Path: event:/SFX/Smashable/SFX_Smash_Hydrant_01
 --- !u!1001 &867274314810707414
 PrefabInstance:
   m_ObjectHideFlags: 0

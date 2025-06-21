@@ -179,7 +179,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.005815857
+  - screenRelativeHeight: 0.008201271
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 8592594623950133}
@@ -208,7 +208,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &5573167686183245106
@@ -340,10 +340,13 @@ MonoBehaviour:
   hitFreezeRotation: 0
   hitConstrains: 0
   hitIsKinematic: 0
-  impactAudios: []
-  audioSource: {fileID: 5872960750537055611}
-  impactMinPitch: 0.75
-  impactMaxPitch: 1.25
+  impactEventPath:
+    Guid:
+      Data1: -1920836208
+      Data2: 1107881644
+      Data3: 1813580416
+      Data4: 1224677816
+    Path: event:/SFX/Smashable/SFX_Smash_OutdoorTable_01
 --- !u!1001 &1780432719516706991
 PrefabInstance:
   m_ObjectHideFlags: 0
