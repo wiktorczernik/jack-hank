@@ -12,17 +12,20 @@ namespace AccountManagement
         public int bountyPoints;
         public bool hasWatchedIntroCutscene;
         public LevelStatistics[] openedLevels;
+        public int savedPassengers;
+        public int playTimeTimestamp;
         [NonSerialized] public string accountName;
 
         public object Clone()
         {
-            var clone = new PlayerAccountData
-            {
-                accountName = accountName,
-                bountyPoints = bountyPoints,
-                openedLevels = new LevelStatistics[openedLevels?.Length ?? 0]
-            };
+            var clone = new PlayerAccountData();
 
+            clone.accountName = accountName;
+            clone.bountyPoints = bountyPoints;
+            clone.savedPassengers = savedPassengers;
+            clone.playTimeTimestamp = playTimeTimestamp;
+            clone.openedLevels = new LevelStatistics[openedLevels?.Length ?? 0];
+            
             if (openedLevels == null) return clone;
 
             for (var i = 0; i < openedLevels.Length; i++)
