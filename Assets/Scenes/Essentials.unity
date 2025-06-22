@@ -1176,6 +1176,8 @@ MonoBehaviour:
     bountyPoints: 0
     hasWatchedIntroCutscene: 0
     openedLevels: []
+    savedPassengers: 0
+    playTimeTimestamp: 0
 --- !u!4 &972193617
 Transform:
   m_ObjectHideFlags: 0
@@ -1307,7 +1309,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPlaying: 0
-  _audioSource: {fileID: 1226400537}
 --- !u!4 &1226400536
 Transform:
   m_ObjectHideFlags: 0
