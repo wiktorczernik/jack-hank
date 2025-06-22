@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{b37fb8bb-90d4-490e-b181-5df46330cbd2}">
+		<property name="assetPath">
+			<value>VO/Dialogs/VO_TheyArriveAtCity_01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>6.7796666666666665</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6315ab99-567a-401b-97a6-f6af2496e32f}</destination>
+		</relationship>
+	</object>
+</objects>
