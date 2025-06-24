@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMOD.Studio;
 using FMODUnity;
 using JackHank.Dialogs;
 using UnityEngine;
@@ -68,6 +69,12 @@ namespace JackHank.Cinematics
         {
             _instance = this;
         }
+        private void Update()
+        {
+            FMOD.Studio.Bus masterBus = FMODUnity.RuntimeManager.GetBus("bus:/");
+            masterBus.setVolume(Mathf.Clamp01(Time.timeScale));
+            RuntimeManager.PauseAllEvents(Time.timeScale < 0.001f);
+        }
 
         /// <summary>
         /// Plays desired cinematic sequence
@@ -128,9 +135,12 @@ namespace JackHank.Cinematics
             playedSequence = sequence;
             onBeginPlay?.Invoke();
 
-            var audioEventInstance = RuntimeManager.CreateInstance(sequence.audioEventRef);
-            audioEventInstance.start();
-
+            EventInstance audioEventInstance = default;
+            if (!sequence.audioEventRef.IsNull)
+            {
+                audioEventInstance = RuntimeManager.CreateInstance(sequence.audioEventRef);
+                audioEventInstance.start();
+            }
             if (sequence.dialog)
             {
                 DialogPlayer.Request(sequence.dialog);
@@ -160,9 +170,11 @@ namespace JackHank.Cinematics
             playedSequence = null;
             onEndPlay?.Invoke();
 
-            audioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-            audioEventInstance.release();
-
+            if (audioEventInstance.isValid())
+            {
+                audioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                audioEventInstance.release();
+            }
             Destroy(instance);
         }
     }

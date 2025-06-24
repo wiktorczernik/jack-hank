@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Farm Destroyed
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 37f2ff8e74185094cb2d701c280faac8, type: 3}
+  audioEvent:
+    Guid:
+      Data1: 327316722
+      Data2: 1120583635
+      Data3: 2045128079
+      Data4: -571334056
+    Path: event:/VO/Dialogs/VO_FarmDestroys_01
   audioDuration: 3
   transcriptionDuration: 3
   priority: 0

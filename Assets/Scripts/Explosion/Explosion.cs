@@ -20,10 +20,9 @@ public class Explosion : MonoBehaviour
         visuals.Init();
         Collider[] colliders = Physics.OverlapSphere(transform.position, properties.shakeMaxDistance);
         List<Vehicle> affectedVehicles = new List<Vehicle>();
-        foreach(var collider in colliders)
+        RuntimeManager.PlayOneShot(audioEventRef);
+        foreach (var collider in colliders)
         {
-            RuntimeManager.PlayOneShot(audioEventRef);
-
             Vector3 cPosition = collider.transform.position;
             float distance = Vector3.Distance(cPosition, transform.position);
 

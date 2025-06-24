@@ -46,7 +46,7 @@ public class VehicleSoundController : MonoBehaviour
         driftFactor = Mathf.Abs(driftFactor);
         driftFactor = Mathf.Clamp01(driftFactor);
 
-        float speedFactor = vehicleController.speedKmhForward / vehicleController.maxForwardSpeed;
+        float speedFactor = vehicleController.speedKmhForward / 150f;
         speedFactor = Mathf.Clamp01(speedFactor);
 
         engineEventInstance.setParameterByName("Velocity", speedFactor);
@@ -81,10 +81,12 @@ public class VehicleSoundController : MonoBehaviour
 
     private void OnDriftBegin()
     {
+        Debug.Log("Drift Begin");
         driftEventInstance.start();
     }
     private void OnDriftEnd()
     {
+        Debug.Log("Drift End");
         driftEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
     private void OnCinematicBegin()

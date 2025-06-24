@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Booster Ready
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 0a7932036c5cffc40994c1379486ecb4, type: 3}
+  audioEvent:
+    Guid:
+      Data1: -1710743812
+      Data2: 1187613124
+      Data3: 323766405
+      Data4: 1918750357
+    Path: event:/VO/Dialogs/VO_RocketBooster_01
   audioDuration: 8.088
   transcriptionDuration: 8.088
   priority: 0
@@ -26,7 +32,7 @@ MonoBehaviour:
     duration: 1
     startDelay: 0
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Rocket booster, you dumbass.
+    text: Rocket booster, you stupid.
     duration: 2
     startDelay: 0
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}

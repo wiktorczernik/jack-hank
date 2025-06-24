@@ -12,13 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Farm Arrived
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 1d79d35d000956e4287a159344830170, type: 3}
+  audioEvent:
+    Guid:
+      Data1: 701867343
+      Data2: 1244367625
+      Data3: -488566375
+      Data4: 238643084
+    Path: event:/VO/Dialogs/VO_JackAndHankArrive_01
   audioDuration: 6.672
   transcriptionDuration: 6.672
   priority: 0
   transcriptions:
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
-    text: Hank, there's a farm right ahead!
+    text: Hank, I see a farm!
     duration: 2.3
     startDelay: 0
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}

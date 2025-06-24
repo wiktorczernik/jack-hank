@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Cowslums Arrival
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: f2d436a3218d7654eadde6f66a9987ed, type: 3}
+  audioEvent:
+    Guid:
+      Data1: 52881411
+      Data2: 1110250158
+      Data3: -235257421
+      Data4: 646830624
+    Path: event:/VO/Dialogs/VO_TheyArriveAtCity_01
   audioDuration: 5.04
   transcriptionDuration: 5.04
   priority: 0
@@ -22,6 +28,6 @@ MonoBehaviour:
     duration: 2.5
     startDelay: 0
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Yes. Smash every thing you see, Jack.
+    text: That's right! Smash every thing you see, Jack.
     duration: 2.54
     startDelay: 0

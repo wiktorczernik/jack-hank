@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Cowslums Second Pack
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: 580d08ba5c9dd724aab49bf2bd679a12, type: 3}
+  audioEvent:
+    Guid:
+      Data1: -1177033925
+      Data2: 1247584280
+      Data3: 135064196
+      Data4: -1427712391
+    Path: event:/VO/Dialogs/VO_JackDestroysAnotherPack_01
   audioDuration: 19.584
-  transcriptionDuration: 19.584
+  transcriptionDuration: 22
   priority: 0
   transcriptions:
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
@@ -28,20 +34,16 @@ MonoBehaviour:
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
     text: Hank.. Hank?
     duration: 2
-    startDelay: 0
+    startDelay: 2
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
     text: Hm? Ogh.. Yeah, yeah.. Uh.. Where were you?,,
-    duration: 4
-    startDelay: 0
+    duration: 3
+    startDelay: 2
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
     text: How the hell were you playing the guitar and sleeping at the same time?
-    duration: 4
+    duration: 4.5
     startDelay: 0
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Well, it's not really important, is it?
+    text: Well, that's not really important, is it?
     duration: 2.5
-    startDelay: 0
-  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
-    text: Okay..
-    duration: 1.084
     startDelay: 0

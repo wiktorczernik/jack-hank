@@ -50,13 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visuals: {fileID: 6876015900257930307}
-  audioSource: {fileID: 4399664870952986350}
-  audioPitchMin: 0.65
-  audioPitchMax: 1.3
-  sounds:
-  - {fileID: 8300000, guid: 61103e1c4b917114ba342845080428d9, type: 3}
-  - {fileID: 8300000, guid: c3df364575bbaeb4ebe753b910df0b4e, type: 3}
-  - {fileID: 8300000, guid: 6bc6eb0e0976c0d4c98594733af83520, type: 3}
   properties:
     _epicenterParentTransform: {fileID: 7388565218404419512}
     _epicenterPosition: {x: 0, y: 0, z: 0}
@@ -72,6 +65,13 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+  audioEventRef:
+    Guid:
+      Data1: 1865997847
+      Data2: 1087924605
+      Data3: 170715811
+      Data4: 890464415
+    Path: event:/SFX/Hit/SFX_Hit_Explosion_1
 --- !u!114 &6876015900257930307
 MonoBehaviour:
   m_ObjectHideFlags: 0

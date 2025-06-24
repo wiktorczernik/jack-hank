@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
   m_Name: Passenger Encounter
   m_EditorClassIdentifier: 
-  audioClip: {fileID: 8300000, guid: c7bfd8cfea2a4c64f972236c7fbcc13e, type: 3}
+  audioEvent:
+    Guid:
+      Data1: -2016306989
+      Data2: 1314263616
+      Data3: 761608885
+      Data4: 736565573
+    Path: event:/VO/Dialogs/VO_FirstEncounter_01
   audioDuration: 11.04
   transcriptionDuration: 11
   priority: 0
@@ -34,6 +40,6 @@ MonoBehaviour:
     duration: 1
     startDelay: 0.5
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Then he is gonna help us
+    text: Why not then?
     duration: 2
     startDelay: 0

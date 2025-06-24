@@ -9,7 +9,7 @@ public class TutorialMaster : MonoBehaviour
     public static string description { get; private set; } = string.Empty;
     public static VideoClip clip { get; private set; } = null;
     public static float readtime { get; private set; } = 1f;
-    public static float timestretchDuration { get; private set; } = 1f;
+    public static float timestretchDuration { get; private set; } = 0.1f;
 
     public static bool isActive { get; private set; } = false;
 
