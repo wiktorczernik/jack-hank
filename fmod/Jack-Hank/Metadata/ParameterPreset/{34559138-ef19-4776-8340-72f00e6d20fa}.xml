@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{34559138-ef19-4776-8340-72f00e6d20fa}">
+		<property name="name">
+			<value>Drift_Intensity</value>
+		</property>
+		<relationship name="folder">
+			<destination>{6f1343e0-68f2-404a-bd9a-cf464faedc21}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{f982130a-12a5-4868-9f56-0b55a2af2272}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{f982130a-12a5-4868-9f56-0b55a2af2272}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
