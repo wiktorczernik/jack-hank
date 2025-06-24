@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
 public class VehiclePhysics : MonoBehaviour
@@ -384,8 +383,6 @@ public class VehiclePhysics : MonoBehaviour
         float angY = bodyRigidbody.angularVelocity.y;
         float absAngY = Mathf.Abs(angY);
 
-        bool oldIsDrifting = isDrifting;
-
         if (!isGrounded)
         {
             isDrifting = false;
@@ -417,14 +414,6 @@ public class VehiclePhysics : MonoBehaviour
             driftAngular = angY;
             driftEndBuildup = 0f;
         }
-
-        if (oldIsDrifting != isDrifting)
-        {
-            if (isDrifting)
-                onDriftBegin?.Invoke();
-            else
-                onDriftEnd?.Invoke();
-        }
     }
 
     private void ApplyFriction()
@@ -448,8 +437,28 @@ public class VehiclePhysics : MonoBehaviour
         collisionEvents.OnEnter.RemoveListener(DampenVelocity);
     }
 
+    void StabilizeRotation()
+    {
+        Vector3 currentUp = transform.up;
+        Vector3 targetUp = groundNormal;
+        Vector3 errorAxis = Vector3.Cross(currentUp, targetUp);
+
+        Vector3 localError = transform.InverseTransformDirection(errorAxis);
+        Vector3 localAngVel = transform.InverseTransformDirection(bodyRigidbody.angularVelocity);
+
+        Vector3 localTorque = new Vector3(
+            localError.x * pitchStabilization - localAngVel.x * pitchDamping,
+            0f,
+            localError.z * rollStabilization - localAngVel.z * rollDamping
+        );
+
+        Vector3 worldTorque = transform.TransformDirection(localTorque) * Time.fixedDeltaTime;
+        bodyRigidbody.AddTorque(worldTorque, ForceMode.VelocityChange);
+    }
     private void FixedUpdate()
     {
+        bool oldIsDrifting = isDrifting;
+
         CheckGrounded();
         bodyRigidbody.automaticCenterOfMass = !isGrounded;
 
@@ -478,29 +487,20 @@ public class VehiclePhysics : MonoBehaviour
             );
         }
 
-        if (isGrounded)
-        {
-            Vector3 currentUp = transform.up;
-            Vector3 targetUp = groundNormal;
-            Vector3 errorAxis = Vector3.Cross(currentUp, targetUp);
-
-            Vector3 localError = transform.InverseTransformDirection(errorAxis);
-            Vector3 localAngVel = transform.InverseTransformDirection(bodyRigidbody.angularVelocity);
-
-            Vector3 localTorque = new Vector3(
-                localError.x * pitchStabilization - localAngVel.x * pitchDamping,
-                0f,
-                localError.z * rollStabilization - localAngVel.z * rollDamping
-            );
-
-            Vector3 worldTorque = transform.TransformDirection(localTorque) * Time.fixedDeltaTime;
-            bodyRigidbody.AddTorque(worldTorque, ForceMode.VelocityChange);
-        }
-
         DoAirRoll(input);
         speedKmh = Mathf.RoundToInt(bodyRigidbody.linearVelocity.magnitude * 3.6f);
         speedKmhForward = Mathf.Abs(speedKmh);
         lastVelocity = bodyRigidbody.linearVelocity;
+        
+        if (isDrifting != oldIsDrifting)
+        {
+            if (isDrifting)
+                onDriftBegin?.Invoke();
+            else
+                onDriftEnd?.Invoke();
+        }
+
+        StabilizeRotation();
     }
 
 #if UNITY_EDITOR
