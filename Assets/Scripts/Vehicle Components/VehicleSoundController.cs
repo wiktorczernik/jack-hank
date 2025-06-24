@@ -50,6 +50,8 @@ public class VehicleSoundController : MonoBehaviour
         speedFactor = Mathf.Clamp01(speedFactor);
 
         engineEventInstance.setParameterByName("Velocity", speedFactor);
+
+        driftEventInstance.setParameterByName("Drift_Intensity", driftFactor);
     }
 
     private void Awake()
