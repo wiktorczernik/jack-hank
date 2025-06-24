@@ -25,7 +25,7 @@
 	<object class="MixerBusFader" id="{40ae4b21-1461-4fc7-8816-5cf6e5975d94}" />
 	<object class="CompressorEffect" id="{47a74ef8-1bc0-4c8f-b20c-1b657a832288}">
 		<property name="threshold">
-			<value>-20</value>
+			<value>-22</value>
 		</property>
 		<property name="ratio">
 			<value>1.80000007</value>
