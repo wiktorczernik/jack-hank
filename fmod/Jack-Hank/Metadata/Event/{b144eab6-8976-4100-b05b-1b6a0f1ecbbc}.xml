@@ -212,6 +212,8 @@
 	<object class="MixerBusEffectChain" id="{254a13be-bd54-4861-a1cc-eb6cd92f59bf}">
 		<relationship name="effects">
 			<destination>{2c5d1666-ed70-4f8b-8a58-b88263f775a3}</destination>
+			<destination>{640c40bf-3c58-4189-9917-1a8b9f5d18ce}</destination>
+			<destination>{435b1ded-b591-4903-a67a-e54fd084700e}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{339b9987-e2fd-4989-81fc-a435e8c54968}" />
@@ -245,6 +247,28 @@
 	</object>
 	<object class="MixerBusPanner" id="{ce9003d8-dbf9-4e72-a49c-dad42ced2bb1}" />
 	<object class="MixerBusFader" id="{2c5d1666-ed70-4f8b-8a58-b88263f775a3}" />
+	<object class="FlangerEffect" id="{640c40bf-3c58-4189-9917-1a8b9f5d18ce}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
+		<property name="rate">
+			<value>1.10000002</value>
+		</property>
+		<property name="mix">
+			<value>100</value>
+		</property>
+	</object>
+	<object class="ChorusEffect" id="{435b1ded-b591-4903-a67a-e54fd084700e}">
+		<property name="bypass">
+			<value>true</value>
+		</property>
+		<property name="rate">
+			<value>1.5</value>
+		</property>
+		<property name="depth">
+			<value>29.5</value>
+		</property>
+	</object>
 	<object class="AutomationCurve" id="{f7bcf7a6-9361-49aa-a727-005eb4a8910d}">
 		<relationship name="parameter">
 			<destination>{c429e5af-08bc-479a-ba99-1d878c4a7a29}</destination>
