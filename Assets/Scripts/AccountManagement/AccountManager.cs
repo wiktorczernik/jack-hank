@@ -40,13 +40,12 @@ public class AccountManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-
-        LogInDebugAccount();
+        Debug.Log($"AccountManager: Account saves on path {_saveFolderPath}");
     }
 
     public static void LogInDebugAccountOnAwake()
     {
-        useDebugAccount = true;
+        LogInDebugAccount();
     }
 
     public static List<string> GetSavedAccountsNames()

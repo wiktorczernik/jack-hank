@@ -63,6 +63,8 @@ namespace LevelManagement
             }
             
             _statistics = levelStatistics;
+            if (_statistics.bonuses == null)
+                _statistics.bonuses = new Dictionary<PlayerBonusTypes, int>();
         }
         
         public void RemovePlayerProgressData()
@@ -92,6 +94,21 @@ namespace LevelManagement
             }
             
             _statistics.bonuses = bountyPoints.ToList().ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        public void IncrementBountyPoints(Dictionary<PlayerBonusTypes, int> bonusPoints)
+        {
+            if (_statistics == null)
+            {
+                Debug.LogError("LevelInfo: levelInfo has not incremented with level statistics.");
+                return;
+            }
+
+            foreach ((var bonusType, var bonusValue) in bonusPoints)
+            {
+                if (!_statistics.bonuses.ContainsKey(bonusType)) _statistics.bonuses.Add(bonusType, bonusValue);
+                else _statistics.bonuses[bonusType] += bonusValue;
+            }
         }
     }
 }

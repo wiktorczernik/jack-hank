@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
 
     public static void PlayerDeathRestart()
     {
+        SavePlayerProgress();
         PlayerVehicle.playerTurret.DisallowFire();
         PlayerVehicle._botDirect.enabled = false;
         PlayerVehicle.physics.enabled = false;
@@ -186,6 +187,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
 
         GameSceneManager.ReloadLevel();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SavePlayerProgress();
     }
 
     private void BeginRun()
@@ -230,8 +236,15 @@ public class GameManager : MonoBehaviour
     {
         if (isLevelEnded) return;
         isLevelEnded = true;
-        
-        LevelManager.SetLevelAsCompleted(_definition, RunInfo.GetPointsByBonusTypes());
+
+        LevelManager.SetLevelAsCompleted(_definition);
+
+        SavePlayerProgress();
+    }
+
+    private static void SavePlayerProgress()
+    {
+        LevelManager.IncrementPointsToLevel(_definition.LevelID, RunInfo.GetPointsByBonusTypes());
         AccountManager.currentAccount.IncrementPassengersAmount(RunInfo.PassengersOnBoard);
         AccountManager.currentAccount.IncrementPlayTime((int)(RunInfo.Time * 1000));
         AccountManager.SaveCurrentAccount();
