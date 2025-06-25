@@ -5,7 +5,7 @@
 			<value>SFX_Heli_WagnaRocketfly_01</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{2c1bfb40-58f3-44ec-bdfd-19f5f87902dd}</destination>
@@ -116,6 +116,7 @@
 	<object class="MixerBusEffectChain" id="{f7afbc6d-201e-449b-aef5-de41b7147eab}">
 		<relationship name="effects">
 			<destination>{e1868ed0-54c3-4e94-bb87-c1ce1355e5cf}</destination>
+			<destination>{60dee743-9f72-4749-97e8-ccbb4aae76a7}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4e54b35d-4496-4438-bf4d-f970c6ddb7d3}" />
@@ -127,5 +128,16 @@
 	</object>
 	<object class="MixerBusPanner" id="{892af988-f9a7-454e-a1f3-f71918a13292}" />
 	<object class="MixerBusFader" id="{e1868ed0-54c3-4e94-bb87-c1ce1355e5cf}" />
+	<object class="SpatialiserEffect" id="{60dee743-9f72-4749-97e8-ccbb4aae76a7}">
+		<property name="distanceRolloffType">
+			<value>1</value>
+		</property>
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{3a3c7f89-aad5-4c2b-9b32-41eb1c3e7c3a}" />
 </objects>
