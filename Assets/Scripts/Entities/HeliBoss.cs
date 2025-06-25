@@ -90,6 +90,12 @@ public class HeliBoss : GameEntity, IBossBarApplicable
         Vector3 startPos = rb.position;
         Vector3 deltaPos = rb.linearVelocity * time;
         Vector3 finalPos = startPos + deltaPos;
+        if (NavMesh.SamplePosition(finalPos, out NavMeshHit hit, maxSampleDistance, NavMesh.AllAreas))
+        {
+            float y = finalPos.y;
+            finalPos = hit.position;
+            finalPos.y = y;
+        }
         return finalPos;
     }
     private void SeekPlayerView()
