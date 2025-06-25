@@ -57,9 +57,13 @@ public class HeliBoss : GameEntity, IBossBarApplicable
 
     [Header("Heli Follow Options")]
     public NavMeshAgent agent;
+    public float turnSpeed = 180f;
+    public float slowDownDistance = 15f;
+    public float minFollowSpeed = 0.1f;
     public float maxSampleDistance = 25f;
     public float maxRayHeight = 100f;
     public LayerMask groundMask;
+    float originalSpeed = 1;
 
     public float playerVerticalOffset = 50f;
     public float playerForwardDistance = 30f;
@@ -118,9 +122,12 @@ public class HeliBoss : GameEntity, IBossBarApplicable
         propellerEventInstance = RuntimeManager.CreateInstance(propellerEventRef);
         propellerEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         propellerEventInstance.start();
+        agent.updateRotation = false;
+        originalSpeed = agent.speed;
     }
     private void OnDestroy()
     {
+        propellerEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         propellerEventInstance.release();
     }
     protected override void OnDeathInternal()
@@ -183,5 +190,34 @@ public class HeliBoss : GameEntity, IBossBarApplicable
     protected void FixedUpdate()
     {
         SeekPlayerView();
+    }
+    private void Update()
+    {
+        Vector3 vel = agent.velocity;
+        vel.y = 0f;  // »гнорируем вертикальную составл€ющую
+
+        if (vel.magnitude > 0.1f)
+        {
+            Quaternion desiredRot = Quaternion.LookRotation(vel.normalized);
+
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                desiredRot,
+                turnSpeed * Time.deltaTime
+            );
+        }
+        float distance = agent.remainingDistance;
+        if (!agent.pathPending && agent.hasPath)
+        {
+            if (distance < slowDownDistance)
+            {
+                float t = distance / slowDownDistance;
+                agent.speed = Mathf.Lerp(minFollowSpeed, originalSpeed, t);
+            }
+            else
+            {
+                agent.speed = originalSpeed;
+            }
+        }
     }
 }

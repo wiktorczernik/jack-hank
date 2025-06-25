@@ -193,7 +193,7 @@ NavMeshAgent:
   m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 720
-  m_StoppingDistance: 10
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -295,13 +295,16 @@ MonoBehaviour:
   burstMaxFirings: 5
   burstCooldown: 10
   agent: {fileID: 1191386432721272524}
+  turnSpeed: 1.2
+  slowDownDistance: 25
+  minFollowSpeed: 0.5
   maxSampleDistance: 50
   maxRayHeight: 100
   groundMask:
     serializedVersion: 2
     m_Bits: 8
   playerVerticalOffset: 10
-  playerForwardDistance: 25
+  playerForwardDistance: 30
   prepareParticles:
   - {fileID: 192635471895502460}
   - {fileID: 6950815973611843916}
