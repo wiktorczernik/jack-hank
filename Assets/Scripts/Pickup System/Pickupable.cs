@@ -44,6 +44,8 @@ public class Pickupable : MonoBehaviour
 
         pickedUp = true;
         onPickup?.Invoke();
+
+        if (type == PickupableType.Passenger) PassengerInteraction_GUI.PassengerCaught();
     }
     public void Expire()
     {
@@ -53,6 +55,7 @@ public class Pickupable : MonoBehaviour
 
         expired = false;
         onExpire?.Invoke();
+        if (type == PickupableType.Passenger) PassengerInteraction_GUI.PassengerExpired();
     }
     public void Smash()
     {
@@ -62,5 +65,6 @@ public class Pickupable : MonoBehaviour
 
         smashed = true;
         onSmash?.Invoke();
+        if (type == PickupableType.Passenger) PassengerInteraction_GUI.PassengerSmashed();
     }
 }
