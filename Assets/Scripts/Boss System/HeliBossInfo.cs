@@ -4,12 +4,15 @@ using UnityEngine;
 public class HeliBossInfo : Boss
 {
     private HeliBoss instance;
+    [SerializeField] LayerMask groundMask;
 
     private void Awake()
     {
         instance = GetComponent<HeliBoss>();
         instance.enabled = false;
+        instance.agent.enabled = false;
         instance.agent.isStopped = true;
+        instance.agent.updatePosition = false;
         //instance.physics.enabled = false;
         instance.onDeath += Die;
     }
@@ -18,6 +21,13 @@ public class HeliBossInfo : Boss
     {
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
+        if (Physics.Raycast(instance.transform.position, Vector3.down, out RaycastHit hitInfo, 50, groundMask))
+        {
+            Debug.Log("Placed on ground");
+            instance.transform.position = hitInfo.point;
+        }
+        instance.agent.updatePosition = true;
+        instance.agent.enabled = true;
         instance.agent.isStopped = false;
         instance.StartTotalFlyingDestruction();
         
