@@ -9,6 +9,7 @@ namespace LevelManagement
     //LevelInfo to runtime'owa reprezentacja poziomu w grze.
     public class LevelInfo
     {
+        public LevelDefinition definition => _definition;
         private readonly LevelDefinition _definition;
         [CanBeNull] private LevelStatistics _statistics;
         

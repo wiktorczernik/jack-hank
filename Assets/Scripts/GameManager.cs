@@ -32,6 +32,33 @@ public class GameManager : MonoBehaviour
     
     public bool isLevelEnded { get; private set; }
 
+    private void Awake()
+    {
+        if (!Debug.isDebugBuild)
+        {
+            GameSceneManager.onLevelLoadBegin += TryInitialize;
+            GameSceneManager.onLevelLoadEnd += TryInitialize;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (!Debug.isDebugBuild)
+        {
+            GameSceneManager.onLevelLoadBegin -= TryInitialize;
+            GameSceneManager.onLevelLoadEnd -= TryInitialize;
+        }
+    }
+    void TryInitialize(LevelInfo levelInfo)
+    {
+        if (levelInfo == null) return;
+        TryInitialize(levelInfo.definition);
+    }
+    void TryInitialize(LevelDefinition levelDefinition)
+    {
+        if (levelDefinition == null) return;
+        if (_isInitialized) return;
+        Initialize(levelDefinition);
+    }
     private void Update()
     {
         if (IsDuringRun) GameRunFrameTick();
@@ -39,8 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (Debug.isDebugBuild && !_isInitialized)
-            Initialize(debugLevelDefinition);
+        if (Debug.isDebugBuild)
+            TryInitialize(debugLevelDefinition);
 
         if (!_isInitialized) Debug.LogError("Game Manager was not initialized");
 
