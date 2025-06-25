@@ -36,12 +36,13 @@ public class Pickupable : MonoBehaviour
     {
         return !(smashed || expired);
     }
+
     public void Pickup()
     {
         if (pickedUp || smashed || expired) return;
 
         RuntimeManager.PlayOneShotAttached(pickupAudioRef, gameObject);
-
+        
         pickedUp = true;
         onPickup?.Invoke();
 
@@ -50,9 +51,9 @@ public class Pickupable : MonoBehaviour
     public void Expire()
     {
         if (pickedUp || smashed || expired || !canExpire) return;
-
+                    
         RuntimeManager.PlayOneShotAttached(expireAudioRef, gameObject);
-
+        
         expired = false;
         onExpire?.Invoke();
 
@@ -61,9 +62,7 @@ public class Pickupable : MonoBehaviour
     public void Smash()
     {
         if (pickedUp || smashed || expired || !isSmashable) return;
-
-        RuntimeManager.PlayOneShotAttached(smashAudioRef, gameObject);
-
+        
         smashed = true;
         onSmash?.Invoke();
 
