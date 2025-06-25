@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 [Serializable]
@@ -26,7 +27,7 @@ public struct HeliBossWaveConfig
     /// </summary>
     public float predictiveFirePause;
 }
-public class HeliBoss : BotVehicle, IBossBarApplicable
+public class HeliBoss : GameEntity, IBossBarApplicable
 {
     [Header("Boss State")]
     public PlayerVehicle target;
@@ -43,7 +44,6 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public HeliBossWaveConfig[] waves;
     public ArcadeMissile staticMissilePrefab;
     public ArcadeMissile predictiveMissilePrefab;
-    public GameObject ground;
 
     [Header("Heli Burst Fire")]
     public float predictionTime = 1.5f;
@@ -54,10 +54,13 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     public float burstCooldown = 5f;
 
     [Header("Heli Follow Options")]
-    public float currentHeight = 0;
-    public float playerVerticalOffset = 20f;
+    public NavMeshAgent agent;
+    public float maxSampleDistance = 25f;
+    public float maxRayHeight = 100f;
+    public LayerMask groundMask;
+
+    public float playerVerticalOffset = 50f;
     public float playerForwardDistance = 30f;
-    public float verticalAlignSpeed = 1f;
 
     [Header("Visuals")]
     public ParticleSystem[] prepareParticles;
@@ -81,10 +84,8 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
     }
     private void SeekPlayerView()
     {
-        arrived = false;
-        isFollowing = true;
-        destinationPoint = target.GetPosition();
-        destinationPoint.y = currentHeight;
+        Vector3 destinationPoint = target.GetPosition();
+        destinationPoint.y = transform.position.y;
 
         Vector3 destinationOffset = Quaternion.Euler(Vector3.up * target.transform.eulerAngles.y) * Vector3.forward;
         destinationOffset *= playerForwardDistance;
@@ -92,6 +93,19 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
         velocityOffset.y = 0;
         destinationOffset += velocityOffset;
         destinationPoint += destinationOffset;
+
+        if (NavMesh.SamplePosition(destinationPoint, out NavMeshHit hit, maxSampleDistance, NavMesh.AllAreas))
+        {
+            Vector3 navPoint = hit.position;
+
+            Ray ray = new Ray(navPoint + Vector3.up * maxRayHeight, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit rhit, maxRayHeight * 2f, groundMask))
+            {
+                navPoint.y = rhit.point.y;
+            }
+
+            agent.SetDestination(navPoint);
+        }
     }
     public void StartTotalFlyingDestruction()
     {
@@ -143,31 +157,10 @@ public class HeliBoss : BotVehicle, IBossBarApplicable
             yield return new WaitForSeconds(wave.predictiveFirePause);
         }
     }
-    private void AlignGround()
+
+
+    protected void FixedUpdate()
     {
-        float targetHeight = target.transform.position.y + playerVerticalOffset;
-
-        float oldHeight = currentHeight;
-        currentHeight = Mathf.Lerp(currentHeight, targetHeight, verticalAlignSpeed * Time.fixedDeltaTime);
-
-        Vector3 newPos = transform.position;
-        newPos.y = currentHeight;
-
-        ground.transform.position = newPos;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
-
-        currentHeight = transform.position.y;
-        ground.transform.SetParent(null);
-    }
-
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        AlignGround();
         SeekPlayerView();
     }
 }

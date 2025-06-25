@@ -9,7 +9,8 @@ public class HeliBossInfo : Boss
     {
         instance = GetComponent<HeliBoss>();
         instance.enabled = false;
-        instance.physics.enabled = false;
+        instance.agent.isStopped = true;
+        //instance.physics.enabled = false;
         instance.onDeath += Die;
     }
 
@@ -17,7 +18,7 @@ public class HeliBossInfo : Boss
     {
         instance.target = FindFirstObjectByType<PlayerVehicle>();
         instance.enabled = true;
-        instance.physics.enabled = true;
+        instance.agent.isStopped = false;
         instance.StartTotalFlyingDestruction();
         
         BossHPManager.DisplayBoss(instance);
@@ -26,7 +27,7 @@ public class HeliBossInfo : Boss
     protected override void PrepareDie()
     {
         instance.enabled = false;
-        instance.physics.enabled = false;
+        instance.agent.isStopped = true;
         instance.onDeath -= Die;
         instance.gameObject.SetActive(false);
     }
