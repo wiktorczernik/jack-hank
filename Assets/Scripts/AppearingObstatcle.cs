@@ -44,7 +44,7 @@ public class AppearingObstatcle : MonoBehaviour
             if (objectToJustAppear == null)
             { 
                 Debug.LogError($"AppearingObstacle({name}): selected appearing type is JustAppear but no objctToJustAppear");
-                return;
+                return; 
             }
             objectToJustAppear.SetActive(false);
         } else if (obstacleAppearType == ObstacleAppearType.WithEffects)

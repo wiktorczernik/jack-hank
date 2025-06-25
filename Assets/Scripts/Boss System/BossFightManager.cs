@@ -13,11 +13,11 @@ public abstract class BossFightManager : MonoBehaviour
 
     [SerializeField] private CinematicSequence beginCutscene;
     [SerializeField] private Transform beginCutsceneTransform;
-    [SerializeField] private Transform playerSpawnAfterBeginCutscene;
+    [SerializeField] protected Transform playerSpawnAfterBeginCutscene;
 
     [SerializeField] private CinematicSequence endCutscene;
     [SerializeField] private Transform endCutsceneTransform;
-    [SerializeField] private Transform playerSpawnAfterEndCutscene;
+    [SerializeField] protected Transform playerSpawnAfterEndCutscene;
 
     private Boss _bossInstance;
 
