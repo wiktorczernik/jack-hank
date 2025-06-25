@@ -31002,10 +31002,10 @@ MonoBehaviour:
   hullSize: {x: 3.5, y: 2.7, z: 8.9}
   bodyGroundedUpOffset: 1.8
   bodyGroundedMaxDistance: 0.1
-  rollStabilization: 1
-  pitchStabilization: 10
-  rollDamping: 4
-  pitchDamping: 25
+  rollStabilization: 15
+  pitchStabilization: 50
+  rollDamping: 15
+  pitchDamping: 50
   skidmarkSourceLeft: {fileID: 8059905075052972374}
   skidmarkSourceRight: {fileID: 8917350830385957065}
   smokeSourceLeft: {fileID: 5284457554462717292}

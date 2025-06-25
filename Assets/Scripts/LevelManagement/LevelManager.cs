@@ -44,7 +44,7 @@ namespace LevelManagement
             return _levels.Where(level => level.status == LevelStatus.Available).ToList();
         }
 
-        public static void SetLevelAsCompleted(LevelDefinition definition, Dictionary<PlayerBonusTypes, int> bonuses)
+        public static void SetLevelAsCompleted(LevelDefinition definition)
         {
             if (!_isInitialized)
             {
@@ -61,7 +61,6 @@ namespace LevelManagement
             
             var levelToPass = _levels.Find(value => value.levelID == definition.LevelID);
             levelToPass.SetStatus(LevelStatus.Passed);
-            levelToPass.SetBountyPoints(bonuses);
 
             foreach (var level in _levels)
             {
@@ -76,6 +75,31 @@ namespace LevelManagement
                 
                 if (canBeAvailable && isNextLevel) level.SetStatus(LevelStatus.Available);
             }
+        }
+
+        public static void IncrementPointsToLevel(int id, Dictionary<PlayerBonusTypes, int> bountyPoints)
+        {
+            if (!_isInitialized)
+            {
+                Debug.LogError("LevelManager: not initialized. Probably you forgot to load  'Essentials' scene.");
+                return;
+            }
+            if (!containPlayerProgressData)
+            {
+                Debug.LogError(
+                    "LevelManager: level manager is not incremented with account data. Probably you forgot to use debug account");
+                return;
+            }
+
+            var level = GetLevelByID(id);
+
+            if (level == null)
+            {
+                Debug.LogError($"LevelManager: level with id '{id}' does not exist.");
+                return;
+            }
+
+            level.IncrementBountyPoints(bountyPoints);
         }
 
         [CanBeNull]

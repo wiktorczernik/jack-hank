@@ -32,6 +32,33 @@ public class GameManager : MonoBehaviour
     
     public bool isLevelEnded { get; private set; }
 
+    private void Awake()
+    {
+        if (!Debug.isDebugBuild)
+        {
+            GameSceneManager.onLevelLoadBegin += TryInitialize;
+            GameSceneManager.onLevelLoadEnd += TryInitialize;
+        }
+    }
+    private void OnDestroy()
+    {
+        if (!Debug.isDebugBuild)
+        {
+            GameSceneManager.onLevelLoadBegin -= TryInitialize;
+            GameSceneManager.onLevelLoadEnd -= TryInitialize;
+        }
+    }
+    void TryInitialize(LevelInfo levelInfo)
+    {
+        if (levelInfo == null) return;
+        TryInitialize(levelInfo.definition);
+    }
+    void TryInitialize(LevelDefinition levelDefinition)
+    {
+        if (levelDefinition == null) return;
+        if (_isInitialized) return;
+        Initialize(levelDefinition);
+    }
     private void Update()
     {
         if (IsDuringRun) GameRunFrameTick();
@@ -39,8 +66,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (Debug.isDebugBuild && !_isInitialized)
-            Initialize(debugLevelDefinition);
+        if (Debug.isDebugBuild)
+            TryInitialize(debugLevelDefinition);
 
         if (!_isInitialized) Debug.LogError("Game Manager was not initialized");
 
@@ -147,6 +174,7 @@ public class GameManager : MonoBehaviour
 
     public static void PlayerDeathRestart()
     {
+        SavePlayerProgress();
         PlayerVehicle.playerTurret.DisallowFire();
         PlayerVehicle._botDirect.enabled = false;
         PlayerVehicle.physics.enabled = false;
@@ -186,6 +214,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
 
         GameSceneManager.ReloadLevel();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SavePlayerProgress();
     }
 
     private void BeginRun()
@@ -230,8 +263,15 @@ public class GameManager : MonoBehaviour
     {
         if (isLevelEnded) return;
         isLevelEnded = true;
-        
-        LevelManager.SetLevelAsCompleted(_definition, RunInfo.GetPointsByBonusTypes());
+
+        LevelManager.SetLevelAsCompleted(_definition);
+
+        SavePlayerProgress();
+    }
+
+    private static void SavePlayerProgress()
+    {
+        LevelManager.IncrementPointsToLevel(_definition.LevelID, RunInfo.GetPointsByBonusTypes());
         AccountManager.currentAccount.IncrementPassengersAmount(RunInfo.PassengersOnBoard);
         AccountManager.currentAccount.IncrementPlayTime((int)(RunInfo.Time * 1000));
         AccountManager.SaveCurrentAccount();

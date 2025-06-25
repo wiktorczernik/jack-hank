@@ -30,22 +30,16 @@ public class TopAccountList_GUI : MonoBehaviour
             .OrderByDescending(data => data.bountyPoints)
             .ThenByDescending(data => data.savedPassengers)
             .ThenBy(data => data.playTimeTimestamp)
-            .Take(amountOfTopAccountsToDisplay)
             .ToList();
         
-        for (var i = 0; i < amountOfTopAccountsToDisplay; i++)
+        for (var i = 0; i < accounts.Count; i++)
         {
-            var item = _listItems[i];
-            
-            item.SetName("");
-            item.SetBounty(0);
-            item.SetPassengers(0);
-            item.SetPlayTime(0);
-
-            if (i >= accounts.Count) continue;
             var acc = accounts[i];
+            var item = Instantiate(listItemPrefab, transform.GetChild(0));
+            _listItems.Add(item);
+
             
-            item.SetName($"{i + 1}. {acc.accountName}");
+            item.SetName($"#{i + 1} - {acc.accountName}");
             item.SetBounty(acc.bountyPoints);
             item.SetPassengers(acc.savedPassengers);
             item.SetPlayTime(acc.playTimeTimestamp);
@@ -62,15 +56,18 @@ public class TopAccountList_GUI : MonoBehaviour
 
     private void InitializeItemList()
     {
+        if (_listItems != null)
+        {
+            foreach (var item in _listItems)
+            {
+                Destroy(item);
+            }
+        }
+
         _listItems = new List<LeaderListItem>();
 
         for (var i = 0; i < amountOfTopAccountsToDisplay; i++)
         {
-            var item = Instantiate(listItemPrefab, transform);
-
-            item.rectTransform.anchoredPosition = 
-                new Vector2(0, -(i * item.rectTransform.rect.height + i * gapBetweenListItems));
-            _listItems.Add(item);
         }
     }
 }

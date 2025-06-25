@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,7 +23,6 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
     [SerializeField] private TMP_Text distanceText;
     [SerializeField] private GameObject distanceObject;
 
-    private Dictionary<PickupableType, PointerSpriteConfig> spriteConfigsDict = new Dictionary<PickupableType, PointerSpriteConfig>();
     private PointerSpriteConfig activeConfig;
     private Pickupable target;
     private RectTransform parentRect;
@@ -35,8 +35,6 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         if (!player) yield break;
         player.onPickupZoneEnter.AddListener(OnZoneEnter);
         player.onPickupZoneExit.AddListener(OnZoneExit);
-        foreach (var config in spriteConfigs)
-            spriteConfigsDict.Add(config.pickupableType, config);
     }
 
     private void OnEnable()
@@ -62,8 +60,7 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
         if (!zone.target) return;
         Debug.Log(zone.gameObject.name, zone);
         target = zone.target;
-        activeConfig = spriteConfigsDict[zone.target.type];
-        Debug.Log(activeConfig);
+        activeConfig = spriteConfigs.First(x => x.pickupableType == target.type);
     }
 
     void OnZoneExit(PickupZone zone)
@@ -94,7 +91,7 @@ public class PickupablePointerWindow_GUI : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (target == null || target.smashed || target.expired)
+        if (target == null || target.smashed || target.expired || target.pickedUp || activeConfig == null)
         {
             pointerRect.gameObject.SetActive(false);
             return;

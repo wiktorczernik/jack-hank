@@ -24,11 +24,20 @@ public class CreateAccountButton_GUI : MonoBehaviour
 
         if (status == AccountManager.LogInStatus.AccountAlreadyExist)
         {
-            inputTip.ShowText("Account already exist");
+            inputTip.ShowText("Account with that nickname already exists");
         }
         else
         {
-            GameSceneManager.LoadFirstLevel();
+            GetComponent<Button>().interactable = false;
+
+            void LoadFirstLevel()
+            {
+                ScreenFade.onAfterIn -= LoadFirstLevel;
+                GameSceneManager.LoadFirstLevel();
+            }
+            ScreenFade.onAfterIn += LoadFirstLevel;
+
+            ScreenFade.In(1f, ScreenFadeType.Circle);
         }
     }
 }
