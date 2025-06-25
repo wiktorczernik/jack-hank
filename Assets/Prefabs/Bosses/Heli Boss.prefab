@@ -311,6 +311,14 @@ MonoBehaviour:
   prepareParticles:
   - {fileID: 192635471895502460}
   - {fileID: 6950815973611843916}
+  fireRate: 0.525
+  fireEventRef:
+    Guid:
+      Data1: 1678567815
+      Data2: 1260980851
+      Data3: -1984337753
+      Data4: -1159628085
+    Path: event:/SFX/Helicopter/SFX_Heli_MissileFire_01
   propellerEventRef:
     Guid:
       Data1: -758917769
@@ -1282,7 +1290,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5301,7 +5309,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 0
+    scalar: 0.525
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -6115,7 +6123,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 1
       minScalar: 10
       maxCurve:
         serializedVersion: 2

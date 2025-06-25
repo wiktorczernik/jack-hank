@@ -15413,7 +15413,7 @@ MonoBehaviour:
   Head: {fileID: 6144434918236721063}
   Nozzle: {fileID: 1199686842043375411}
   RaycastOrigin: {fileID: 6684326915665550971}
-  damage: 5
+  damage: 10
   fireRate: 15
   fireTarget: {fileID: 0}
   targetInProximity: 0
