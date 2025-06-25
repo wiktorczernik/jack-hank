@@ -21,4 +21,4 @@ MonoBehaviour:
       Data3: -693300574
       Data4: 1466654909
     Path: event:/Enviro/Env_Opening_01
-  dialog: {fileID: 0}
+  dialog: {fileID: 11400000, guid: fae9fcda01d7fb34296bc814701c050c, type: 2}

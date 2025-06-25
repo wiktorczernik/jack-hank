@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
+  m_Name: Boss Starts
+  m_EditorClassIdentifier: 
+  audioEvent:
+    Guid:
+      Data1: 1637625895
+      Data2: 1170530103
+      Data3: 631933854
+      Data4: 1673176787
+    Path: event:/VO/Dialogs/VO_BossRunawayStarts_01
+  audioDuration: 12
+  transcriptionDuration: 8.088
+  priority: 0
+  transcriptions:
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Guess what's finally unjammed.
+    duration: 2
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
+    text: What?
+    duration: 1
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Rocket booster, you stupid.
+    duration: 2
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
+    text: Oh, right..
+    duration: 2
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Press the button
+    duration: 1.088
+    startDelay: 0
