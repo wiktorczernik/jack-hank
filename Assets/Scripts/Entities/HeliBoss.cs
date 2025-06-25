@@ -72,6 +72,8 @@ public class HeliBoss : GameEntity, IBossBarApplicable
     public ParticleSystem[] prepareParticles;
 
     [Header("Audio Effects")]
+    public float fireRate = 0.175f;
+    public EventReference fireEventRef;
     public EventReference propellerEventRef;
     public EventInstance propellerEventInstance;
 
@@ -145,6 +147,14 @@ public class HeliBoss : GameEntity, IBossBarApplicable
     {
         StartCoroutine(WaveCoroutine());
     }
+    void PlayFireSound()
+    {
+        RuntimeManager.PlayOneShotAttached(fireEventRef, gameObject);
+    }
+    void CancelFireSound()
+    {
+        CancelInvoke(nameof(PlayFireSound));
+    }
     IEnumerator WaveCoroutine()
     {
         currentWave = 0;
@@ -162,9 +172,11 @@ public class HeliBoss : GameEntity, IBossBarApplicable
             isCooldowned = false;
             foreach(ParticleSystem particle in prepareParticles)
             {
+                InvokeRepeating(nameof(PlayFireSound), 0, fireRate);
                 particle.Stop();
                 var main = particle.main;
                 main.duration = wave.prepareDuration;
+                Invoke(nameof(CancelFireSound), wave.prepareDuration);
                 particle.Play();
             }
             onAttackPrepare?.Invoke();
