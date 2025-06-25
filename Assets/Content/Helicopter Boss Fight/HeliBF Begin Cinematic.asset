@@ -16,9 +16,9 @@ MonoBehaviour:
   prefab: {fileID: 8000922772160107268, guid: e84f89e7e3f69be4dbfe3c13619096e6, type: 3}
   audioEventRef:
     Guid:
-      Data1: -24739068
-      Data2: 1075322083
-      Data3: -693300574
-      Data4: 1466654909
-    Path: event:/Enviro/Env_Opening_01
+      Data1: 619391761
+      Data2: 1132476183
+      Data3: 1131553415
+      Data4: 880042704
+    Path: event:/Enviro/Env_CutsceneBeforeBoss_01
   dialog: {fileID: 11400000, guid: fae9fcda01d7fb34296bc814701c050c, type: 2}

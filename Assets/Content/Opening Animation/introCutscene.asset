@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c31b293a1761df4287666e5d7418812, type: 3}
   m_Name: introCutscene
   m_EditorClassIdentifier: 
-  duration: 27.9
+  duration: 38.34
   prefab: {fileID: 6358601637671769738, guid: cee3a40ecb80e3c44928b52b093c3214, type: 3}
   audioEventRef:
     Guid:
-      Data1: -24739068
-      Data2: 1075322083
-      Data3: -693300574
-      Data4: 1466654909
-    Path: event:/Enviro/Env_Opening_01
-  dialog: {fileID: 0}
+      Data1: 1477558252
+      Data2: 1245230615
+      Data3: -649465703
+      Data4: 436899762
+    Path: event:/Enviro/Env_Cowslums_01
+  dialog: {fileID: 11400000, guid: 2551cfcf14cb9784586c417f124659ec, type: 2}

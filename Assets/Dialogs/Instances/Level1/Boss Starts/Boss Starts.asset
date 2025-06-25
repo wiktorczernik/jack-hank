@@ -20,26 +20,18 @@ MonoBehaviour:
       Data4: 1673176787
     Path: event:/VO/Dialogs/VO_BossRunawayStarts_01
   audioDuration: 12
-  transcriptionDuration: 8.088
+  transcriptionDuration: 12.2
   priority: 0
   transcriptions:
-  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Guess what's finally unjammed.
-    duration: 2
-    startDelay: 0
   - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
-    text: What?
-    duration: 1
-    startDelay: 0
+    text: So.. What now?
+    duration: 2.5
+    startDelay: 4.2
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Rocket booster, you stupid.
-    duration: 2
-    startDelay: 0
-  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
-    text: Oh, right..
+    text: Grab ammo so I can shoot, Jack!
     duration: 2
     startDelay: 0
   - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
-    text: Press the button
-    duration: 1.088
-    startDelay: 0
+    text: '*screaming*'
+    duration: 2
+    startDelay: 1.5

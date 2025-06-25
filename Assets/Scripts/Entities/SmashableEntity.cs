@@ -228,7 +228,7 @@ public class SmashableEntity : GameEntity
     {
         if (!model)
         {
-            Debug.LogError("Smashable model game object wasn't filled in!", this);
+            //Debug.LogError("Smashable model game object wasn't filled in!", this);
             return;
         }
         if (!usedRigidbody)
