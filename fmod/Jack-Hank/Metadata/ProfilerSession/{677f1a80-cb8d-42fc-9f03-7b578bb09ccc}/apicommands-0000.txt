@@ -1,0 +1,215 @@
+Playback::frame, 0
+Playback::version, 2, 131847
+#
+# FMOD v2.03.07 command capture
+#   System::setSoftwareChannels(numsoftwarechannels: 64)
+#   System::setDSPBufferSize(bufferlength: 512, numbuffers: 4)
+#   System::setSoftwareFormat(samplerate: 48000, speakermode: 6, numrawspeakers: 6)
+#   System::setAdvancedSettings(settings: {maxMPEGCodecs: 0, maxADPCMCodecs: 0, maxXMACodecs: 0, maxVorbisCodecs: 0, maxAT9Codecs: 0, maxFADPCMCodecs: 0, maxOpusCodecs: 0
+#       ASIONumChannels: 0, vol0virtualvol: -1, defaultDecodeBufferSize: 400, geometryMaxFadeTime: 0,
+#       distanceFilterCenterFreq: 1500, reverb3Dinstance: 0, DSPBufferPoolSize: 8, resamplerMethod: 2, randomSeed: 0})
+#   Studio::System::setAdvancedSettings(settings: {commandqueuesize: 32768, handleinitialsize: 65536, studioupdateperiod: 20, idlesampledatapoolsize: 262144})
+#   Studio::System::initialize(maxchannels: 1024, studioflags: 0x00000024, flags: 0x00520000)
+#
+Playback::frame, 0
+# Printing initial instance state
+System::setListenerAttributes, 0, {{0,0,0},{0,0,0},{0,0,1},{0,1,0}}, {0,0,0}, true
+# Finished printing initial instance state
+Playback::frame, 4608
+Manager::directLoadBankMemory
+Playback::frame, 49664
+Playback::frame, 48640
+Playback::frame, 49664
+Playback::frame, 49152
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48128
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 53760
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 58880
+Playback::frame, 2560
+Manager::directLoadBankMemory
+Playback::frame, 6656
+Manager::directLoadBankMemory
+Playback::frame, 48640
+Playback::frame, 51200
+Playback::frame, 50688
+Playback::frame, 51712
+Playback::frame, 48128
+Playback::frame, 49664
+Playback::frame, 49152
+Playback::frame, 49664
+Playback::frame, 50176
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 50176
+Playback::frame, 48128
+Playback::frame, 45056
+Manager::directLoadBankMemory
+Playback::frame, 7680
+Manager::directLoadBankMemory
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 51712
+Playback::frame, 48128
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 48128
+Playback::frame, 48128
+Playback::frame, 49152
+Playback::frame, 50688
+Playback::frame, 28672
+Manager::directLoadBankMemory
+Playback::frame, 49152
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 49152
+Playback::frame, 51200
+Playback::frame, 49664
+Playback::frame, 50176
+Playback::frame, 51200
+Playback::frame, 50176
+Playback::frame, 48128
+Playback::frame, 25600
+Manager::directLoadBankMemory
+Playback::frame, 49152
+Playback::frame, 50176
+Playback::frame, 49152
+Playback::frame, 38400
+Manager::directLoadBankMemory
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 50688
+Playback::frame, 50176
+Playback::frame, 50176
+Playback::frame, 48640
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 49664
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 49664
+Playback::frame, 48128
+Playback::frame, 51200
+Playback::frame, 49152
+Playback::frame, 51200
+Playback::frame, 50688
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 50176
+Playback::frame, 51200
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 49664
+Playback::frame, 50688
+Playback::frame, 50176
+Playback::frame, 48640
+Playback::frame, 51200
+Playback::frame, 49664
+Playback::frame, 51200
+Playback::frame, 52224
+Playback::frame, 51200
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 48640
+Playback::frame, 49664
+Playback::frame, 50176
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 49152
+Playback::frame, 50176
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 50176
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 50176
+Playback::frame, 51200
+Playback::frame, 48128
+Playback::frame, 51712
+Playback::frame, 52224
+Playback::frame, 50688
+Playback::frame, 51712
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 48128
+Playback::frame, 48640
+Playback::frame, 50688
+Playback::frame, 48128
+Playback::frame, 52224
+Playback::frame, 49664
+Playback::frame, 50688
+Playback::frame, 48128
+Playback::frame, 50176
+Playback::frame, 48128
+Playback::frame, 50688
+Playback::frame, 51712
+Playback::frame, 51200
+Playback::frame, 51200
+Playback::frame, 50176
+Playback::frame, 50176
+Playback::frame, 57856
+Playback::frame, 3072
+Manager::directLoadBankMemory
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 51712
+Playback::frame, 0
+Manager::directLoadBankMemory
+Playback::frame, 52224
+Playback::frame, 51200
+Playback::frame, 50176
+Playback::frame, 51200
+Playback::frame, 49152
+Playback::frame, 48128
+Playback::frame, 49152
+Playback::frame, 51200
+Playback::frame, 50176
+Playback::frame, 48128
+Playback::frame, 49152
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 50688
+Playback::frame, 48128
+Playback::frame, 51200
+Playback::frame, 51712
+Playback::frame, 50688
+Playback::frame, 51200
+Playback::frame, 50688
+Playback::frame, 52224

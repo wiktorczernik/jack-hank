@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{eac337d2-e89d-4faf-85bd-f7e99e6e0218}">
+		<property name="name">
+			<value>RedScreen</value>
+		</property>
+		<relationship name="folder">
+			<destination>{6f1343e0-68f2-404a-bd9a-cf464faedc21}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{87c12cd2-739d-48eb-b6aa-b146560be947}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{87c12cd2-739d-48eb-b6aa-b146560be947}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>
