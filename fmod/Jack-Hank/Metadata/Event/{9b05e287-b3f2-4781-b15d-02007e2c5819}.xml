@@ -119,7 +119,7 @@
 	<object class="MixerBusEffectChain" id="{5adf48e4-3883-4096-8708-6e421c6242bf}">
 		<relationship name="effects">
 			<destination>{a323b618-3336-412b-b407-f28e3eb22d16}</destination>
-			<destination>{2309439d-4f9e-419c-a1ab-940b5e081c6d}</destination>
+			<destination>{e6188f06-98a5-4708-98df-d07cf8ce2308}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{aed1dd36-3161-476b-b8c9-769fb046d240}" />
@@ -132,21 +132,27 @@
 	</object>
 	<object class="MixerBusPanner" id="{ceca37fb-b221-4c37-9c90-21a253b9e7c9}" />
 	<object class="MixerBusFader" id="{a323b618-3336-412b-b407-f28e3eb22d16}" />
-	<object class="SpatialiserEffect" id="{2309439d-4f9e-419c-a1ab-940b5e081c6d}">
+	<object class="SpatialiserEffect" id="{e6188f06-98a5-4708-98df-d07cf8ce2308}">
 		<property name="distanceRolloffType">
 			<value>1</value>
 		</property>
 		<property name="minimumDistance">
 			<value>0</value>
 		</property>
+		<property name="maximumDistance">
+			<value>40</value>
+		</property>
 		<property name="overrideRange">
 			<value>true</value>
 		</property>
-		<property name="panBlend">
-			<value>0.694999993</value>
+		<property name="extentMode">
+			<value>1</value>
 		</property>
-		<property name="userStereoSeparation">
-			<value>38</value>
+		<property name="soundSize">
+			<value>13</value>
+		</property>
+		<property name="minimumExtent">
+			<value>40</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{836954e4-05c4-4133-b964-2a0773f035f7}" />
