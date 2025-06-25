@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c31b293a1761df4287666e5d7418812, type: 3}
   m_Name: HeliBF Begin Cinematic
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 12
   prefab: {fileID: 8000922772160107268, guid: e84f89e7e3f69be4dbfe3c13619096e6, type: 3}
   audioEventRef:
     Guid:

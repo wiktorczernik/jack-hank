@@ -35,10 +35,13 @@ public class ArcadeMissile : GameEntity
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] CollisionEventEmitter collisionEvents;
 
+    bool initialized = false;
+
     EventInstance flyEventInstance;
 
-    private void Start()
+    private void OnEnable()
     {
+        initialized = true;
         startTime = Time.time;
         onSpawn?.Invoke();
         collisionEvents.OnEnter?.AddListener(OnCollision);
@@ -59,6 +62,7 @@ public class ArcadeMissile : GameEntity
     }
     private void FixedUpdate()
     {
+        if (!initialized) return;
         if (startTime + startDelay >= Time.time) return;
         rigidbody.linearVelocity = Vector3.down * speed;
     }
@@ -70,6 +74,7 @@ public class ArcadeMissile : GameEntity
 
     private void OnCollision(Collision collision)
     {
+        if (!initialized) return;
         SelfExplode(1);
     }
     protected override void InternalSelfExplode()
