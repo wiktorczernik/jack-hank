@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4610177810314701323}
+  - component: {fileID: 6048328768488028069}
   - component: {fileID: 653233470705109189}
   - component: {fileID: 957587759799931432}
   - component: {fileID: 5271517522153453597}
@@ -39,6 +40,19 @@ Transform:
   - {fileID: 1212498876386718559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6048328768488028069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719438248672454860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9308153489333e146be2475d5918a399, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amount: 50
 --- !u!114 &653233470705109189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +75,19 @@ MonoBehaviour:
   canExpire: 0
   onPickup:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6048328768488028069}
+        m_TargetAssemblyTypeName: AmmoIncrementer, Assembly-CSharp
+        m_MethodName: Increment
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onSmash:
     m_PersistentCalls:
       m_Calls: []
@@ -70,11 +96,11 @@ MonoBehaviour:
       m_Calls: []
   pickupAudioRef:
     Guid:
-      Data1: 749029813
-      Data2: 1153463526
-      Data3: 227915939
-      Data4: -1601295064
-    Path: event:/VO/Passengers/VO_Passenger_CatchedMale_01
+      Data1: 1598695581
+      Data2: 1110982258
+      Data3: 450275764
+      Data4: -760175997
+    Path: event:/SFX/Bus/SFX_Bus_GrabBox_01
   smashAudioRef:
     Guid:
       Data1: 0

@@ -15420,13 +15420,6 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 17
-  audioSource: {fileID: 2701820497989009126}
-  shotClips:
-  - {fileID: 8300000, guid: 4559401021ed6f34cac1719a6e9a83b8, type: 3}
-  - {fileID: 8300000, guid: 62a95871694f94545bfe9b6491b0286b, type: 3}
-  - {fileID: 8300000, guid: 8da654900d8b16d4a9631f146784776c, type: 3}
-  shotMinPitch: 0.7
-  shotMaxPitch: 1.3
   animator: {fileID: 0}
   particles:
   - {fileID: 7912522854581503113}
@@ -15436,6 +15429,13 @@ MonoBehaviour:
   nozzleStartPos: {x: -0.593, y: 0.511907, z: 3.027}
   nozzleEndPos: {x: -0.593, y: 0.511907, z: 2.265}
   lightSource: {fileID: 8443832941448184521}
+  audioEventReference:
+    Guid:
+      Data1: -693253112
+      Data2: 1082148679
+      Data3: -1696835453
+      Data4: 1197608594
+    Path: event:/SFX/Hit/SFX_Hit_TurretShot_1
 --- !u!1 &8999115284836296539
 GameObject:
   m_ObjectHideFlags: 0
