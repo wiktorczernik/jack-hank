@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,6 +17,7 @@ public class ArcadeMissile : GameEntity
     public UnityEvent onSpawn;
     public LayerMask groundLayer;
     public float startDelay = 0.5f;
+    public EventReference flyEventRef;
     [Header("State")]
     public float speed = 25f;
     public float initialDistance = 25f;
@@ -32,6 +35,8 @@ public class ArcadeMissile : GameEntity
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] CollisionEventEmitter collisionEvents;
 
+    EventInstance flyEventInstance;
+
     private void Start()
     {
         startTime = Time.time;
@@ -42,6 +47,9 @@ public class ArcadeMissile : GameEntity
         {
             destination = hitInfo.point;
             rigidbody.MovePosition(destination + Vector3.up * initialDistance);
+            flyEventInstance = RuntimeManager.CreateInstance(flyEventRef);
+            flyEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+            flyEventInstance.start();
         }
         else
         {
@@ -53,6 +61,11 @@ public class ArcadeMissile : GameEntity
     {
         if (startTime + startDelay >= Time.time) return;
         rigidbody.linearVelocity = Vector3.down * speed;
+    }
+    private void OnDestroy()
+    {
+        flyEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        flyEventInstance.release();
     }
 
     private void OnCollision(Collision collision)

@@ -24,18 +24,17 @@ public class VehicleSoundController : MonoBehaviour
     EventReference engineEventRef;
     [SerializeField]
     EventReference driftEventRef;
+    [SerializeField]
+    EventReference bumpEventRef;
 
     EventInstance engineEventInstance;
     EventInstance driftEventInstance;
 
 
-    public void PlayEnvironmentBump()
+    public void PlayEnvironmentBump(Collision collision)
     {
-        /*
-        if (bumpSoundSource.isPlaying) return;
-        bumpSoundSource.pitch = Random.Range(bumpMinPitch, bumpMaxPitch);
-        bumpSoundSource.Play();
-        */
+        Debug.Log("Bump!");
+        RuntimeManager.PlayOneShot(bumpEventRef);
     }
 
     private void Update()
@@ -67,6 +66,7 @@ public class VehicleSoundController : MonoBehaviour
         CinematicPlayer.onEndPlay += OnCinematicEnd;
         vehicleController.onDriftBegin += OnDriftBegin;
         vehicleController.onDriftEnd += OnDriftEnd;
+        vehicleController.onEnvironmentBump.AddListener(PlayEnvironmentBump);
     }
     private void OnDisable()
     {
@@ -74,6 +74,7 @@ public class VehicleSoundController : MonoBehaviour
         CinematicPlayer.onEndPlay -= OnCinematicEnd;
         vehicleController.onDriftBegin -= OnDriftBegin;
         vehicleController.onDriftEnd -= OnDriftEnd;
+        vehicleController.onEnvironmentBump.RemoveListener(PlayEnvironmentBump);
     }
     private void OnDestroy()
     {

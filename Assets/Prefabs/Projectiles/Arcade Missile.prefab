@@ -120,6 +120,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 145
   startDelay: 0
+  flyEventRef:
+    Guid:
+      Data1: -1887777525
+      Data2: 1341077582
+      Data3: -694532693
+      Data4: 1304380031
+    Path: event:/SFX/Helicopter/SFX_Heli_WagnaRocketfly_01
   speed: 100
   initialDistance: 100
   distance: Infinity
