@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMODUnity;
 using UnityEngine;
 
 public class PlayerTurret : MonoBehaviour
@@ -25,12 +26,6 @@ public class PlayerTurret : MonoBehaviour
     [Header("Raycasting")]
     public LayerMask mask;
 
-    [Header("Sound effects")]
-    public AudioSource audioSource;
-    public AudioClip[] shotClips;
-    public float shotMinPitch = 0.7f;
-    public float shotMaxPitch = 1.3f;
-
     [Header("Visual Effects")]
     public Animator animator;
     [SerializeField] ParticleSystem[] particles;
@@ -38,6 +33,9 @@ public class PlayerTurret : MonoBehaviour
     public Vector3 nozzleStartPos;
     public Vector3 nozzleEndPos;
     public Light lightSource;
+
+    [Header("Audio Effects")]
+    public EventReference audioEventReference;
 
     private void Update()
     {
@@ -78,9 +76,7 @@ public class PlayerTurret : MonoBehaviour
         onFire?.Invoke();
         StartCoroutine(NozzleAnimation(Mathf.Min(maxNozzleAnimTime, 1f / fireRate)));
 
-        audioSource.clip = shotClips[UnityEngine.Random.Range(0, shotClips.Length)];
-        audioSource.pitch = UnityEngine.Random.Range(shotMinPitch, shotMaxPitch);
-        audioSource.Play();
+        RuntimeManager.PlayOneShot(audioEventReference);
 
         if (targetInProximity)
         {

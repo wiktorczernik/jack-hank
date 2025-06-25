@@ -1,8 +1,11 @@
-using System.Collections.Generic;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 public class FarmField : MonoBehaviour
 {
+    public static int currentlyDestroyedAmount = 0;
+
     public enum DestructionEnum : byte
     {
         MinorHarm = 1,
@@ -28,6 +31,7 @@ public class FarmField : MonoBehaviour
         if (!tracked) return;
         if (!tracked.TryGetComponent(out Vehicle vehicle)) return;
 
+        currentlyDestroyedAmount++;
         Hit(vehicle);
     }
     public void OnStay(Collider collider)
@@ -46,6 +50,7 @@ public class FarmField : MonoBehaviour
         if (!tracked.TryGetComponent(out Vehicle vehicle)) return;
 
         tickTimer = 0f;
+        currentlyDestroyedAmount--;
     }
 
     private void OnEnable()
@@ -72,7 +77,6 @@ public class FarmField : MonoBehaviour
             DestroyField(DestructionEnum.MajorHarm);
         else DestroyField(DestructionEnum.MinorHarm);
     }
-
     public void DestroyField(DestructionEnum harm)
     {
         if (destructionLevel == 5) return;
