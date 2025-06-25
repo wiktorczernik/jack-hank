@@ -28,6 +28,8 @@ public class PlayerVehicle : Vehicle
 
     public BotVehicle _botDirect;
 
+    public MeshRenderer[] renderersHiddenCinematic;
+
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -167,10 +169,18 @@ public class PlayerVehicle : Vehicle
     {
         _rigidbody.isKinematic = true;
         physics.enabled = false;
+        foreach(var renderer in renderersHiddenCinematic)
+        {
+            renderer.enabled = false;
+        }
     }
 
     private void OnCinematicEnd()
     {
+        foreach (var renderer in renderersHiddenCinematic)
+        {
+            renderer.enabled = true;
+        }
         _rigidbody.isKinematic = false;
         physics.enabled = true;
     }
