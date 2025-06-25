@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5294201407075549424
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344969482925427600, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414310415231077567, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_Name
+      value: Passenger Emo
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385278897064085951, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385278897064085951, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385278897064085951, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115087971902168950, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 718423689, guid: 4e0f639120668bb45a8e420da4922e3e, type: 3}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: smashAudioRef.Path
+      value: event:/VO/Passengers/VO_Passenger_HitFemale_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: expireAudioRef.Path
+      value: event:/VO/Passengers/VO_Passenger_MissedFemale_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: pickupAudioRef.Path
+      value: event:/VO/Passengers/VO_Passenger_CatchedFemale_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: smashAudioRef.Guid.Data1
+      value: -1734260112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: smashAudioRef.Guid.Data2
+      value: 1294202812
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: smashAudioRef.Guid.Data3
+      value: -1798320978
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: smashAudioRef.Guid.Data4
+      value: -997490612
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: expireAudioRef.Guid.Data1
+      value: 1635534949
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: expireAudioRef.Guid.Data2
+      value: 1256871092
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: expireAudioRef.Guid.Data3
+      value: -150670683
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: expireAudioRef.Guid.Data4
+      value: -1206243736
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: pickupAudioRef.Guid.Data1
+      value: -631697848
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: pickupAudioRef.Guid.Data2
+      value: 1263590581
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: pickupAudioRef.Guid.Data3
+      value: -554647881
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140065568191445784, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: pickupAudioRef.Guid.Data4
+      value: 1004268915
+      objectReference: {fileID: 0}
+    - target: {fileID: 6570457968160107687, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e2a1d5cbb14ea7f4e8c87bd769598ff4, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d4ba3a85902b3a24e822446bf8eeb9c6, type: 3}

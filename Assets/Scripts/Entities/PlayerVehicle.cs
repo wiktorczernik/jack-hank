@@ -125,7 +125,7 @@ public class PlayerVehicle : Vehicle
         {
             time = Mathf.Clamp(time + Time.deltaTime, 0, maxTime);
             passenger.transform.position = Vector3.Lerp(initPos, seat.point.position, time / maxTime);
-            passenger.transform.localScale = Vector3.Lerp(initScale, initScale * 0.5f, time / maxTime);
+            passenger.transform.localScale = Vector3.Lerp(initScale, initScale * 0.25f, time / maxTime);
             yield return null;
         }
 

@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 900
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,12 +95,738 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: passenger_ihatecows_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e38fe34a803cad4da80c687a618d28d
+      internalID: 1910652179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_1
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c08d35e5c923b5140b39a3285b239036
+      internalID: -1758499515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_2
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21bf0f45b4a0f264eba0e41835a60270
+      internalID: 263302692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_3
+      rect:
+        serializedVersion: 2
+        x: 2161
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28cd8fc3c0a105849ba3acb5115bc39a
+      internalID: -1868821398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_4
+      rect:
+        serializedVersion: 2
+        x: 2881
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 024112367ea8b0144ab6781e3c794b2c
+      internalID: 1989869040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_5
+      rect:
+        serializedVersion: 2
+        x: 3601
+        y: 3610
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f47d6011c22575e40bc9c2ce2b8c6b19
+      internalID: 956767621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7804213d33b371f48aa0d9897b59b019
+      internalID: 2077459927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_7
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9031bb6a7bbefb047bdcd75a06a84c06
+      internalID: 2128898537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_8
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 599782fe6a3fb634aa9b93f0be830bec
+      internalID: -732145274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_9
+      rect:
+        serializedVersion: 2
+        x: 2161
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4f556d88f0cb084bb13228c3019a027
+      internalID: 1164342583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_10
+      rect:
+        serializedVersion: 2
+        x: 2881
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f64c7ca9f12ce64692aab2539b48fb7
+      internalID: -517500550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_11
+      rect:
+        serializedVersion: 2
+        x: 3601
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2ceea8177f9f34c81616b5b442de74
+      internalID: -463170260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_12
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7fed4a267ce0ef439fd1ce10c182998
+      internalID: -1755841040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_13
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c6867c730e34bf479ae0805c073dadc
+      internalID: 1633443388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_14
+      rect:
+        serializedVersion: 2
+        x: 1441
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6847d966494bd144a814e9990ba69201
+      internalID: 1081395848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_15
+      rect:
+        serializedVersion: 2
+        x: 2161
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 229a981cd6710734e98ccc06436eecdd
+      internalID: -333054779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_16
+      rect:
+        serializedVersion: 2
+        x: 2881
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5308c579a017d74ba51626a14b9365a
+      internalID: -1685996208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_17
+      rect:
+        serializedVersion: 2
+        x: 3601
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78c9cf3f2c303be4d8656ebcb3c4e5be
+      internalID: -1708197101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 909
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc1e6058463263a4c8c116be6900e9ed
+      internalID: -919701806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_19
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 909
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1e3a3e3d9fbc734986db59612976c67
+      internalID: -1921514881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_20
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 909
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b30b715c27c68cd4fb61c3c44a005712
+      internalID: -1120981702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_21
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 909
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af5c451d1c7aca44aaf14f94c58ae1c1
+      internalID: 1392057861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_22
+      rect:
+        serializedVersion: 2
+        x: 2881
+        y: 910
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1da80ee7c6c592f4292d9b91e5bd4e6f
+      internalID: 1870830909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_23
+      rect:
+        serializedVersion: 2
+        x: 3601
+        y: 910
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9283c776da058c40bfc3733302799be
+      internalID: -546340957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8fa6330e0fbf3641bcfde9a29f15402
+      internalID: -1416811379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_25
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10791a6a1fd3e134694509d4908bb4ae
+      internalID: -1673969893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_26
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f5a3aaf363cfed44a6999ba2bba2541
+      internalID: -1017628528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_27
+      rect:
+        serializedVersion: 2
+        x: 2160
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d43d391299ec02042b486b33b2d8ec16
+      internalID: 187421873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_28
+      rect:
+        serializedVersion: 2
+        x: 2880
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b1edd564a3d9a94f9fc4baee375139a
+      internalID: 2034049929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_29
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 9
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faaf40678ca9c9f439d61d1ada561a82
+      internalID: 497172769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_30
+      rect:
+        serializedVersion: 2
+        x: 4321
+        y: 3604
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9492cab0e5e26242905c70b1572e3f6
+      internalID: 962260476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_31
+      rect:
+        serializedVersion: 2
+        x: 4321
+        y: 2710
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37e418283394654f93cb66c47a5fd7a
+      internalID: 1488755661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: passenger_ihatecows_32
+      rect:
+        serializedVersion: 2
+        x: 4321
+        y: 1810
+        width: 720
+        height: 900
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b92eefb139e1140b21334772c35aa7
+      internalID: 1271643580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a7c4a7b7307b26e44822ddd388238e2b
     internalID: 0
     vertices: []
     indices: 
@@ -109,7 +835,41 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      passenger_ihatecows_0: 1910652179
+      passenger_ihatecows_1: -1758499515
+      passenger_ihatecows_10: -517500550
+      passenger_ihatecows_11: -463170260
+      passenger_ihatecows_12: -1755841040
+      passenger_ihatecows_13: 1633443388
+      passenger_ihatecows_14: 1081395848
+      passenger_ihatecows_15: -333054779
+      passenger_ihatecows_16: -1685996208
+      passenger_ihatecows_17: -1708197101
+      passenger_ihatecows_18: -919701806
+      passenger_ihatecows_19: -1921514881
+      passenger_ihatecows_2: 263302692
+      passenger_ihatecows_20: -1120981702
+      passenger_ihatecows_21: 1392057861
+      passenger_ihatecows_22: 1870830909
+      passenger_ihatecows_23: -546340957
+      passenger_ihatecows_24: -1416811379
+      passenger_ihatecows_25: -1673969893
+      passenger_ihatecows_26: -1017628528
+      passenger_ihatecows_27: 187421873
+      passenger_ihatecows_28: 2034049929
+      passenger_ihatecows_29: 497172769
+      passenger_ihatecows_3: -1868821398
+      passenger_ihatecows_30: 962260476
+      passenger_ihatecows_31: 1488755661
+      passenger_ihatecows_32: 1271643580
+      passenger_ihatecows_33: -93696325
+      passenger_ihatecows_4: 1989869040
+      passenger_ihatecows_5: 956767621
+      passenger_ihatecows_6: 2077459927
+      passenger_ihatecows_7: 2128898537
+      passenger_ihatecows_8: -732145274
+      passenger_ihatecows_9: 1164342583
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
