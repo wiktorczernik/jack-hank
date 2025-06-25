@@ -5,7 +5,7 @@
 			<value>SFX_Heli_MissileFire_01</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{2c1bfb40-58f3-44ec-bdfd-19f5f87902dd}</destination>
@@ -92,17 +92,20 @@
 	</object>
 	<object class="MixerBusPanner" id="{a431f490-1590-4666-8c07-e07bdeeb3969}" />
 	<object class="SingleSound" id="{2f800902-c0ba-468e-b90d-9cfd6786921e}">
-		<property name="start">
-			<value>1.1102230246251565e-16</value>
-		</property>
 		<property name="length">
-			<value>1.6846458333333334</value>
+			<value>1.5</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{d4cdb4c5-4209-49a1-838b-f7cbc8182208}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{130a5adb-5e84-4573-bc4e-e1f1770488cc}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{973d7b90-fa92-4bf4-a6a9-47957f479430}">
+		<property name="volume">
+			<value>2</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
@@ -119,10 +122,20 @@
 	<object class="MixerBusEffectChain" id="{ec95489e-6378-4647-919e-699c051f0564}">
 		<relationship name="effects">
 			<destination>{76166937-9c27-4800-bac3-6a4fa74eae11}</destination>
+			<destination>{fd745e50-0ee5-4213-bcb4-81b541b465ae}</destination>
+			<destination>{3866b19d-84d9-4c80-bb5c-e3d2fafe9daa}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{cfd2b00f-276d-4762-b50e-4f5fdd250765}" />
 	<object class="MixerBusFader" id="{904da0c9-dc1d-4a56-af54-704bceb12258}" />
+	<object class="RandomizerModulator" id="{d4cdb4c5-4209-49a1-838b-f7cbc8182208}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>13.5</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{48c65590-97ad-4784-abad-49c795220e4f}">
 		<relationship name="effects">
 			<destination>{95038d31-3509-4908-9e46-9120ed7be3b9}</destination>
@@ -130,5 +143,36 @@
 	</object>
 	<object class="MixerBusPanner" id="{8012031e-97a7-4555-bec9-0bc71c02b59e}" />
 	<object class="MixerBusFader" id="{76166937-9c27-4800-bac3-6a4fa74eae11}" />
+	<object class="SpatialiserEffect" id="{fd745e50-0ee5-4213-bcb4-81b541b465ae}">
+		<property name="distanceRolloffType">
+			<value>4</value>
+		</property>
+		<property name="maximumDistance">
+			<value>200</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{3866b19d-84d9-4c80-bb5c-e3d2fafe9daa}">
+		<property name="filterTypeA">
+			<value>9</value>
+		</property>
+		<property name="filterTypeB">
+			<value>6</value>
+		</property>
+		<property name="frequencyA">
+			<value>182.636749</value>
+		</property>
+		<property name="frequencyB">
+			<value>38.6120605</value>
+		</property>
+		<property name="qualityB">
+			<value>0.100000001</value>
+		</property>
+		<property name="gainA">
+			<value>30</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{95038d31-3509-4908-9e46-9120ed7be3b9}" />
 </objects>
