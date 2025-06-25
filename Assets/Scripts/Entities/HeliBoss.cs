@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -65,6 +67,10 @@ public class HeliBoss : GameEntity, IBossBarApplicable
     [Header("Visuals")]
     public ParticleSystem[] prepareParticles;
 
+    [Header("Audio Effects")]
+    public EventReference propellerEventRef;
+    public EventInstance propellerEventInstance;
+
     [Header("Bossbar")]
     public Color primaryColor;
     public Color secondaryColor;
@@ -106,6 +112,21 @@ public class HeliBoss : GameEntity, IBossBarApplicable
 
             agent.SetDestination(navPoint);
         }
+    }
+    private void Awake()
+    {
+        propellerEventInstance = RuntimeManager.CreateInstance(propellerEventRef);
+        propellerEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+        propellerEventInstance.start();
+    }
+    private void OnDestroy()
+    {
+        propellerEventInstance.release();
+    }
+    protected override void OnDeathInternal()
+    {
+        base.OnDeathInternal();
+        propellerEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
     public void StartTotalFlyingDestruction()
     {
