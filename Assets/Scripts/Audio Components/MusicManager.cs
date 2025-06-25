@@ -13,6 +13,8 @@ public class MusicManager : MonoBehaviour
     [SerializeField]
     protected EventReference wheatMusic;
 
+    PlayerVehicle player;
+
     [SerializeField] bool isWheatPlaying = false;
 
     EventInstance runEventInstance;
@@ -35,6 +37,7 @@ public class MusicManager : MonoBehaviour
         GameManager.Local.bossFightManager.OnPrepareBegin += StopMusic;
         GameManager.OnDeath += StopMusic;
         GameManager.Local.bossFightManager.OnEnd += StopMusic;
+        player = GameManager.PlayerVehicle;
     }
 
     private void FixedUpdate()
@@ -49,6 +52,9 @@ public class MusicManager : MonoBehaviour
             isWheatPlaying = false;
             wheatEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
         }
+
+        float redScreenIntensity = 1 - player.health / player.maxHealth;
+        RuntimeManager.StudioSystem.setParameterByName("RedScreen", redScreenIntensity);
     }
 
     private void OnDestroy()
