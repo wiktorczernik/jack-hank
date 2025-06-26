@@ -10,10 +10,6 @@ public class BonusSystem : MonoBehaviour
     [SerializeField] private BonusSettingsPreset settings;
     [SerializeField] private VehiclePhysics _playerVehicleController;
 
-    private int _destructionCombo = 1;
-    private float _lastHitTime;
-    private int _hitBonusPool;
-
     private Dictionary<PlayerBonusTypes, InUpdateBonus> _inUpdateBonuses;
     private Dictionary<PlayerBonusTypes, ComboBonus> _comboBonuses;
 

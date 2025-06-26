@@ -1,0 +1,11 @@
+# Created by Kenney (www.kenney.nl)
+
+newmtl purple
+  Kd 0.35 0.28 0.81
+
+newmtl _defaultMat
+  Kd 1.00 1.00 1.00
+
+newmtl white
+  Kd 0.88 0.89 0.92
+

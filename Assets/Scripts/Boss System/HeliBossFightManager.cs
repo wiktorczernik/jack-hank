@@ -6,6 +6,7 @@ public class HeliBossFightManager : BossFightManager
     private PlayerVehicle player;
     public int initAmmoCount = 12;
     public float initSpeedInKmH = 50;
+    public GameObject obstacleToActivateAfterBeginCutscene;
 
     protected override void AfterEndCutscene()
     {
@@ -25,6 +26,7 @@ public class HeliBossFightManager : BossFightManager
         PlayerTurret.ammo = initAmmoCount;
         player.playerTurret.AllowFire();    
         player.physics.bodyRigidbody.linearVelocity = playerSpawnAfterBeginCutscene.forward * (initSpeedInKmH / 2);
+        obstacleToActivateAfterBeginCutscene.SetActive(true);
     }
 
     protected override void OnBossDeathInterval()

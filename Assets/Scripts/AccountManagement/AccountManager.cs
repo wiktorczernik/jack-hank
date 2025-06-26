@@ -157,6 +157,8 @@ public class AccountManager : MonoBehaviour
         _currentAccount = new PlayerAccount(accountName);
         File.WriteAllText(GetAccountSavePath(accountName), _currentAccount.ToJson());
         onCreateAccount?.Invoke(_currentAccount.GetData());
+
+        useDebugAccount = false;
         
         return LogInAccount(accountName);
     }

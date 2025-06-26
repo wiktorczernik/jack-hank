@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public BossFightManager bossFightManager;
     [SerializeField] private SceneEnter sceneEnter;
     [SerializeField] private SceneExit sceneExit;
+    [SerializeField] private static PlayerVehicle playerVehicle;
 
     [Header("Optional dependency")] [SerializeField]
     private IntroCutscenePlayer introCutscenePlayer;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
     public static LevelTaskDefinition[] LevelTasks => _definition.LevelTasks;
     public static GameRunInfo RunInfo { get; private set; }
     public static bool IsDuringRun { get; private set; }
-    public static PlayerVehicle PlayerVehicle { get; private set; }
+    public static PlayerVehicle PlayerVehicle => playerVehicle;
     
     public bool isLevelEnded { get; private set; }
 
@@ -99,7 +100,7 @@ public class GameManager : MonoBehaviour
 
     public void SetupReferences()
     {
-        PlayerVehicle = FindFirstObjectByType<PlayerVehicle>();
+        if (playerVehicle == null) playerVehicle = FindFirstObjectByType<PlayerVehicle>();
         Local = this;
         RunInfo = new GameRunInfo();
         IsDuringRun = true;
@@ -120,6 +121,15 @@ public class GameManager : MonoBehaviour
 
         _definition = definition;
         CreateTaskTrackers();
+
+        foreach(var pickupable in FindObjectsByType<Pickupable>(FindObjectsSortMode.InstanceID))
+        {
+            if (pickupable.type == PickupableType.Passenger)
+            {
+                Debug.Log("Add even to passengers");
+                pickupable.onPickup.AddListener(() => RunInfo.AddPassenger());
+            }
+        }
         _isInitialized = true;
     }
 
@@ -187,7 +197,6 @@ public class GameManager : MonoBehaviour
 
         void AfterFadeIn()
         {
-            Debug.Log("AfterFadeIn");
             ScreenFade.onAfterIn -= AfterFadeIn;
             if (Local.bossFightManager.duringFight)
             {
@@ -218,7 +227,10 @@ public class GameManager : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        SavePlayerProgress();
+        if (AccountManager.useDebugAccount)
+            Debug.Log("Because of using of debug account progress has not been saved");
+        else
+            SavePlayerProgress();
     }
 
     private void BeginRun()
