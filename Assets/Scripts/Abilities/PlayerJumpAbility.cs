@@ -18,6 +18,8 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     [SerializeField] float pitchDampingFactor = 1f;
     [SerializeField] float rollDampingFactor = 1f;
 
+    float lastBoostTime;
+
     public override bool ContinueWorkWhile()
     {
         return !physics.isGrounded;
@@ -25,6 +27,7 @@ public class PlayerJumpAbility : PlayerVehicleAbility
 
     protected override void OnWorkBegin()
     {
+        lastBoostTime = Time.time;
         physics.onLand += OnLand;
 
         Rigidbody useRigidbody = physics.bodyRigidbody;
@@ -54,7 +57,32 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     {
         if (physics.isGrounded) return;
 
+        if (physics.speedKmhForward < 5f && Time.time - lastBoostTime > 3)
+        {
+            lastBoostTime = Time.time;
+            onWorkBegin?.Invoke();
+            Rigidbody useRigidbody = physics.bodyRigidbody;
+            Vector3 horizontalVelocity = Vector3.ProjectOnPlane(useRigidbody.linearVelocity, physics.transform.up);
+            speedBeforeJump = Mathf.Max(minForwardSpeed, horizontalVelocity.magnitude);
+
+            Vector3 jumpVelocity = vehicle.transform.forward * speedBeforeJump
+                                  + vehicle.transform.up * upwardSpeed;
+            Vector3 angular = useRigidbody.angularVelocity;
+            angular.x = 0f;
+            angular.z = 0f;
+            useRigidbody.angularVelocity = angular;
+
+            Vector3 currentEuler = vehicle.transform.eulerAngles;
+            startPitch = NormalizeAngle(currentEuler.x);
+            Keyframe firstKey = pitchCurve.keys[0];
+            firstKey.value = startPitch;
+            pitchCurve.MoveKey(0, firstKey);
+
+            useRigidbody.linearVelocity = jumpVelocity;
+        }
+
         float desiredPitch = pitchCurve.Evaluate(workTime);
+        physics.stabilizeRotation = false;
 
         // Текущие мировые углы в локальных осях
         Vector3 euler = vehicle.transform.eulerAngles;
@@ -92,6 +120,7 @@ public class PlayerJumpAbility : PlayerVehicleAbility
     {
         if (workTime < workDuration) return;
 
+        physics.stabilizeRotation = true;
         Rigidbody rb = physics.bodyRigidbody;
         rb.linearVelocity = vehicle.transform.forward * speedBeforeJump;
         rb.angularVelocity = Vector3.zero;

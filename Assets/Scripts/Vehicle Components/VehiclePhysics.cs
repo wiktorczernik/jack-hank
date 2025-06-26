@@ -97,7 +97,7 @@ public class VehiclePhysics : MonoBehaviour
     public Vector3 hullSize = new Vector3(3.5f, 2.7f, 8.9f);
     public float bodyGroundedUpOffset = 1.8f;
     public float bodyGroundedMaxDistance = 0.5f;
-
+    public bool stabilizeRotation = true;
     public float rollStabilization = 10f;
     public float pitchStabilization = 8f;
     public float rollDamping = 4f;
@@ -439,6 +439,7 @@ public class VehiclePhysics : MonoBehaviour
 
     void StabilizeRotation()
     {
+        if (!stabilizeRotation) return;
         Vector3 currentUp = transform.up;
         Vector3 targetUp = groundNormal;
         Vector3 errorAxis = Vector3.Cross(currentUp, targetUp);
