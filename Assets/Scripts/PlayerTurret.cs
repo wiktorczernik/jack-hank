@@ -61,9 +61,7 @@ public class PlayerTurret : MonoBehaviour
     }
     private void TryFire()
     {
-        CheckTargetProximity();
-
-        if (!targetInProximity || ammo <= 0f)
+        if (ammo <= 0f)
         {
             return;
         }
@@ -79,32 +77,7 @@ public class PlayerTurret : MonoBehaviour
 
         RuntimeManager.PlayOneShot(audioEventReference);
 
-        if (targetInProximity)
-        {
-            fireTarget.Hurt(damage);
-            return;
-        }
-
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
-
-        Transform current = hit.transform;
-        GameEntity E = null;
-        while (true)
-        {
-            if (!current.TryGetComponent(out GameEntity entity))
-            {
-                current = current.parent;
-                if (current == null) break;
-            }
-            else
-            {
-                E = entity; 
-                break;
-            }
-        }
-        if (E == null) return;
-        
-        E.Hurt(damage);
+        fireTarget.Hurt(damage);
 
     }
     IEnumerator NozzleAnimation(float animTime)
@@ -131,31 +104,6 @@ public class PlayerTurret : MonoBehaviour
             Nozzle.localPosition = Vector3.Lerp(nozzleEndPos, nozzleStartPos,
                 (timePassed - animTime * shotPerc) / (1 - shotPerc) / animTime);
         }
-    }
-
-    public void CheckTargetProximity()
-    {
-        if (fireTarget == null)
-        {
-            targetInProximity = false;
-            return;
-        }
-
-        if (!Physics.Raycast(new Ray(RaycastOrigin.position, -Nozzle.right), out RaycastHit hit, Mathf.Infinity, mask)) return;
-
-        Transform current = hit.transform;
-        while (true)
-        {
-            if (current.TryGetComponent(out GameEntity entity) && entity == fireTarget)
-            {
-                targetInProximity = true;
-                return;
-            }
-            current = current.parent;
-            if (current == null) break;
-        }
-
-        targetInProximity = false;
     }
 
     private void LookAtTarget()
