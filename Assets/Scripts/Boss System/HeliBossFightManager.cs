@@ -4,7 +4,7 @@ using UnityEngine;
 public class HeliBossFightManager : BossFightManager
 {
     private PlayerVehicle player;
-    public int initAmmoCount = 12;
+    public int initAmmoCount = 64;
     public float initSpeedInKmH = 50;
     public GameObject obstacleToActivateAfterBeginCutscene;
 

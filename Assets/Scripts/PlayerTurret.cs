@@ -10,6 +10,7 @@ public class PlayerTurret : MonoBehaviour
     public static Action onFire;
     public static Action onAllowFire;
     public static Action onDisallowFire;
+    public static Action onLoad;
 
     [Header("Parts")]
     [SerializeField] Transform Rotor;
@@ -181,5 +182,6 @@ public class PlayerTurret : MonoBehaviour
     {
         if (amount <= 0) return;
         ammo += amount;
+        onLoad?.Invoke();
     }
 }

@@ -17,6 +17,7 @@ public class AmmoMonitorGUI : MonoBehaviour
         PlayerTurret.onAllowFire += Show;
         PlayerTurret.onDisallowFire += Hide;
         PlayerTurret.onFire += OnFire;
+        PlayerTurret.onLoad += OnFire;
         CinematicPlayer.onEndPlay += UpdateVisibility;
         CinematicPlayer.onFrameUpdate += OnCinematicFrame;
 
@@ -27,6 +28,7 @@ public class AmmoMonitorGUI : MonoBehaviour
         PlayerTurret.onAllowFire -= Show;
         PlayerTurret.onDisallowFire -= Hide;
         PlayerTurret.onFire -= OnFire;
+        PlayerTurret.onLoad -= OnFire;
         CinematicPlayer.onEndPlay -= UpdateVisibility;
         CinematicPlayer.onFrameUpdate -= OnCinematicFrame;
     }

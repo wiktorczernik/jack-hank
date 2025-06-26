@@ -100,9 +100,6 @@
 		<property name="length">
 			<value>12.241</value>
 		</property>
-		<relationship name="fadeOutCurve">
-			<destination>{6465e29d-ee10-47fc-b259-f7f416eb9287}</destination>
-		</relationship>
 		<relationship name="audioFile">
 			<destination>{5f97abb5-fe17-4693-8059-d4540248bacd}</destination>
 		</relationship>
@@ -140,14 +137,11 @@
 	</object>
 	<object class="SingleSound" id="{f74a1204-cd84-4506-9c15-630c210cecbf}">
 		<property name="start">
-			<value>10.150248727422003</value>
+			<value>9.7919633004926112</value>
 		</property>
 		<property name="length">
 			<value>2.1667310349377562</value>
 		</property>
-		<relationship name="fadeInCurve">
-			<destination>{eafe0d20-13dc-4fdf-b3a8-7cc4b4b258fe}</destination>
-		</relationship>
 		<relationship name="audioFile">
 			<destination>{98f35008-874d-43ea-956f-f440b3a5df6b}</destination>
 		</relationship>
@@ -193,17 +187,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{ff2a2d28-a9a2-43f2-be24-baf41ee1e496}" />
 	<object class="MixerBusFader" id="{f3bfa0c9-163c-4056-ad37-79f59119944b}" />
-	<object class="FadeCurve" id="{6465e29d-ee10-47fc-b259-f7f416eb9287}">
-		<relationship name="startPoint">
-			<destination>{c6882361-278e-4ae6-864f-c320001522dd}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{006cdc43-17f8-49a4-ada3-b2c07e631911}</destination>
-		</relationship>
-		<relationship name="relatedModule">
-			<destination>{f74a1204-cd84-4506-9c15-630c210cecbf}</destination>
-		</relationship>
-	</object>
 	<object class="FadeCurve" id="{3634373c-fb90-4b08-a801-176804e555ca}">
 		<relationship name="startPoint">
 			<destination>{f5fc772d-cd19-430c-988c-d968f6ac5351}</destination>
@@ -226,17 +209,6 @@
 			<destination>{bca9e621-9d08-44c5-81a7-ce118c0ef1c6}</destination>
 		</relationship>
 	</object>
-	<object class="FadeCurve" id="{eafe0d20-13dc-4fdf-b3a8-7cc4b4b258fe}">
-		<relationship name="startPoint">
-			<destination>{0ece9bfd-3ea9-4427-9d1c-40627a2b34f4}</destination>
-		</relationship>
-		<relationship name="endPoint">
-			<destination>{5c578ea3-828b-41fd-954e-b5fbca477f86}</destination>
-		</relationship>
-		<relationship name="relatedModule">
-			<destination>{290643f1-6f4e-4174-9d35-65476f620ead}</destination>
-		</relationship>
-	</object>
 	<object class="FadeCurve" id="{860b7692-bd64-4d8e-8a06-ba58d85db1f1}">
 		<relationship name="startPoint">
 			<destination>{7950feba-e816-43d8-9928-1609493e570f}</destination>
@@ -252,25 +224,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{82a06348-1265-4dc0-ae7d-4bdd2b62fd4e}" />
 	<object class="MixerBusFader" id="{883465a9-02f4-41e6-88f8-06241ae86332}" />
-	<object class="AutomationPoint" id="{c6882361-278e-4ae6-864f-c320001522dd}">
-		<property name="position">
-			<value>10.150248727422003</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-		<property name="curveShape">
-			<value>0.25471893</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{006cdc43-17f8-49a4-ada3-b2c07e631911}">
-		<property name="position">
-			<value>12.241</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-	</object>
 	<object class="AutomationPoint" id="{f5fc772d-cd19-430c-988c-d968f6ac5351}">
 		<property name="position">
 			<value>5.6502487274220003</value>
@@ -304,25 +257,6 @@
 	<object class="AutomationPoint" id="{e9513d40-9c8f-4aeb-b43f-32148f627f16}">
 		<property name="position">
 			<value>5.722851628942303</value>
-		</property>
-		<property name="value">
-			<value>1</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{0ece9bfd-3ea9-4427-9d1c-40627a2b34f4}">
-		<property name="position">
-			<value>10.150248727422003</value>
-		</property>
-		<property name="value">
-			<value>0</value>
-		</property>
-		<property name="curveShape">
-			<value>-0.2547189</value>
-		</property>
-	</object>
-	<object class="AutomationPoint" id="{5c578ea3-828b-41fd-954e-b5fbca477f86}">
-		<property name="position">
-			<value>12.241</value>
 		</property>
 		<property name="value">
 			<value>1</value>
