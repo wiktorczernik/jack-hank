@@ -127,7 +127,7 @@ MonoBehaviour:
   hittable: 1
   bountyPointsReward: 0
   destroyTime: 10
-  model: {fileID: 0}
+  model: {fileID: 1913919363367912843}
   smashableType: 0
   shouldBecomeDebris: 0
   debrisPrefab: {fileID: 0}
