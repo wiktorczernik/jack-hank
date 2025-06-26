@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6612962731386262014}
   - component: {fileID: 4174879054022182403}
   - component: {fileID: 7377125799622911987}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pickup Trigger Right
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6318858428641228763}
   - component: {fileID: 8930568866080897821}
   - component: {fileID: 3784873896521202734}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: seats
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 1530501619771812440}
   - component: {fileID: 276487848086827425}
   - component: {fileID: 1754507601643921490}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wheel Back Right
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 3719792249936022879}
   - component: {fileID: 7684140732747701937}
   - component: {fileID: 6582577405405240925}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wheel Front Right
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5438,7 +5438,7 @@ GameObject:
   - component: {fileID: 1479505069620789123}
   - component: {fileID: 3719713887689433283}
   - component: {fileID: 7305581676110192606}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: seat.driver
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10474,7 +10474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2903569808212546925}
   - component: {fileID: 1163287944426431088}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: 'Nitro Ready Sound '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10538,7 +10538,7 @@ GameObject:
   - component: {fileID: 6330085990676307154}
   - component: {fileID: 4201687660209483775}
   - component: {fileID: 8442194802235426159}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: wheel-back-R
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10622,7 +10622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 993343864060429947}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hank Left
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10656,7 +10656,7 @@ GameObject:
   - component: {fileID: 3276347796051839081}
   - component: {fileID: 1912329924668330110}
   - component: {fileID: 7298951906239404105}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bus-wall-door
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -10743,7 +10743,7 @@ GameObject:
   - component: {fileID: 4365186707926545003}
   - component: {fileID: 8880427507609649622}
   - component: {fileID: 5510068231011352907}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: wheel-front-R
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -15691,7 +15691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5092422079568603940}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: AmmoTransitionSpot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -15722,7 +15722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7862949590376080174}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Seat 1
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -20588,7 +20588,7 @@ GameObject:
   - component: {fileID: 5882246190223746869}
   - component: {fileID: 7579209945102099691}
   - component: {fileID: 5494111998625822928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rear Mirror Camera
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -20649,7 +20649,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1943
+    m_Bits: 3991
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 868bee70768d64042b1c84f8e5e2a590, type: 2}
   m_TargetDisplay: 0
@@ -30382,7 +30382,7 @@ GameObject:
   - component: {fileID: 193059994328504966}
   - component: {fileID: 8500060640871675463}
   - component: {fileID: 1755988377352314909}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bus-hull
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30466,7 +30466,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6744854428881861219}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bussy (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30512,7 +30512,7 @@ GameObject:
   - component: {fileID: 8870859131007109423}
   - component: {fileID: 922861960684707577}
   - component: {fileID: 7256103484338772184}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Sundoor
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30596,7 +30596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1185642782726917204}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Seat 2
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -30639,7 +30639,7 @@ GameObject:
   - component: {fileID: 1318795595491404067}
   - component: {fileID: 351531459514417218}
   - component: {fileID: 9170904330043421232}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TestBus
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31008,6 +31008,7 @@ MonoBehaviour:
   hullSize: {x: 3.5, y: 2.7, z: 8.9}
   bodyGroundedUpOffset: 1.8
   bodyGroundedMaxDistance: 0.1
+  stabilizeRotation: 1
   rollStabilization: 15
   pitchStabilization: 50
   rollDamping: 15
@@ -31407,7 +31408,7 @@ GameObject:
   - component: {fileID: 9071659613075476278}
   - component: {fileID: 7953251662763201820}
   - component: {fileID: 8616628573737247584}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: steering-wheel
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31493,7 +31494,7 @@ GameObject:
   - component: {fileID: 7156728046625934601}
   - component: {fileID: 5608170388676728335}
   - component: {fileID: 5697948151613955009}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: doors-first-windows.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31580,7 +31581,7 @@ GameObject:
   - component: {fileID: 913706374343046244}
   - component: {fileID: 5315794068943464431}
   - component: {fileID: 4437701377564138266}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bus-wall
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31666,7 +31667,7 @@ GameObject:
   - component: {fileID: 734440529484850383}
   - component: {fileID: 3577226829555802928}
   - component: {fileID: 3197444944842555888}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: doors-second-windows.001
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31756,7 +31757,7 @@ GameObject:
   - component: {fileID: 8047620005199023980}
   - component: {fileID: 2649367148469278820}
   - component: {fileID: 8618616740173551389}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: BusNew
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -31983,7 +31984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7500202417077754446}
   - component: {fileID: 8416922929760768304}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PickupGuidance
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32071,7 +32072,7 @@ GameObject:
   - component: {fileID: 1843211901760209337}
   - component: {fileID: 6857201541724280652}
   - component: {fileID: 2677922147936666708}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: doors-second-windows.001 (1)
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32158,7 +32159,7 @@ GameObject:
   - component: {fileID: 6954036479313091982}
   - component: {fileID: 7513743170737957691}
   - component: {fileID: 7991301308265535331}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: door-device-idk
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32486,7 +32487,7 @@ GameObject:
   - component: {fileID: 3899408103439205578}
   - component: {fileID: 935231137603860631}
   - component: {fileID: 321183809788251971}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wheel Front Left
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32778,7 +32779,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5705831209910973627}
   - component: {fileID: 126812750527760579}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Jump Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32844,7 +32845,7 @@ GameObject:
   - component: {fileID: 792677453214556936}
   - component: {fileID: 3036122847310517632}
   - component: {fileID: 3321319435392987212}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bumper
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -32962,7 +32963,7 @@ GameObject:
   - component: {fileID: 4524870182299961043}
   - component: {fileID: 8059905075052972374}
   - component: {fileID: 812043417424753418}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Skidmark Source Left
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33115,7 +33116,7 @@ GameObject:
   - component: {fileID: 8238813519845311572}
   - component: {fileID: 7748779584245337267}
   - component: {fileID: 4327324076011865815}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: wheel-front-L
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33201,7 +33202,7 @@ GameObject:
   - component: {fileID: 2658755439862436711}
   - component: {fileID: 203405238472393991}
   - component: {fileID: 2613045913967580964}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bus-walldoor-windows
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33287,7 +33288,7 @@ GameObject:
   - component: {fileID: 2458955345852042848}
   - component: {fileID: 133788780036339325}
   - component: {fileID: 7616561235152842145}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rocket booster
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33374,7 +33375,7 @@ GameObject:
   - component: {fileID: 7888591674512697798}
   - component: {fileID: 2188570316205131224}
   - component: {fileID: 161515586258071151}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: numer linii
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33458,7 +33459,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3484621251597863864}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Aim
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33492,7 +33493,7 @@ GameObject:
   - component: {fileID: 1360345764412146516}
   - component: {fileID: 1991286314898252981}
   - component: {fileID: 6691517024098662515}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Pickup Trigger Light
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33573,7 +33574,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3825695125531816910}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Seat 3
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33604,7 +33605,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 902544891924513258}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Seat 4
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33721,7 +33722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2129140299204795345}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hank Right
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33841,7 +33842,7 @@ GameObject:
   - component: {fileID: 8347097341218724468}
   - component: {fileID: 1557681800010780372}
   - component: {fileID: 9121711511315832261}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: doors-first-windows
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33927,7 +33928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7689343232912152553}
   - component: {fileID: 6219431260533126271}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Nitro Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33993,7 +33994,7 @@ GameObject:
   - component: {fileID: 3601310230038554918}
   - component: {fileID: 4874616326639056341}
   - component: {fileID: 663347084425971500}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wheel Back Left
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -34202,7 +34203,7 @@ GameObject:
   - component: {fileID: 2363594345569303361}
   - component: {fileID: 1565412381320022043}
   - component: {fileID: 964721189103708198}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: bus-lights
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -34288,7 +34289,7 @@ GameObject:
   - component: {fileID: 4754420594172215122}
   - component: {fileID: 189451279971596792}
   - component: {fileID: 6250971270953050363}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: control-board
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -34416,6 +34417,10 @@ PrefabInstance:
       value: Hank Guidance
       objectReference: {fileID: 0}
     - target: {fileID: 6278407685004362672, guid: 7ca237cb32f714448b3753ba00c3b7df, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278407685004362672, guid: 7ca237cb32f714448b3753ba00c3b7df, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -34487,6 +34492,10 @@ PrefabInstance:
       value: Hank Guidance
       objectReference: {fileID: 0}
     - target: {fileID: 6278407685004362672, guid: 7ca237cb32f714448b3753ba00c3b7df, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6278407685004362672, guid: 7ca237cb32f714448b3753ba00c3b7df, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -34513,6 +34522,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3878800678360203441}
     m_Modifications:
+    - target: {fileID: 421979804062780731, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1484992498570801135, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.5
@@ -34569,17 +34582,73 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2602960935780261772, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2917945181991041711, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3153238467616117270, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 8618616740173551389}
+    - target: {fileID: 3262238356888996396, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4483554296368878039, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4606278046584905660, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4902588464762296907, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5349094745586414927, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5466874786689151143, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530195661669921671, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785795650352417848, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7552675494107111805, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7764446207046707413, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8164325392089719710, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
     - target: {fileID: 8164325392089719710, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164325392089719710, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8999115284836296539, guid: 6bedd40062f0743409ae27d0d7d4e411, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
