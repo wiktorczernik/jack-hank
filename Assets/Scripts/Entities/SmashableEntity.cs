@@ -236,7 +236,6 @@ public class SmashableEntity : GameEntity
             usedRigidbody = model.GetComponentInChildren<Rigidbody>();
             if (!usedRigidbody)
             {
-                Debug.LogError("Smashable entity doesn't have attached rigidbody to it!", this);
             }
         }
         if (usedColliders.Length == 0)
@@ -244,7 +243,6 @@ public class SmashableEntity : GameEntity
             usedColliders = model.GetComponentsInChildren<Collider>();
             if (usedColliders.Length == 0)
             {
-                Debug.LogError("Smashable entity doesn't have any colliders attached to it!", this);
             }
         }
         if (!collisionEvents)
@@ -252,7 +250,6 @@ public class SmashableEntity : GameEntity
             collisionEvents = model.GetComponentInChildren<CollisionEventEmitter>();
             if (!collisionEvents)
             {
-                Debug.LogError("Smashable entity doesn't have collision event emitter attached to it!", this);
             }
         }
     }
