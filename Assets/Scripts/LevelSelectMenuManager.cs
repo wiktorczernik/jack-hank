@@ -36,11 +36,13 @@ public class LevelSelectMenuManager : MonoBehaviour
     {
         if (_initialized) return;
 
+        Debug.Log("init");
+
         State = LevelSelectMenuState.Idle;
-        NextLevels = LevelManager.GetAvailableLevels().ToArray();
-        var nextLevelsUI = FindFirstObjectByType<NextAccessibleLevels_GUI>();
-        nextLevelsUI.InitializeWithNextLevels(NextLevels);
-        nextLevelsUI.OnLevelSelected += SetLevelSelectedState;
+        //NextLevels = LevelManager.GetAvailableLevels().ToArray();
+        //var nextLevelsUI = FindFirstObjectByType<NextAccessibleLevels_GUI>();
+        //nextLevelsUI.InitializeWithNextLevels(NextLevels);
+        //nextLevelsUI.OnLevelSelected += SetLevelSelectedState;
 
         _instance._sceneExit = FindFirstObjectByType<SceneExit>();
         _instance._sceneExit.OnExit += ResetState;
@@ -59,6 +61,7 @@ public class LevelSelectMenuManager : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Start");
         StartCoroutine(Play());
     }
 
@@ -92,7 +95,19 @@ public class LevelSelectMenuManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        GameSceneManager.onMenuLoadEnd += Initialize;
+
+        Debug.Log(Debug.isDebugBuild);
+        Debug.Log(GameSceneManager.isLoading);
+
+        if (Debug.isDebugBuild && !GameSceneManager.isLoading)
+        {
+            Initialize();
+        }
+
+        if (!Debug.isDebugBuild)
+        {
+            GameSceneManager.onMenuLoadEnd += Initialize;
+        }
     }
 }
 
