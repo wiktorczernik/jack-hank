@@ -47,7 +47,7 @@ public class KillTrigger : MonoBehaviour
 
             PlayerVehicle v = c.GetComponentInParent<PlayerVehicle>();
             if (!v) return;
-
+            if (c != v.mainCollider) return;
             if (behaviour == KillTriggerEnum.Alarm)
             {
                 v.GetComponent<OffroadPenalty>().RegisterInside();

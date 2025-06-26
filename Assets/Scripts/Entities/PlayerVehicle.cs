@@ -24,6 +24,7 @@ public class PlayerVehicle : Vehicle
     public PickupZone pickupZone;
     public PlayerTurret playerTurret;
     private Rigidbody _rigidbody;
+    public Collider mainCollider;
     public PlayerVehicleSeatController seatsController;
 
     public BotVehicle _botDirect;
