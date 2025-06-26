@@ -958,7 +958,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: Get  as  close  as  possible  to  passengers  standing  near  the  road 
-    to  pick  them  up!
+    to  pick  them  up! <sprite=0><sprite=1><sprite=2><sprite=3>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
   m_sharedMaterial: {fileID: -7284951508663892846, guid: 967c39549f0c94d45b967956f78bb3ce, type: 2}
@@ -977,7 +977,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 8176587da5dcc044d90e0043af5e7978, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
