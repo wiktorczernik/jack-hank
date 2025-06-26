@@ -29,6 +29,7 @@ public class MusicManager : MonoBehaviour
         wheatEventInstance = RuntimeManager.CreateInstance(wheatMusic);
         GameManager.OnRunBegin += OnRunBegin;
         GameManager.OnRunFinish += OnRunEnd;
+        FarmField.currentlyDestroyedAmount = 0;
     }
     private void Start()
     {

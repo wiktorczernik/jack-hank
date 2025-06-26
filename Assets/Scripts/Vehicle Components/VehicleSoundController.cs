@@ -78,6 +78,7 @@ public class VehicleSoundController : MonoBehaviour
     }
     private void OnDestroy()
     {
+        driftEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         driftEventInstance.release();
         engineEventInstance.release();
     }

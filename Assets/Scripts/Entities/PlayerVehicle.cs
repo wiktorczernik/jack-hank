@@ -29,6 +29,7 @@ public class PlayerVehicle : Vehicle
     public BotVehicle _botDirect;
 
     public MeshRenderer[] renderersHiddenCinematic;
+    public ParticleSystem[] particlesHiddenCinematic;
 
     private void Awake()
     {
@@ -173,6 +174,10 @@ public class PlayerVehicle : Vehicle
         {
             renderer.enabled = false;
         }
+        foreach(var particle in particlesHiddenCinematic)
+        {
+            particle.gameObject.SetActive(false);
+        }
     }
 
     private void OnCinematicEnd()
@@ -180,6 +185,10 @@ public class PlayerVehicle : Vehicle
         foreach (var renderer in renderersHiddenCinematic)
         {
             renderer.enabled = true;
+        }
+        foreach (var particle in particlesHiddenCinematic)
+        {
+            particle.gameObject.SetActive(true);
         }
         _rigidbody.isKinematic = false;
         physics.enabled = true;
