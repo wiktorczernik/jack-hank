@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnDestroy()
     {
+        SavePlayerProgress();
         if (!Debug.isDebugBuild)
         {
             GameSceneManager.onLevelLoadBegin -= TryInitialize;
@@ -137,6 +138,7 @@ public class GameManager : MonoBehaviour
     {
         IsDuringRun = false;
         OnRunFinish?.Invoke(RunInfo);
+        SavePlayerProgress();
     }
 
     public static void UpdateBonus(int bonusValue, PlayerBonusTypes bonusType, int bonusPool)
@@ -212,11 +214,13 @@ public class GameManager : MonoBehaviour
 
     public static void RestartLevel()
     {
+        SavePlayerProgress();
         GameSceneManager.ReloadLevel();
     }
 
     public static void RestartBossFight()
     {
+        SavePlayerProgress();
         PlayerPrefs.SetInt("StartFromBossFight", 1);
         var runStats = RunInfo.GetPointsByBonusTypes();
         foreach (var key in runStats.Keys) PlayerPrefs.SetInt(key.ToString(), runStats[key]);
@@ -283,9 +287,38 @@ public class GameManager : MonoBehaviour
 
     private static void SavePlayerProgress()
     {
-        LevelManager.IncrementPointsToLevel(_definition.LevelID, RunInfo.GetPointsByBonusTypes());
-        AccountManager.currentAccount.IncrementPassengersAmount(RunInfo.PassengersOnBoard);
-        AccountManager.currentAccount.IncrementPlayTime((int)(RunInfo.Time * 1000));
+
+        var bountyPointsChanged = false;
+
+        var bountyInLevel = LevelManager.GetLevelByID(_definition.LevelID).bountyPointsPerBonusType;
+
+        foreach (var pair in RunInfo.GetPointsByBonusTypes())
+        {
+            if (!bountyInLevel.ContainsKey(pair.Key))
+            {
+                bountyPointsChanged = true;
+                continue;
+            }
+
+            if (bountyInLevel[pair.Key] != pair.Value)
+            {
+                bountyPointsChanged = true;
+            }
+        }
+
+        if (bountyInLevel == null)
+        {
+            bountyPointsChanged = true;
+        }
+
+        if (bountyPointsChanged) LevelManager.SetPointsToLevel(_definition.LevelID, RunInfo.GetPointsByBonusTypes());
+
+        var passengersInAccount = AccountManager.currentAccount.GetData().savedPassengers;
+        
+        if (passengersInAccount != RunInfo.PassengersOnBoard) AccountManager.currentAccount.IncrementPassengersAmount(RunInfo.PassengersOnBoard);
+
+        if (AccountManager.currentAccount.GetData().playTimeTimestamp != RunInfo.Time) AccountManager.currentAccount.IncrementPlayTime((int)(RunInfo.Time * 1000));
+
         AccountManager.SaveCurrentAccount();
     }
 }

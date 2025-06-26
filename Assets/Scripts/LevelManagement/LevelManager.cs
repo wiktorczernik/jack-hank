@@ -102,6 +102,13 @@ namespace LevelManagement
             level.IncrementBountyPoints(bountyPoints);
         }
 
+        public static void SetPointsToLevel(int levelID, Dictionary<PlayerBonusTypes, int> bountyPoints)
+        {
+            var level = GetLevelByID(levelID);
+
+            level.SetBountyPoints(bountyPoints);
+        }
+
         [CanBeNull]
         public static LevelInfo GetLevelByName(string levelName)
         {

@@ -136,6 +136,7 @@ public class AccountManager : MonoBehaviour
 
     public static void SaveCurrentAccount()
     {
+        Debug.Log(useDebugAccount);
         if (useDebugAccount) return;
         
         EnsureSaveDirectoryExists();
@@ -193,6 +194,12 @@ public class AccountManager : MonoBehaviour
         dataToSave.openedLevels = LevelManager.GetLevelsStatistics();
 
         dataToSave.bountyPoints = dataToSave.openedLevels.Sum(level => level.bonuses.Sum(pair => pair.Value));
+
+        Debug.Log($"Data to Save to account '{dataToSave.accountName}'");
+        Debug.Log("Points: " + dataToSave.bountyPoints);
+        Debug.Log("Levels Amount: " + dataToSave.openedLevels.Length);
+        Debug.Log("PlayTime: " + dataToSave.playTimeTimestamp);
+        Debug.Log("Passengers: " + dataToSave.savedPassengers);
 
         return dataToSave;
     }
