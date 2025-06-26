@@ -71,6 +71,7 @@ public class SceneExit : MonoBehaviour
         {
             // finishText.ShowFinishMark(GameManager.GetMarkByBounty(), GameManager.RunInfo.GetPointsByBonusTypes());
             // finishText.OnEndAnimation += ExitToMenu;
+            ExitToMenu();
             OnExit?.Invoke();
         }
         else
