@@ -230,8 +230,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canReceiveDamage: 1
   canBeHealed: 1
-  _health: 5200
-  _maxHealth: 5200
+  _health: 3800
+  _maxHealth: 3800
   exploded: 0
   canBeExploded: 0
   canSelfExplode: 0
@@ -264,31 +264,31 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   waves:
-  - cooldownTime: 15
-    prepareDuration: 5
+  - cooldownTime: 12
+    prepareDuration: 7
     predictiveRocketsCount: 3
+    predictiveBurstDelay: 4
+    predictiveFirePause: 4
+  - cooldownTime: 10
+    prepareDuration: 7
+    predictiveRocketsCount: 4
+    predictiveBurstDelay: 3.5
+    predictiveFirePause: 3.5
+  - cooldownTime: 10
+    prepareDuration: 7
+    predictiveRocketsCount: 5
+    predictiveBurstDelay: 2.5
+    predictiveFirePause: 2.5
+  - cooldownTime: 8
+    prepareDuration: 7
+    predictiveRocketsCount: 6
     predictiveBurstDelay: 2
     predictiveFirePause: 2
-  - cooldownTime: 12
-    prepareDuration: 5
-    predictiveRocketsCount: 4
-    predictiveBurstDelay: 1.75
-    predictiveFirePause: 1.75
-  - cooldownTime: 10
-    prepareDuration: 5
-    predictiveRocketsCount: 5
-    predictiveBurstDelay: 1.5
-    predictiveFirePause: 1.5
   - cooldownTime: 8
-    prepareDuration: 5
-    predictiveRocketsCount: 6
-    predictiveBurstDelay: 1.5
-    predictiveFirePause: 1.5
-  - cooldownTime: 6
-    prepareDuration: 5
+    prepareDuration: 7
     predictiveRocketsCount: 7
-    predictiveBurstDelay: 1.5
-    predictiveFirePause: 1.5
+    predictiveBurstDelay: 2
+    predictiveFirePause: 2
   staticMissilePrefab: {fileID: 209675717119317151, guid: 989eb3b1882938143945108fd62cae27, type: 3}
   predictiveMissilePrefab: {fileID: 5606164053725797410, guid: f7c3a38bd16c8934e968e82daca469b6, type: 3}
   predictionTime: 1.5

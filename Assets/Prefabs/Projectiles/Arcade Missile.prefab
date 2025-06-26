@@ -63,10 +63,10 @@ MonoBehaviour:
     _epicenterPosition: {x: 0, y: 0, z: 0}
     initiator: {fileID: 209675717119317151}
     force: 2000
-    epicenterRadius: 12
+    epicenterRadius: 9
     shakeIntensity: 0.4
-    shakeMaxDistance: 30
-    damage: 25
+    shakeMaxDistance: 20
+    damage: 15
     damageFalloff:
       serializedVersion: 2
       m_Curve:
