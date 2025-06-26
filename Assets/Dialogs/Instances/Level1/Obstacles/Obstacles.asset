@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e85852e09864d4bbc2467729f82119, type: 3}
+  m_Name: Obstacles
+  m_EditorClassIdentifier: 
+  audioEvent:
+    Guid:
+      Data1: 466942614
+      Data2: 1133753922
+      Data3: 529287101
+      Data4: 7903095
+    Path: event:/VO/Dialogs/VO_ObstaclesJump_01
+  audioDuration: 8.784
+  transcriptionDuration: 2.5
+  priority: 0
+  transcriptions:
+  - character: {fileID: 11400000, guid: 928e4e192ab453f4cafbf827b3578dc0, type: 2}
+    text: The road's blocked!
+    duration: 1.5
+    startDelay: 0
+  - character: {fileID: 11400000, guid: 1f304d396090da6429ecc11b26a350c7, type: 2}
+    text: Jump!
+    duration: 1
+    startDelay: 0

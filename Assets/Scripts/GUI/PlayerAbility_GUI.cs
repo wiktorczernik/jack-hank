@@ -57,7 +57,7 @@ public class PlayerAbility_GUI : MonoBehaviour
     }
     private void UpdateCooldownSlider()
     {
-        cooldownSlider.enabled = ability.isCooldowned;
+        cooldownSlider.enabled = !(ability.isReady || ability.isWorking || ability.isCooldowned);
         cooldownSlider.value = ability.cooldownFraction;
     }
     private void Update()
