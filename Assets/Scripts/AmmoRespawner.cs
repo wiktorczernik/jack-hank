@@ -35,6 +35,7 @@ public class AmmoRespawner : MonoBehaviour
         currentAmmo.transform.SetPositionAndRotation(ammoSpawn.position, ammoSpawn.rotation);
         currentAmmo.GetComponent<AmmoIncrementer>().amount = ammoAmount;
         currentAmmo.onPickup.AddListener(() => OnPickup());
+        currentAmmo.type = PickupableType.Ammo;
         pickupZone.target = currentAmmo;
     }
 }
