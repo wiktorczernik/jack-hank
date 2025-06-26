@@ -238,7 +238,7 @@
 			<value>57.252345801208875</value>
 		</property>
 		<property name="volume">
-			<value>-3</value>
+			<value>-8.5</value>
 		</property>
 		<relationship name="fadeInCurve">
 			<destination>{6a018903-f64f-4f54-a4aa-3e04e20e1865}</destination>
@@ -273,6 +273,9 @@
 		</property>
 		<property name="timelockedOffset">
 			<value>33.091423772749046</value>
+		</property>
+		<property name="volume">
+			<value>-2.5</value>
 		</property>
 		<relationship name="fadeOutCurve">
 			<destination>{81360474-dcb3-45c9-ad27-e1552a6529d2}</destination>
@@ -372,9 +375,6 @@
 		</property>
 		<property name="timelockedOffset">
 			<value>26.629520921253622</value>
-		</property>
-		<property name="volume">
-			<value>4</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{9928bc7c-0872-4f5d-a57a-4dc8f8f2d6e6}</destination>
@@ -533,7 +533,7 @@
 	</object>
 	<object class="AutomationPoint" id="{88fe4f6b-810e-49f1-8c62-79726807d40d}">
 		<property name="position">
-			<value>37</value>
+			<value>36.694926344704129</value>
 		</property>
 		<property name="value">
 			<value>1</value>
@@ -541,7 +541,7 @@
 	</object>
 	<object class="AutomationPoint" id="{9e00241a-9c6f-4e81-8f11-e502348afdda}">
 		<property name="position">
-			<value>38.031201870167962</value>
+			<value>37</value>
 		</property>
 		<property name="value">
 			<value>1</value>
