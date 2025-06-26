@@ -7,6 +7,7 @@ public class AmmoRespawner : MonoBehaviour
     [SerializeField] private int ammoAmount;
     [SerializeField] private Transform ammoSpawn;
     [SerializeField] private float delayBeforeRespawn = 20f;
+    [SerializeField] private PickupZone pickupZone;
 
     private Pickupable currentAmmo;
     private float timeFromLastPickUp;
@@ -34,5 +35,6 @@ public class AmmoRespawner : MonoBehaviour
         currentAmmo.transform.SetPositionAndRotation(ammoSpawn.position, ammoSpawn.rotation);
         currentAmmo.GetComponent<AmmoIncrementer>().amount = ammoAmount;
         currentAmmo.onPickup.AddListener(() => OnPickup());
+        pickupZone.target = currentAmmo;
     }
 }
